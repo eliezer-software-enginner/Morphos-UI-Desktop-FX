@@ -21,7 +21,10 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     ComponentsContext componentsContext;
 
     public TextComponent(String content, ComponentsContext componentsContext) {
+
         super(content);
+
+        this.componentsContext = componentsContext;
 
         setStyle("-fx-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
                 .formatted(
@@ -31,7 +34,6 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
 
         setId(String.valueOf(System.currentTimeMillis()));
         currentState.set(this);
-
     }
 
     @Override

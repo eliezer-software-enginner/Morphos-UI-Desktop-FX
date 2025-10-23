@@ -275,8 +275,21 @@ public class ComponentsContext {
     }
 
     public void addCustomComponent(Node customComponent, CanvaComponent mainCanva) {
+        // mainCanvaComponent = mainCanva;
         // nodes.add(customComponent); // Adiciona à lista mestre
+        System.out.println("(addCustomComponent) -> mainCanva in custom component: " + mainCanva);
         addItem("component", customComponent);
+
+        SelectedComponent newSelection = new SelectedComponent("component", customComponent);
+        nodeSelected.set(newSelection);
+
+        // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
+        headerSelected.set("component");
+
+        // 4. Adiciona o nó à tela (Canva)
+        mainCanva.addElementDragable(customComponent, true);
+
+        // 5. Notifica a UI lateral para atualizar a lista
         refreshSubItems();
     }
 
@@ -378,6 +391,29 @@ public class ComponentsContext {
     }
 
     public void removeNode(String nodeId) {
+        System.out.println("mainCanva: " + mainCanvaComponent);
+        // 1. Tenta remover o Node do mainCanva (UI)
+        ObservableList<Node> canvaChildren = mainCanvaComponent.getChildren();
+        boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));
+
+        // 2. Remove do dataMap (a coleção de dados)
+        boolean removedFromDataMap = removeItemByIdentification(nodeId);
+
+        Node currentlySelectedNode = nodeSelected.get() != null ? nodeSelected.get().node() : null;
+
+        if (currentlySelectedNode != null && nodeId.equals(currentlySelectedNode.getId())) {
+            nodeSelected.set(null);
+            headerSelected.set(null); // Limpa o header também
+        }
+
+        // 4. Atualiza a UI lateral SOMENTE se a remoção foi bem-sucedida em algum lugar
+        if (removedFromCanva || removedFromDataMap) {
+            refreshSubItems();
+        }
+    }
+
+    public void removeCustomComponent(String nodeId, CanvaComponent maiCanvaComponent) {
+        System.out.println("mainCanva: " + mainCanvaComponent);
         // 1. Tenta remover o Node do mainCanva (UI)
         ObservableList<Node> canvaChildren = mainCanvaComponent.getChildren();
         boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));

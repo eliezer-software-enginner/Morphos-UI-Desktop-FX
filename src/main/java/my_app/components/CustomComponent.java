@@ -7,10 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.inputComponents.InputComponent;
+import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.ButtonComponentData;
 import my_app.data.ColumnComponentData;
@@ -20,12 +20,15 @@ import my_app.data.ImageComponentData;
 import my_app.data.InputComponentData;
 import my_app.data.TextComponentData;
 import my_app.data.ViewContract;
+import my_app.themes.Typography;
 
 public class CustomComponent extends Pane implements ViewContract<CustomComponentData> {
 
     ComponentsContext componentsContext;
+    public ComponentsContext mainComponentsContext;
 
     public CustomComponent(ComponentsContext componentsContext) {
+        super();
         this.componentsContext = componentsContext;
 
         this.setId(System.currentTimeMillis() + "");
@@ -214,11 +217,13 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
         // applyUrl,
         // new my_app.components.shared.WidthComponent(this),
         // new HeightComponent(this));
+
+        father.getChildren().setAll(new ButtonRemoverComponent(this, mainComponentsContext));
     }
 
     @Override
     public void settings(Pane father) {
-        father.getChildren().setAll(new Text("Empty"));
+        father.getChildren().setAll(Typography.body("Empty"));
     }
 
 }

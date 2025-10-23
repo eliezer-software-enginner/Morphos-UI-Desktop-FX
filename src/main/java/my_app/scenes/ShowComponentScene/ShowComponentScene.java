@@ -17,7 +17,6 @@ public class ShowComponentScene extends Scene {
     public Stage stage = new Stage();
 
     ComponentsContext componentsContext = new ComponentsContext();
-
     Home home = new Home(componentsContext, true);
 
     MenuBar mb = new MenuBar();
@@ -46,6 +45,7 @@ public class ShowComponentScene extends Scene {
             newCustomComponent.setStyle(contentCanva.getStyle());
             newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
             newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());
+            newCustomComponent.mainComponentsContext = mainComponentsContext;
 
             // 2. Transfere os filhos do canva temporário (home.canva) para o customComp.
             // **IMPORTANTE:** Isso move os Nodes, tirando-os do 'contentCanva'.
