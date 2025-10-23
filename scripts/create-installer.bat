@@ -3,7 +3,7 @@ setlocal enableDelayedExpansion
 
 REM --- Application Configuration ---
 set "APP_NAME=morphos_desktop_fx"
-set "APP_VERSION=v1.0"
+set "APP_VERSION=1.0"
 set "APP_VENDOR=Eliezer known as Plantfall"
 set "APP_COPYRIGHT=Copyright 2025"
 set "APP_DESCRIPTION=Morphos Desktop Fx is a UI builder for making UI rapidly and easily, and also generate pure java code for you copy and paste in your application"
