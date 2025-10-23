@@ -1,5 +1,7 @@
 package my_app.scenes.MainScene;
 
+import static my_app.components.shared.UiComponents.MenuBarPrimary;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -17,18 +19,15 @@ import my_app.screens.ShowCode.ShowCode;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
 import toolkit.Component;
-import toolkit.theme.MaterialTheme;
 
 public class MainScene extends Scene {
 
     ComponentsContext componentsContext = new ComponentsContext();
 
-    MenuBar menuBar = new MenuBar();
+    MenuBar menuBar = MenuBarPrimary();
     Home home = new Home(componentsContext, false);
     Stage stage = new Stage();
     VBox mainView;
-
-    MaterialTheme theme = MaterialTheme.getInstance();
 
     MainSceneController controller = new MainSceneController(componentsContext);
 
@@ -38,11 +37,15 @@ public class MainScene extends Scene {
         setup();
         styles();
 
-        controller.loadSceneFromJsonFile(home, stage);
+        try {
+            controller.loadSceneFromJsonFile(home, stage);
+        } catch (RuntimeException _) {
+        }
+
     }
 
     void setup() {
-        menuBar = new MenuBar(createMenuOptions());
+        menuBar.getMenus().setAll(createMenuOptions());
         mainView = new VBox(menuBar, home);
 
         HBox.setHgrow(home, Priority.ALWAYS);
@@ -54,8 +57,7 @@ public class MainScene extends Scene {
     }
 
     void styles() {
-        menuBar.setStyle("-fx-background-color:%s;".formatted(theme.getBackgroundColorStyle()));
-        mainView.setStyle("-fx-background-color:%s;".formatted(theme.getBackgroundColorStyle()));
+        mainView.getStyleClass().add("background-color");
     }
 
     @Component
@@ -73,7 +75,15 @@ public class MainScene extends Scene {
         menu.getItems().addAll(itemSalvar, itemSaveAs, itemLoad, itemShowCode, itemContribute);
 
         itemSalvar.setOnAction(_ -> controller.handleSave(home, stage));
-        itemSaveAs.setOnAction(_ -> controller.handleSaveAs(home, stage));
+        itemSaveAs.setOnAction(_ -> {
+
+            try {
+                controller.handleSaveAs(home, stage);
+            } catch (RuntimeException e) {
+                home.leftSide.notifyError(e.getMessage());
+            }
+
+        });
 
         itemLoad.setOnAction(_ -> controller.handleClickLoad(home, stage));
 
@@ -81,7 +91,7 @@ public class MainScene extends Scene {
 
         itemContribute.setOnAction(_ -> controller.handleBecomeContributor());
 
-        menuText.setStyle("-fx-fill:white;");
+        menuText.getStyleClass().add("text-primary-color");
 
         return menu;
     }

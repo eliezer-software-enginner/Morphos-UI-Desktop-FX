@@ -84,17 +84,23 @@ public class MainSceneController {
     }
 
     public void handleSaveAs(Home home, Stage stage) {
+        home.leftSide.removeError();
+
         var fc = new FileChooser();
 
         fc.setTitle("save project as");
         fc.getExtensionFilters().add(
-                new ExtensionFilter("ui extension", "*.json"));
+                new ExtensionFilter("ui.json", "*.json"));
         fc.setInitialFileName("ui.json");
 
-        var file = fc.showSaveDialog(stage);
-        if (file != null) {
-            // json bening saved on specfif file
-            componentsContext.saveStateInJsonFile_v2(file, home.canva);
+        try {
+            var file = fc.showSaveDialog(stage);
+            if (file != null) {
+                // json bening saved on specfif file
+                componentsContext.saveStateInJsonFile_v2(file, home.canva);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
 
     }

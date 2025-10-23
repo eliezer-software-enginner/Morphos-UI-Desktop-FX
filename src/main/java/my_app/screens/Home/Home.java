@@ -12,6 +12,7 @@ import toolkit.theme.MaterialTheme;
 
 public class Home extends BorderPane {
 
+    public LeftSide leftSide;
     public CanvaComponent canva;
 
     @FunctionalInterface
@@ -20,7 +21,8 @@ public class Home extends BorderPane {
     }
 
     public Home(ComponentsContext componentsContext, boolean openComponentScene) {
-        setLeft(new LeftSide(this, componentsContext));
+        this.leftSide = new LeftSide(this, componentsContext);
+        setLeft(this.leftSide);
 
         canva = new CanvaComponent(componentsContext);
 
@@ -53,5 +55,9 @@ public class Home extends BorderPane {
         setRight(new RightSide(componentsContext));
 
         setStyle("-fx-background-color:%s;".formatted(MaterialTheme.getInstance().getSurfaceColorStyle()));
+    }
+
+    public void notifyError(String message) {
+        leftSide.notifyError(message);
     }
 }

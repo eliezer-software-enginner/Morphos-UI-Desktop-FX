@@ -2,6 +2,7 @@ package my_app;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my_app.data.Commons;
 import my_app.scenes.SplashScene.SplashScene;
@@ -37,6 +38,7 @@ public class App extends Application {
 
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png")));
         primaryStage.show();
     }
 

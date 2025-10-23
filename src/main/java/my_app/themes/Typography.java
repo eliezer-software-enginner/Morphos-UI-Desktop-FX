@@ -37,4 +37,11 @@ public class Typography {
         text.getStyleClass().addAll("caption-label-typo", "text-primary-color");
         return text;
     }
+
+    public static Label error(String message) {
+        var text = new Label(message);
+        text.setStyle("-fx-font-smoothing-type: gray;"); // 🔹 Suaviza o texto
+        text.getStyleClass().addAll("caption-label-typo", "error-color", "text-error-color");
+        return text;
+    }
 }
