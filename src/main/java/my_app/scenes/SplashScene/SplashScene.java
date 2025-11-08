@@ -10,14 +10,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import my_app.contexts.TranslationContext;
 import my_app.scenes.MainScene.MainScene;
+
+import java.util.Objects;
 
 public class SplashScene extends Scene {
 
-    ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/assets/images/m.png")));
-    Text title = new Text("Welcome to Morpho");
-    Text description = new Text("Create your ui easily for your javaFX application");
-    Text footer = new Text("Copyright 2025 - By Plantfall");
+    TranslationContext translation = TranslationContext.instance();
+
+    ImageView logo = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/images/m.png"))));
+    Text title = new Text(translation.get().splashTranslation().title());
+    Text description = new Text(translation.get().splashTranslation().description());
+    Text footer = new Text(translation.get().splashTranslation().footer());
 
     VBox layout = new VBox();
     VBox titleAndDescriptionContainer = new VBox(title, description);

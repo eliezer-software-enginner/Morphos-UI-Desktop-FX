@@ -4,10 +4,19 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.SplashScene.SplashScene;
 
+import java.util.Locale;
+
 public class App extends Application {
+
+    @Override
+    public void init() throws Exception {
+        var translationContenxt = TranslationContext.instance();
+        translationContenxt.loadTranslation(Locale.of("pt-br"));
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {

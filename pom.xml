@@ -14,7 +14,7 @@
     <maven.compiler.source>25</maven.compiler.source>
     <maven.compiler.target>25</maven.compiler.target>
     <!-- <javafx.version>21.0.3</javafx.version> -->
-    <javafx.version>17.0.2</javafx.version>
+      <javafx.version>25.0.1</javafx.version>
     <main.class>my_app.App</main.class>
   </properties>
 
@@ -181,9 +181,9 @@
         <version>3.0.0</version>
         <configuration>
           <skipTests>true</skipTests>
-          <compilerArgs>
-            <arg>--enable-preview</arg>
-          </compilerArgs>
+<!--          <compilerArgs>-->
+<!--            <arg>&#45;&#45;enable-preview</arg>-->
+<!--          </compilerArgs>-->
 
         </configuration>
       </plugin>
