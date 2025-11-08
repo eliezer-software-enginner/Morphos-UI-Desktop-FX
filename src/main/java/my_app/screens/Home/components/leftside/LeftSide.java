@@ -1,10 +1,5 @@
 package my_app.screens.Home.components.leftside;
 
-import static my_app.themes.Typography.BodySecondary;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,21 +11,28 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
 import my_app.themes.Typography;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static my_app.themes.Typography.BodySecondary;
+
 public class LeftSide extends VBox {
+    private final TranslationContext.Translation translation = TranslationContext.instance().get();
 
         Text appName = new Text(Commons.AppName);
         ImageView iv = Commons.CreateImageView("/assets/images/m.png");
 
         HBox logo = new HBox(iv, appName);
-        Label title = BodySecondary("Visual Elements");
+        Label title = BodySecondary(translation.VisualElements());
         // new Text("Visual Elements");
         // List<String> optionsText = List.of("Text", "Button", "Input", "Image",
         // "Component", "Column items");
-        List<String> optionsText = List.of("Text", "Button", "Input", "Image", "Component");
+        List<String> optionsText = List.of(translation.Text(), translation.Button(), translation.Input(), translation.Image(), translation.Component());
 
         List<Option> options = new ArrayList<>();
         VBox errorContainer = new VBox();
@@ -91,7 +93,6 @@ public class LeftSide extends VBox {
         }
 
         public void removeError() {
-
                 errorContainer.getChildren().clear();
         }
 

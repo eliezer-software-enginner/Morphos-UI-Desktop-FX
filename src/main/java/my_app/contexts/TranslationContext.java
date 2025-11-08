@@ -1,6 +1,7 @@
 package my_app.contexts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import my_app.App;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.util.Locale;
 public class TranslationContext {
     private static TranslationContext instance;
     private Translation translation;
+    private App application;
 
     public static TranslationContext instance(){
         if(instance == null) instance = new TranslationContext();
@@ -34,8 +36,30 @@ public class TranslationContext {
 
     }
 
+    public void onEntryPoint(App app) {
+        this.application = app;
+    }
+
+    public void changeLanguage(Locale locale){
+        this.application.changeLanguage(locale);
+    }
+
     public record Translation(
-        SplashTranslation splashTranslation
+        SplashTranslation splashTranslation,
+        OptionsMenuMainScene optionsMenuMainScene,
+        Common common,
+        String Appearance,
+        String Layout,
+        String AppearanceSettings,
+        String LayoutSettings,
+        String NoComponentSelected,
+        String SelectComponentToViewSettings,
+        String VisualElements,
+        String Text,
+        String Button,
+        String Input,
+        String Image,
+        String Component
     ){}
 
     public Translation get(){
@@ -47,19 +71,13 @@ public class TranslationContext {
     ){
     }
 
-    static void main() {
-        var t = TranslationContext.instance();
+    public record OptionsMenuMainScene(
+            String showCode, String becomeContributor
+    ){
+    }
 
-        Locale[] locales = {
-               Locale.US, Locale.of("pt-br")
-        };
-
-        //Arrays.stream(locales).forEach(t::loadTranslation);
-        t.loadTranslation(locales[0]);
-
-        var data = t.translation;
-        var title = data.splashTranslation().title();
-        IO.println(title);
-
+    public record Common(
+            String save, String saveAs, String load,String option
+    ){
     }
 }

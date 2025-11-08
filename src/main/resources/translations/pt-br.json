@@ -1,7 +1,29 @@
 {
   "splashTranslation": {
-    "title": "Bem vindo ao Morphos",
-    "description": "Crie sua ui rapidamente para sua aplicação JavaFX",
-    "footer": "Copyright 2025 - Por Plantfall"
-  }
+    "title": "Bem-vindo ao Morpho",
+    "description": "Crie sua interface facilmente para sua aplicação JavaFX",
+    "footer": "Direitos Autorais 2025 - Por Plantfall"
+  },
+  "optionsMenuMainScene": {
+    "showCode": "Mostrar código",
+    "becomeContributor": "Tornar-se um colaborador"
+  },
+  "common": {
+    "save": "Salvar",
+    "saveAs": "Salvar como",
+    "load": "Carregar",
+    "option": "Opção"
+  },
+  "Appearance": "Aparência",
+  "Layout": "Layout",
+  "AppearanceSettings": "Configurações de Aparência",
+  "LayoutSettings": "Configurações de Layout",
+  "NoComponentSelected": "Nenhum componente selecionado",
+  "SelectComponentToViewSettings": "Selecione um componente para ver as configurações.",
+  "VisualElements": "Elementos Visuais",
+  "Text": "Texto",
+  "Button": "Botão",
+  "Input": "Input",
+  "Image": "Imagem",
+  "Component": "Componente"
 }

@@ -6,32 +6,38 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.scenes.SplashScene.SplashScene;
+import my_app.scenes.MainScene.MainScene;
 
 import java.util.Locale;
 
 public class App extends Application {
 
+    Stage stage;
+     TranslationContext translationContext;
+
     @Override
     public void init() throws Exception {
-        var translationContenxt = TranslationContext.instance();
-        translationContenxt.loadTranslation(Locale.of("pt-br"));
+        translationContext = TranslationContext.instance();
+        translationContext.onEntryPoint(this);
+        translationContext.loadTranslation(Locale.getDefault());
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle(Commons.AppName + " " + Commons.AppVersion);
+        this.stage = primaryStage;
 
-        Scene splashScene = new SplashScene(primaryStage);
-        primaryStage.setScene(splashScene);
+        this.stage.setTitle(Commons.AppName + " " + Commons.AppVersion);
 
-        // Scene mainScene = new MainScene();
-        // primaryStage.setScene(mainScene);
+        //Scene splashScene = new SplashScene(primaryStage);
+        // this.stage.setScene(splashScene);
+
+         Scene mainScene = new MainScene();
+        this.stage.setScene(mainScene);
 
         // themeManager.addScene(mainScene);
 
         // getStylesheets().add(getClass().getResource("/global_styles.css").toExternalForm());
-        primaryStage.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+        this.stage.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             javafx.scene.Node node = event.getPickResult().getIntersectedNode();
             if (node != null) {
                 System.out.println("Clique em: " + node.getClass().getSimpleName());
@@ -47,11 +53,17 @@ public class App extends Application {
 
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png")));
-        primaryStage.show();
+        this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png")));
+        this.stage.show();
     }
 
-    public static void main(String[] args) {
+    public void changeLanguage(Locale locale){
+        translationContext.loadTranslation(locale);
+        MainScene mainScene = new MainScene();
+        stage.setScene(mainScene);
+    }
+
+     static void main(String[] args) {
         launch(args);
     }
 }

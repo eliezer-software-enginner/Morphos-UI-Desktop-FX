@@ -3,5 +3,27 @@
     "title": "Welcome to Morpho",
     "description": "Create your ui easily for your javaFX application",
     "footer": "Copyright 2025 - By Plantfall"
-  }
+  },
+  "optionsMenuMainScene": {
+    "showCode": "Show code",
+    "becomeContributor": "Become a contributor"
+  },
+  "common": {
+    "save": "Save",
+    "saveAs": "Save as",
+    "load": "Load",
+    "option": "Option"
+  },
+  "Appearance": "Appearance",
+  "Layout": "Layout",
+  "AppearanceSettings": "Appearance Settings",
+  "LayoutSettings": "Layout Settings",
+  "NoComponentSelected": "No component selected",
+  "SelectComponentToViewSettings": "Select a component to view settings.",
+  "VisualElements": "Visual Elements",
+  "Text": "Text",
+  "Button": "Button",
+  "Input": "Input",
+  "Image": "Image",
+  "Component": "Component"
 }
