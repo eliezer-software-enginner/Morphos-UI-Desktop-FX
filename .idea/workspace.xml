@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="the main part of ui was translated to pt-br">
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene/ShowComponentScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene/ShowComponentScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCode/ShowCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCode/ShowCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "plantfall"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/plantfall/Morphos-UI-Desktop-FX.git",
+    "accountId": "ab9c0fb5-e88e-4870-af81-c988db1b0a21"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="35DElaekis9azEASgt6i9oVgsSa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.App[Linux].executor": "Run",
+    "Application.TranslationContext.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/.idea",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.idea" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.App[Linux]">
+    <configuration name="App[Linux]" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.App" />
+      <module name="my_app" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -Dprism.verbose=true --enable-native-access=javafx.graphics" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="my_app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TranslationContext" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.contexts.TranslationContext" />
+      <module name="my_app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="my_app.contexts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Morphos-UI-Desktop-FX" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Morphos-UI-Desktop-FX" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App[Linux]" />
+        <item itemvalue="Application.TranslationContext" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="" />
+      <created>1762636393870</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762636393870</updated>
+    </task>
+    <task id="LOCAL-00001" summary="created translator">
+      <option name="closed" value="true" />
+      <created>1762640338659</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1762640338659</updated>
+    </task>
+    <task id="LOCAL-00002" summary="the main part of ui was translated to pt-br">
+      <option name="closed" value="true" />
+      <created>1762644115477</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1762644115477</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created translator" />
+    <MESSAGE value="the main part of ui was translated to pt-br" />
+    <option name="LAST_COMMIT_MESSAGE" value="the main part of ui was translated to pt-br" />
+  </component>
+</project>

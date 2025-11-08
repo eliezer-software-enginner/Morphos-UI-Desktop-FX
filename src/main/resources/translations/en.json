@@ -25,5 +25,10 @@
   "Button": "Button",
   "Input": "Input",
   "Image": "Image",
-  "Component": "Component"
+  "Component": "Component",
+  "menu": "Menu",
+  "save": "Save",
+  "imports": "Imports",
+  "codeContent": "Code content",
+  "codeContentOfCustomComponent": "Code content of Custom Component"
 }

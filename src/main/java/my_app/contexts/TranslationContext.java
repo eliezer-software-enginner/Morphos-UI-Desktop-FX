@@ -59,7 +59,12 @@ public class TranslationContext {
         String Button,
         String Input,
         String Image,
-        String Component
+        String Component,
+        String menu,
+        String save,
+        String imports,
+        String codeContent,
+        String codeContentOfCustomComponent
     ){}
 
     public Translation get(){

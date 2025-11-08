@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import my_app.components.CustomComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
 import my_app.themes.ThemeManager;
@@ -24,6 +25,7 @@ public class ShowComponentScene extends Scene {
     static BorderPane root = new BorderPane();
 
     ThemeManager themeManager = ThemeManager.Instance();
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     public ShowComponentScene(CanvaComponent mainCanva, ComponentsContext mainComponentsContext) {
         super(root, 775, 300);
@@ -32,8 +34,8 @@ public class ShowComponentScene extends Scene {
         Commons.UseDefaultStyles(this);
         themeManager.addScene(this);
 
-        Menu menu = new Menu("Menu");
-        MenuItem is = new MenuItem("Save");
+        Menu menu = new Menu(translation.menu());
+        MenuItem is = new MenuItem(translation.save());
 
         is.setOnAction(_ -> {
             // O 'home.canva' é o CanvaComponent com o conteúdo que o usuário desenhou (aqui

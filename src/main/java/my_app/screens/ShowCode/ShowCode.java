@@ -1,7 +1,5 @@
 package my_app.screens.ShowCode;
 
-import java.util.List;
-
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,8 +9,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.contexts.TranslationContext;
+
+import java.util.List;
 
 public class ShowCode {
+
+    private final TranslationContext.Translation translation = TranslationContext.instance().get();
     private Stage stage;
     private ShowCodeController controller = new ShowCodeController();
     VBox root = new VBox();
@@ -28,18 +31,18 @@ public class ShowCode {
         String codeContent = controller.createRestOfCode(canvaComponent);
         List<String> customComponentsContent = controller.createComponentsForPreview(canvaComponent.getChildren());
 
-        VBox importsColumnContent = columnItem(importsContent, "Imports");
+        VBox importsColumnContent = columnItem(importsContent, translation.imports());
         root.getChildren().add(importsColumnContent);
 
         VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
 
-        VBox codeColumnContent = columnItem(codeContent, "Code content");
+        VBox codeColumnContent = columnItem(codeContent,  translation.codeContent());
         root.getChildren().add(codeColumnContent);
 
         for (String text : customComponentsContent) {
             VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
 
-            VBox customComponentsColumnContent = columnItem(text, "Code content of Custom Component");
+            VBox customComponentsColumnContent = columnItem(text, translation.codeContentOfCustomComponent());
             root.getChildren().add(customComponentsColumnContent);
         }
 
