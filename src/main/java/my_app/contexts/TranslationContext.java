@@ -10,29 +10,32 @@ import java.util.Locale;
 
 public class TranslationContext {
     private static TranslationContext instance;
-    private Translation translation;
+    private Translation translation, englishBase;
     private App application;
 
-    public static TranslationContext instance(){
-        if(instance == null) instance = new TranslationContext();
+    public static TranslationContext instance() {
+        if (instance == null) instance = new TranslationContext();
         return instance;
     }
 
-    public void loadTranslation(Locale locale){
+    public void loadTranslation(Locale locale) {
         IO.println(locale.getLanguage());
 
         var path = Path.of("src/main/resources/translations").resolve(locale.getLanguage() + ".json");
+        var pathEnglish = Path.of("src/main/resources/translations").resolve("en.json");
 
-        try{
+        try {
             var content = Files.readString(path);
-            IO.println("content=> " + content);
+            var contentEn = Files.readString(pathEnglish);
 
             var om = new ObjectMapper();
             this.translation = om.readValue(content, Translation.class);
+            this.englishBase = om.readValue(contentEn, Translation.class);
 
-        }catch (IOException e){
+        } catch (IOException e) {
             IO.println("erro aconteceu");
-            e.printStackTrace();}
+            e.printStackTrace();
+        }
 
     }
 
@@ -40,49 +43,54 @@ public class TranslationContext {
         this.application = app;
     }
 
-    public void changeLanguage(Locale locale){
+    public void changeLanguage(Locale locale) {
         this.application.changeLanguage(locale);
     }
 
     public record Translation(
-        SplashTranslation splashTranslation,
-        OptionsMenuMainScene optionsMenuMainScene,
-        Common common,
-        String Appearance,
-        String Layout,
-        String AppearanceSettings,
-        String LayoutSettings,
-        String NoComponentSelected,
-        String SelectComponentToViewSettings,
-        String VisualElements,
-        String Text,
-        String Button,
-        String Input,
-        String Image,
-        String Component,
-        String menu,
-        String save,
-        String imports,
-        String codeContent,
-        String codeContentOfCustomComponent
-    ){}
+            SplashTranslation splashTranslation,
+            OptionsMenuMainScene optionsMenuMainScene,
+            Common common,
+            String Appearance,
+            String Layout,
+            String AppearanceSettings,
+            String LayoutSettings,
+            String NoComponentSelected,
+            String SelectComponentToViewSettings,
+            String VisualElements,
+            String Text,
+            String Button,
+            String Input,
+            String Image,
+            String Component,
+            String menu,
+            String save,
+            String imports,
+            String codeContent,
+            String codeContentOfCustomComponent
+    ) {
+    }
 
-    public Translation get(){
+    public Translation get() {
         return this.translation;
+    }
+
+    public Translation getInEnglishBase() {
+        return this.englishBase;
     }
 
     public record SplashTranslation(
             String title, String description, String footer
-    ){
+    ) {
     }
 
     public record OptionsMenuMainScene(
             String showCode, String becomeContributor
-    ){
+    ) {
     }
 
     public record Common(
-            String save, String saveAs, String load,String option
-    ){
+            String save, String saveAs, String load, String option
+    ) {
     }
 }

@@ -21,21 +21,25 @@ import toolkit.Component;
 
 public class Option extends VBox {
     BooleanProperty expanded = new SimpleBooleanProperty(false);
+
+    @Component
     VBox subItemsContainer = new VBox();
     String type;
 
+    @Component
     OptionHeader header;
 
     ComponentsContext componentsContext;
 
+    @Component
     Home home;
 
-    public Option(String type, Home home, ComponentsContext componentsContext) {
-        this.type = type.toLowerCase().trim();
+    public Option(LeftSide.Field field, Home home, ComponentsContext componentsContext) {
+        this.type = field.nameEngligh().toLowerCase().trim();
         this.home = home;
         this.componentsContext = componentsContext;
 
-        header = new OptionHeader(type, home, expanded, componentsContext);
+        header = new OptionHeader(field, home, expanded, componentsContext);
 
         getChildren().add(header);
         getChildren().add(subItemsContainer);
@@ -60,8 +64,8 @@ public class Option extends VBox {
 
         ObservableList<Node> nodes = componentsContext.getItemsByType(type);
 
-        for (int i = 0; i < nodes.size(); i++) {
-            String itemId = nodes.get(i).getId();
+        for (Node node : nodes) {
+            String itemId = node.getId();
 
             HBox subItemBox = createSubItemBox(itemId);
 
@@ -130,7 +134,7 @@ public class Option extends VBox {
     }
 
     void onClickOnSubItem(String itemIdentification, String type,
-            CanvaComponent mainCanvaComponent) {
+                          CanvaComponent mainCanvaComponent) {
 
         var canvaChildren = mainCanvaComponent.getChildren();
 

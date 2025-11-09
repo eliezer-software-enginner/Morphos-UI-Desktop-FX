@@ -14,24 +14,31 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import my_app.contexts.ComponentsContext;
 import my_app.screens.Home.Home;
+import toolkit.Component;
 import toolkit.theme.MaterialTheme;
 
 public class OptionHeader extends HBox {
+
+    @Component
     Label label = new Label();
+
+    @Component
     Region spacer = new Region();
+
+    @Component
     Button btnAdd = new Button();
 
     ComponentsContext componentsContext;
     MaterialTheme theme = MaterialTheme.getInstance();
 
     public OptionHeader(
-            String type,
+            LeftSide.Field field,
             Home home, BooleanProperty expanded,
             ComponentsContext componentsContext) {
 
         this.componentsContext = componentsContext;
 
-        label.setText(type);
+        label.setText(field.name());
 
         getChildren().add(label);
         getChildren().add(spacer);
@@ -39,6 +46,8 @@ public class OptionHeader extends HBox {
 
         setup();
         styles();
+
+        String type = field.nameEngligh().toLowerCase();
 
         btnAdd.setOnAction(_ -> {
             componentsContext.addComponent(type, home);

@@ -15,6 +15,7 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
 import my_app.themes.Typography;
+import toolkit.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,76 +25,98 @@ import static my_app.themes.Typography.BodySecondary;
 public class LeftSide extends VBox {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
 
-        Text appName = new Text(Commons.AppName);
-        ImageView iv = Commons.CreateImageView("/assets/images/m.png");
+    @Component
+    Text appName = new Text(Commons.AppName);
 
-        HBox logo = new HBox(iv, appName);
-        Label title = BodySecondary(translation.VisualElements());
-        // new Text("Visual Elements");
-        // List<String> optionsText = List.of("Text", "Button", "Input", "Image",
-        // "Component", "Column items");
-        List<String> optionsText = List.of(translation.Text(), translation.Button(), translation.Input(), translation.Image(), translation.Component());
+    @Component
+    ImageView iv = Commons.CreateImageView("/assets/images/m.png");
 
-        List<Option> options = new ArrayList<>();
-        VBox errorContainer = new VBox();
+    @Component
+    HBox logo = new HBox(iv, appName);
 
-        public LeftSide(Home home, ComponentsContext componentsContext) {
+    @Component
+    Label title = BodySecondary(translation.VisualElements());
+    // new Text("Visual Elements");
+    // List<String> optionsText = List.of("Text", "Button", "Input", "Image",
+    // "Component", "Column items");
 
-                config();
-                styles();
+    private final TranslationContext.Translation enlishBase = TranslationContext.instance().getInEnglishBase();
 
-                getChildren().addAll(logo, title);
+    record Field(String name, String nameEngligh) {
+    }
 
-                var spacer = new Region();
-                spacer.setMaxHeight(10);
-                spacer.setPrefHeight(10);
+    List<Field> optionsField = List.of(
+            new Field(translation.Text(), enlishBase.Text()),
+            new Field(translation.Button(), enlishBase.Button()),
+            new Field(translation.Input(), enlishBase.Input()),
+            new Field(translation.Image(), enlishBase.Image()),
+            new Field(translation.Component(), enlishBase.Component())
+    );
 
-                getChildren().add(spacer);
 
-                optionsText.forEach(title -> options.add(new Option(title, home, componentsContext)));
+    @Component
+    List<Option> options = new ArrayList<>();
 
-                getChildren().addAll(options);
-                getChildren().add(errorContainer);
-        }
+    @Component
+    VBox errorContainer = new VBox();
 
-        private final int WIDTH = 230;
+    public LeftSide(Home home, ComponentsContext componentsContext) {
 
-        void config() {
-                iv.setFitHeight(50);
-                iv.setFitWidth(50);
+        config();
+        styles();
 
-                logo.setAlignment(Pos.CENTER_LEFT);
-                var iv = (ImageView) logo.getChildren().get(0);
-                iv.setPreserveRatio(true);
+        getChildren().addAll(logo, title);
 
-                // Faz com que o LeftSide ocupe a altura toda
-                setMaxHeight(Double.MAX_VALUE);
+        var spacer = new Region();
+        spacer.setMaxHeight(10);
+        spacer.setPrefHeight(10);
 
-                setPrefWidth(WIDTH);
-                setMaxWidth(WIDTH);
-                setMinWidth(WIDTH);
+        getChildren().add(spacer);
 
-                // Espaçamento horizontal entre conteúdo e borda
-                setPadding(new Insets(10, 10, 0, 10)); // top, right, bottom, left
-        }
+        optionsField.forEach(field -> options.add(new Option(field, home, componentsContext)));
 
-        void styles() {
-                getStyleClass().add("background-color");
-                appName.setStyle("-fx-fill:#fff;-fx-font-size:17px;");
-        }
+        getChildren().addAll(options);
+        getChildren().add(errorContainer);
+    }
 
-        public void notifyError(String message) {
-                PauseTransition delay = new PauseTransition(Duration.millis(700));
+    private final int WIDTH = 230;
 
-                var errorText = Typography.error(message);
-                errorText.setWrapText(true);
+    void config() {
+        iv.setFitHeight(50);
+        iv.setFitWidth(50);
 
-                delay.setOnFinished(_ -> errorContainer.getChildren().add(errorText));
-                delay.play();
-        }
+        logo.setAlignment(Pos.CENTER_LEFT);
+        var iv = (ImageView) logo.getChildren().get(0);
+        iv.setPreserveRatio(true);
 
-        public void removeError() {
-                errorContainer.getChildren().clear();
-        }
+        // Faz com que o LeftSide ocupe a altura toda
+        setMaxHeight(Double.MAX_VALUE);
+
+        setPrefWidth(WIDTH);
+        setMaxWidth(WIDTH);
+        setMinWidth(WIDTH);
+
+        // Espaçamento horizontal entre conteúdo e borda
+        setPadding(new Insets(10, 10, 0, 10)); // top, right, bottom, left
+    }
+
+    void styles() {
+        getStyleClass().add("background-color");
+        appName.setStyle("-fx-fill:#fff;-fx-font-size:17px;");
+    }
+
+    public void notifyError(String message) {
+        PauseTransition delay = new PauseTransition(Duration.millis(700));
+
+        var errorText = Typography.error(message);
+        errorText.setWrapText(true);
+
+        delay.setOnFinished(_ -> errorContainer.getChildren().add(errorText));
+        delay.play();
+    }
+
+    public void removeError() {
+        errorContainer.getChildren().clear();
+    }
 
 }

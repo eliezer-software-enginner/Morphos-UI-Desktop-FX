@@ -8,16 +8,18 @@ import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.Home.components.RightSide;
 import my_app.screens.Home.components.leftside.LeftSide;
+import toolkit.Component;
 import toolkit.theme.MaterialTheme;
 
 public class Home extends BorderPane {
 
+    @Component
     public LeftSide leftSide;
     public CanvaComponent canva;
 
     @FunctionalInterface
     public interface VisualNodeCallback {
-        public void set(Node n);
+        void set(Node n);
     }
 
     public Home(ComponentsContext componentsContext, boolean openComponentScene) {

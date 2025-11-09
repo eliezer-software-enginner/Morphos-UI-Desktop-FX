@@ -28,9 +28,14 @@ public class MainScene extends Scene {
     ComponentsContext componentsContext = new ComponentsContext();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
+    @Component
     MenuBar menuBar = MenuBarPrimary();
+
+    @Component
     Home home = new Home(componentsContext, false);
     Stage stage = new Stage();
+
+    @Component
     VBox mainView;
 
     MainSceneController controller = new MainSceneController(componentsContext);
@@ -80,7 +85,7 @@ public class MainScene extends Scene {
         menu.getItems().addAll(itemSalvar, itemSaveAs, itemLoad, itemShowCode, itemContribute, translate_test);
 
 
-        translate_test.setOnAction(_-> TranslationContext.instance().changeLanguage(Locale.of("pt-br")));
+        translate_test.setOnAction(_ -> TranslationContext.instance().changeLanguage(Locale.of("pt-br")));
         itemSalvar.setOnAction(_ -> controller.handleSave(home, stage));
         itemSaveAs.setOnAction(_ -> {
 
