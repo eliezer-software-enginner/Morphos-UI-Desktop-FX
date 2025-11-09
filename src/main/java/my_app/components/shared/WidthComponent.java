@@ -6,12 +6,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
 public class WidthComponent extends HBox {
 
-    Label title = Typography.caption("Width:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Label title = Typography.caption(translation.width() + ":");
     TextField tf = new TextField();
 
     public WidthComponent(Node node) {

@@ -5,18 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="the main part of ui was translated to pt-br">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/App_Linux_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/App_Linux_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBgColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBgColorPicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderColorPicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderRadius.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderRadius.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderWidth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderWidth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/PreserveRatioComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/PreserveRatioComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ButtonRemoverComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ButtonRemoverComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontColorPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontColorPicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontSizeComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontSizeComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontWeightComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontWeightComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/TextContentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/TextContentComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/toolkit/Component.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +159,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762644115477</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="the main part of ui was translated to pt-br">
+      <option name="closed" value="true" />
+      <created>1762698758061</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762698758061</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

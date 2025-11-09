@@ -5,12 +5,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
 public class FontSizeComponent extends HBox {
 
-    Label title = Typography.caption("Font size:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Label title = Typography.caption(translation.fontSize() + ":");
     TextField tf = new TextField();
 
     public FontSizeComponent(ObjectProperty<Node> selectedNode) {

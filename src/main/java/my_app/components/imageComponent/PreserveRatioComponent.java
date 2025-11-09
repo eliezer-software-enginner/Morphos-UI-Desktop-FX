@@ -6,10 +6,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import my_app.contexts.TranslationContext;
 
 public class PreserveRatioComponent extends HBox {
-
-    Text title = new Text("Preserve ratio:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Text title = new Text(translation.preserveRatio() + ":");
     ChoiceBox<String> choiceBox = new ChoiceBox<>(
             FXCollections.observableArrayList("True", "False"));
 

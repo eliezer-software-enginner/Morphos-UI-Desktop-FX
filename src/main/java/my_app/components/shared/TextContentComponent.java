@@ -7,11 +7,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
+import my_app.contexts.TranslationContext;
 import my_app.themes.Typography;
 
 public class TextContentComponent extends HBox {
 
-    Label text = Typography.caption("Text content:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Label title = Typography.caption(translation.textContent() + ":");
     TextField tf = new TextField();
 
     public TextContentComponent(ObjectProperty<Node> selectedNode) {
@@ -40,7 +42,7 @@ public class TextContentComponent extends HBox {
             }
         });
 
-        getChildren().addAll(text, tf);
+        getChildren().addAll(title, tf);
 
     }
 }

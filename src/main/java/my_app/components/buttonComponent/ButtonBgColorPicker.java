@@ -7,12 +7,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 
 public class ButtonBgColorPicker extends HBox {
 
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+
     ColorPicker colorPicker = new ColorPicker(Color.WHITE);
-    Text fontColorText = new Text("Background color:");
+    Text fontColorText = new Text(translation.backgroundColor() + ":");
 
     public ButtonBgColorPicker(ObjectProperty<Node> selectedNode) {
 

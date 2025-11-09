@@ -14,12 +14,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 
 public class ButtonBorderColorPicker extends HBox {
-
+    TranslationContext.Translation translation = TranslationContext.instance().get();
     ColorPicker colorPicker = new ColorPicker(Color.WHITE);
-    Text fontColorText = new Text("Border Color:");
+    Text fontColorText = new Text(translation.borderColor() + ":");
 
     public ButtonBorderColorPicker(ObjectProperty<Node> selectedNode) {
 

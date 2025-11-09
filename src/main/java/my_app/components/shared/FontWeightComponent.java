@@ -7,11 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
 public class FontWeightComponent extends HBox {
-    Label title = Typography.caption("Font Weight:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Label title = Typography.caption(translation.fontWeight() + ":");
 
     public FontWeightComponent(ObjectProperty<Node> selectedNode) {
 

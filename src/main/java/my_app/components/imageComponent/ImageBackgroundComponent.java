@@ -12,12 +12,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import my_app.contexts.TranslationContext;
+import toolkit.Component;
 
 public class ImageBackgroundComponent extends HBox {
-    Text title = new Text("Background:");
-    TextField tf = new TextField();
-    Button btnChooseImg = new Button("Choose image");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
+    @Component
+    Text title = new Text("Background:");
+
+    @Component
+    TextField tf = new TextField();
+
+    @Component
+    Button btnChooseImg = new Button(translation.chooseImage());
+    @Component
     VBox column = new VBox(tf, btnChooseImg);
 
     public ImageBackgroundComponent(ImageComponent node) {

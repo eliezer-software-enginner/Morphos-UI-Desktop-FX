@@ -35,7 +35,7 @@ public class LeftSide extends VBox {
     HBox logo = new HBox(iv, appName);
 
     @Component
-    Label title = BodySecondary(translation.VisualElements());
+    Label title = BodySecondary(translation.visualElements());
     // new Text("Visual Elements");
     // List<String> optionsText = List.of("Text", "Button", "Input", "Image",
     // "Component", "Column items");
@@ -46,11 +46,11 @@ public class LeftSide extends VBox {
     }
 
     List<Field> optionsField = List.of(
-            new Field(translation.Text(), enlishBase.Text()),
-            new Field(translation.Button(), enlishBase.Button()),
-            new Field(translation.Input(), enlishBase.Input()),
-            new Field(translation.Image(), enlishBase.Image()),
-            new Field(translation.Component(), enlishBase.Component())
+            new Field(translation.text(), enlishBase.text()),
+            new Field(translation.button(), enlishBase.button()),
+            new Field(translation.input(), enlishBase.input()),
+            new Field(translation.image(), enlishBase.image()),
+            new Field(translation.component(), enlishBase.component())
     );
 
 

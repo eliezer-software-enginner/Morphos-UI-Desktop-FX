@@ -7,11 +7,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import toolkit.Component;
 
 public class ButtonBorderRadius extends HBox {
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
-    Text title = new Text("Border radius:");
+    @Component
+    Text title = new Text(translation.borderRadius() + ":");
+    @Component
     TextField tf = new TextField();
 
     public ButtonBorderRadius(ObjectProperty<Node> selectedNode) {
@@ -37,8 +42,8 @@ public class ButtonBorderRadius extends HBox {
                     // Atualiza tanto o -fx-background-radius quanto o -fx-border-radius
                     String newStyle = Commons.UpdateEspecificStyle(existingStyle, "-fx-background-radius", newVal);
                     newStyle = Commons.UpdateEspecificStyle(newStyle, "-fx-border-radius", newVal); // Garante que a
-                                                                                                    // borda tenha o
-                                                                                                    // mesmo raio
+                    // borda tenha o
+                    // mesmo raio
                     // Aplica o estilo com a modificação
                     node.setStyle(newStyle);
 

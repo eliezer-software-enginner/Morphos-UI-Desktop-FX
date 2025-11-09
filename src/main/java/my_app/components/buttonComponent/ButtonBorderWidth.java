@@ -7,11 +7,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 
 public class ButtonBorderWidth extends HBox {
-
-    Text title = new Text("Border width:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Text title = new Text(translation.borderWidth() + ":");
     TextField tf = new TextField();
 
     public ButtonBorderWidth(ObjectProperty<Node> selectedNode) {

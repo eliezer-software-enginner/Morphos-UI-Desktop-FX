@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.inputComponents.InputComponent;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
@@ -17,7 +18,8 @@ public class FontColorPicker extends HBox {
 
     ColorPicker colorPicker = new ColorPicker(Color.WHITE);
 
-    Label title = Typography.caption("Font Color:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Label title = Typography.caption(translation.fontColor() + ":");
 
     public FontColorPicker(ObjectProperty<Node> selectedNode) {
 

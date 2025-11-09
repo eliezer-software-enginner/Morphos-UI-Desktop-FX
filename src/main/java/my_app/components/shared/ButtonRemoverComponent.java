@@ -4,10 +4,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 
 public class ButtonRemoverComponent extends HBox {
-
-    Button btn = new Button("Remove component");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Button btn = new Button(translation.removeComponent());
 
     public ButtonRemoverComponent(Node node, ComponentsContext componentsContext) {
         System.out.println("node: " + node);

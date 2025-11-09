@@ -6,12 +6,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
 public class HeightComponent extends HBox {
 
-    Label title = Typography.caption("Height:");
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+    Label title = Typography.caption(translation.height() + ":");
     TextField tf = new TextField();
 
     public HeightComponent(Node node) {

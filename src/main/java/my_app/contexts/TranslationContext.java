@@ -1,6 +1,7 @@
 package my_app.contexts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.property.SimpleObjectProperty;
 import my_app.App;
 
 import java.io.IOException;
@@ -10,7 +11,8 @@ import java.util.Locale;
 
 public class TranslationContext {
     private static TranslationContext instance;
-    private Translation translation, englishBase;
+    private Translation englishBase;
+    private SimpleObjectProperty<Translation> translation = null;
     private App application;
 
     public static TranslationContext instance() {
@@ -29,7 +31,11 @@ public class TranslationContext {
             var contentEn = Files.readString(pathEnglish);
 
             var om = new ObjectMapper();
-            this.translation = om.readValue(content, Translation.class);
+
+            if (this.translation == null)
+                this.translation = new SimpleObjectProperty<>();
+
+            this.translation.set(om.readValue(content, Translation.class));
             this.englishBase = om.readValue(contentEn, Translation.class);
 
         } catch (IOException e) {
@@ -51,27 +57,44 @@ public class TranslationContext {
             SplashTranslation splashTranslation,
             OptionsMenuMainScene optionsMenuMainScene,
             Common common,
-            String Appearance,
-            String Layout,
-            String AppearanceSettings,
-            String LayoutSettings,
-            String NoComponentSelected,
-            String SelectComponentToViewSettings,
-            String VisualElements,
-            String Text,
-            String Button,
-            String Input,
-            String Image,
-            String Component,
+            String appearance,
+            String layout,
+            String appearanceSettings,
+            String layoutSettings,
+            String noComponentSelected,
+            String selectComponentToViewSettings,
+            String visualElements,
+            String text,
+            String button,
+            String input,
+            String image,
+            String component,
             String menu,
             String save,
             String imports,
             String codeContent,
-            String codeContentOfCustomComponent
+            String codeContentOfCustomComponent,
+            String width,
+            String height,
+            String textContent,
+            String fontWeight,
+            String fontColor,
+            String fontSize,
+            String removeComponent,
+            String preserveRatio,
+            String chooseImage,
+            String borderRadius,
+            String borderWidth,
+            String borderColor,
+            String backgroundColor
     ) {
     }
 
     public Translation get() {
+        return this.translation.get();
+    }
+
+    public SimpleObjectProperty<Translation> translationProperty() {
         return this.translation;
     }
 

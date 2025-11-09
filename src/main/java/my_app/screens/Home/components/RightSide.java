@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -21,23 +22,22 @@ import static my_app.components.shared.UiComponents.ButtonPrimary;
 import static my_app.components.shared.UiComponents.ButtonSecondary;
 
 public class RightSide extends VBox {
-    private final TranslationContext.Translation translation = TranslationContext.instance().get();
+    private TranslationContext.Translation translation = TranslationContext.instance().get();
     final double width = 250;
     // 1. ALTERADO: Tipo da propriedade é agora SelectedComponent
     final ObjectProperty<SelectedComponent> selectedComponentProperty;
 
-    Button btnAppearence = ButtonPrimary("Appearance");
-    Button btnLayout = ButtonSecondary("Layout");
+    Button btnAppearence = ButtonPrimary(translation.appearance());
+    Button btnLayout = ButtonSecondary(translation.layout());
     HBox top = new HBox(btnAppearence, btnLayout);
     HBox topWrapper = new HBox(top); // wrapper só para não se esticar
 
     Label title = Typography.body("");
-    Label NoContentText = Typography.caption(translation.NoComponentSelected());
+    Label NoContentText = Typography.caption(translation.noComponentSelected());
 
     private VBox dynamicContainer; // container que será substituído
 
     BooleanProperty appearenceIsSelected = new SimpleBooleanProperty(true);
-
 
 
     public RightSide(ComponentsContext componentsContext) {
@@ -52,7 +52,7 @@ public class RightSide extends VBox {
         getChildren().add(topWrapper);
 
         title.textProperty().bind(Bindings
-                .createStringBinding(() -> appearenceIsSelected.get() ? translation.AppearanceSettings() : translation.LayoutSettings(),
+                .createStringBinding(() -> appearenceIsSelected.get() ? translation.appearanceSettings() : translation.layoutSettings(),
                         appearenceIsSelected));
 
         getChildren().add(title);
@@ -103,7 +103,7 @@ public class RightSide extends VBox {
             nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected);
         } else {
             // Garante que o container esteja limpo se nada estiver selecionado ao montar
-            Label desc = Typography.caption(translation.SelectComponentToViewSettings());
+            Label desc = Typography.caption(translation.selectComponentToViewSettings());
             desc.setWrapText(true);
 
             dynamicContainer.getChildren().setAll(desc);
