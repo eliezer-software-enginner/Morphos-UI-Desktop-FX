@@ -12,6 +12,13 @@ public class Typography {
         Font.loadFont(Typography.class.getResourceAsStream("/fonts/Montserrat-Regular.ttf"), 10);
     }
 
+    public static Text title(String content) {
+        Text text = new Text(content);
+        text.getStyleClass().addAll("title-typo", "text-primary-color");
+        text.setStyle("-fx-font-smoothing-type: gray;"); // 🔹 Suaviza o texto
+        return text;
+    }
+
     public static Text subtitle(String content) {
         Text text = new Text(content);
         text.getStyleClass().addAll("subtitle-typo", "text-primary-color");

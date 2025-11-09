@@ -2,6 +2,8 @@ package my_app.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.scenes.MainScene.MainSceneController;
 
 public class Commons {
 
@@ -65,7 +68,7 @@ public class Commons {
             // Substitui a parte do estilo correspondente ao targetField com o novo valor
             currentStyle = currentStyle.replaceAll(
                     "(?i)" + targetField + ":\\s*[^;]+;", // Captura o campo de destino e o valor atual, ignorando
-                                                          // espaços extras
+                    // espaços extras
                     newStyle); // Substitui com o novo valor
         } else {
             // Se não houver, adiciona o novo estilo no final
@@ -133,4 +136,43 @@ public class Commons {
         return new NodeInCanva(false, null);
     }
 
+    public static MainSceneController.PrefsData getPrefsData() {
+        String appData = loadPrefs();
+        var prefs = Path.of(appData).resolve(Commons.AppNameAtAppData).resolve("prefs.json");
+
+        try {
+            var om = new ObjectMapper();
+            var jsonContent = Files.readString(prefs);
+            return om.readValue(jsonContent, MainSceneController.PrefsData.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Path getPrefsFile() {
+        String appData = loadPrefs();
+        return Path.of(appData).resolve(Commons.AppNameAtAppData).resolve("prefs.json");
+    }
+
+    //change this function in the future
+    public static String loadPrefs() {
+        String os = System.getProperty("os.name").toLowerCase();
+        String userHome = System.getProperty("user.home");
+
+        if (os.contains("win")) {
+            // Windows
+            String appData = System.getenv("LOCALAPPDATA");
+            if (appData == null) {
+                appData = userHome + "\\AppData\\Local";
+            }
+            return appData;
+        } else if (os.contains("mac")) {
+            // macOS
+            return userHome + "/Library/Application Support";
+        } else {
+            // Linux e outros
+            return userHome + "/.local/share";
+        }
+    }
 }

@@ -4,12 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.MainScene.MainScene;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class App extends Application {
 
@@ -17,10 +17,18 @@ public class App extends Application {
     TranslationContext translationContext;
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         translationContext = TranslationContext.instance();
         translationContext.onEntryPoint(this);
-        translationContext.loadTranslation(Locale.getDefault());
+
+        var prefsData = Commons.getPrefsData();
+
+        if (prefsData != null) {
+            translationContext.loadTranslation(Locale.of(prefsData.language()));
+        } else {
+            translationContext.loadTranslation(Locale.getDefault());
+        }
+
     }
 
     @Override
@@ -54,7 +62,7 @@ public class App extends Application {
 
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
-        this.stage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png")));
+        this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
         this.stage.show();
     }
 

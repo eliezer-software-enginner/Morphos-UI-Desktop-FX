@@ -44,5 +44,6 @@
   "borderWidth": "Border width",
   "borderColor": "Border color",
   "backgroundColor": "Background color",
-  "settings": "Settings"
+  "settings": "Settings",
+  "language": "Language"
 }

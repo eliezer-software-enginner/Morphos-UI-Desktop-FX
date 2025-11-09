@@ -15,6 +15,8 @@ public class TranslationContext {
     private SimpleObjectProperty<Translation> translation = null;
     private App application;
 
+    public String currentLanguage;
+
     public static TranslationContext instance() {
         if (instance == null) instance = new TranslationContext();
         return instance;
@@ -22,6 +24,8 @@ public class TranslationContext {
 
     public void loadTranslation(Locale locale) {
         IO.println(locale.getLanguage());
+
+        currentLanguage = locale.getLanguage();
 
         var path = Path.of("src/main/resources/translations").resolve(locale.getLanguage() + ".json");
         var pathEnglish = Path.of("src/main/resources/translations").resolve("en.json");
@@ -51,6 +55,10 @@ public class TranslationContext {
 
     public void changeLanguage(Locale locale) {
         this.application.changeLanguage(locale);
+    }
+
+    public String currentLanguage() {
+        return currentLanguage;
     }
 
     public record Translation(
@@ -87,7 +95,8 @@ public class TranslationContext {
             String borderWidth,
             String borderColor,
             String backgroundColor,
-            String settings
+            String settings,
+            String language
     ) {
     }
 

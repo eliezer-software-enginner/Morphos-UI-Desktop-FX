@@ -62,11 +62,11 @@ public class MainScene extends Scene {
 
         setRoot(mainView);
         ThemeManager.Instance().addScene(this);
-        Commons.UseDefaultStyles(this);
     }
 
     void styles() {
         mainView.getStyleClass().add("background-color");
+        Commons.UseDefaultStyles(this);
     }
 
     @Component

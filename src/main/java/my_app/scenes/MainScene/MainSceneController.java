@@ -5,6 +5,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.SettingsScene;
 import my_app.screens.Home.Home;
@@ -12,7 +13,12 @@ import my_app.screens.Home.Home;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static my_app.data.Commons.loadPrefs;
 
 public class MainSceneController {
     ComponentsContext componentsContext;
@@ -21,7 +27,7 @@ public class MainSceneController {
         new SettingsScene().show();
     }
 
-    public record PrefsData(String last_project_saved_path) {
+    public record PrefsData(String last_project_saved_path, String language) {
     }
 
     public MainSceneController(ComponentsContext componentsContext) {
@@ -70,22 +76,28 @@ public class MainSceneController {
         String appData = loadPrefs();
 
         var appFolder = new File(appData, Commons.AppNameAtAppData);
+        if (!appFolder.exists()) {
+            appFolder.mkdirs();
+        }
+
         var prefsJsonFile = new File(appFolder, "prefs.json");
 
-        try {
-            var stream = new FileInputStream(prefsJsonFile);
+        if (!prefsJsonFile.exists()) {
+            // cria arquivo padrão na primeira execução
+            var defaultPrefs = new PrefsData("", TranslationContext.instance().currentLanguage());
+            Commons.WriteJsonInDisc(prefsJsonFile, defaultPrefs);
+            return null; // ainda não há projeto salvo
+        }
 
+        try (var stream = new FileInputStream(prefsJsonFile)) {
             var om = new ObjectMapper();
             final var path = om.readValue(stream, PrefsData.class).last_project_saved_path;
-
-            var uiFile = new File(path);
-
-            return uiFile;
+            return path == null || path.isBlank() ? null : new File(path);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Was not possible load the file of ui");
+            throw new RuntimeException("Não foi possível carregar prefs.json", e);
         }
     }
+
 
     public void handleSaveAs(Home home, Stage stage) {
         home.leftSide.removeError();
@@ -98,19 +110,32 @@ public class MainSceneController {
         fc.setInitialFileName("ui.json");
 
         try {
+
             var file = fc.showSaveDialog(stage);
             if (file != null) {
                 // json bening saved on specfif file
                 componentsContext.saveStateInJsonFile_v2(file, home.canva);
+
+                //saving also the prefs
+                //check if file exists
+                String appData = loadPrefs();
+                var prefsFile = Path.of(appData).resolve(Commons.AppNameAtAppData).resolve("prefs.json");
+
+                var defaultPrefs = new PrefsData(file.getAbsolutePath(), TranslationContext.instance().currentLanguage());
+                Commons.WriteJsonInDisc(prefsFile.toFile(), defaultPrefs);
+
+                IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
+
             }
+
+
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    private void updateUiJsonFilePathOnAppData(File file) {
 
-        var pref = new PrefsData(file.getAbsolutePath());
+    private void updateUiJsonFilePathOnAppData(File file) {
 
         String appData = loadPrefs();
 
@@ -120,16 +145,19 @@ public class MainSceneController {
         }
 
         var fileInCurrentDirectory = new File(appFolder, "prefs.json");
+
+        var pref = new PrefsData(file.getAbsolutePath(), TranslationContext.instance().currentLanguage());
         Commons.WriteJsonInDisc(fileInCurrentDirectory, pref);
     }
 
-    private String loadPrefs() {
-        String appData = System.getenv("LOCALAPPDATA"); // C:\Users\<user>\AppData\Local
-        if (appData == null) {
-            appData = System.getProperty("user.home") + "\\AppData\\Local";
-        }
-        return appData;
-    }
+//    private String loadPrefs() {
+//        String appData = System.getenv("LOCALAPPDATA"); // C:\Users\<user>\AppData\Local
+//        if (appData == null) {
+//            appData = System.getProperty("user.home") + "\\AppData\\Local";
+//        }
+//        return appData;
+//    }
+
 
     public void handleBecomeContributor() {
         // https://buymeacoffee.com/plantfall

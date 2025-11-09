@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="creating scene for changing language">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/SceneGraph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/SettingsScene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/SettingsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/SettingsScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/themes/Typography.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/themes/Typography.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
     </list>
@@ -52,22 +55,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.App[Linux].executor": "Run",
-    "Application.TranslationContext.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/scenes/SplashScene",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "actions.on.save"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App[Linux].executor&quot;: &quot;Run&quot;,
+    &quot;Application.TranslationContext.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/scenes/SplashScene&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/SplashScene" />
@@ -165,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762707060868</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="creating scene for changing language">
+      <option name="closed" value="true" />
+      <created>1762710306311</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762710306311</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
