@@ -54,7 +54,7 @@ public class MainScene extends Scene {
     }
 
     void setup() {
-        menuBar.getMenus().setAll(createMenuOptions());
+        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings());
         mainView = new VBox(menuBar, home);
 
         HBox.setHgrow(home, Priority.ALWAYS);
@@ -102,6 +102,19 @@ public class MainScene extends Scene {
         itemShowCode.setOnAction(_ -> handleShowJavaCode(home.canva));
 
         itemContribute.setOnAction(_ -> controller.handleBecomeContributor());
+
+        menuText.getStyleClass().add("text-primary-color");
+
+        return menu;
+    }
+
+    @Component
+    Menu createMenuSettings() {
+        Menu menu = new Menu();
+        Label menuText = Typography.caption(translation.settings());
+        menu.setGraphic(menuText);
+
+        menuText.setOnMouseClicked(_ -> controller.handleClickMenuSettings(stage));
 
         menuText.getStyleClass().add("text-primary-color");
 

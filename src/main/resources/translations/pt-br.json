@@ -43,5 +43,6 @@
   "borderRadius": "Arredondamento da borda",
   "borderWidth": "Largura da borda",
   "borderColor": "Cor da borda",
-  "backgroundColor": "Cor de fundo"
+  "backgroundColor": "Cor de fundo",
+  "settings": "Configurações"
 }

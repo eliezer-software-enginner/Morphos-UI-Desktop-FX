@@ -86,7 +86,8 @@ public class TranslationContext {
             String borderRadius,
             String borderWidth,
             String borderColor,
-            String backgroundColor
+            String backgroundColor,
+            String settings
     ) {
     }
 

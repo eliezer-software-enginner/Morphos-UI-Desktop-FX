@@ -1,21 +1,25 @@
 package my_app.scenes.MainScene;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URI;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
+import my_app.scenes.SettingsScene;
 import my_app.screens.Home.Home;
+
+import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URI;
 
 public class MainSceneController {
     ComponentsContext componentsContext;
+
+    public void handleClickMenuSettings(Stage stage) {
+        new SettingsScene().show();
+    }
 
     public record PrefsData(String last_project_saved_path) {
     }
@@ -102,7 +106,6 @@ public class MainSceneController {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-
     }
 
     private void updateUiJsonFilePathOnAppData(File file) {
