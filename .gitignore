@@ -1,8 +1,6 @@
-cryxie_libs
 sources.txt
 build
 bin
-.java_fx
 installer
 target
 dist
