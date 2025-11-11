@@ -49,6 +49,7 @@ public class Typography {
         var text = new Label(message);
         text.setStyle("-fx-font-smoothing-type: gray;"); // 🔹 Suaviza o texto
         text.getStyleClass().addAll("caption-label-typo", "error-color", "text-error-color");
+        text.setWrapText(true);
         return text;
     }
 }

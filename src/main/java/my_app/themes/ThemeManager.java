@@ -18,14 +18,14 @@ public class ThemeManager {
     private final String lightThemePath = ThemeManager.class.getResource("/theme-light.css").toExternalForm();
     private final String darkThemePath = ThemeManager.class.getResource("/theme-dark.css").toExternalForm();
 
-    private static ThemeManager themeManager;
+    private static ThemeManager instance;
 
     public static ThemeManager Instance() {
-        if (themeManager == null) {
-            themeManager = new ThemeManager();
+        if (instance == null) {
+            instance = new ThemeManager();
         }
 
-        return themeManager;
+        return instance;
     }
 
     public ThemeManager() {

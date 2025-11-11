@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 
 public class SceneGraph {
 
+    //entryScreen
     public Scene settingsScene() {
         Stage stage = new Stage();
         Scene scene = new Scene(new VBox());

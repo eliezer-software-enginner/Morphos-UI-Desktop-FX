@@ -2,6 +2,7 @@ package my_app.components.imageComponent;
 
 import java.io.File;
 
+import javafx.animation.PauseTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -12,7 +13,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import my_app.contexts.TranslationContext;
+import my_app.themes.Typography;
 import toolkit.Component;
 
 public class ImageBackgroundComponent extends HBox {
@@ -41,17 +44,39 @@ public class ImageBackgroundComponent extends HBox {
                 return;
 
             try {
-
                 // Carrega a imagem com cache desativado e carregamento síncrono
-                Image image = new Image(newVal, false);
+                Image image = new Image(newVal, true);
                 node.setImage(image);
+                node.errorContainer.getChildren().clear();
 
-                if (image.isError()) {
-                    System.err.println("Erro ao carregar imagem: " + image.getException());
-                }
+                // Escuta se deu erro após o carregamento em background
+                image.errorProperty().addListener((obs, wasError, isError) -> {
+                    if (isError) {
+                        var message = "Erro ao carregar imagem: " + image.getException().getMessage();
+                        System.err.println(message);
+
+                        var delay = new PauseTransition(Duration.millis(700));
+                        var errorText = Typography.error(message);
+                        errorText.setWrapText(true);
+
+                        delay.setOnFinished(_ -> node.errorContainer.getChildren().add(errorText));
+                        delay.play();
+                    } else {
+                        node.errorContainer.getChildren().clear();
+                    }
+                });
 
             } catch (Exception err) {
-                System.err.println("Falha ao carregar imagem: " + err.getMessage());
+                var message = "Erro ao carregar imagem: " + err.getMessage();
+                System.err.println(message);
+
+                PauseTransition delay = new PauseTransition(Duration.millis(700));
+
+                var errorText = Typography.error(message);
+                errorText.setWrapText(true);
+
+                delay.setOnFinished(_ -> node.errorContainer.getChildren().add(errorText));
+                delay.play();
             }
 
         });

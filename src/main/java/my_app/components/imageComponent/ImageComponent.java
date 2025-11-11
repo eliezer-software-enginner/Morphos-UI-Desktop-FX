@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
@@ -16,6 +17,8 @@ import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.data.ImageComponentData;
 import my_app.data.ViewContract;
+import my_app.themes.Typography;
+import toolkit.Component;
 
 public class ImageComponent extends ImageView implements ViewContract<ImageComponentData> {
 
@@ -27,6 +30,9 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     public Stage stage;
 
     ComponentsContext componentsContext;
+
+    @Component
+    public VBox errorContainer = new VBox();
 
     public ImageComponent(ComponentsContext componentsContext) {
         config();
@@ -57,6 +63,8 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
                 new HeightComponent(this),
                 new PreserveRatioComponent(this),
                 new ImageBackgroundComponent(this),
+                Components.spacerVertical(10),
+                errorContainer,
                 Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext)
                 // new FitComponent(this)
