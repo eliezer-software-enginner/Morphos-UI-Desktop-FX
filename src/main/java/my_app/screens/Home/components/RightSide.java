@@ -16,6 +16,7 @@ import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.ViewContract;
 import my_app.themes.Typography;
+import toolkit.Component;
 import toolkit.theme.MaterialTheme;
 
 import static my_app.components.shared.UiComponents.ButtonPrimary;
@@ -27,14 +28,22 @@ public class RightSide extends VBox {
     // 1. ALTERADO: Tipo da propriedade é agora SelectedComponent
     final ObjectProperty<SelectedComponent> selectedComponentProperty;
 
+
+    @Component
     Button btnAppearence = ButtonPrimary(translation.appearance());
+
+    @Component
     Button btnLayout = ButtonSecondary(translation.layout());
+
+    @Component
     HBox top = new HBox(btnAppearence, btnLayout);
+    @Component
     HBox topWrapper = new HBox(top); // wrapper só para não se esticar
-
+    @Component
     Label title = Typography.body("");
+    @Component
     Label NoContentText = Typography.caption(translation.noComponentSelected());
-
+    @Component
     private VBox dynamicContainer; // container que será substituído
 
     BooleanProperty appearenceIsSelected = new SimpleBooleanProperty(true);

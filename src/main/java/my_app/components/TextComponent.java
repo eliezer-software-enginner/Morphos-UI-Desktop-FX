@@ -29,7 +29,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
         setStyle("-fx-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
                 .formatted(
                         Commons.FontSizeDefault
-                //
+                        //
                 ));
 
         setId(String.valueOf(System.currentTimeMillis()));
@@ -43,6 +43,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
                 new FontColorPicker(currentState),
                 new TextContentComponent(currentState),
                 new FontSizeComponent(currentState),
+                Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }
 

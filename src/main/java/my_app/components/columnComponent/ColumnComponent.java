@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.ChildHandlerComponent;
@@ -146,6 +147,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
                 new ChildHandlerComponent("Child component:", this, currentChildIdState),
                 new ItemsAmountPreviewComponent(this),
                 new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState),
+                Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }
 

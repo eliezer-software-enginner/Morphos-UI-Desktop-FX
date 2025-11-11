@@ -88,10 +88,12 @@ public class SettingsScene extends Scene {
     }
 
     void styles() {
-        layout.setStyle("-fx-background-color:#15161A;");
+        // layout.setStyle("-fx-background-color:#15161A;");
+
         layout.setPadding(new Insets(20));
 
         Commons.UseDefaultStyles(this);
+        layout.getStyleClass().add("background-color");
     }
 
 }

@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.FontColorPicker;
@@ -37,7 +38,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
         setStyle("-fx-text-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
                 .formatted(
                         Commons.FontSizeDefault
-                //
+                        //
                 ));
 
         setId(String.valueOf(System.currentTimeMillis()));
@@ -66,6 +67,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
                 new TextContentComponent(currentState),
                 new FontSizeComponent(currentState),
                 new PromptTextComponent(currentState),
+                Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }
 

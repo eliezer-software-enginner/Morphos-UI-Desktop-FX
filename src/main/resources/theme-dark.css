@@ -51,3 +51,6 @@
 .button-secondary {
   -fx-background-color: #1565c0ff;
 }
+.button-remove {
+  -fx-background-color: #b00020;
+}

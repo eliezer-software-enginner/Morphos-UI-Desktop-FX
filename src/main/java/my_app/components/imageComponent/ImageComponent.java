@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
@@ -56,8 +57,9 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
                 new HeightComponent(this),
                 new PreserveRatioComponent(this),
                 new ImageBackgroundComponent(this),
+                Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext)
-        // new FitComponent(this)
+                // new FitComponent(this)
         );
     }
 

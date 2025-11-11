@@ -13,7 +13,6 @@ public class NodeWrapper {
     }
 
     public void renderRightSideContainer(Pane father, BooleanProperty appearenceIsSelected) {
-
         if (appearenceIsSelected.get()) {
             this.currentNode.appearance(father);
         } else {

@@ -56,10 +56,6 @@ public class Home extends BorderPane {
         setCenter(editor);
         setRight(new RightSide(componentsContext));
 
-        setStyle("-fx-background-color:%s;".formatted(MaterialTheme.getInstance().getSurfaceColorStyle()));
-    }
-
-    public void notifyError(String message) {
-        leftSide.notifyError(message);
+        getStylesheets().add("surface-color");
     }
 }

@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.TranslationContext;
+import my_app.themes.ThemeManager;
+import toolkit.Component;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class ShowCode {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
     private Stage stage;
     private ShowCodeController controller = new ShowCodeController();
+
+    @Component
     VBox root = new VBox();
 
     // por enquanto só os node do canva
@@ -36,7 +40,7 @@ public class ShowCode {
 
         VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
 
-        VBox codeColumnContent = columnItem(codeContent,  translation.codeContent());
+        VBox codeColumnContent = columnItem(codeContent, translation.codeContent());
         root.getChildren().add(codeColumnContent);
 
         for (String text : customComponentsContent) {
@@ -47,12 +51,18 @@ public class ShowCode {
         }
 
         root.setSpacing(10);
-        root.setStyle("-fx-padding: 20; -fx-alignment: center; -fx-background-color:#39375B");
+        root.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
+        
         Scene scene = new Scene(root, 500, 550);
+        ThemeManager.Instance().addScene(scene);
+
+        root.getStyleClass().add("background-color");
+
         stage.setScene(scene);
     }
 
+    @Component
     VBox columnItem(String content, String title) {
         Text titleText = new Text(title);
         VBox.setMargin(titleText, new Insets(0, 0, 10, 0));

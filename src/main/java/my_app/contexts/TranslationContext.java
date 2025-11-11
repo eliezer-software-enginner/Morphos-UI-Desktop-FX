@@ -52,7 +52,7 @@ public class TranslationContext {
     public void onEntryPoint(App app) {
         this.application = app;
     }
-
+    
     public void changeLanguage(Locale locale) {
         this.application.changeLanguage(locale);
     }

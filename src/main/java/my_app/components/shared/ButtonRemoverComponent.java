@@ -1,13 +1,17 @@
 package my_app.components.shared;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
+import toolkit.Component;
 
 public class ButtonRemoverComponent extends HBox {
     TranslationContext.Translation translation = TranslationContext.instance().get();
+    @Component
     Button btn = new Button(translation.removeComponent());
 
     public ButtonRemoverComponent(Node node, ComponentsContext componentsContext) {
@@ -21,6 +25,6 @@ public class ButtonRemoverComponent extends HBox {
     }
 
     void config() {
-        // btn.getStyleClass().add("button-59");
+        btn.getStyleClass().addAll("button-remove", "text-primary-color");
     }
 }
