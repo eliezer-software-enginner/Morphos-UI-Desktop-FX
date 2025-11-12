@@ -8,6 +8,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.inputComponents.InputComponent;
 import my_app.components.shared.ButtonRemoverComponent;
@@ -163,7 +164,7 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     }
 
     @Override
-    public void appearance(Pane father) {
+    public void appearance(Pane father, CanvaComponent canva) {
 
         // 1. Obter o valor da cor.
         String currentColor = Commons.getValueOfSpecificField(getStyle(), "-fx-background-color");
@@ -222,7 +223,7 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     }
 
     @Override
-    public void settings(Pane father) {
+    public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(Typography.body("Empty"));
     }
 

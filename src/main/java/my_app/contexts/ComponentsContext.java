@@ -135,7 +135,7 @@ public class ComponentsContext {
 
             // Restaura inputs
             for (InputComponentData data : state.input_components) {
-                InputComponent comp = new InputComponent("", this);
+                InputComponent comp = new InputComponent("", this, canvaComponent);
 
                 comp.applyData(data);
                 // nodes.add(comp);
@@ -245,7 +245,7 @@ public class ComponentsContext {
         if (type.equalsIgnoreCase("Button")) {
             node = new ButtonComponent(content, this);
         } else if (type.equalsIgnoreCase("Input")) {
-            node = new InputComponent(content, this);
+            node = new InputComponent(content, this, home.canva);
 
         } else if (type.equalsIgnoreCase("Text")) {
             node = new TextComponent(content, this);

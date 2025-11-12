@@ -4,13 +4,13 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import my_app.components.NodeWrapper;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.contexts.TranslationContext;
@@ -49,7 +49,7 @@ public class RightSide extends VBox {
     BooleanProperty appearenceIsSelected = new SimpleBooleanProperty(true);
 
 
-    public RightSide(ComponentsContext componentsContext) {
+    public RightSide(ComponentsContext componentsContext, CanvaComponent canva) {
         // 1. ALTERADO: Atribui a propriedade com o tipo correto
         ObjectProperty<SelectedComponent> selectedCompProp = componentsContext.nodeSelected;
 
@@ -76,15 +76,15 @@ public class RightSide extends VBox {
         getChildren().add(spacer);
 
         // mount
-        mount();
+        mount(canva);
 
         // Atualiza UI quando muda de seleção
 
-        appearenceIsSelected.addListener((_, _, _) -> mount());
+        appearenceIsSelected.addListener((_, _, _) -> mount(canva));
         // NodeWrapper
 
         // quando muda o node
-        appearenceIsSelected.addListener((_, _, _) -> mount());
+        appearenceIsSelected.addListener((_, _, _) -> mount(canva));
 
         // 2. ALTERADO: Listener agora recebe SelectedComponent
         selectedComponentProperty.addListener((_, _, newComp) -> {
@@ -93,7 +93,7 @@ public class RightSide extends VBox {
 
             if (newNode instanceof ViewContract renderable) {
                 NodeWrapper nw = new NodeWrapper(renderable);
-                nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected);
+                nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected, canva);
             } else {
                 // Se newNode for null (desseleção) ou não for ViewContract
                 dynamicContainer.getChildren().setAll(NoContentText);
@@ -103,13 +103,13 @@ public class RightSide extends VBox {
         config();
     }
 
-    void mount() {
+    void mount(CanvaComponent canva) {
         SelectedComponent currentSelectedComp = selectedComponentProperty.get();
         Node currentNode = (currentSelectedComp != null) ? currentSelectedComp.node() : null;
 
         if (currentNode instanceof ViewContract renderable) {
             NodeWrapper nw = new NodeWrapper(renderable);
-            nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected);
+            nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected, canva);
         } else {
             // Garante que o container esteja limpo se nada estiver selecionado ao montar
             Label desc = Typography.caption(translation.selectComponentToViewSettings());

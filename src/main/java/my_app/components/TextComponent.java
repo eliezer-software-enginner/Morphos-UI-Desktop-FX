@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.FontColorPicker;
 import my_app.components.shared.FontSizeComponent;
@@ -37,7 +38,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     }
 
     @Override
-    public void appearance(Pane father) {
+    public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
                 new FontWeightComponent(currentState),
                 new FontColorPicker(currentState),
@@ -48,9 +49,10 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     }
 
     @Override
-    public void settings(Pane father) {
+    public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState));
+                new LayoutPositionComponent(currentState),
+                Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
     }
 
     @Override

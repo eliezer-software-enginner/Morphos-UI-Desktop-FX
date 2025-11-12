@@ -13,6 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.ChildHandlerComponent;
 import my_app.components.shared.ItemsAmountPreviewComponent;
@@ -142,7 +143,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     @Override
-    public void appearance(Pane father) {
+    public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
                 new ChildHandlerComponent("Child component:", this, currentChildIdState),
                 new ItemsAmountPreviewComponent(this),
@@ -152,9 +153,10 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     @Override
-    public void settings(Pane father) {
+    public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState));
+                new LayoutPositionComponent(currentState),
+                Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
     }
 
     @Override

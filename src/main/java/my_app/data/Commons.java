@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.scenes.MainScene.MainSceneController;
@@ -178,5 +179,28 @@ public class Commons {
             // Linux e outros
             return userHome + "/.local/share";
         }
+    }
+
+    public static void CentralizeComponent(Node node, Pane canva) {
+
+        Runnable runnable = () -> {
+            double larguraPane = canva.getWidth();
+            double larguraNode = node.getBoundsInLocal().getWidth();
+
+            // Aplica a formula de centralizacao
+            double novaPosX = (larguraPane - larguraNode) / 2;
+
+            // Define a nova posicao
+            node.setLayoutX(novaPosX);
+        };
+
+        runnable.run();
+
+        // Adiciona um listener para recalcular a centralização
+        // caso o tamanho do Pane mude (por exemplo, ao redimensionar a janela)
+        canva.widthProperty().addListener((obs, oldVal, newVal) -> {
+            runnable.run();
+        });
+
     }
 }

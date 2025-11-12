@@ -1,6 +1,7 @@
 package my_app.data;
 
 // ComponentFactory.java (NOVA CLASSE)
+
 import javafx.scene.Node;
 import my_app.components.CustomComponent;
 import my_app.components.TextComponent;
@@ -13,7 +14,7 @@ public class ComponentFactory {
 
     /**
      * Cria um novo componente JavaFX (Node) a partir do objeto de dados.
-     * 
+     *
      * @param data O ComponentData contendo o estado.
      * @return O Node (Componente JavaFX) totalmente configurado.
      */
@@ -55,7 +56,8 @@ public class ComponentFactory {
             case "input":
                 // Em casos de contêineres, evite recursão desnecessária no Factory.
                 // O ColumnComponent aplica os dados e recria os filhos internamente.
-                component = new InputComponent(componentsContext);
+                IO.println("Em componente factory -> input");
+                component = new InputComponent(componentsContext, null);
                 ((ViewContract<InputComponentData>) component).applyData((InputComponentData) data);
                 break;
 

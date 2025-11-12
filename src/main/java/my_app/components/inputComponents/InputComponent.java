@@ -7,29 +7,36 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.*;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.InputComponentData;
 import my_app.data.ViewContract;
+import toolkit.Component;
 
 public class InputComponent extends TextField implements ViewContract<InputComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
     ComponentsContext componentsContext;
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
-    public InputComponent(String content, ComponentsContext componentsContext) {
+    @Component
+    CanvaComponent canvaFather;
+
+    public InputComponent(String content, ComponentsContext componentsContext, CanvaComponent canva) {
         super(content);
         config();
 
         this.componentsContext = componentsContext;
+        this.canvaFather = canva;
     }
 
-    public InputComponent(ComponentsContext componentsContext) {
+    public InputComponent(ComponentsContext componentsContext, CanvaComponent canva) {
         config();
 
         this.componentsContext = componentsContext;
+        this.canvaFather = canva;
     }
 
     void config() {
@@ -72,7 +79,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     }
 
     @Override
-    public void appearance(Pane father) {
+    public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
                 new FontWeightComponent(currentState),
                 new FontColorPicker(currentState),
@@ -87,9 +94,11 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     }
 
     @Override
-    public void settings(Pane father) {
+    public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState));
+                new LayoutPositionComponent(currentState),
+                Components.ToogleSwithItemRow("Centralize horizontally", this, canva)
+        );
     }
 
     @Override

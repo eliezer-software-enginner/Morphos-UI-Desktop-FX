@@ -54,7 +54,7 @@ public class Home extends BorderPane {
 
         // setCenter(this.canva);
         setCenter(editor);
-        setRight(new RightSide(componentsContext));
+        setRight(new RightSide(componentsContext, canva));
 
         getStyleClass().add("surface-color");
     }

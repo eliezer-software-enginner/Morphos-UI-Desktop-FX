@@ -169,7 +169,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
     }
 
     @Override
-    public void appearance(Pane father) {
+    public void appearance(Pane father, CanvaComponent canva) {
 
         // Color Picker
         ColorPicker bgColorPicker = new ColorPicker(
@@ -215,7 +215,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
     }
 
     @Override
-    public void settings(Pane father) {
+    public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().clear();
     }
 
@@ -313,9 +313,5 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
             setStyle("-fx-background-image: url('" + bgContent + "');" +
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
-    }
-
-    public void addElement(Node comp) {
-        getChildren().add(comp);
     }
 }

@@ -4,11 +4,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.inputComponents.InputComponent;
 import my_app.data.Commons;
 
@@ -26,6 +28,18 @@ public class Components {
         var btn = new Button(text);
         btn.getStylesheets().add("btn-remove");
         return btn;
+    }
+
+    public static HBox ToogleSwithItemRow(String title, Node selectedNode, Pane canvaFather) {
+        Button btn = new Button("Centralize");
+
+        HBox root = ItemRow(btn, title);
+
+        btn.setOnAction(ev -> {
+            Commons.CentralizeComponent(selectedNode, canvaFather);
+        });
+
+        return root;
     }
 
     public static HBox ColorPickerRow(String title, Node selectedNode, String cssField) {

@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
@@ -17,7 +18,6 @@ import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.data.ImageComponentData;
 import my_app.data.ViewContract;
-import my_app.themes.Typography;
 import toolkit.Component;
 
 public class ImageComponent extends ImageView implements ViewContract<ImageComponentData> {
@@ -57,7 +57,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
-    public void appearance(Pane father) {
+    public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
                 new WidthComponent(this),
                 new HeightComponent(this),
@@ -72,10 +72,11 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
-    public void settings(Pane father) {
+    public void settings(Pane father, CanvaComponent canva) {
 
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState));
+                new LayoutPositionComponent(currentState),
+                Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
     }
 
     @Override

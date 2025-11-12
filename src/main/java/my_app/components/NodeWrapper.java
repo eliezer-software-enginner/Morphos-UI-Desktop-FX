@@ -3,6 +3,7 @@ package my_app.components;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.data.ViewContract;
 
 public class NodeWrapper {
@@ -12,11 +13,11 @@ public class NodeWrapper {
         this.currentNode = node;
     }
 
-    public void renderRightSideContainer(Pane father, BooleanProperty appearenceIsSelected) {
+    public void renderRightSideContainer(Pane father, BooleanProperty appearenceIsSelected, CanvaComponent canva) {
         if (appearenceIsSelected.get()) {
-            this.currentNode.appearance(father);
+            this.currentNode.appearance(father, canva);
         } else {
-            this.currentNode.settings(father);
+            this.currentNode.settings(father, canva);
         }
     }
 
