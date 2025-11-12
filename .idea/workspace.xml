@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="ui">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added fallback for images that couldn be loaded">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/SceneGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/SceneGraph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/themes/ThemeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/themes/ThemeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/themes/Typography.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/themes/Typography.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +48,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.AppNavTest.executor": "Run",
     "Application.App[Linux].executor": "Run",
+    "Application.MainApp.executor": "Run",
+    "Application.SceneGraph.executor": "Run",
     "Application.TranslationContext.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -73,8 +72,25 @@
       <recent name="$PROJECT_DIR$/.idea" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="my_app" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.App[Linux]">
+  <component name="RunManager" selected="Application.AppNavTest">
+    <configuration name="AppNavTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.AppNavTest" />
+      <module name="my_app" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="my_app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="App[Linux]" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="my_app.App" />
       <module name="my_app" />
@@ -82,6 +98,33 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="my_app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.scenes.MainApp" />
+      <module name="my_app" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="my_app.scenes.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SceneGraph" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.scenes.SceneGraph" />
+      <module name="my_app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="my_app.scenes.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -115,10 +158,16 @@
     </configuration>
     <list>
       <item itemvalue="Application.App[Linux]" />
+      <item itemvalue="Application.AppNavTest" />
+      <item itemvalue="Application.SceneGraph" />
+      <item itemvalue="Application.MainApp" />
       <item itemvalue="Application.TranslationContext" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AppNavTest" />
+        <item itemvalue="Application.SceneGraph" />
+        <item itemvalue="Application.MainApp" />
         <item itemvalue="Application.App[Linux]" />
         <item itemvalue="Application.TranslationContext" />
       </list>
@@ -196,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762820146597</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added fallback for images that couldn be loaded">
+      <option name="closed" value="true" />
+      <created>1762822164273</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1762822164273</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -206,6 +263,58 @@
     <MESSAGE value="persisting language" />
     <MESSAGE value="javafx module" />
     <MESSAGE value="ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="ui" />
+    <MESSAGE value="added fallback for images that couldn be loaded" />
+    <option name="LAST_COMMIT_MESSAGE" value="added fallback for images that couldn be loaded" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>120</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/AppNavTest.java</url>
+          <line>118</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
