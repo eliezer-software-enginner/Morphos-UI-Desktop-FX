@@ -9,6 +9,7 @@ import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
 import my_app.components.shared.*;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.InputComponentData;
 import my_app.data.ViewContract;
@@ -16,6 +17,7 @@ import my_app.data.ViewContract;
 public class InputComponent extends TextField implements ViewContract<InputComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
     ComponentsContext componentsContext;
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     public InputComponent(String content, ComponentsContext componentsContext) {
         super(content);
@@ -77,9 +79,9 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
                 new TextContentComponent(currentState),
                 new FontSizeComponent(currentState),
                 new PromptTextComponent(currentState),
-                Components.ColorPickerRow("Placeholder color", this, "-fx-prompt-text-fill"),
-                Components.ColorPickerRow("Focus color", this, "-fx-focus-color"),
-                Components.ColorPickerRow("No Focus color", this, "-fx-text-box-border"),
+                Components.ColorPickerRow(translation.placeholderColor(), this, "-fx-prompt-text-fill"),
+                Components.ColorPickerRow(translation.focusColor(), this, "-fx-focus-color"),
+                Components.ColorPickerRow(translation.noFocusColor(), this, "-fx-text-box-border"),
                 Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }

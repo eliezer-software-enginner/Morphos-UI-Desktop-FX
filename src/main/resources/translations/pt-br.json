@@ -48,5 +48,6 @@
   "language": "Idioma",
   "new_": "Novo",
   "placeholderColor": "Cor da placeholder",
-  "focusColor": "Cor em Foco"
+  "focusColor": "Cor em Foco",
+  "noFocusColor": "Cor sem foco"
 }

@@ -99,7 +99,8 @@ public class TranslationContext {
             String language,
             String new_,
             String placeholderColor,
-            String focusColor
+            String focusColor,
+            String noFocusColor
     ) {
     }
 
