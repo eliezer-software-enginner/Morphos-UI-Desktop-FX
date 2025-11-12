@@ -45,5 +45,8 @@
   "borderColor": "Border color",
   "backgroundColor": "Background color",
   "settings": "Settings",
-  "language": "Language"
+  "language": "Language",
+  "new_": "New",
+  "placeholderColor": "Placeholder color",
+  "focusColor": "Focus color"
 }

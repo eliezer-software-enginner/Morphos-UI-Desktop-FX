@@ -76,16 +76,16 @@ public class MainScene extends Scene {
         Label menuText = Typography.caption(translation.common().option());
         menu.setGraphic(menuText);
 
+        MenuItem itemNovo = new MenuItem(translation.new_());
         MenuItem itemSalvar = new MenuItem(translation.common().save());
         MenuItem itemSaveAs = new MenuItem(translation.common().saveAs());
         MenuItem itemLoad = new MenuItem(translation.common().load());
         MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
         MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
-        MenuItem translate_test = new MenuItem("Translate - test");
-        menu.getItems().addAll(itemSalvar, itemSaveAs, itemLoad, itemShowCode, itemContribute, translate_test);
+        menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemShowCode, itemContribute);
 
 
-        translate_test.setOnAction(_ -> TranslationContext.instance().changeLanguage(Locale.of("pt-br")));
+        itemNovo.setOnAction(_ -> controller.handleNew(home, stage));
         itemSalvar.setOnAction(_ -> controller.handleSave(home, stage));
         itemSaveAs.setOnAction(_ -> {
 

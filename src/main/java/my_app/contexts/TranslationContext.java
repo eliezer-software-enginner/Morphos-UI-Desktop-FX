@@ -52,7 +52,7 @@ public class TranslationContext {
     public void onEntryPoint(App app) {
         this.application = app;
     }
-    
+
     public void changeLanguage(Locale locale) {
         this.application.changeLanguage(locale);
     }
@@ -96,7 +96,10 @@ public class TranslationContext {
             String borderColor,
             String backgroundColor,
             String settings,
-            String language
+            String language,
+            String new_,
+            String placeholderColor,
+            String focusColor
     ) {
     }
 

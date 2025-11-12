@@ -56,6 +56,6 @@ public class Home extends BorderPane {
         setCenter(editor);
         setRight(new RightSide(componentsContext));
 
-        getStylesheets().add("surface-color");
+        getStyleClass().add("surface-color");
     }
 }

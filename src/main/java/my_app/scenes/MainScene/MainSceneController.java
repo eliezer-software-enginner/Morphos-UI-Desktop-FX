@@ -27,6 +27,11 @@ public class MainSceneController {
         new SettingsScene().show();
     }
 
+    public void handleNew(Home home, Stage stage) {
+        home.canva.getChildren().clear();
+        componentsContext.reset();
+    }
+
     public record PrefsData(String last_project_saved_path, String language) {
     }
 

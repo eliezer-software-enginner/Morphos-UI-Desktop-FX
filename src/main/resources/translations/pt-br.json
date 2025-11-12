@@ -45,5 +45,8 @@
   "borderColor": "Cor da borda",
   "backgroundColor": "Cor de fundo",
   "settings": "Configurações",
-  "language": "Idioma"
+  "language": "Idioma",
+  "new_": "Novo",
+  "placeholderColor": "Cor da placeholder",
+  "focusColor": "Cor em Foco"
 }

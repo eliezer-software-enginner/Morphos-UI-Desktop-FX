@@ -33,9 +33,6 @@ import my_app.screens.Home.Home;
 
 public class ComponentsContext {
 
-    public record SelectedComponent(String type, Node node) {
-    }
-
     public SimpleObjectProperty<SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
 
     public ObservableMap<String, ObservableList<Node>> dataMap = FXCollections
@@ -46,6 +43,19 @@ public class ComponentsContext {
     public SimpleBooleanProperty leftItemsStateRefreshed = new SimpleBooleanProperty(false);
 
     private CanvaComponent mainCanvaComponent;
+
+    public void reset() {
+        // mainCanvaComponent = canvaComponent;
+
+        String idOfComponentSelected = null;
+        nodeSelected.set(null);
+        headerSelected.set(null);
+        dataMap.clear();
+        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+    }
+
+    public record SelectedComponent(String type, Node node) {
+    }
 
     public boolean currentNodeIsSelected(String nodeId) {
 
