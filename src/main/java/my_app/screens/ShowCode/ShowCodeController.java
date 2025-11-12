@@ -22,6 +22,7 @@ public class ShowCodeController {
                 .append("import javafx.scene.control.*;\n")
                 .append("import javafx.scene.text.*;\n")
                 .append("import javafx.scene.image.ImageView;\n")
+                .append("import javafx.scene.image.Image;\n")
                 .append("import javafx.scene.layout.*;\n")
                 .append("import javafx.scene.paint.Color;\n")
                 .append("import javafx.stage.Stage;");

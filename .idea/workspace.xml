@@ -4,23 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="styling input">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="centralizing components horizontally">
+      <change afterPath="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_ratinho/biscoito_da_sorte/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/layouts_generated_preview/biscoito_da_sorte/App_base.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/canvaComponent/CanvaComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/canvaComponent/CanvaComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/columnComponent/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/columnComponent/ColumnComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/inputComponents/InputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inputComponents/InputComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/layout_generated/App_base.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/layouts_generated_preview/App_base.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,16 +52,19 @@
   "keyToString": {
     "Application.AppNavTest.executor": "Run",
     "Application.App[Linux].executor": "Run",
+    "Application.App_base.executor": "Run",
     "Application.MainApp.executor": "Run",
     "Application.SceneGraph.executor": "Run",
     "Application.TranslationContext.executor": "Run",
+    "Application.run app ratinho.executor": "Run",
+    "Application.run layout preview.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/scenes/SplashScene",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/layouts_generated_preview/app_ratinho",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -82,6 +73,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_ratinho" />
+      <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/biscoito_da_sorte" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/SplashScene" />
       <recent name="$PROJECT_DIR$/.idea" />
       <recent name="$PROJECT_DIR$" />
@@ -91,7 +84,7 @@
       <recent name="my_app" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App[Linux]">
+  <component name="RunManager" selected="Application.run app ratinho">
     <configuration name="AppNavTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="my_app.AppNavTest" />
       <module name="my_app" />
@@ -160,6 +153,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="run app ratinho" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="layouts_generated_preview.app_ratinho.biscoito_da_sorte.App" />
+      <module name="my_app" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="layouts_generated_preview.app_ratinho.biscoito_da_sorte.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run layout preview" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="layouts_generated_preview.biscoito_da_sorte.App_base" />
+      <module name="my_app" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="layouts_generated_preview.biscoito_da_sorte.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Morphos-UI-Desktop-FX" />
       <method v="2">
@@ -172,7 +193,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.run app ratinho" />
       <item itemvalue="Application.App[Linux]" />
+      <item itemvalue="Application.run layout preview" />
       <item itemvalue="Application.AppNavTest" />
       <item itemvalue="Application.SceneGraph" />
       <item itemvalue="Application.MainApp" />
@@ -180,11 +203,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.run layout preview" />
         <item itemvalue="Application.AppNavTest" />
         <item itemvalue="Application.SceneGraph" />
         <item itemvalue="Application.MainApp" />
         <item itemvalue="Application.App[Linux]" />
-        <item itemvalue="Application.TranslationContext" />
       </list>
     </recent_temporary>
   </component>
@@ -308,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762970929814</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="centralizing components horizontally">
+      <option name="closed" value="true" />
+      <created>1762973871422</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1762973871422</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -322,7 +353,8 @@
     <MESSAGE value="implementing a basic scenegrap" />
     <MESSAGE value="navigation completed" />
     <MESSAGE value="styling input" />
-    <option name="LAST_COMMIT_MESSAGE" value="styling input" />
+    <MESSAGE value="centralizing components horizontally" />
+    <option name="LAST_COMMIT_MESSAGE" value="centralizing components horizontally" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

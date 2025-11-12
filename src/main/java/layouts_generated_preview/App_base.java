@@ -1,4 +1,4 @@
-package layout_generated;
+package layouts_generated_preview;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
