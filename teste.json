@@ -1,0 +1,55 @@
+{
+  "id_of_component_selected": "1762718878915",
+  "type_of_component_selected": "input",
+  "canva": {
+    "padding_top": 0,
+    "padding_right": 0,
+    "padding_bottom": 0,
+    "padding_left": 0,
+    "width": 800.0,
+    "height": 600.0,
+    "bg_type": "color",
+    "bgContent": "#ffffff",
+    "identification": "1762718878915",
+    "x": 0,
+    "y": 0
+  },
+  "text_components": [
+    {
+      "type": "text",
+      "type": "text",
+      "text": "Im new here",
+      "layout_x": 127.234130859375,
+      "layout_y": 77.73828125,
+      "fontSize": "16",
+      "color": "black",
+      "font_weight": "normal",
+      "identification": "1762969629087",
+      "in_canva": true,
+      "canva_id": "1762718878915"
+    }
+  ],
+  "button_components": [],
+  "image_components": [],
+  "input_components": [
+    {
+      "type": "input",
+      "type": "input",
+      "text": "Im new here",
+      "placeholder": "type here",
+      "font_weight": "normal",
+      "font_size": "16",
+      "color": "black",
+      "x": 131.0,
+      "y": 101.0,
+      "identification": "1762969636635",
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "focus_color": "#001a80",
+      "placeholder_color": "gray",
+      "no_focus_color": "black"
+    }
+  ],
+  "column_components": [],
+  "custom_components": []
+}
