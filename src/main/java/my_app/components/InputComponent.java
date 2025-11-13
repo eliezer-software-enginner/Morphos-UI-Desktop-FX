@@ -41,13 +41,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     }
 
     void config() {
-        setStyle("""
-                -fx-text-fill:black;-fx-font-weight:normal;-fx-text-box-border: black;
-                -fx-font-size:%s;
-                -fx-focus-color:%s;
-                -fx-faint-focus-color:%s;
-                -fx-prompt-text-fill:%s;
-                """
+        setStyle("-fx-text-fill:black;-fx-font-weight:normal;-fx-text-box-border:black;-fx-font-size:%s;-fx-focus-color:%s;-fx-faint-focus-color:%s;-fx-prompt-text-fill:%s;"
                 .formatted(
                         Commons.FontSizeDefault,
                         Commons.FocusColorDefault,
@@ -66,10 +60,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
         this.setId(data.identification());
         this.setText(data.text());
 
-        this.setStyle("""
-                -fx-text-fill:%s;-fx-font-size:%s;-fx-font-weight:%s;
-                -fx-prompt-text-fill:%s;-fx-focus-color:%s;-fx-text-box-border:%s;
-                """
+        this.setStyle("-fx-text-fill:%s;-fx-font-size:%s;-fx-font-weight:%s;-fx-prompt-text-fill:%s;-fx-focus-color:%s;-fx-text-box-border:%s;"
                 .formatted(data.color(), data.font_size(), data.font_weight(),
                         data.placeholder_color(), data.focus_color(), data.no_focus_color()
                 ));

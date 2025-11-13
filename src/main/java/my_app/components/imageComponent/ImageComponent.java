@@ -2,6 +2,8 @@ package my_app.components.imageComponent;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +30,8 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     public ObjectProperty<FitMode> fitMode = new SimpleObjectProperty<>(FitMode.CONTAIN);
 
     public Stage stage;
+
+    public StringProperty name = new SimpleStringProperty();
 
     ComponentsContext componentsContext;
 
@@ -81,7 +85,8 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
 
     @Override
     public void otherSettings(Pane father, CanvaComponent canva) {
-
+        father.getChildren().setAll(
+                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }
 
     @Override
@@ -100,7 +105,8 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
 
         return new ImageComponentData(url, width, height, x, y, preserveRatio, this.getId(),
                 location.inCanva(),
-                location.fatherId());
+                location.fatherId(),
+                name.get());
     }
 
     @Override
@@ -117,7 +123,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
 
         this.setFitHeight(data.height());
         this.setFitWidth(data.width());
-
+        this.name.set(data.name());
     }
 
 }

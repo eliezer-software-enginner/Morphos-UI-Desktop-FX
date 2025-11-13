@@ -1,6 +1,6 @@
 {
-  "id_of_component_selected": "1763056568461",
-  "type_of_component_selected": "button",
+  "id_of_component_selected": "1763062442084",
+  "type_of_component_selected": "text",
   "canva": {
     "padding_top": 0,
     "padding_right": 0,
@@ -26,20 +26,22 @@
       "font_weight": "normal",
       "identification": "1763056424222",
       "in_canva": true,
-      "canva_id": "1762718878915"
+      "canva_id": "1762718878915",
+      "name": "title"
     },
     {
       "type": "text",
       "type": "text",
-      "text": "Im new here",
-      "layout_x": 317.234130859375,
-      "layout_y": 109.73828125,
+      "text": "paçoca",
+      "layout_x": 174.234130859375,
+      "layout_y": 90.73828125,
       "fontSize": "16",
       "color": "black",
       "font_weight": "normal",
-      "identification": "1763056448977",
+      "identification": "1763062442084",
       "in_canva": true,
-      "canva_id": "1762718878915"
+      "canva_id": "1762718878915",
+      "name": null
     }
   ],
   "button_components": [
@@ -83,7 +85,8 @@
       "canva_id": "1762718878915",
       "focus_color": "#b31a1a",
       "placeholder_color": "gray",
-      "no_focus_color": "black"
+      "no_focus_color": "black",
+      "name": "input"
     }
   ],
   "column_components": [],

@@ -4,39 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="resizing right side automacally">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="cleanup and variable name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBgColorPicker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderColorPicker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderRadius.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderRadius.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderWidth.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonPaddingComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/canvaComponent/CanvaComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/canvaComponent/CanvaComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/columnComponent/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/columnComponent/ColumnComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/inputComponents/InputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/inputComponents/PromptTextComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontColorPicker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontSizeComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/FontWeightComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/TextContentComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ButtonComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ButtonComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/InputComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/InputComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/TextComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/TextComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ImageComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ImageComponentData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCode/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCode/ShowCodeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -383,7 +357,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763041798742</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="cleanup and variable name">
+      <option name="closed" value="true" />
+      <created>1763059769355</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763059769355</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -400,7 +382,8 @@
     <MESSAGE value="centralizing components horizontally" />
     <MESSAGE value="image is now added as import" />
     <MESSAGE value="resizing right side automacally" />
-    <option name="LAST_COMMIT_MESSAGE" value="resizing right side automacally" />
+    <MESSAGE value="cleanup and variable name" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup and variable name" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

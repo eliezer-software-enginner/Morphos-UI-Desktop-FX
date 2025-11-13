@@ -10,26 +10,21 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import my_app.components.CustomComponent;
 import my_app.components.TextComponent;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.InputComponent;
 
 public class ShowCodeController {
     public String createImports() {
-        // imports
-        StringBuilder imports = new StringBuilder();
-        imports.append("import javafx.scene.Scene;\n")
-                .append("import javafx.scene.control.*;\n")
-                .append("import javafx.scene.text.*;\n")
-                .append("import javafx.scene.image.ImageView;\n")
-                .append("import javafx.scene.image.Image;\n")
-                .append("import javafx.scene.layout.*;\n")
-                .append("import javafx.scene.paint.Color;\n")
-                .append("import javafx.stage.Stage;");
-
-        System.out.println(imports.toString());
-
-        return imports.toString();
+        return "import javafx.scene.Scene;\n" +
+                "import javafx.scene.control.*;\n" +
+                "import javafx.scene.text.*;\n" +
+                "import javafx.scene.image.ImageView;\n" +
+                "import javafx.scene.image.Image;\n" +
+                "import javafx.scene.layout.*;\n" +
+                "import javafx.scene.paint.Color;\n" +
+                "import javafx.stage.Stage;";
     }
 
     public List<String> createComponentsForPreview(ObservableList<Node> nodesInCanva) {
@@ -68,6 +63,7 @@ public class ShowCodeController {
                         textCount++;
 
                         String textText = component.getText();
+
 
                         String textCreation = "Text text%d = new Text(\"%s\");".formatted(textCount, textText);
                         componentsInstances.add(textCreation);
@@ -248,56 +244,60 @@ public class ShowCodeController {
         for (int i = 0; i < nodesInCanva.size(); i++) {
             Node node = nodesInCanva.get(i);
 
-            if (node instanceof TextComponent) {
-                var component = (TextComponent) node;
-
-                textCount++;
+            if (node instanceof TextComponent component) {
+                String variableName = component.name.get();
+                if (variableName != null) textCount++;
 
                 String textText = component.getText();
 
-                String textCreation = "Text text%d = new Text(\"%s\");".formatted(textCount, textText);
-                componentsInstances.add(textCreation);
-                componentsInsideGetChildren.add("text" + textCount);
+                String finalName = variableName != null ? variableName : "text" + textCount;
 
-                String setX = String.format(Locale.US, "text%d.setLayoutX(%f);", textCount, node.getLayoutX());
-                String setY = String.format(Locale.US, "text%d.setLayoutY(%f);", textCount, node.getLayoutY());
+                String textCreation = "Text %s = new Text(\"%s\");".formatted(finalName, textText);
+                componentsInstances.add(textCreation);
+                componentsInsideGetChildren.add(finalName);
+
+                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
+                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
 
                 componentsInsideMethodSetup.add(setX);
                 componentsInsideMethodSetup.add(setY);
 
-                String setStyle = "text%d.setStyle(\"%s\");".formatted(textCount, component.getStyle());
+                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
                 componentsInsideMethodStyles.add(setStyle);
             }
 
-            if (node instanceof Button) {
-                var component = (Button) node;
-
-                btnCount++;
+            if (node instanceof ButtonComponent component) {
+                String variableName = component.name.get();
+                if (variableName != null) btnCount++;
 
                 String btnText = component.getText();
 
-                String btnCreation = "Button button%d = new Button(\"%s\");".formatted(btnCount, btnText);
-                componentsInstances.add(btnCreation);
-                componentsInsideGetChildren.add("button" + btnCount);
+                String finalName = variableName != null ? variableName : "btn" + btnCount;
 
-                String setX = String.format(Locale.US, "button%d.setLayoutX(%f);", btnCount, node.getLayoutX());
-                String setY = String.format(Locale.US, "button%d.setLayoutY(%f);", btnCount, node.getLayoutY());
+                String btnCreation = "Button %s = new Button(\"%s\");".formatted(finalName, btnText);
+                componentsInstances.add(btnCreation);
+                componentsInsideGetChildren.add(finalName);
+
+                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
+                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
 
                 componentsInsideMethodSetup.add(setX);
                 componentsInsideMethodSetup.add(setY);
 
-                String setStyle = "button%d.setStyle(\"%s\");".formatted(btnCount, component.getStyle());
+                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
                 componentsInsideMethodStyles.add(setStyle);
             }
 
             if (node instanceof ImageComponent component) {
+                String variableName = component.name.get();
+                if (variableName != null) imgCount++;
 
-                imgCount++;
+                String finalName = variableName != null ? variableName : "imgV" + imgCount;
 
-                String imgViewCreation = "ImageView imgV%d = new ImageView();".formatted(imgCount);
+                String imgViewCreation = "ImageView %s = new ImageView();".formatted(finalName);
                 componentsInstances.add(imgViewCreation);
 
-                componentsInsideGetChildren.add("imgV" + imgCount);
+                componentsInsideGetChildren.add(finalName);
 
                 Image img = component.getImage();
 
@@ -305,15 +305,15 @@ public class ShowCodeController {
 
                 String urlstr = "final var url = \"%s\";".formatted(url);
 
-                String setX = String.format(Locale.US, "imgV%d.setLayoutX(%f);", imgCount, node.getLayoutX());
-                String setY = String.format(Locale.US, "imgV%d.setLayoutY(%f);", imgCount, node.getLayoutY());
+                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
+                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
 
-                String setImageStr = "imgV%d.setImage(new Image(url));".formatted(imgCount, urlstr);
+                String setImageStr = "%s.setImage(new Image(url));".formatted(finalName);
 
                 var h = component.getFitHeight();
                 var w = component.getFitWidth();
-                String wstr = "imgV%d.setFitWidth(%.0f);".formatted(imgCount, w);
-                String hstr = "imgV%d.setFitHeight(%.0f);".formatted(imgCount, h);
+                String wstr = "%s.setFitWidth(%.0f);".formatted(finalName, w);
+                String hstr = "%s.setFitHeight(%.0f);".formatted(finalName, h);
 
                 // inside setup
                 componentsInsideMethodSetup.add(urlstr);
@@ -324,33 +324,35 @@ public class ShowCodeController {
                 componentsInsideMethodSetup.add(setX);
                 componentsInsideMethodSetup.add(setY);
 
-                String setStyle = "imgV%d.setStyle(\"%s\");".formatted(imgCount, component.getStyle());
+                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
                 componentsInsideMethodStyles.add(setStyle);
             }
 
             if (node instanceof InputComponent component) {
+                String variableName = component.name.get();
+                if (variableName != null) inputCount++;
 
-                inputCount++;
-
+                String finalName = variableName != null ? variableName : "input" + inputCount;
                 String textText = component.getText();
 
-                String textCreation = "TextField input%d = new TextField(\"%s\");".formatted(inputCount, textText);
+                String textCreation = "TextField %s = new TextField(\"%s\");".formatted(finalName, textText);
                 componentsInstances.add(textCreation);
-                componentsInsideGetChildren.add("input" + inputCount);
+                componentsInsideGetChildren.add(finalName);
 
-                String setX = String.format(Locale.US, "input%d.setLayoutX(%f);", inputCount, node.getLayoutX());
-                String setY = String.format(Locale.US, "input%d.setLayoutY(%f);", inputCount, node.getLayoutY());
-                String setPromptText = "input%d.setPromptText(\"%s\");".formatted(inputCount,
+                String setX = String.format("%s.setLayoutX(%f);", finalName, node.getLayoutX());
+                String setY = String.format("%s.setLayoutY(%f);", finalName, node.getLayoutY());
+                String setPromptText = "%s.setPromptText(\"%s\");".formatted(finalName,
                         component.getPromptText());
 
                 componentsInsideMethodSetup.add(setX);
                 componentsInsideMethodSetup.add(setY);
                 componentsInsideMethodSetup.add(setPromptText);
 
-                String setStyle = "input%d.setStyle(\"%s\");".formatted(inputCount, component.getStyle());
+                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
                 componentsInsideMethodStyles.add(setStyle);
             }
 
+            //todo ver a questão de obter o name da variable aqui posteriormente
             if (node instanceof CustomComponent component) {
 
                 customComponentCount++;
@@ -435,3 +437,5 @@ public class ShowCodeController {
     }
 
 }
+
+
