@@ -1,6 +1,8 @@
 package my_app.scenes.MainScene;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -22,6 +24,7 @@ import static my_app.data.Commons.loadPrefs;
 
 public class MainSceneController {
     ComponentsContext componentsContext;
+    public StringProperty uiPathProperty = new SimpleStringProperty();
 
     public void handleClickMenuSettings(Stage stage) {
         new SettingsScene().show();
@@ -30,6 +33,7 @@ public class MainSceneController {
     public void handleNew(Home home, Stage stage) {
         home.canva.getChildren().clear();
         componentsContext.reset();
+        uiPathProperty.set("");
     }
 
     public record PrefsData(String last_project_saved_path, String language) {
@@ -52,6 +56,7 @@ public class MainSceneController {
         if (uiFile != null) {
             uiJsonFile = uiFile;
             componentsContext.loadJsonState(uiFile, home.canva, stage);
+            uiPathProperty.set(uiFile.getAbsolutePath());
         }
 
     }
@@ -60,6 +65,7 @@ public class MainSceneController {
         try {
             uiJsonFile = loadUiFileFromAppData();
             componentsContext.loadJsonState(uiJsonFile, home.canva, stage);
+            uiPathProperty.set(uiJsonFile.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
             componentsContext.loadJsonState(null, home.canva, stage);
@@ -130,7 +136,7 @@ public class MainSceneController {
                 Commons.WriteJsonInDisc(prefsFile.toFile(), defaultPrefs);
 
                 IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
-
+                uiPathProperty.set(file.getAbsolutePath());
             }
 
 

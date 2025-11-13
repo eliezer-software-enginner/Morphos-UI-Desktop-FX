@@ -74,7 +74,6 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                //new FontWeightComponent(currentState),
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
                 Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),

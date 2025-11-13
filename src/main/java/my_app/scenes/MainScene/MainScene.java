@@ -8,6 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
@@ -55,7 +56,7 @@ public class MainScene extends Scene {
     }
 
     void setup() {
-        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings());
+        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings(), createMenuUiPath());
         mainView = new VBox(menuBar, home);
 
         HBox.setHgrow(home, Priority.ALWAYS);
@@ -116,6 +117,19 @@ public class MainScene extends Scene {
         menu.setGraphic(menuText);
 
         menuText.setOnMouseClicked(_ -> controller.handleClickMenuSettings(stage));
+
+        menuText.getStyleClass().add("text-primary-color");
+
+        return menu;
+    }
+
+    @Component
+    Menu createMenuUiPath() {
+        Menu menu = new Menu();
+        Label menuText = Typography.caption("path of ui file");
+        menuText.textProperty().bind(controller.uiPathProperty);
+
+        menu.setGraphic(menuText);
 
         menuText.getStyleClass().add("text-primary-color");
 
