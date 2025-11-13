@@ -1,7 +1,7 @@
 package my_app.data;
 
 public record ButtonComponentData(
-        String type, // NOVO: "column"
+        String type,
         String text,
         String fontSize,
         String fontWeight,
@@ -17,9 +17,7 @@ public record ButtonComponentData(
         int padding_left,
         String identification,
         boolean in_canva,
-        String canva_id) implements ComponentData {
-    public ButtonComponentData {
-        if (type == null)
-            type = "button";
-    }
+        String canva_id,
+        String border_color, String name) implements ComponentData {
+
 }

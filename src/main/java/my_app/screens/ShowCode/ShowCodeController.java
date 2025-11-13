@@ -12,7 +12,7 @@ import my_app.components.CustomComponent;
 import my_app.components.TextComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
-import my_app.components.inputComponents.InputComponent;
+import my_app.components.InputComponent;
 
 public class ShowCodeController {
     public String createImports() {

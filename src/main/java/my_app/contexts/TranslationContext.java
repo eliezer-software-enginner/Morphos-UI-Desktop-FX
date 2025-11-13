@@ -100,7 +100,9 @@ public class TranslationContext {
             String new_,
             String placeholderColor,
             String focusColor,
-            String noFocusColor
+            String noFocusColor,
+            String padding,
+            String placeholder
     ) {
     }
 

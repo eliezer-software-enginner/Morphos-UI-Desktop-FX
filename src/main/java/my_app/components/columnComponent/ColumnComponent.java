@@ -2,10 +2,7 @@ package my_app.components.columnComponent;
 
 import java.util.ArrayList;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -34,6 +31,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
     public SimpleIntegerProperty childrenAmountState = new SimpleIntegerProperty(3);
+    public StringProperty name = new SimpleStringProperty();
 
     ComponentsContext componentsContext;
 
@@ -157,6 +155,12 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         father.getChildren().setAll(
                 new LayoutPositionComponent(currentState),
                 Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
+    }
+
+    @Override
+    public void otherSettings(Pane father, CanvaComponent canva) {
+        father.getChildren().setAll(
+                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }
 
     @Override

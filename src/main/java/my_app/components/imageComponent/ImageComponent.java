@@ -80,6 +80,11 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
+    public void otherSettings(Pane father, CanvaComponent canva) {
+
+    }
+
+    @Override
     public ImageComponentData getData() {
         Image img = this.getImage();
 

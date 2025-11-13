@@ -8,6 +8,8 @@ public interface ViewContract<T> {
 
     void settings(Pane father, CanvaComponent canva);
 
+    void otherSettings(Pane father, CanvaComponent canva);
+
     T getData();
 
     void applyData(T data);

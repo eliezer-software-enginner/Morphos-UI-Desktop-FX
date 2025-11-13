@@ -52,6 +52,7 @@ public class Commons {
     public static String ButtonFontWeightDefault = "normal";
     public static String ButtonFontSizeDefault = "16";
     public static String FontSizeDefault = "16";
+    public static String ColorTransparent = "transparent";
     public static String BorderColorDefault = "black";
     public static String FocusColorDefault = "black";
     public static String PlaceHolderColorDefault = "gray";

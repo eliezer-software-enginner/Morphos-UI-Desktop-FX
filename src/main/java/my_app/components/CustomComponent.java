@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
-import my_app.components.inputComponents.InputComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.ButtonComponentData;
@@ -161,6 +160,8 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
             node.setOnMouseClicked((e) -> componentsContext.selectNode(node));
             getChildren().add(node);
         }
+
+        //this.name.set(data.name());
     }
 
     @Override
@@ -225,6 +226,11 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     @Override
     public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(Typography.body("Empty"));
+    }
+
+    @Override
+    public void otherSettings(Pane father, CanvaComponent canva) {
+
     }
 
 }

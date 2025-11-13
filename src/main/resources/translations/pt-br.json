@@ -49,5 +49,7 @@
   "new_": "Novo",
   "placeholderColor": "Cor da placeholder",
   "focusColor": "Cor em Foco",
-  "noFocusColor": "Cor sem foco"
+  "noFocusColor": "Cor sem foco",
+  "padding": "Padding",
+  "placeholder": "Placeholder"
 }

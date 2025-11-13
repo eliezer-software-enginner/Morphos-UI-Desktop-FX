@@ -219,6 +219,11 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
         father.getChildren().clear();
     }
 
+    @Override
+    public void otherSettings(Pane father, CanvaComponent canva) {
+
+    }
+
     void config() {
         setBorder(new Border(
                 new BorderStroke(

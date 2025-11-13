@@ -2,9 +2,7 @@ package my_app.screens.Home.components;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -39,7 +37,10 @@ public class RightSide extends VBox {
     Button btnLayout = ButtonSecondary(translation.layout());
 
     @Component
-    HBox top = new HBox(btnAppearence, btnLayout);
+    Button btnOtherSettings = ButtonSecondary("Other settings");
+
+    @Component
+    HBox top = new HBox(btnAppearence, btnLayout, btnOtherSettings);
     @Component
     HBox topWrapper = new HBox(top); // wrapper só para não se esticar
     @Component
@@ -47,9 +48,9 @@ public class RightSide extends VBox {
     @Component
     Label NoContentText = Typography.caption(translation.noComponentSelected());
     @Component
-    private VBox dynamicContainer; // container que será substituído
+    private final VBox dynamicContainer; // container que será substituído
 
-    BooleanProperty appearenceIsSelected = new SimpleBooleanProperty(true);
+    IntegerProperty optionSelected = new SimpleIntegerProperty(1);
 
 
     public RightSide(ComponentsContext componentsContext, CanvaComponent canva) {
@@ -58,15 +59,11 @@ public class RightSide extends VBox {
 
         this.selectedComponentProperty = selectedCompProp; // Renomeado para clareza
 
-        btnAppearence.setOnAction(_ -> appearenceIsSelected.set(true));
-        btnLayout.setOnAction(_ -> appearenceIsSelected.set(false));
+        btnAppearence.setOnAction(_ -> optionSelected.set(1));
+        btnLayout.setOnAction(_ -> optionSelected.set(2));
+        btnOtherSettings.setOnAction(_ -> optionSelected.set(3));
 
         getChildren().add(topWrapper);
-
-        title.textProperty().bind(Bindings
-                .createStringBinding(() -> appearenceIsSelected.get() ? translation.appearanceSettings() : translation.layoutSettings(),
-                        appearenceIsSelected));
-
         getChildren().add(title);
 
         // ---- Container dinâmico (será trocado conforme o node selecionado) ----
@@ -83,11 +80,8 @@ public class RightSide extends VBox {
 
         // Atualiza UI quando muda de seleção
 
-        appearenceIsSelected.addListener((_, _, _) -> mount(canva));
-        // NodeWrapper
-
         // quando muda o node
-        appearenceIsSelected.addListener((_, _, _) -> mount(canva));
+        optionSelected.addListener((_, _, _) -> mount(canva));
 
         // 2. ALTERADO: Listener agora recebe SelectedComponent
         selectedComponentProperty.addListener((_, _, newComp) -> {
@@ -96,7 +90,7 @@ public class RightSide extends VBox {
 
             if (newNode instanceof ViewContract renderable) {
                 NodeWrapper nw = new NodeWrapper(renderable);
-                nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected, canva);
+                nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
             } else {
                 // Se newNode for null (desseleção) ou não for ViewContract
                 dynamicContainer.getChildren().setAll(NoContentText);
@@ -110,9 +104,16 @@ public class RightSide extends VBox {
         SelectedComponent currentSelectedComp = selectedComponentProperty.get();
         Node currentNode = (currentSelectedComp != null) ? currentSelectedComp.node() : null;
 
+        int opselected = optionSelected.get();
+
+        if (opselected == 1) title.setText(translation.appearanceSettings());
+        else if (opselected == 2) title.setText(translation.layoutSettings());
+        else title.setText("Other config");
+
+
         if (currentNode instanceof ViewContract renderable) {
             NodeWrapper nw = new NodeWrapper(renderable);
-            nw.renderRightSideContainer(dynamicContainer, appearenceIsSelected, canva);
+            nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
         } else {
             // Garante que o container esteja limpo se nada estiver selecionado ao montar
             Label desc = Typography.caption(translation.selectComponentToViewSettings());

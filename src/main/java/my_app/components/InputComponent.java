@@ -1,12 +1,12 @@
-package my_app.components.inputComponents;
+package my_app.components;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import my_app.components.Components;
-import my_app.components.LayoutPositionComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.*;
 import my_app.contexts.ComponentsContext;
@@ -20,6 +20,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
     ComponentsContext componentsContext;
     TranslationContext.Translation translation = TranslationContext.instance().get();
+    public StringProperty name = new SimpleStringProperty();
 
     @Component
     CanvaComponent canvaFather;
@@ -76,16 +77,18 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
         this.setLayoutX(data.x());
         this.setLayoutY(data.y());
         this.setPromptText(data.placeholder());
+        this.name.set(data.name());
     }
 
     @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new FontWeightComponent(currentState),
-                new FontColorPicker(currentState),
-                new TextContentComponent(currentState),
-                new FontSizeComponent(currentState),
-                new PromptTextComponent(currentState),
+                //new FontWeightComponent(currentState),
+                Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
+                Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
+                Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
+                Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
+                Components.LabelWithTextContent(translation.placeholder(), getPromptText(), this::setPromptText),
                 Components.ColorPickerRow(translation.placeholderColor(), this, "-fx-prompt-text-fill"),
                 Components.ColorPickerRow(translation.focusColor(), this, "-fx-focus-color"),
                 Components.ColorPickerRow(translation.noFocusColor(), this, "-fx-text-box-border"),
@@ -99,6 +102,12 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
                 new LayoutPositionComponent(currentState),
                 Components.ToogleSwithItemRow("Centralize horizontally", this, canva)
         );
+    }
+
+    @Override
+    public void otherSettings(Pane father, CanvaComponent canva) {
+        father.getChildren().setAll(
+                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }
 
     @Override
@@ -124,7 +133,8 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
         return new InputComponentData(
                 "input", text, placeholder, fontWeight, fontSize, color, x, y, this.getId(),
                 location.inCanva(),
-                location.fatherId(), focusColor, placeholderColor, noFocusColor);
+                location.fatherId(), focusColor, placeholderColor, noFocusColor,
+                name.get());
     }
 
 }

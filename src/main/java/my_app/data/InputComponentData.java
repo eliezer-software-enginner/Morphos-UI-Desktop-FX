@@ -14,10 +14,7 @@ public record InputComponentData(
         String canva_id,
         String focus_color,
         String placeholder_color,
-        String no_focus_color
+        String no_focus_color,
+        String name
 ) implements ComponentData {
-    public InputComponentData {
-        if (type == null)
-            type = "input";
-    }
 }

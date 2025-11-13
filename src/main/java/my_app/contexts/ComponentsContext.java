@@ -19,7 +19,7 @@ import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.columnComponent.ColumnComponent;
 import my_app.components.imageComponent.ImageComponent;
-import my_app.components.inputComponents.InputComponent;
+import my_app.components.InputComponent;
 import my_app.data.ButtonComponentData;
 import my_app.data.ColumnComponentData;
 import my_app.data.Commons;
