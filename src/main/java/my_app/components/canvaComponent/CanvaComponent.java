@@ -234,7 +234,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
 
         setPadding(new Insets(0));
 
-        setStyle("-fx-background-color:%s;".formatted(Commons.CanvaBgColorDefault));
+        setStyle("-fx-background-color:%s;".formatted("red"));
 
         setId(String.valueOf(System.currentTimeMillis()));
 

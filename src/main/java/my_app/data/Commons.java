@@ -20,6 +20,22 @@ import my_app.scenes.MainScene.MainSceneController;
 
 public class Commons {
 
+    public enum ScreensSize {
+        SMALL(640, 480),
+        MEDIUM(800, 600),
+        LARGE(1280, 720),
+        XLARGE(1600, 900),
+        FULL(1920, 1080);
+
+
+        public final double width, heigh;
+
+        ScreensSize(int width, int height) {
+            this.width = width;
+            this.heigh = height;
+        }
+    }
+
     public static String AppName = "Morphos Desktop FX";
     public static String AppNameAtAppData = "morphos_desktop_fx";
     public static String AppVersion = "v1.0";

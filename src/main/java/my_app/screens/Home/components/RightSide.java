@@ -1,11 +1,14 @@
 package my_app.screens.Home.components;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -14,6 +17,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.contexts.TranslationContext;
+import my_app.data.Commons;
 import my_app.data.ViewContract;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -27,7 +31,6 @@ public class RightSide extends VBox {
     final double width = 250;
     // 1. ALTERADO: Tipo da propriedade é agora SelectedComponent
     final ObjectProperty<SelectedComponent> selectedComponentProperty;
-
 
     @Component
     Button btnAppearence = ButtonPrimary(translation.appearance());
@@ -119,21 +122,54 @@ public class RightSide extends VBox {
         }
     }
 
-    void config() {
 
+    void config() {
         top.setSpacing(0);
 
         HBox.setHgrow(top, Priority.NEVER);
         top.setMaxWidth(Region.USE_COMPUTED_SIZE); // largura baseada nos filhos
-
+        setPrefWidth(width);
         setMaxHeight(Double.MAX_VALUE);
         setBackground(new Background(
                 new BackgroundFill(MaterialTheme.getInstance().getBackgroundColor(), CornerRadii.EMPTY, Insets.EMPTY)));
-
-        setPrefWidth(width);
-        setMinWidth(width);
-        setMaxWidth(width);
-
         setPadding(new Insets(15));
+
+        var mediumWidth = Commons.ScreensSize.MEDIUM.width;
+        var largeWidth = Commons.ScreensSize.LARGE.width;//1280
+        var fullscreenWidth = Commons.ScreensSize.FULL.width;//1920
+
+        Platform.runLater(() -> {
+            Scene scene = getScene();
+            if (scene != null) {
+                scene.widthProperty().addListener((_, _, newW) -> {
+                    var v = newW.doubleValue();
+                    IO.println("width: " + v);
+
+                    if (v <= mediumWidth) {
+                        this.setPrefWidth(200);
+                    }
+
+                    if (v > mediumWidth && v <= largeWidth) {
+                        this.setPrefWidth(240);
+                    }
+
+                    if (v > largeWidth && v <= 1400) {
+                        this.setPrefWidth(370);
+                    }
+
+                    if (v > 1400 && v <= fullscreenWidth) {
+                        this.setPrefWidth(410);
+                    }
+
+                    if (v > fullscreenWidth) {
+                        this.setPrefWidth(500);
+                    }
+
+                    // double novaLargura = Math.max(250, newW.doubleValue() * 0.2);
+
+                    // this.setPrefWidth(novaLargura);
+                });
+            }
+        });
     }
 }

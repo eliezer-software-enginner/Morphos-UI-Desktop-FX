@@ -80,7 +80,7 @@ public class Components {
     private static HBox ItemRow(Node node, String text) {
         Text titleText = new Text();
         titleText.setText(text + ":");
-        titleText.setFont(Font.font(14));
+        titleText.setFont(Font.font(16));
         titleText.setFill(Color.WHITE);
 
         HBox root = new HBox(titleText, node);

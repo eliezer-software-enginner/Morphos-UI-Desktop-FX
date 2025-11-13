@@ -41,7 +41,8 @@ public class MainScene extends Scene {
     MainSceneController controller = new MainSceneController(componentsContext);
 
     public MainScene() {
-        super(new VBox(), 1200, 650);
+        var screenSize = Commons.ScreensSize.LARGE;
+        super(new VBox(), screenSize.width, screenSize.heigh);
 
         setup();
         styles();

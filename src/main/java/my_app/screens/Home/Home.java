@@ -1,8 +1,11 @@
 package my_app.screens.Home;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
@@ -34,9 +37,14 @@ public class Home extends BorderPane {
         editor.setFitToWidth(false);
         editor.setFitToHeight(false);
 
+        //background-color is border
         editor.setStyle("-fx-background-color:%s;-fx-background: %s"
-                .formatted(MaterialTheme.getInstance().getSurfaceColorStyle(),
-                        MaterialTheme.getInstance().getSurfaceColorStyle()));
+                .formatted("red",
+                        "yellow"));
+
+//        editor.setStyle("-fx-background-color:%s;-fx-background: %s"
+//                .formatted(MaterialTheme.getInstance().getSurfaceColorStyle(),
+//                        MaterialTheme.getInstance().getSurfaceColorStyle()));
 
         if (openComponentScene) {
             canva.setPrefSize(370, 250);
@@ -54,7 +62,17 @@ public class Home extends BorderPane {
 
         // setCenter(this.canva);
         setCenter(editor);
-        setRight(new RightSide(componentsContext, canva));
+
+        var rightSide = new RightSide(componentsContext, canva);
+        StackPane rightWrapper = new StackPane(rightSide);
+        rightWrapper.setMinWidth(Region.USE_PREF_SIZE);
+        rightWrapper.setMaxWidth(Region.USE_PREF_SIZE);
+        setRight(rightWrapper);
+
+        //StackPane.setAlignment(rightSide, Pos.CENTER_RIGHT);
+
+
+        //setRight(new RightSide(componentsContext, canva));
 
         getStyleClass().add("surface-color");
     }
