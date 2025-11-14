@@ -32,6 +32,12 @@ public class Typography {
         return text;
     }
 
+    public static Label h2(String content) {
+        var text = new Label(content);
+        text.getStyleClass().addAll("h2-typo", "text-primary-color");
+        return text;
+    }
+
     public static Label BodySecondary(String content) {
         var text = new Label(content);
         text.getStyleClass().addAll("body-typo", "text-secondary");

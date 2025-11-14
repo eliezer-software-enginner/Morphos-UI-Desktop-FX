@@ -1,20 +1,20 @@
 package my_app.themes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ThemeManager {
-    enum ThemeType {
+    public enum ThemeType {
         LIGHT, DARK
     }
 
-    private final ObjectProperty<ThemeType> themeProperty = new SimpleObjectProperty<>(ThemeType.DARK);
+    public final ObjectProperty<ThemeType> themeProperty = new SimpleObjectProperty<>(ThemeType.DARK);
 
-    private List<Scene> scenes;
+    private final List<Scene> scenes;
     private final String lightThemePath = ThemeManager.class.getResource("/theme-light.css").toExternalForm();
     private final String darkThemePath = ThemeManager.class.getResource("/theme-dark.css").toExternalForm();
 
@@ -28,7 +28,7 @@ public class ThemeManager {
         return instance;
     }
 
-    public ThemeManager() {
+    private ThemeManager() {
         this.scenes = new ArrayList<>();
 
         themeProperty.addListener((_, _, newTheme) -> applyTheme(newTheme));
@@ -65,5 +65,13 @@ public class ThemeManager {
             stylesheets.forEach(System.out::println);
         }
 
+    }
+
+    public ThemeType getTheme() {
+        return themeProperty.get();
+    }
+
+    public boolean themeIsWhite() {
+        return themeProperty.get().equals(ThemeType.LIGHT);
     }
 }

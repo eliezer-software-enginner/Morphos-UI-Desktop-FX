@@ -10,6 +10,7 @@
 }
 .surface-color {
   -fx-background-color: #1e1f23;
+  -fx-background: #1e1f23;
 }
 .error-color {
   -fx-background-color: #b00020;

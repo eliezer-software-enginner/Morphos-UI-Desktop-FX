@@ -19,7 +19,7 @@
 
 .caption-label-typo {
   -fx-font-family: 'Montserrat';
-  -fx-font-size: 12px;
+  -fx-font-size: 14px;
 }
 
 .title-typo {
@@ -33,6 +33,11 @@
   -fx-font-size: 20px;
 }
 
+.h2-typo{
+  -fx-font-family: 'Montserrat';
+  -fx-font-size: 17px;
+}
+
 .body-typo {
   -fx-font-family: 'Montserrat';
   -fx-font-size: 16px;
@@ -40,5 +45,5 @@
 
 .caption-typo {
   -fx-font-family: 'Montserrat';
-  -fx-font-size: 12px;
+  -fx-font-size: 15px;
 }

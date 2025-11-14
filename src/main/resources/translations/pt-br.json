@@ -51,5 +51,6 @@
   "focusColor": "Cor em Foco",
   "noFocusColor": "Cor sem foco",
   "padding": "Padding",
-  "placeholder": "Placeholder"
+  "placeholder": "Placeholder",
+  "toogleTheme": "Alternar tema"
 }

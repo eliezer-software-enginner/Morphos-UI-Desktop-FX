@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -27,19 +28,22 @@ public class SettingsScene extends Scene {
     Text title = Typography.title(translation.settings());
     @Component
     Text language = Typography.subtitle(translation.language());
+    @Component
+    Text textChangeTheme = Typography.subtitle(translation.toogleTheme());
 
     Map<String, Locale> map = Map.of("English", Locale.ENGLISH,
             "Português-Br", Locale.of("pt-br"));
 
     @Component
-    ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList(
+    ComboBox<String> comboBoxLanguage = new ComboBox<>(FXCollections.observableArrayList(
             map.keySet()
     ));
 
     @Component
     Region region = Components.spacerVertical(10);
     @Component
-    VBox layout = new VBox(title, region, language, comboBox);
+    VBox layout = new VBox(title, region, language, comboBoxLanguage, textChangeTheme,
+            new Button("Change theme"));
 
     private final Stage stage = new Stage();
 
@@ -65,13 +69,13 @@ public class SettingsScene extends Scene {
 
         for (var entry : map.entrySet()) {
             if (entry.getValue().equals(locale)) {
-                comboBox.setValue(entry.getKey());
+                comboBoxLanguage.setValue(entry.getKey());
                 break;
             }
         }
 
-        comboBox.setOnAction(_ -> {
-            var n = comboBox.getValue();
+        comboBoxLanguage.setOnAction(_ -> {
+            var n = comboBoxLanguage.getValue();
             var locale_ = map.get(n);
 
             IO.println(locale_.getLanguage());
@@ -80,6 +84,11 @@ public class SettingsScene extends Scene {
         });
 
         ThemeManager.Instance().addScene(this);
+
+        var btn = (Button) layout.getChildren().getLast();
+        btn.setOnAction(ev -> {
+            ThemeManager.Instance().toogleTheme();
+        });
     }
 
     public void show() {

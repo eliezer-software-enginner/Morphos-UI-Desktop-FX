@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
@@ -20,13 +19,11 @@ import toolkit.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static my_app.themes.Typography.BodySecondary;
-
 public class LeftSide extends VBox {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
 
     @Component
-    Text appName = new Text(Commons.AppName);
+    Label appName = Typography.h2(Commons.AppName);
 
     @Component
     ImageView iv = Commons.CreateImageView("/assets/images/m.png");
@@ -35,7 +32,7 @@ public class LeftSide extends VBox {
     HBox logo = new HBox(iv, appName);
 
     @Component
-    Label title = BodySecondary(translation.visualElements());
+    Label title = Typography.BodySecondary(translation.visualElements());
     // new Text("Visual Elements");
     // List<String> optionsText = List.of("Text", "Button", "Input", "Image",
     // "Component", "Column items");
@@ -79,14 +76,13 @@ public class LeftSide extends VBox {
         getChildren().add(errorContainer);
     }
 
-    private final int WIDTH = 230;
+    private final int WIDTH = 250;
 
     void config() {
         iv.setFitHeight(50);
         iv.setFitWidth(50);
 
         logo.setAlignment(Pos.CENTER_LEFT);
-        var iv = (ImageView) logo.getChildren().get(0);
         iv.setPreserveRatio(true);
 
         // Faz com que o LeftSide ocupe a altura toda
@@ -98,11 +94,12 @@ public class LeftSide extends VBox {
 
         // Espaçamento horizontal entre conteúdo e borda
         setPadding(new Insets(10, 10, 0, 10)); // top, right, bottom, left
+        setSpacing(5);
     }
 
     void styles() {
         getStyleClass().add("background-color");
-        appName.setStyle("-fx-fill:#fff;-fx-font-size:17px;");
+        //appName.setStyle("-fx-fill:#fff;-fx-font-size:17px;");
     }
 
     public void notifyError(String message) {

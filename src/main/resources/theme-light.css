@@ -1,0 +1,40 @@
+/* TEXT-COLORS */
+.text-primary-color {
+  -fx-text-fill: black;
+  -fx-fill: black;
+}
+.text-secondary {
+  -fx-text-fill: #141515;
+  -fx-fill: #41515;
+}
+.text-error-color {
+  -fx-text-fill: #ffffff;
+  -fx-fill: #ffffff;
+}
+
+/* STATE-COLORS */
+.disable-color {
+  -fx-text-fill: #bdbdbd;
+  -fx-fill: #bdbdbd;
+}
+.focus-color {
+  -fx-background-color: #3b38a0;
+}
+.hover-color {
+  -fx-background-color: #7371fc;
+}
+.hover-color-secondary {
+  -fx-background-color: #1e1f23;
+}
+
+
+/* BUTTON-COLORS */
+.button-primary {
+  -fx-background-color: #387ae9;
+}
+.button-secondary {
+  -fx-background-color: #1565c0ff;
+}
+.button-remove {
+  -fx-background-color: #b00020;
+}

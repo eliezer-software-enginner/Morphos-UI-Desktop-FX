@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import my_app.components.buttonComponent.ButtonComponent;
-import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
@@ -24,6 +23,13 @@ public class Components {
         region.setMaxHeight(insets);
         region.setPrefHeight(insets);
         return region;
+    }
+
+    public static Button ButtonPrimary() {
+        var btn = new Button();
+        btn.getStyleClass().addAll("button-primary", "body-typo");
+
+        return btn;
     }
 
     public static Button buttonRemove(String text) {

@@ -1,6 +1,5 @@
 package my_app.screens.Home;
 
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -12,7 +11,6 @@ import my_app.data.Commons;
 import my_app.screens.Home.components.RightSide;
 import my_app.screens.Home.components.leftside.LeftSide;
 import toolkit.Component;
-import toolkit.theme.MaterialTheme;
 
 public class Home extends BorderPane {
 
@@ -38,14 +36,15 @@ public class Home extends BorderPane {
         editor.setFitToHeight(false);
 
         //background-color is border
-        editor.setStyle("-fx-background-color:%s;-fx-background: %s"
-                .formatted("red",
-                        "yellow"));
+//        editor.setStyle("-fx-background-color:%s;-fx-background: %s"
+//                .formatted("red",
+//                        "yellow"));
 
 //        editor.setStyle("-fx-background-color:%s;-fx-background: %s"
 //                .formatted(MaterialTheme.getInstance().getSurfaceColorStyle(),
 //                        MaterialTheme.getInstance().getSurfaceColorStyle()));
 
+        editor.getStyleClass().setAll("surface-color");
         if (openComponentScene) {
             canva.setPrefSize(370, 250);
             var style = canva.getStyle();
