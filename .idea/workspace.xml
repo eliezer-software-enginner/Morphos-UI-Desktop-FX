@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added visual feedback for ui file">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="change theme on leftside">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ButtonRemoverComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ButtonRemoverComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/UiComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/UiComponents.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/SettingsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/SettingsScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/themes/ThemeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/themes/ThemeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/themes/Typography.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/themes/Typography.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/theme-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/theme-dark.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/theme-light.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/theme-light.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/MaterialTheme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/toolkit/theme/MaterialTheme.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/typography.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/typography.css" afterDir="false" />
@@ -389,7 +389,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763064549993</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="change theme on leftside">
+      <option name="closed" value="true" />
+      <created>1763131747479</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1763131747479</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -409,7 +417,8 @@
     <MESSAGE value="cleanup and variable name" />
     <MESSAGE value="addes variable name" />
     <MESSAGE value="added visual feedback for ui file" />
-    <option name="LAST_COMMIT_MESSAGE" value="added visual feedback for ui file" />
+    <MESSAGE value="change theme on leftside" />
+    <option name="LAST_COMMIT_MESSAGE" value="change theme on leftside" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

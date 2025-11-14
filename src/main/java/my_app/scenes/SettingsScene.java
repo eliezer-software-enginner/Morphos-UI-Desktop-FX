@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -27,9 +28,9 @@ public class SettingsScene extends Scene {
     @Component
     Text title = Typography.title(translation.settings());
     @Component
-    Text language = Typography.subtitle(translation.language());
+    Label language = Typography.subtitle(translation.language());
     @Component
-    Text textChangeTheme = Typography.subtitle(translation.toogleTheme());
+    Label textChangeTheme = Typography.subtitle(translation.toogleTheme());
 
     Map<String, Locale> map = Map.of("English", Locale.ENGLISH,
             "Português-Br", Locale.of("pt-br"));
@@ -43,7 +44,7 @@ public class SettingsScene extends Scene {
     Region region = Components.spacerVertical(10);
     @Component
     VBox layout = new VBox(title, region, language, comboBoxLanguage, textChangeTheme,
-            new Button("Change theme"));
+            new Button(translation.toogleTheme()));
 
     private final Stage stage = new Stage();
 

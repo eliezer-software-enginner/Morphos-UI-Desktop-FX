@@ -8,7 +8,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
@@ -19,8 +18,6 @@ import my_app.screens.ShowCode.ShowCode;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
 import toolkit.Component;
-
-import java.util.Locale;
 
 import static my_app.components.shared.UiComponents.MenuBarPrimary;
 

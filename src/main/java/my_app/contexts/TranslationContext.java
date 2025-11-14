@@ -103,7 +103,9 @@ public class TranslationContext {
             String noFocusColor,
             String padding,
             String placeholder,
-            String toogleTheme
+            String toogleTheme,
+            String otherSettings,
+            String variableName
     ) {
     }
 

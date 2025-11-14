@@ -71,6 +71,10 @@ public class ThemeManager {
         return themeProperty.get();
     }
 
+    public boolean themeIsWhite(ThemeType themeType) {
+        return themeType.equals(ThemeType.LIGHT);
+    }
+
     public boolean themeIsWhite() {
         return themeProperty.get().equals(ThemeType.LIGHT);
     }

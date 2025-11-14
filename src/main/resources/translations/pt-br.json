@@ -52,5 +52,7 @@
   "noFocusColor": "Cor sem foco",
   "padding": "Padding",
   "placeholder": "Placeholder",
-  "toogleTheme": "Alternar tema"
+  "toogleTheme": "Alternar tema",
+  "otherSettings": "Outras configurações",
+  "variableName": "Nome de variável"
 }

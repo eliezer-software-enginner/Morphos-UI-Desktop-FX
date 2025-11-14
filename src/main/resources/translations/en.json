@@ -52,5 +52,7 @@
   "noFocusColor": "No focus color",
   "padding": "Padding",
   "placeholder": "Placeholder",
-  "toogleTheme": "Toogle theme"
+  "toogleTheme": "Toggle theme",
+  "otherSettings": "Other settings",
+  "variableName": "Name of variable"
 }

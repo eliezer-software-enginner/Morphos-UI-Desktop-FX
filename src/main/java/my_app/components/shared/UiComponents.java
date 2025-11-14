@@ -6,13 +6,25 @@ import javafx.scene.control.MenuBar;
 public class UiComponents {
     public static Button ButtonPrimary(String text) {
         var b = new Button(text);
-        b.getStyleClass().addAll("button-primary", "text-primary-color");
+        b.getStyleClass().addAll("button-primary", "text-primary-color", "body-typo");
+        return b;
+    }
+
+    public static Button ButtonMedium(String text) {
+        var b = new Button(text);
+        b.getStyleClass().addAll("button-secondary", "text-primary-color", "body-typo");
+        return b;
+    }
+
+    public static Button ButtonSmall(String text) {
+        var b = new Button(text);
+        b.getStyleClass().addAll("button-secondary", "text-primary-color", "body-typo");
         return b;
     }
 
     public static Button ButtonSecondary(String text) {
         var b = new Button(text);
-        b.getStyleClass().addAll("button-secondary", "text-primary-color");
+        b.getStyleClass().addAll("button-secondary", "text-primary-color", "body-typo");
         return b;
     }
 

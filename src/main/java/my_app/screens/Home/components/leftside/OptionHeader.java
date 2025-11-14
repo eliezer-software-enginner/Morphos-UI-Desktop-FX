@@ -124,7 +124,6 @@ public class OptionHeader extends HBox {
 
             updateIconColor(themeManager.themeIsWhite() ? Color.BLACK : Color.WHITE);
         });
-
     }
 
     private void nodeSelectedListener(ComponentsContext componentsContext, String type) {

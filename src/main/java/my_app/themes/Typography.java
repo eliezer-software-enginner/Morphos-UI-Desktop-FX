@@ -19,8 +19,8 @@ public class Typography {
         return text;
     }
 
-    public static Text subtitle(String content) {
-        Text text = new Text(content);
+    public static Label subtitle(String content) {
+        var text = new Label(content);
         text.getStyleClass().addAll("subtitle-typo", "text-primary-color");
         text.setStyle("-fx-font-smoothing-type: gray;"); // 🔹 Suaviza o texto
         return text;
@@ -47,14 +47,14 @@ public class Typography {
     public static Label caption(String content) {
         var text = new Label(content);
         text.setStyle("-fx-font-smoothing-type: gray;"); // 🔹 Suaviza o texto
-        text.getStyleClass().addAll("caption-label-typo", "text-primary-color");
+        text.getStyleClass().addAll("caption-typo", "text-primary-color");
         return text;
     }
 
     public static Label error(String message) {
         var text = new Label(message);
         text.setStyle("-fx-font-smoothing-type: gray;"); // 🔹 Suaviza o texto
-        text.getStyleClass().addAll("caption-label-typo", "error-color", "text-error-color");
+        text.getStyleClass().addAll("caption-typo", "error-color", "text-error-color");
         text.setWrapText(true);
         return text;
     }

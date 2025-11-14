@@ -3,9 +3,7 @@ package toolkit.theme;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import my_app.data.Commons;
-import my_app.themes.Typography;
 
 /**
  * Sistema de tema global baseado em Material Design
@@ -232,22 +230,6 @@ public class MaterialTheme {
         return Font.font(fontFamily, headingFontWeight, h3FontSize);
     }
 
-    public Font getH4Font() {
-        return Font.font(fontFamily, headingFontWeight, h4FontSize);
-    }
-
-    public Font getH5Font() {
-        return Font.font(fontFamily, headingFontWeight, h5FontSize);
-    }
-
-    public Font getH6Font() {
-        return Font.font(fontFamily, headingFontWeight, h6FontSize);
-    }
-
-    public Text getSubtitle(String text) {
-        return Typography.subtitle(text);
-    }
-
     public Font getCaptionFont() {
         return Font.font(fontFamily, bodyFontWeight, captionFontSize);
     }
@@ -262,20 +244,6 @@ public class MaterialTheme {
         return this;
     }
 
-    public MaterialTheme setSecondaryColor(Color color) {
-        this.secondaryColor = color;
-        return this;
-    }
-
-    public MaterialTheme setBackgroundColor(Color color) {
-        this.backgroundColor = color;
-        return this;
-    }
-
-    public MaterialTheme setFontFamily(String fontFamily) {
-        this.fontFamily = fontFamily;
-        return this;
-    }
 
     // Métodos para obter estilos CSS como String
     public String getPrimaryColorStyle() {
@@ -285,12 +253,6 @@ public class MaterialTheme {
                 (int) (primaryColor.getBlue() * 255));
     }
 
-    public String getSecondaryColorStyle() {
-        return String.format("#%02X%02X%02X",
-                (int) (secondaryColor.getRed() * 255),
-                (int) (secondaryColor.getGreen() * 255),
-                (int) (secondaryColor.getBlue() * 255));
-    }
 
     public String getBackgroundColorStyle() {
         return String.format("#%02X%02X%02X",
@@ -304,14 +266,6 @@ public class MaterialTheme {
                 (int) (onPrimaryColor.getRed() * 255),
                 (int) (onPrimaryColor.getGreen() * 255),
                 (int) (onPrimaryColor.getBlue() * 255));
-    }
-
-    public String getOnBackgroundColorStyle() {
-        return getColorString(onBackgroundColor);
-    }
-
-    public String getOnSecondaryColorStyle() {
-        return getColorString(onSecondaryColor);
     }
 
     public String getFocusColorStyle() {
@@ -330,31 +284,4 @@ public class MaterialTheme {
         return Commons.ColortoHex(color);
     }
 
-    /**
-     * Obtém uma fonte específica do FontLoader
-     */
-    public Font getCustomFont(String fontName) {
-        return FontLoader.getFont(fontName);
-    }
-
-    /**
-     * Obtém uma fonte específica com tamanho personalizado
-     */
-    public Font getCustomFont(String fontName, double size) {
-        return FontLoader.getFontWithSize(fontName, size);
-    }
-
-    /**
-     * Obtém uma fonte específica com peso e tamanho personalizados
-     */
-    public Font getCustomFont(String fontName, FontWeight weight, double size) {
-        return FontLoader.getFontWithWeight(fontName, weight, size);
-    }
-
-    /**
-     * Carrega todas as fontes disponíveis
-     */
-    public void loadAllFonts() {
-        FontLoader.loadFonts();
-    }
 }
