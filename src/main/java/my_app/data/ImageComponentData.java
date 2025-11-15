@@ -11,5 +11,5 @@ public record ImageComponentData(
         boolean preserve_ratio,
         String identification,
         boolean in_canva,
-        String canva_id, String name) implements Serializable {
+        String canva_id, String name, String type_of_clip) implements Serializable {
 }

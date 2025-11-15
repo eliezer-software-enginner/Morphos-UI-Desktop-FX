@@ -1,15 +1,15 @@
 package my_app.components;
 
+import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 
@@ -109,36 +109,31 @@ public class Components {
         return root;
     }
 
-    public static HBox ColorPickerRow_(String title, Node selectedNode, String cssField) {
-        ColorPicker colorPicker = new ColorPicker(Color.WHITE);
+    public static HBox LabelWithComboBox(String title, Node selectedNode, String cssField) {
+        ComboBox<String> comboBox = new ComboBox<>();
 
-        HBox root = ItemRow(colorPicker, title);
+        HBox root = ItemRow(comboBox, title);
 
-        String color = "transparent";
+        if (cssField.equals("clip-image-as-circle")) {
+            if (selectedNode instanceof ImageComponent component) {
+                comboBox.setItems(FXCollections.observableArrayList("Circle"));
 
-        if (selectedNode instanceof InputComponent node) {
-            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-            IO.println(cssField + ": " + color);
-        } else if (selectedNode instanceof ButtonComponent node) {
-            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-        } else if (selectedNode instanceof TextComponent node) {
-            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
+                //se tem type de clip definido
+                if (component.clipType != null) comboBox.setValue(component.clipType);
+
+                comboBox.setOnAction(ev -> {
+                    var value = comboBox.getValue();
+                    if (value.equals("Circle")) {
+                        //validar se a largura e tamanho são o mesmo
+                        //var size = component.getFitWidth() / 2;
+
+                        var size = component.getFitWidth() / 2;
+                        component.setClip(new Circle(size, size, size));
+                        component.clipType = "Circle";
+                    }
+                });
+            }
         }
-
-        // Inicializa o ColorPicker com a cor da borda atual
-        colorPicker.setValue(Color.web(color));
-
-        colorPicker.setOnAction(e -> {
-            Color c = colorPicker.getValue();
-            String existingStyle = selectedNode.getStyle();
-
-            // Atualiza o estilo com a nova cor da borda
-            String newStyle = Commons.UpdateEspecificStyle(existingStyle, cssField,
-                    Commons.ColortoHex(c));
-
-            // Aplica o novo estilo no botão
-            selectedNode.setStyle(newStyle);
-        });
 
         return root;
     }

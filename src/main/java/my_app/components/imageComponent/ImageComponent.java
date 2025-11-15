@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
@@ -32,6 +33,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     public Stage stage;
 
     public StringProperty name = new SimpleStringProperty();
+    public String clipType;
 
     ComponentsContext componentsContext;
 
@@ -67,6 +69,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
                 new HeightComponent(this),
                 new PreserveRatioComponent(this),
                 new ImageBackgroundComponent(this),
+                Components.LabelWithComboBox("Clip", this, "clip-image-as-circle"),
                 Components.spacerVertical(10),
                 errorContainer,
                 Components.spacerVertical(20),
@@ -106,7 +109,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
         return new ImageComponentData(url, width, height, x, y, preserveRatio, this.getId(),
                 location.inCanva(),
                 location.fatherId(),
-                name.get());
+                name.get(), clipType);
     }
 
     @Override
@@ -124,6 +127,12 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
         this.setFitHeight(data.height());
         this.setFitWidth(data.width());
         this.name.set(data.name());
+        this.clipType = data.type_of_clip();
+
+        if (data.type_of_clip().equals("Circle")) {
+            var size = data.height() / 2;
+            setClip(new Circle(size, size, size));
+        }
     }
 
 }
