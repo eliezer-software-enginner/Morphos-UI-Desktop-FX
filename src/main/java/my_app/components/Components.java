@@ -27,7 +27,7 @@ public class Components {
 
     public static Button ButtonPrimary() {
         var btn = new Button();
-        btn.getStyleClass().addAll("button-primary", "body-typo");
+        btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
 
         return btn;
     }

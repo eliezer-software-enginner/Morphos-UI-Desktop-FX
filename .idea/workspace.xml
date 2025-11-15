@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="wrapping width of text">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="clipping image as circle">
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ImageComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ImageComponentData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +80,7 @@
       <recent name="$PROJECT_DIR$/.idea" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="my_app.scenes" />
       <recent name="my_app.components.shared" />
       <recent name="my_app" />
     </key>
@@ -395,7 +396,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763221631865</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="clipping image as circle">
+      <option name="closed" value="true" />
+      <created>1763223052348</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1763223052348</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -417,7 +426,8 @@
     <MESSAGE value="added visual feedback for ui file" />
     <MESSAGE value="change theme on leftside" />
     <MESSAGE value="wrapping width of text" />
-    <option name="LAST_COMMIT_MESSAGE" value="wrapping width of text" />
+    <MESSAGE value="clipping image as circle" />
+    <option name="LAST_COMMIT_MESSAGE" value="clipping image as circle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
