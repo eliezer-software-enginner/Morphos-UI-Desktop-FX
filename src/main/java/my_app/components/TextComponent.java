@@ -42,11 +42,11 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                //new FontWeightComponent(currentState),
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-fill"),
                 Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
+                Components.LabelWithInput(translation.width(), this, "text-wrapping-width"),
                 Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }
@@ -83,7 +83,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
                 "text",
                 text, x, y, fontSize, textFill, fontWeight, this.getId(),
                 location.inCanva(),
-                location.fatherId(), name.get());
+                location.fatherId(), name.get(), this.getWrappingWidth());
     }
 
     @Override
@@ -98,6 +98,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
         this.setLayoutX(data.layout_x());
         this.setLayoutY(data.layout_y());
         this.name.set(data.name());
+        this.setWrappingWidth(data.wrapping_width());
 
     }
 }

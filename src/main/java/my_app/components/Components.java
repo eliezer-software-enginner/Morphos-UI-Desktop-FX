@@ -54,13 +54,21 @@ public class Components {
         return root;
     }
 
+    //se o campo recebido não for um css então é java, mexeremos no node!
     public static Node LabelWithInput(String name, Node node, String fieldCss) {
         TextField tf = new TextField();
 
         HBox root = ItemRow(tf, name);
 
-        String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
-        tf.setText(valueOfField);
+        if (fieldCss.equals("text-wrapping-width")) {
+            if (node instanceof TextComponent component) {
+                tf.setText(String.valueOf(component.getWrappingWidth()));
+            }
+        } else {
+            String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
+            tf.setText(valueOfField);
+        }
+
 
         tf.textProperty().addListener((_, _, newVal) -> {
             if (!newVal.isBlank()) {
@@ -68,10 +76,18 @@ public class Components {
 //                    return; // Se não for válido, ignora a alteração
 //                }
                 try {
-                    String currentStyle = node.getStyle();
-                    String newStyle = Commons.UpdateEspecificStyle(currentStyle,
-                            fieldCss, newVal);
-                    node.setStyle(newStyle);
+                    if (fieldCss.equals("text-wrapping-width")) {
+                        if (node instanceof TextComponent component) {
+                            //validate if is number
+                            component.setWrappingWidth(Double.parseDouble(newVal.trim()));
+                        }
+                    } else {
+                        String currentStyle = node.getStyle();
+                        String newStyle = Commons.UpdateEspecificStyle(currentStyle,
+                                fieldCss, newVal);
+                        node.setStyle(newStyle);
+                    }
+
                 } catch (NumberFormatException ignored) {
                 }
             }
@@ -88,6 +104,40 @@ public class Components {
 
         btn.setOnAction(ev -> {
             Commons.CentralizeComponent(selectedNode, canvaFather);
+        });
+
+        return root;
+    }
+
+    public static HBox ColorPickerRow_(String title, Node selectedNode, String cssField) {
+        ColorPicker colorPicker = new ColorPicker(Color.WHITE);
+
+        HBox root = ItemRow(colorPicker, title);
+
+        String color = "transparent";
+
+        if (selectedNode instanceof InputComponent node) {
+            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
+            IO.println(cssField + ": " + color);
+        } else if (selectedNode instanceof ButtonComponent node) {
+            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
+        } else if (selectedNode instanceof TextComponent node) {
+            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
+        }
+
+        // Inicializa o ColorPicker com a cor da borda atual
+        colorPicker.setValue(Color.web(color));
+
+        colorPicker.setOnAction(e -> {
+            Color c = colorPicker.getValue();
+            String existingStyle = selectedNode.getStyle();
+
+            // Atualiza o estilo com a nova cor da borda
+            String newStyle = Commons.UpdateEspecificStyle(existingStyle, cssField,
+                    Commons.ColortoHex(c));
+
+            // Aplica o novo estilo no botão
+            selectedNode.setStyle(newStyle);
         });
 
         return root;
