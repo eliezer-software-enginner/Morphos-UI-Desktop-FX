@@ -98,7 +98,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
         node.setLayoutY(data.y());
         this.name.set(data.name());
         final var ic = data.icon();
-        
+
         //AntDesignIcons-Filled;ANDROID
         if (ic != null) {
 //            var ikon = Ikonli.valueOf(ic.name());
@@ -120,7 +120,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                Components.ColorPickerRow(translation.fontColor(), this, "-fx-background-color"),
+                Components.ColorPickerRow(translation.backgroundColor(), this, "-fx-background-color"),
                 Components.LabelWithInput(translation.padding(), this, "-fx-padding"),
                 new ButtonBorderRadius(currentState),
                 //new ButtonBorderWidth(currentState),

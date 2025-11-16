@@ -204,32 +204,55 @@ public class Components {
     public static HBox ColorPickerRow(String title, Node selectedNode, String cssField) {
         ColorPicker colorPicker = new ColorPicker(Color.WHITE);
 
-        HBox root = ItemRow(colorPicker, title);
+        // Botão de transparência
+        Button transparentBtn = new Button("Transparente");
+        transparentBtn.getStyleClass().add("transparent-btn");
+
+        // Layout (ColorPicker + Botão)
+        HBox root = ItemRow(new HBox(10, colorPicker, transparentBtn), title);
 
         String color = "transparent";
 
         if (selectedNode instanceof InputComponent node) {
             color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-            IO.println(cssField + ": " + color);
         } else if (selectedNode instanceof ButtonComponent node) {
             color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
         } else if (selectedNode instanceof TextComponent node) {
             color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
         }
 
-        // Inicializa o ColorPicker com a cor da borda atual
-        colorPicker.setValue(Color.web(color));
+        // Só aplica cor se NÃO for transparent
+        if (!color.equalsIgnoreCase("transparent")) {
+            try {
+                colorPicker.setValue(Color.web(color));
+            } catch (Exception ignored) {
+            }
+        }
 
+        // ▼ ColorPicker: aplica cor escolhida
         colorPicker.setOnAction(e -> {
             Color c = colorPicker.getValue();
-            String existingStyle = selectedNode.getStyle();
+            String newStyle = Commons.UpdateEspecificStyle(
+                    selectedNode.getStyle(),
+                    cssField,
+                    Commons.ColortoHex(c)
+            );
 
-            // Atualiza o estilo com a nova cor da borda
-            String newStyle = Commons.UpdateEspecificStyle(existingStyle, cssField,
-                    Commons.ColortoHex(c));
-
-            // Aplica o novo estilo no botão
             selectedNode.setStyle(newStyle);
+        });
+
+        // ▼ Botão “Transparente”
+        transparentBtn.setOnAction(e -> {
+            String newStyle = Commons.UpdateEspecificStyle(
+                    selectedNode.getStyle(),
+                    cssField,
+                    "transparent"
+            );
+
+            selectedNode.setStyle(newStyle);
+
+            // visual feedback opcional (não obrigatório)
+            transparentBtn.setStyle("-fx-opacity: 0.6;");
         });
 
         return root;

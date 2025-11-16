@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="adding icon">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="changing position of icon">
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/IconData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/IconData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -429,7 +427,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763305932378</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="changing position of icon">
+      <option name="closed" value="true" />
+      <created>1763307520982</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1763307520982</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -455,7 +461,8 @@
     <MESSAGE value="icons scene" />
     <MESSAGE value="icons scene - optimizations" />
     <MESSAGE value="adding icon" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding icon" />
+    <MESSAGE value="changing position of icon" />
+    <option name="LAST_COMMIT_MESSAGE" value="changing position of icon" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -492,7 +499,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java</url>
-          <line>190</line>
+          <line>189</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
