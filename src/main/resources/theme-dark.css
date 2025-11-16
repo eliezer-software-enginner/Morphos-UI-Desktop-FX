@@ -15,6 +15,9 @@
 .error-color {
   -fx-background-color: #b00020;
 }
+.highlight-color{
+  -fx-border-color: #1565c0ff;
+}
 
 /* TEXT-COLORS */
 .text-primary-color {

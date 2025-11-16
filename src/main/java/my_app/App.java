@@ -1,6 +1,7 @@
 package my_app;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my_app.contexts.TranslationContext;
@@ -40,7 +41,7 @@ public class App extends Application {
         //Scene splashScene = new SplashScene(primaryStage);
         // this.stage.setScene(splashScene);
 
-        // Scene mainScene = new MainScene();
+        Scene mainScene = new MainScene();
         //this.stage.setScene(mainScene);
 
         this.stage.setScene(new IconsScene(primaryStage));

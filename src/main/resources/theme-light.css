@@ -12,6 +12,10 @@
   -fx-fill: #ffffff;
 }
 
+.highlight-color{
+  -fx-border-color: #1565c0ff;
+}
+
 /* STATE-COLORS */
 .disable-color {
   -fx-text-fill: #bdbdbd;

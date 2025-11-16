@@ -6,3 +6,17 @@
 .button:hover {
   -fx-opacity: 0.85;
 }
+
+.icon-item {
+    -fx-border-radius: 7px;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+    -fx-padding: 10px;
+}
+
+.icon-item-selected {
+    -fx-border-radius: 7px;
+    -fx-border-width: 1px;
+    -fx-border-color: #1565c0ff;
+    -fx-padding: 10px;
+}
