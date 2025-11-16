@@ -71,7 +71,9 @@ public class Components {
             is.iconItemSelected.addListener((_, _, icon) -> {
                 if (icon != null) {
                     var ic = FontIcon.of(icon.getIconCode(), 16, Color.WHITE);
-                    root.getChildren().set(1, ic);
+                    if (loadedIcon != null) root.getChildren().set(1, ic);
+                    else root.getChildren().add(ic);
+
                     ic = FontIcon.of(icon.getIconCode(), 14, Color.WHITE);
                     nodeTarget.setGraphic(ic);
                 }
@@ -145,9 +147,7 @@ public class Components {
 
         HBox root = ItemRow(btn, title);
 
-        btn.setOnAction(ev -> {
-            Commons.CentralizeComponent(selectedNode, canvaFather);
-        });
+        btn.setOnAction(_ -> Commons.CentralizeComponent(selectedNode, canvaFather));
 
         return root;
     }
@@ -215,12 +215,14 @@ public class Components {
         if (cssField.equals("icon-color")) {
             var btn = (ButtonComponent) selectedNode;
             var ic = (FontIcon) btn.getGraphic();
-            colorPicker.setValue((Color) ic.getIconColor());
+            if (ic != null) {
+                colorPicker.setValue((Color) ic.getIconColor());
 
-            colorPicker.setOnAction(e -> {
-                Color c = colorPicker.getValue();
-                ic.setIconColor(c);
-            });
+                colorPicker.setOnAction(e -> {
+                    Color c = colorPicker.getValue();
+                    ic.setIconColor(c);
+                });
+            }
 
         } else {
             String color = "transparent";
