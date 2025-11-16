@@ -175,6 +175,26 @@ public class Components {
                     }
                 });
             }
+        } else if (cssField.equals("positioning-icon")) {
+            if (selectedNode instanceof ButtonComponent component) {
+                comboBox.setItems(FXCollections.observableArrayList("Left", "Right"));
+
+                //se tem type de clip definido
+                var positioning = component.getContentDisplay();
+                if (positioning != null) comboBox.setValue(
+                        positioning.equals(ContentDisplay.LEFT) ? "Left" : "Right"
+                );
+
+                comboBox.setOnAction(ev -> {
+                    var value = comboBox.getValue();
+                    if (value.equals("Left")) {
+                        component.setContentDisplay(ContentDisplay.LEFT);
+                    }
+                    if (value.equals("Right")) {
+                        component.setContentDisplay(ContentDisplay.RIGHT);
+                    }
+                });
+            }
         }
 
         return root;

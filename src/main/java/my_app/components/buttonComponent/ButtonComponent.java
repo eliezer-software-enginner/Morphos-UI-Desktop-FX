@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
@@ -97,8 +98,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
         node.setLayoutY(data.y());
         this.name.set(data.name());
         final var ic = data.icon();
-
-
+        
         //AntDesignIcons-Filled;ANDROID
         if (ic != null) {
 //            var ikon = Ikonli.valueOf(ic.name());
@@ -108,6 +108,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 Class<?> clazz = Class.forName(ic.pack());
                 Ikon ikon = (Ikon) Enum.valueOf((Class<Enum>) clazz, ic.name());
                 this.setGraphic(FontIcon.of(ikon, ic.size(), Color.web(ic.color())));
+                this.setContentDisplay(ic.position().equals("left") ? ContentDisplay.LEFT : ContentDisplay.RIGHT);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -130,6 +131,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
                 Components.ButtonChooseGraphicContent(this),
+                Components.LabelWithComboBox("Icon position", this, "positioning-icon"),
                 Components.spacerVertical(10),
                 new ButtonRemoverComponent(this, componentsContext));
     }
@@ -175,11 +177,14 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
         var location = Commons.NodeInCanva(this);
 
         IconData iconData = null;
+        var iconPosition = getContentDisplay();
         if (getGraphic() != null) {
             if (getGraphic() instanceof FontIcon icon)
                 iconData = new IconData(
                         icon.getIconCode().getClass().getName(),
-                        icon.getIconCode().toString(), icon.getIconSize(), Commons.ColortoHex((Color) icon.getIconColor()));
+                        icon.getIconCode().toString(), icon.getIconSize(),
+                        Commons.ColortoHex((Color) icon.getIconColor()),
+                        iconPosition.equals(ContentDisplay.LEFT) ? "left" : "right");
         }
 
         return new ButtonComponentData(
