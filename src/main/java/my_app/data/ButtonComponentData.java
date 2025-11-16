@@ -18,6 +18,6 @@ public record ButtonComponentData(
         String identification,
         boolean in_canva,
         String canva_id,
-        String border_color, String name) implements ComponentData {
+        String border_color, String name, IconData icon) implements ComponentData {
 
 }

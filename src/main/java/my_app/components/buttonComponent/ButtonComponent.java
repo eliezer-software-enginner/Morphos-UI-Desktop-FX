@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import my_app.components.Components;
 import my_app.components.LayoutPositionComponent;
 import my_app.components.canvaComponent.CanvaComponent;
@@ -16,7 +17,11 @@ import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.ButtonComponentData;
 import my_app.data.Commons;
+import my_app.data.IconData;
 import my_app.data.ViewContract;
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.Ikonli;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class ButtonComponent extends Button implements ViewContract<ButtonComponentData> {
 
@@ -74,6 +79,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 new Insets(data.padding_top(), data.padding_right(), data.padding_bottom(),
                         data.padding_left()));
 
+
         node.setStyle(
                 "-fx-background-color:%s;-fx-padding:%s;-fx-font-weight:%s;-fx-background-radius:%s;-fx-border-radius:%s;-fx-text-fill:%s;-fx-font-size:%s;-fx-border-width:%s;-fx-border-color:%s;"
                         .formatted(
@@ -90,6 +96,24 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
         node.setLayoutX(data.x());
         node.setLayoutY(data.y());
         this.name.set(data.name());
+        final var ic = data.icon();
+
+
+        //AntDesignIcons-Filled;ANDROID
+        if (ic != null) {
+//            var ikon = Ikonli.valueOf(ic.name());
+//            this.setGraphic(FontIcon.of(ikon, ic.size(), Color.web(ic.color())));
+
+            try {
+                Class<?> clazz = Class.forName(ic.pack());
+                Ikon ikon = (Ikon) Enum.valueOf((Class<Enum>) clazz, ic.name());
+                this.setGraphic(FontIcon.of(ikon, ic.size(), Color.web(ic.color())));
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
     }
 
     @Override
@@ -105,6 +129,8 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
                 Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
+                Components.ButtonChooseGraphicContent(this),
+                Components.spacerVertical(10),
                 new ButtonRemoverComponent(this, componentsContext));
     }
 
@@ -148,6 +174,14 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
 
         var location = Commons.NodeInCanva(this);
 
+        IconData iconData = null;
+        if (getGraphic() != null) {
+            if (getGraphic() instanceof FontIcon icon)
+                iconData = new IconData(
+                        icon.getIconCode().getClass().getName(),
+                        icon.getIconCode().toString(), icon.getIconSize(), Commons.ColortoHex((Color) icon.getIconColor()));
+        }
+
         return new ButtonComponentData(
                 "button",
                 text, fontSize, fontWeight, color, borderWidth, borderRadius, bgColor,
@@ -155,7 +189,9 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 location.inCanva(),
                 location.fatherId(),
                 borderColor,
-                name.get());
+                name.get(),
+                iconData
+        );
 
     }
 

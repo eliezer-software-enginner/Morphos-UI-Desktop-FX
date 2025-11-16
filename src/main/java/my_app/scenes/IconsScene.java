@@ -1,5 +1,7 @@
 package my_app.scenes;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -45,17 +47,18 @@ public class IconsScene extends Scene {
     VBox layout = new VBox(title, Components.spacerVertical(10), header, Components.spacerVertical(10), content);
 
     StringProperty iconMapSelected = new SimpleStringProperty();
-    StringProperty iconItemSelected = new SimpleStringProperty();
+    public StringProperty iconIdSelected = new SimpleStringProperty();
+    public ObjectProperty<FontIcon> iconItemSelected = new SimpleObjectProperty<>();
 
     Map<String, List<HBox>> itemsCreatedBuffer = new HashMap<>();
 
     private final Stage stage = new Stage();
 
-    public IconsScene(Stage primaryStage) {
+    public IconsScene() {
         var screenSize = Commons.ScreensSize.LARGE;
         super(new VBox(), screenSize.width, screenSize.heigh);
+        stage.setResizable(false);
 
-        primaryStage.setResizable(false);
         setRoot(layout);
 
         setup();
@@ -63,7 +66,6 @@ public class IconsScene extends Scene {
     }
 
     void setup() {
-        stage.setResizable(false);
 
         for (var entry : iconsMap.entrySet()) {
             var btn = Components.ButtonPrimary();
@@ -91,9 +93,10 @@ public class IconsScene extends Scene {
             //new : only pass buffer created once to the content whithout recreation
             content.getChildren().setAll(itemsCreatedBuffer.get(newV));
             iconItemSelected.set(null);//clear highlight
+            iconIdSelected.set(null);
         });
 
-        iconItemSelected.addListener((_, _, newId) -> {
+        iconIdSelected.addListener((_, _, newId) -> {
             for (Node node : content.getChildren()) {
 
                 var classes = node.getStyleClass();
@@ -106,7 +109,6 @@ public class IconsScene extends Scene {
                 }
             }
         });
-
 
         content.setPrefColumns(5);
 
@@ -146,7 +148,8 @@ public class IconsScene extends Scene {
 
         root.setOnMouseClicked(ev -> {
             IO.println(id);
-            iconItemSelected.set(id);
+            iconIdSelected.set(id);
+            iconItemSelected.set(icon);
         });
         return root;
     }

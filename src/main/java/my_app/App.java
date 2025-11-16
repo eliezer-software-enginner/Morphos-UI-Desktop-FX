@@ -42,9 +42,9 @@ public class App extends Application {
         // this.stage.setScene(splashScene);
 
         Scene mainScene = new MainScene();
-        //this.stage.setScene(mainScene);
+        this.stage.setScene(mainScene);
 
-        this.stage.setScene(new IconsScene(primaryStage));
+        //this.stage.setScene(new IconsScene(primaryStage));
 
         // themeManager.addScene(mainScene);
 

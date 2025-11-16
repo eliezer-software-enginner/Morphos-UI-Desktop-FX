@@ -1,6 +1,7 @@
 package my_app.components;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -11,7 +12,10 @@ import javafx.scene.shape.Circle;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.data.Commons;
+import my_app.scenes.IconsScene;
 import my_app.themes.Typography;
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.function.Consumer;
 
@@ -32,12 +36,50 @@ public class Components {
         return btn;
     }
 
+    public static Button ButtonPrimary(String text) {
+        var btn = new Button(text);
+        btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
+
+        return btn;
+    }
+
+
     public static Button buttonRemove(String text) {
         var btn = new Button(text);
         btn.getStylesheets().add("btn-remove");
         return btn;
     }
 
+    public static Node ButtonChooseGraphicContent(ButtonComponent nodeTarget) {
+        var btn = ButtonPrimary("Choose icon");
+        HBox root = new HBox(5, btn);
+
+        var loadedIcon = nodeTarget.getGraphic();
+
+        if (loadedIcon instanceof FontIcon ic) {
+            root.getChildren().add(FontIcon.of(ic.getIconCode(), ic.getIconSize(), (Color) ic.getIconColor()));
+        }
+
+        root.setSpacing(10);
+        root.setAlignment(Pos.CENTER_LEFT);
+
+        btn.setOnMouseClicked(ev -> {
+            var is = new IconsScene();
+            is.show();
+
+            is.iconItemSelected.addListener((_, _, icon) -> {
+                if (icon != null) {
+                    var ic = FontIcon.of(icon.getIconCode(), 16, Color.WHITE);
+                    root.getChildren().set(1, ic);
+                    ic = FontIcon.of(icon.getIconCode(), 14, Color.WHITE);
+                    nodeTarget.setGraphic(ic);
+                }
+
+            });
+        });
+
+        return root;
+    }
 
     public static Node LabelWithTextContent(String name, String currentTextContent, Consumer<String> consume) {
         TextField tf = new TextField();
