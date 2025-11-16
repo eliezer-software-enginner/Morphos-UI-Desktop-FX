@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="changing position of icon">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added transparent button">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -435,7 +441,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763307520982</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="added transparent button">
+      <option name="closed" value="true" />
+      <created>1763307857243</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1763307857243</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -462,7 +476,8 @@
     <MESSAGE value="icons scene - optimizations" />
     <MESSAGE value="adding icon" />
     <MESSAGE value="changing position of icon" />
-    <option name="LAST_COMMIT_MESSAGE" value="changing position of icon" />
+    <MESSAGE value="added transparent button" />
+    <option name="LAST_COMMIT_MESSAGE" value="added transparent button" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -499,12 +514,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java</url>
-          <line>189</line>
+          <line>190</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/Components.java</url>
-          <line>58</line>
+          <line>59</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>

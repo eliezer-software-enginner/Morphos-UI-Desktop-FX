@@ -131,7 +131,8 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
                 Components.ButtonChooseGraphicContent(this),
-                Components.LabelWithComboBox("Icon position", this, "positioning-icon"),
+                Components.LabelWithComboBox(translation.iconPosition(), this, "positioning-icon"),
+                Components.ColorPickerRow(translation.iconColor(), this, "icon-color"),
                 Components.spacerVertical(10),
                 new ButtonRemoverComponent(this, componentsContext));
     }

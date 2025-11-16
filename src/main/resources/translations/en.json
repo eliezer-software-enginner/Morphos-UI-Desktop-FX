@@ -54,5 +54,8 @@
   "placeholder": "Placeholder",
   "toogleTheme": "Toggle theme",
   "otherSettings": "Other settings",
-  "variableName": "Name of variable"
+  "variableName": "Name of variable",
+  "transparent": "Transparent",
+  "iconColor": "Icon color",
+  "iconPosition": "Icon position"
 }

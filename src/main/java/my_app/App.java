@@ -8,6 +8,7 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.IconsScene;
 import my_app.scenes.MainScene.MainScene;
+import my_app.scenes.SplashScene.SplashScene;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -37,12 +38,13 @@ public class App extends Application {
         this.stage = primaryStage;
 
         this.stage.setTitle(Commons.AppName + " " + Commons.AppVersion);
+        this.stage.setMinWidth(Commons.ScreensSize.LARGE.width);
 
-        //Scene splashScene = new SplashScene(primaryStage);
-        // this.stage.setScene(splashScene);
+        Scene splashScene = new SplashScene(primaryStage);
+        this.stage.setScene(splashScene);
 
-        Scene mainScene = new MainScene();
-        this.stage.setScene(mainScene);
+        //Scene mainScene = new MainScene();
+        //this.stage.setScene(mainScene);
 
         //this.stage.setScene(new IconsScene(primaryStage));
 

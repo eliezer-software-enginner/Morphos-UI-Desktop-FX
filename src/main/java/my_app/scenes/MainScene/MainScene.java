@@ -40,7 +40,7 @@ public class MainScene extends Scene {
 
     public MainScene() {
         var screenSize = Commons.ScreensSize.LARGE;
-        super(new VBox(), screenSize.width, screenSize.heigh);
+        super(new VBox(), 1410, screenSize.heigh);
 
         setup();
         styles();
@@ -59,6 +59,7 @@ public class MainScene extends Scene {
         HBox.setHgrow(home, Priority.ALWAYS);
         VBox.setVgrow(home, Priority.ALWAYS);
 
+        stage.setMinWidth(Commons.ScreensSize.LARGE.width);
         setRoot(mainView);
         ThemeManager.Instance().addScene(this);
     }

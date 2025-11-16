@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponent;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.IconsScene;
 import my_app.themes.Typography;
@@ -205,55 +206,68 @@ public class Components {
         ColorPicker colorPicker = new ColorPicker(Color.WHITE);
 
         // Botão de transparência
-        Button transparentBtn = new Button("Transparente");
+        Button transparentBtn = new Button(TranslationContext.instance().get().transparent());
         transparentBtn.getStyleClass().add("transparent-btn");
 
         // Layout (ColorPicker + Botão)
         HBox root = ItemRow(new HBox(10, colorPicker, transparentBtn), title);
 
-        String color = "transparent";
+        if (cssField.equals("icon-color")) {
+            var btn = (ButtonComponent) selectedNode;
+            var ic = (FontIcon) btn.getGraphic();
+            colorPicker.setValue((Color) ic.getIconColor());
 
-        if (selectedNode instanceof InputComponent node) {
-            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-        } else if (selectedNode instanceof ButtonComponent node) {
-            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-        } else if (selectedNode instanceof TextComponent node) {
-            color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-        }
+            colorPicker.setOnAction(e -> {
+                Color c = colorPicker.getValue();
+                ic.setIconColor(c);
+            });
 
-        // Só aplica cor se NÃO for transparent
-        if (!color.equalsIgnoreCase("transparent")) {
-            try {
-                colorPicker.setValue(Color.web(color));
-            } catch (Exception ignored) {
+        } else {
+            String color = "transparent";
+
+            if (selectedNode instanceof InputComponent node) {
+                color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
+            } else if (selectedNode instanceof ButtonComponent node) {
+                color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
+            } else if (selectedNode instanceof TextComponent node) {
+                color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
             }
+
+            // Só aplica cor se NÃO for transparent
+            if (!color.equalsIgnoreCase("transparent")) {
+                try {
+                    colorPicker.setValue(Color.web(color));
+                } catch (Exception ignored) {
+                }
+            }
+
+            // ▼ ColorPicker: aplica cor escolhida
+            colorPicker.setOnAction(e -> {
+                Color c = colorPicker.getValue();
+                String newStyle = Commons.UpdateEspecificStyle(
+                        selectedNode.getStyle(),
+                        cssField,
+                        Commons.ColortoHex(c)
+                );
+
+                selectedNode.setStyle(newStyle);
+            });
+
+            // ▼ Botão “Transparente”
+            transparentBtn.setOnAction(e -> {
+                String newStyle = Commons.UpdateEspecificStyle(
+                        selectedNode.getStyle(),
+                        cssField,
+                        "transparent"
+                );
+
+                selectedNode.setStyle(newStyle);
+
+                // visual feedback opcional (não obrigatório)
+                transparentBtn.setStyle("-fx-opacity: 0.6;");
+            });
         }
 
-        // ▼ ColorPicker: aplica cor escolhida
-        colorPicker.setOnAction(e -> {
-            Color c = colorPicker.getValue();
-            String newStyle = Commons.UpdateEspecificStyle(
-                    selectedNode.getStyle(),
-                    cssField,
-                    Commons.ColortoHex(c)
-            );
-
-            selectedNode.setStyle(newStyle);
-        });
-
-        // ▼ Botão “Transparente”
-        transparentBtn.setOnAction(e -> {
-            String newStyle = Commons.UpdateEspecificStyle(
-                    selectedNode.getStyle(),
-                    cssField,
-                    "transparent"
-            );
-
-            selectedNode.setStyle(newStyle);
-
-            // visual feedback opcional (não obrigatório)
-            transparentBtn.setStyle("-fx-opacity: 0.6;");
-        });
 
         return root;
     }

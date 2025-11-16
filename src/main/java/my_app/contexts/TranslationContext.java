@@ -105,7 +105,10 @@ public class TranslationContext {
             String placeholder,
             String toogleTheme,
             String otherSettings,
-            String variableName
+            String variableName,
+            String iconColor,
+            String transparent,
+            String iconPosition
     ) {
     }
 
