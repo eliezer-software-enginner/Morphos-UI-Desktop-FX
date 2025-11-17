@@ -3,7 +3,7 @@ package my_app.components.shared;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import my_app.components.columnComponent.ColumnComponent;
+import my_app.components.ColumnComponent;
 import my_app.themes.Typography;
 
 // ItemsAmountPreviewComponent.java

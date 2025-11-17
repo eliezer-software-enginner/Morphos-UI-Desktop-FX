@@ -58,5 +58,6 @@
   "transparent": "Transparente",
   "iconColor": "Cor do icone",
   "iconPosition": "Posição do ícone",
-  "duplicate": "Duplicar"
+  "duplicate": "Duplicar",
+  "centralizeHorizontally": "Centralizar horizontalmente"
 }

@@ -109,7 +109,8 @@ public class TranslationContext {
             String iconColor,
             String transparent,
             String iconPosition,
-            String duplicate
+            String duplicate,
+            String centralizeHorizontally
     ) {
     }
 

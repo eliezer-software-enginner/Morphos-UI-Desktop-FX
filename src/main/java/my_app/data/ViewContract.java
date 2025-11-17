@@ -1,5 +1,6 @@
 package my_app.data;
 
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import my_app.components.canvaComponent.CanvaComponent;
 
@@ -13,4 +14,6 @@ public interface ViewContract<T> {
     T getData();
 
     void applyData(T data);
+
+    Node getCurrentNode();
 }

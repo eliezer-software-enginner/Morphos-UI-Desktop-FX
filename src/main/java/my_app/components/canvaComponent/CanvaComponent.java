@@ -319,4 +319,9 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
     }
+
+    @Override
+    public Node getCurrentNode() {
+        return this;
+    }
 }

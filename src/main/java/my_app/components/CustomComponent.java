@@ -148,25 +148,30 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
         for (ButtonComponentData data_ : data.button_components) {
             var node = new ButtonComponent(data_.text(), componentsContext);
             node.applyData(data_);
-            //node.setOnMouseClicked((e) -> componentsContext.selectNode(node));
+            node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
             getChildren().add(node);
         }
 
         for (TextComponentData data_ : data.text_components) {
             var node = new TextComponent(data_.text(), componentsContext, canva);
             node.applyData(data_);
-            //node.setOnMouseClicked((e) -> componentsContext.selectNode(node));
+            node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
             getChildren().add(node);
         }
 
         for (ImageComponentData data_ : data.image_components) {
             var node = new ImageComponent(data_.url(), componentsContext);
             node.applyData(data_);
-            //node.setOnMouseClicked((e) -> componentsContext.selectNode(node));
+            node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
             getChildren().add(node);
         }
 
         //this.name.set(data.name());
+    }
+
+    @Override
+    public Node getCurrentNode() {
+        return this;
     }
 
     @Override
@@ -227,12 +232,12 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
 
         father.getChildren().setAll(
                 Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
-                new ButtonRemoverComponent(this, mainComponentsContext));
+                new ButtonRemoverComponent(this, componentsContext));
     }
 
     @Override
     public void settings(Pane father, CanvaComponent canva) {
-        father.getChildren().setAll(Typography.body("Empty"));
+        father.getChildren().setAll(Components.LayoutXYComponent(this));
     }
 
     @Override

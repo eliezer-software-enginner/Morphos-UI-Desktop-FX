@@ -17,12 +17,11 @@ import my_app.components.CustomComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
-import my_app.components.columnComponent.ColumnComponent;
+import my_app.components.ColumnComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.InputComponent;
 import my_app.data.*;
 import my_app.scenes.ShowComponentScene.ShowComponentScene;
-import my_app.screens.Home.Home;
 
 public class ComponentsContext {
 
@@ -220,6 +219,14 @@ public class ComponentsContext {
         refreshSubItems();
     }
 
+    //here for example is when i only want to select the node for editing inside custom component
+    public void selectNodePartially(ViewContract<?> node) {
+        var comp = (ComponentData) node.getData();
+        SelectedComponent newSelection = new SelectedComponent(comp.type(), node.getCurrentNode());
+        nodeSelected.set(newSelection);
+        System.out.println("Selecionado: " + node + " (Type: " + comp.type() + ")");
+    }
+
     public ObservableList<Node> getItemsByType(String type) {
         return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
     }
@@ -296,67 +303,63 @@ public class ComponentsContext {
         refreshSubItems();
     }
 
-    public void addComponent(Node node, CanvaComponent currentCanva) {
-        if (node instanceof ViewContract<?> n) {
-            var data = (ComponentData) n.getData();
-            var type = data.type();
-            // 1. Adiciona o nó ao dataMap
-            addItem(type, node);
+    public void addComponent(ViewContract<?> nodeWrapper, CanvaComponent currentCanva) {
+        var data = (ComponentData) nodeWrapper.getData();
+        var node = nodeWrapper.getCurrentNode();
+        var type = data.type();
+        // 1. Adiciona o nó ao dataMap
+        addItem(type, node);
 
-            // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
-            // ESTA É A LINHA CORRIGIDA
+        // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
+        // ESTA É A LINHA CORRIGIDA
 
-            SelectedComponent newSelection = new SelectedComponent(type, node);
-            nodeSelected.set(newSelection);
+        SelectedComponent newSelection = new SelectedComponent(type, node);
+        nodeSelected.set(newSelection);
 
-            // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
-            headerSelected.set(type);
+        // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
+        headerSelected.set(type);
 
-            // 4. Adiciona o nó à tela (Canva)
-            currentCanva.addElementDragable(node, true);
+        // 4. Adiciona o nó à tela (Canva)
+        currentCanva.addElementDragable(node, true);
 
-            // 5. Notifica a UI lateral para atualizar a lista
-            refreshSubItems();
-        }
+        // 5. Notifica a UI lateral para atualizar a lista
+        refreshSubItems();
     }
 
-    public void duplicateComponentInCanva(Node node, CanvaComponent currentCanva) {
-        if (node instanceof ViewContract<?> n) {
-            var data = n.getData();
+    public void duplicateComponentInCanva(ViewContract<?> nodeWrapper, CanvaComponent currentCanva) {
+        var data = nodeWrapper.getData();
 
-            if (data instanceof CustomComponentData d) {
-                var copyComponent = new CustomComponent(this, currentCanva);
-                copyComponent.applyData(d);
-                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
-                this.addComponent(copyComponent, currentCanva);
-            }
-
-            if (data instanceof ButtonComponentData d) {
-                var copyComponent = new ButtonComponent(this, currentCanva);
-                copyComponent.applyData(d);
-                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
-                this.addComponent(copyComponent, currentCanva);
-            }
-            if (data instanceof ImageComponentData d) {
-                var copyComponent = new ImageComponent(this, currentCanva);
-                copyComponent.applyData(d);
-                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
-                this.addComponent(copyComponent, currentCanva);
-            }
-            if (data instanceof InputComponentData d) {
-                var copyComponent = new InputComponent(this, currentCanva);
-                copyComponent.applyData(d);
-                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
-                this.addComponent(copyComponent, currentCanva);
-            }
-            if (data instanceof TextComponentData d) {
-                var copyComponent = new TextComponent(this, currentCanva);
-                copyComponent.applyData(d);
-                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
-                this.addComponent(copyComponent, currentCanva);
-            }
+        if (data instanceof CustomComponentData d) {
+            var copyComponent = new CustomComponent(this, currentCanva);
+            copyComponent.applyData(d);
+            copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+            this.addComponent(copyComponent, currentCanva);
         }
 
+        if (data instanceof ButtonComponentData d) {
+            var copyComponent = new ButtonComponent(this, currentCanva);
+            copyComponent.applyData(d);
+            copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+            this.addComponent(copyComponent, currentCanva);
+        }
+        if (data instanceof ImageComponentData d) {
+            var copyComponent = new ImageComponent(this, currentCanva);
+            copyComponent.applyData(d);
+            copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+            this.addComponent(copyComponent, currentCanva);
+        }
+        if (data instanceof InputComponentData d) {
+            var copyComponent = new InputComponent(this, currentCanva);
+            copyComponent.applyData(d);
+            copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+            this.addComponent(copyComponent, currentCanva);
+        }
+        if (data instanceof TextComponentData d) {
+            var copyComponent = new TextComponent(this, currentCanva);
+            copyComponent.applyData(d);
+            copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+            this.addComponent(copyComponent, currentCanva);
+        }
     }
 
     public Optional<Node> SearchNodeById(String nodeId) {

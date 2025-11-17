@@ -1,7 +1,7 @@
 package my_app.components.shared;
 
 import javafx.beans.property.SimpleStringProperty;
-import my_app.components.columnComponent.ColumnComponent;
+import my_app.components.ColumnComponent;
 
 // OnEmptyComponent Refatorado (FINAL)
 public class OnEmptyComponent extends BaseChildSelectorComponent {

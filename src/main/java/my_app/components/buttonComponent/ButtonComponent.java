@@ -11,7 +11,6 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
-import my_app.components.LayoutPositionComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
@@ -121,6 +120,11 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     }
 
     @Override
+    public Node getCurrentNode() {
+        return this;
+    }
+
+    @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.ColorPickerRow(translation.backgroundColor(), this, "-fx-background-color"),
@@ -144,8 +148,8 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     @Override
     public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState),
-                Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
+                Components.LayoutXYComponent(this),
+                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
     }
 
     @Override

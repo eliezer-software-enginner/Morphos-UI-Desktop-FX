@@ -1,4 +1,4 @@
-package my_app.components.columnComponent;
+package my_app.components;
 
 import java.util.ArrayList;
 
@@ -8,13 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import my_app.components.Components;
-import my_app.components.LayoutPositionComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.ChildHandlerComponent;
 import my_app.components.shared.ItemsAmountPreviewComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.ColumnComponentData;
 import my_app.data.Commons;
 import my_app.data.ComponentData;
@@ -32,6 +31,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
     public SimpleIntegerProperty childrenAmountState = new SimpleIntegerProperty(3);
     public StringProperty name = new SimpleStringProperty();
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     ComponentsContext componentsContext;
 
@@ -68,6 +68,11 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         // 3. Chamar a lógica centralizada (permanece igual)
         recreateChildren();
 
+    }
+
+    @Override
+    public Node getCurrentNode() {
+        return this;
     }
 
     // -------------------------------------------------------------------
@@ -153,8 +158,8 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     @Override
     public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState),
-                Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
+                Components.LayoutXYComponent(this),
+                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
     }
 
     @Override

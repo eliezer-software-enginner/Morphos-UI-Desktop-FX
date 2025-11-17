@@ -72,6 +72,11 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     }
 
     @Override
+    public Node getCurrentNode() {
+        return this;
+    }
+
+    @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
@@ -90,8 +95,8 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     @Override
     public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState),
-                Components.ToogleSwithItemRow("Centralize horizontally", this, canva)
+                Components.LayoutXYComponent(this),
+                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva)
         );
     }
 

@@ -6,18 +6,13 @@ import javafx.scene.Node;
 import my_app.components.CustomComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.columnComponent.ColumnComponent;
+import my_app.components.ColumnComponent;
 import my_app.components.InputComponent;
 import my_app.contexts.ComponentsContext;
 
 public class ComponentFactory {
 
-    /**
-     * Cria um novo componente JavaFX (Node) a partir do objeto de dados.
-     *
-     * @param data O ComponentData contendo o estado.
-     * @return O Node (Componente JavaFX) totalmente configurado.
-     */
+    @Deprecated(forRemoval = true, since = "17/nov/2025")
     public static Node createNodeFromData(ComponentData data, ComponentsContext componentsContext) {
         if (data == null) {
             return null;

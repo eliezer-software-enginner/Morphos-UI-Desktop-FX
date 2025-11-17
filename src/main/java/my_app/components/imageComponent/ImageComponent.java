@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import my_app.components.Components;
-import my_app.components.LayoutPositionComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
@@ -88,8 +87,8 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     public void settings(Pane father, CanvaComponent canva) {
 
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState),
-                Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
+                Components.LayoutXYComponent(this),
+                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
     }
 
     @Override
@@ -139,6 +138,11 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
             var size = data.height() / 2;
             setClip(new Circle(size, size, size));
         }
+    }
+
+    @Override
+    public Node getCurrentNode() {
+        return this;
     }
 
 }

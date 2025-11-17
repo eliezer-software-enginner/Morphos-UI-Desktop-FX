@@ -1,5 +1,7 @@
 package my_app.components;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -9,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.converter.NumberStringConverter;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
@@ -89,6 +94,29 @@ public class Components {
 
             });
         });
+
+        return root;
+    }
+
+    public static Node LayoutXYComponent(Node node) {
+        TextField tfX = new TextField();
+        var xSide = ItemRow(tfX, "X");
+
+        TextField tfY = new TextField();
+        var ySide = ItemRow(tfY, "Y");
+
+        var root = new HBox(xSide, ySide);
+
+        // vincula TextField <-> layoutX
+        Bindings.bindBidirectional(
+                tfX.textProperty(),
+                node.layoutXProperty(),
+                new NumberStringConverter());
+
+        Bindings.bindBidirectional(
+                tfY.textProperty(),
+                node.layoutYProperty(),
+                new NumberStringConverter());
 
         return root;
     }
@@ -228,8 +256,11 @@ public class Components {
                 colorPicker.setValue((Color) ic.getIconColor());
 
                 colorPicker.setOnAction(e -> {
+                    IO.println("aqui");
                     Color c = colorPicker.getValue();
-                    ic.setIconColor(c);
+
+                    var currentIc = (FontIcon) btn.getGraphic();
+                    currentIc.setIconColor(c);
                 });
             }
 

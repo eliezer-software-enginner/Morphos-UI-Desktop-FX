@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import my_app.components.columnComponent.ColumnComponent;
+import my_app.components.ColumnComponent;
 import my_app.contexts.SubItemsContext;
 import my_app.themes.Typography;
 

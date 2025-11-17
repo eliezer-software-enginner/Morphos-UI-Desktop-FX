@@ -19,7 +19,7 @@ import toolkit.Component;
 public class TextComponent extends Text implements ViewContract<TextComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
-    private ComponentsContext componentsContext;
+    private final ComponentsContext componentsContext;
 
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
@@ -74,7 +74,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     @Override
     public void settings(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new LayoutPositionComponent(currentState),
+                Components.LayoutXYComponent(this),
                 Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
     }
 
@@ -120,5 +120,10 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
         this.name.set(data.name());
         this.setWrappingWidth(data.wrapping_width());
 
+    }
+
+    @Override
+    public Node getCurrentNode() {
+        return this;
     }
 }
