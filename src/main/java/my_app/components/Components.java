@@ -44,6 +44,15 @@ public class Components {
         return btn;
     }
 
+    public static Button ButtonPrimary(String text, Runnable onClick) {
+        var btn = new Button(text);
+        btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
+
+        btn.setOnMouseClicked(_ -> onClick.run());
+
+        return btn;
+    }
+
 
     public static Button buttonRemove(String text) {
         var btn = new Button(text);

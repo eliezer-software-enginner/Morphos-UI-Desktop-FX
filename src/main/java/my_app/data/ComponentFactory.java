@@ -36,7 +36,7 @@ public class ComponentFactory {
                 break;
 
             case "component":
-                component = new CustomComponent(componentsContext);
+                component = new CustomComponent(componentsContext, null);
                 // Assumindo que o applyData do CustomComponent recebe CustomComponentData
                 ((ViewContract<CustomComponentData>) component).applyData((CustomComponentData) data);
                 break;

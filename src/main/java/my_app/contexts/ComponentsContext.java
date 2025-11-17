@@ -20,14 +20,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.columnComponent.ColumnComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.InputComponent;
-import my_app.data.ButtonComponentData;
-import my_app.data.ColumnComponentData;
-import my_app.data.Commons;
-import my_app.data.CustomComponentData;
-import my_app.data.ImageComponentData;
-import my_app.data.InputComponentData;
-import my_app.data.StateJson_v2;
-import my_app.data.TextComponentData;
+import my_app.data.*;
 import my_app.scenes.ShowComponentScene.ShowComponentScene;
 import my_app.screens.Home.Home;
 
@@ -149,7 +142,7 @@ public class ComponentsContext {
             }
 
             for (CustomComponentData data : state.custom_components) {
-                var comp = new CustomComponent(this);
+                var comp = new CustomComponent(this, canvaComponent);
 
                 comp.applyData(data);
                 // nodes.add(comp);
@@ -301,6 +294,19 @@ public class ComponentsContext {
 
         // 5. Notifica a UI lateral para atualizar a lista
         refreshSubItems();
+    }
+
+    public void duplicateComponentInCanva(Node node, CanvaComponent currentCanva) {
+        if (node instanceof ViewContract<?> n) {
+            var data = n.getData();
+            if (data instanceof CustomComponentData d) {
+                var copyComponent = new CustomComponent(this, currentCanva);
+                copyComponent.applyData(d);
+                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+                this.addCustomComponent(copyComponent, currentCanva);
+            }
+        }
+
     }
 
     public Optional<Node> SearchNodeById(String nodeId) {

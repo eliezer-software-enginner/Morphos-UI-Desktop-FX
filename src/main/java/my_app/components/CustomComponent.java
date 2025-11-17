@@ -12,6 +12,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.ButtonComponentData;
 import my_app.data.ColumnComponentData;
 import my_app.data.Commons;
@@ -21,15 +22,19 @@ import my_app.data.InputComponentData;
 import my_app.data.TextComponentData;
 import my_app.data.ViewContract;
 import my_app.themes.Typography;
+import toolkit.Component;
 
 public class CustomComponent extends Pane implements ViewContract<CustomComponentData> {
-
+    TranslationContext.Translation translation = TranslationContext.instance().get();
     ComponentsContext componentsContext;
     public ComponentsContext mainComponentsContext;
+    @Component
+    public CanvaComponent canva;
 
-    public CustomComponent(ComponentsContext componentsContext) {
+    public CustomComponent(ComponentsContext componentsContext, CanvaComponent canva) {
         super();
         this.componentsContext = componentsContext;
+        this.canva = canva;
 
         this.setId(System.currentTimeMillis() + "");
     }
@@ -220,7 +225,9 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
         // new my_app.components.shared.WidthComponent(this),
         // new HeightComponent(this));
 
-        father.getChildren().setAll(new ButtonRemoverComponent(this, mainComponentsContext));
+        father.getChildren().setAll(
+                Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
+                new ButtonRemoverComponent(this, mainComponentsContext));
     }
 
     @Override

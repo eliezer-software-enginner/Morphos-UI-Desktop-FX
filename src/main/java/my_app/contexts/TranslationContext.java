@@ -108,7 +108,8 @@ public class TranslationContext {
             String variableName,
             String iconColor,
             String transparent,
-            String iconPosition
+            String iconPosition,
+            String duplicate
     ) {
     }
 

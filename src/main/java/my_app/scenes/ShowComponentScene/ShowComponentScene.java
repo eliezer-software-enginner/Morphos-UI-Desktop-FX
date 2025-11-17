@@ -43,7 +43,7 @@ public class ShowComponentScene extends Scene {
             CanvaComponent contentCanva = home.canva;
             // style-> "-fx-background-color:#1a4d4d;"
             // 1. Cria o CustomComponent
-            CustomComponent newCustomComponent = new CustomComponent(componentsContext);
+            CustomComponent newCustomComponent = new CustomComponent(componentsContext, contentCanva);
             newCustomComponent.setStyle(contentCanva.getStyle());
             newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
             newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());

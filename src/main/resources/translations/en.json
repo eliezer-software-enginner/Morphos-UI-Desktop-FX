@@ -57,5 +57,6 @@
   "variableName": "Name of variable",
   "transparent": "Transparent",
   "iconColor": "Icon color",
-  "iconPosition": "Icon position"
+  "iconPosition": "Icon position",
+  "duplicate": "Duplicate"
 }
