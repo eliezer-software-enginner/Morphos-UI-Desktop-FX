@@ -481,28 +481,6 @@ public class ComponentsContext {
         }
     }
 
-    public void removeCustomComponent(String nodeId, CanvaComponent maiCanvaComponent) {
-        System.out.println("mainCanva: " + mainCanvaComponent);
-        // 1. Tenta remover o Node do mainCanva (UI)
-        ObservableList<Node> canvaChildren = mainCanvaComponent.getChildren();
-        boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));
-
-        // 2. Remove do dataMap (a coleção de dados)
-        boolean removedFromDataMap = removeItemByIdentification(nodeId);
-
-        Node currentlySelectedNode = nodeSelected.get() != null ? nodeSelected.get().node() : null;
-
-        if (currentlySelectedNode != null && nodeId.equals(currentlySelectedNode.getId())) {
-            nodeSelected.set(null);
-            headerSelected.set(null); // Limpa o header também
-        }
-
-        // 4. Atualiza a UI lateral SOMENTE se a remoção foi bem-sucedida em algum lugar
-        if (removedFromCanva || removedFromDataMap) {
-            refreshSubItems();
-        }
-    }
-
     private boolean removeItemByIdentification(String identification) {
         // Itera sobre todas as listas de nós no dataMap.
         for (ObservableList<Node> itemsList : dataMap.values()) {

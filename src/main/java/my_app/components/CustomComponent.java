@@ -155,7 +155,11 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
         for (TextComponentData data_ : data.text_components) {
             var node = new TextComponent(data_.text(), componentsContext, canva);
             node.applyData(data_);
-            node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
+            node.setOnMouseClicked((e) -> {
+                // ESSENCIAL: Consome o evento para evitar que o pai (CustomComponent) o veja.
+                e.consume();
+                componentsContext.selectNodePartially(node);
+            });
             getChildren().add(node);
         }
 
@@ -176,60 +180,6 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
 
     @Override
     public void appearance(Pane father, CanvaComponent canva) {
-
-        // 1. Obter o valor da cor.
-        String currentColor = Commons.getValueOfSpecificField(getStyle(), "-fx-background-color");
-
-        // 2. Definir a cor inicial. Se a string for vazia, usa um valor seguro
-        // (#ffffff).
-        Color initialColor = Color.web(
-                currentColor.isEmpty() ? "#ffffff" : currentColor);
-
-        // Color Picker
-        ColorPicker bgColorPicker = new ColorPicker(initialColor);
-        bgColorPicker.setOnAction(e -> {
-            Color c = bgColorPicker.getValue();
-
-            var updated = Commons.UpdateEspecificStyle(getStyle(), "-fx-background-color",
-                    Commons.ColortoHex(c));
-
-            // setStyle("-fx-background-color:%s;".formatted(
-            // Commons.ColortoHex(c)));
-
-        });
-
-        // Botão para escolher imagem do sistema
-        // Button chooseImgBtn = new Button("Choose Image...");
-        // chooseImgBtn.setOnAction(e -> {
-        // final var fc = new FileChooser();
-
-        // fc.getExtensionFilters().addAll(
-        // new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
-        // var file = fc.showOpenDialog(null);
-        // if (file != null) {
-        // setStyle("-fx-background-image: url('" + file.toURI().toString() + "'); " +
-        // "-fx-background-size: cover; -fx-background-position: center;");
-        // }
-        // });
-
-        // // Campo para URL
-        // TextField urlField = new TextField();
-        // urlField.setPromptText("Paste Image Url");
-        // Button applyUrl = new Button("Apply URL");
-        // applyUrl.setOnAction(e -> {
-        // String url = urlField.getText();
-        // if (url != null && !url.isBlank()) {
-        // setStyle("-fx-background-image: url('" + url + "'); " +
-        // "-fx-background-size: cover; -fx-background-position: center;");
-        // }
-        // });
-
-        // father.getChildren().setAll(bgColorPicker,
-        // chooseImgBtn, urlField,
-        // applyUrl,
-        // new my_app.components.shared.WidthComponent(this),
-        // new HeightComponent(this));
-
         father.getChildren().setAll(
                 Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 new ButtonRemoverComponent(this, componentsContext));
