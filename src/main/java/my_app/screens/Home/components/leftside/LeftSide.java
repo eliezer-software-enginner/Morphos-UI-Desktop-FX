@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
@@ -57,7 +58,7 @@ public class LeftSide extends VBox {
     @Component
     VBox errorContainer = new VBox();
 
-    public LeftSide(Home home, ComponentsContext componentsContext) {
+    public LeftSide(CanvaComponent currentCanva, ComponentsContext componentsContext) {
 
         config();
         styles();
@@ -70,7 +71,7 @@ public class LeftSide extends VBox {
 
         getChildren().add(spacer);
 
-        optionsField.forEach(field -> options.add(new Option(field, home, componentsContext)));
+        optionsField.forEach(field -> options.add(new Option(field, currentCanva, componentsContext)));
 
         getChildren().addAll(options);
         getChildren().add(errorContainer);

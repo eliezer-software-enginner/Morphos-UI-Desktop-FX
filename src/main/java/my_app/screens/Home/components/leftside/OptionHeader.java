@@ -10,6 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
@@ -38,7 +39,7 @@ public class OptionHeader extends HBox {
 
     public OptionHeader(
             LeftSide.Field field,
-            Home home, BooleanProperty expanded,
+            CanvaComponent currentCanva, BooleanProperty expanded,
             ComponentsContext componentsContext) {
 
         this.componentsContext = componentsContext;
@@ -55,7 +56,7 @@ public class OptionHeader extends HBox {
         String type = field.nameEngligh().toLowerCase();
 
         btnAdd.setOnAction(_ -> {
-            componentsContext.addComponent(type, home);
+            componentsContext.addComponent(type, currentCanva);
             componentsContext.headerSelected.set(type);
             expanded.set(true);
         });
@@ -107,7 +108,7 @@ public class OptionHeader extends HBox {
 
         // Lógica de clique do botão Add Component
         btnAdd.setOnAction(_ -> {
-            componentsContext.addComponent(type, home);
+            componentsContext.addComponent(type, currentCanva);
             // REMOVEMOS: ComponentsContext.headerSelected.set(type); // Não é mais
             // necessário se o AddComponent chamar SelectNode
             expanded.set(true);

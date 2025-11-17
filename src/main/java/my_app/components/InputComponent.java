@@ -82,6 +82,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
                 Components.ColorPickerRow(translation.placeholderColor(), this, "-fx-prompt-text-fill"),
                 Components.ColorPickerRow(translation.focusColor(), this, "-fx-focus-color"),
                 Components.ColorPickerRow(translation.noFocusColor(), this, "-fx-text-box-border"),
+                Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }

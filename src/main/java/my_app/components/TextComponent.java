@@ -14,20 +14,39 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.TextComponentData;
 import my_app.data.ViewContract;
+import toolkit.Component;
 
 public class TextComponent extends Text implements ViewContract<TextComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
-    ComponentsContext componentsContext;
+    private ComponentsContext componentsContext;
 
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
 
-    public TextComponent(String content, ComponentsContext componentsContext) {
+    @Component
+    CanvaComponent canvaFather;
+
+    public TextComponent(String content, ComponentsContext componentsContext, CanvaComponent canvaComponent) {
 
         super(content);
+        this.componentsContext = componentsContext;
+        this.canvaFather = canvaComponent;
+
+        setStyle("-fx-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
+                .formatted(
+                        Commons.FontSizeDefault
+                        //
+                ));
+
+        setId(String.valueOf(System.currentTimeMillis()));
+        currentState.set(this);
+    }
+
+    public TextComponent(ComponentsContext componentsContext, CanvaComponent canvaComponent) {
 
         this.componentsContext = componentsContext;
+        this.canvaFather = canvaComponent;
 
         setStyle("-fx-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
                 .formatted(
@@ -47,6 +66,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
                 Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
                 Components.LabelWithInput(translation.width(), this, "text-wrapping-width"),
+                Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }

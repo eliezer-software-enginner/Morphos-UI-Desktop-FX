@@ -86,7 +86,7 @@ public class ComponentsContext {
             }
 
             for (TextComponentData data : state.text_components) {
-                TextComponent comp = new TextComponent(data.text(), this);
+                TextComponent comp = new TextComponent(data.text(), this, mainCanvaComponent);
                 comp.applyData(data);
                 // nodes.add(comp);
 
@@ -100,7 +100,7 @@ public class ComponentsContext {
 
             // Restaura os botões
             for (ButtonComponentData data : state.button_components) {
-                ButtonComponent comp = new ButtonComponent(this);
+                ButtonComponent comp = new ButtonComponent(this, canvaComponent);
 
                 comp.applyData(data);
                 // nodes.add(comp);
@@ -114,7 +114,7 @@ public class ComponentsContext {
 
             // Restaura as imagens
             for (ImageComponentData data : state.image_components) {
-                ImageComponent comp = new ImageComponent(this);
+                ImageComponent comp = new ImageComponent(this, canvaComponent);
                 comp.stage = stage;
 
                 comp.applyData(data);
@@ -224,7 +224,7 @@ public class ComponentsContext {
         return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
     }
 
-    public void addComponent(String type, Home home) {
+    public void addComponent(String type, CanvaComponent currentCanva) {
 
         if (type == null || type.isBlank()) {
             return;
@@ -238,10 +238,10 @@ public class ComponentsContext {
         if (type.equalsIgnoreCase("Button")) {
             node = new ButtonComponent(content, this);
         } else if (type.equalsIgnoreCase("Input")) {
-            node = new InputComponent(content, this, home.canva);
+            node = new InputComponent(content, this, currentCanva);
 
         } else if (type.equalsIgnoreCase("Text")) {
-            node = new TextComponent(content, this);
+            node = new TextComponent(content, this, mainCanvaComponent);
 
         } else if (type.equalsIgnoreCase("Image")) {
             node = new ImageComponent(
@@ -249,7 +249,7 @@ public class ComponentsContext {
                     this);
 
         } else if (type.equalsIgnoreCase("Component")) {
-            new ShowComponentScene(home.canva, this).stage.show();
+            new ShowComponentScene(currentCanva, this).stage.show();
             return;
         } else if (type.equalsIgnoreCase("Column items")) {
             node = new ColumnComponent(this);
@@ -270,7 +270,7 @@ public class ComponentsContext {
             headerSelected.set(typeNormalized);
 
             // 4. Adiciona o nó à tela (Canva)
-            home.canva.addElementDragable(node, true);
+            currentCanva.addElementDragable(node, true);
 
             // 5. Notifica a UI lateral para atualizar a lista
             refreshSubItems();
@@ -296,14 +296,64 @@ public class ComponentsContext {
         refreshSubItems();
     }
 
+    public void addComponent(Node node, CanvaComponent currentCanva) {
+        if (node instanceof ViewContract<?> n) {
+            var data = (ComponentData) n.getData();
+            var type = data.type();
+            // 1. Adiciona o nó ao dataMap
+            addItem(type, node);
+
+            // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
+            // ESTA É A LINHA CORRIGIDA
+
+            SelectedComponent newSelection = new SelectedComponent(type, node);
+            nodeSelected.set(newSelection);
+
+            // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
+            headerSelected.set(type);
+
+            // 4. Adiciona o nó à tela (Canva)
+            currentCanva.addElementDragable(node, true);
+
+            // 5. Notifica a UI lateral para atualizar a lista
+            refreshSubItems();
+        }
+    }
+
     public void duplicateComponentInCanva(Node node, CanvaComponent currentCanva) {
         if (node instanceof ViewContract<?> n) {
             var data = n.getData();
+
             if (data instanceof CustomComponentData d) {
                 var copyComponent = new CustomComponent(this, currentCanva);
                 copyComponent.applyData(d);
                 copyComponent.setId(String.valueOf(System.currentTimeMillis()));
-                this.addCustomComponent(copyComponent, currentCanva);
+                this.addComponent(copyComponent, currentCanva);
+            }
+
+            if (data instanceof ButtonComponentData d) {
+                var copyComponent = new ButtonComponent(this, currentCanva);
+                copyComponent.applyData(d);
+                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+                this.addComponent(copyComponent, currentCanva);
+            }
+            if (data instanceof ImageComponentData d) {
+                var copyComponent = new ImageComponent(this, currentCanva);
+                copyComponent.applyData(d);
+                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+                this.addComponent(copyComponent, currentCanva);
+            }
+            if (data instanceof InputComponentData d) {
+                var copyComponent = new InputComponent(this, currentCanva);
+                copyComponent.applyData(d);
+                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+                this.addComponent(copyComponent, currentCanva);
+            }
+            if (data instanceof TextComponentData d) {
+                var copyComponent = new TextComponent(this, currentCanva);
+                copyComponent.applyData(d);
+                copyComponent.setId(String.valueOf(System.currentTimeMillis()));
+                this.addComponent(copyComponent, currentCanva);
             }
         }
 

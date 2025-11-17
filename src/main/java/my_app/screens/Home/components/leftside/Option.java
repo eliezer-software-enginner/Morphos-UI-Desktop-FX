@@ -28,18 +28,19 @@ public class Option extends VBox {
 
     @Component
     OptionHeader header;
+    @Component
+    CanvaComponent currentCanva;
 
     ComponentsContext componentsContext;
 
-    @Component
-    Home home;
 
-    public Option(LeftSide.Field field, Home home, ComponentsContext componentsContext) {
+    public Option(LeftSide.Field field, CanvaComponent currentCanva, ComponentsContext componentsContext) {
         this.type = field.nameEngligh().toLowerCase().trim();
-        this.home = home;
-        this.componentsContext = componentsContext;
 
-        header = new OptionHeader(field, home, expanded, componentsContext);
+        this.componentsContext = componentsContext;
+        this.currentCanva = currentCanva;
+
+        header = new OptionHeader(field, currentCanva, expanded, componentsContext);
 
         getChildren().add(header);
         getChildren().add(subItemsContainer);
@@ -106,7 +107,7 @@ public class Option extends VBox {
             updateSubItemStyle(subItemBox, itemId);
         });
 
-        subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId, this.type, home.canva));
+        subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId, this.type, currentCanva));
 
         subItemBox.setOnMouseEntered(_ -> {
             if (!componentsContext.currentNodeIsSelected(itemId)) {

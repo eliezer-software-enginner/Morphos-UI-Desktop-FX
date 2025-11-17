@@ -29,7 +29,7 @@ public class ComponentFactory {
         switch (data.type()) {
             case "text":
                 // 1. Cria a instância
-                component = new TextComponent("", componentsContext);
+                component = new TextComponent("", componentsContext, null);
                 // 2. Aplica os dados (assumindo que TextComponent implementa
                 // applyData<TextComponentData>)
                 ((ViewContract<TextComponentData>) component).applyData((TextComponentData) data);
@@ -42,7 +42,7 @@ public class ComponentFactory {
                 break;
 
             case "button":
-                component = new ButtonComponent(componentsContext);
+                component = new ButtonComponent(componentsContext, null);
                 ((ViewContract<ButtonComponentData>) component).applyData((ButtonComponentData) data);
                 break;
 

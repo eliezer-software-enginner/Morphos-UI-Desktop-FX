@@ -18,6 +18,7 @@ import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.ImageComponentData;
 import my_app.data.ViewContract;
@@ -34,15 +35,19 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
 
     public StringProperty name = new SimpleStringProperty();
     public String clipType;
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     ComponentsContext componentsContext;
 
     @Component
     public VBox errorContainer = new VBox();
+    @Component
+    CanvaComponent currentCanva;
 
-    public ImageComponent(ComponentsContext componentsContext) {
+    public ImageComponent(ComponentsContext componentsContext, CanvaComponent canvaComponent) {
         config();
         this.componentsContext = componentsContext;
+        this.currentCanva = canvaComponent;
     }
 
     public ImageComponent(String sourcePath, ComponentsContext componentsContext) {
@@ -70,6 +75,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
                 new PreserveRatioComponent(this),
                 new ImageBackgroundComponent(this),
                 Components.LabelWithComboBox("Clip", this, "clip-image-as-circle"),
+                Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(10),
                 errorContainer,
                 Components.spacerVertical(20),
@@ -109,7 +115,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
         return new ImageComponentData(url, width, height, x, y, preserveRatio, this.getId(),
                 location.inCanva(),
                 location.fatherId(),
-                name.get(), clipType);
+                name.get(), clipType, "image");
     }
 
     @Override

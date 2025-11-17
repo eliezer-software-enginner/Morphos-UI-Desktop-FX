@@ -21,8 +21,8 @@ import my_app.data.Commons;
 import my_app.data.IconData;
 import my_app.data.ViewContract;
 import org.kordamp.ikonli.Ikon;
-import org.kordamp.ikonli.Ikonli;
 import org.kordamp.ikonli.javafx.FontIcon;
+import toolkit.Component;
 
 public class ButtonComponent extends Button implements ViewContract<ButtonComponentData> {
 
@@ -31,10 +31,13 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
 
-    public ButtonComponent(ComponentsContext componentsContext) {
+    @Component
+    CanvaComponent currentCanva;
 
+    public ButtonComponent(ComponentsContext componentsContext, CanvaComponent currentCanva) {
         super();
         this.componentsContext = componentsContext;
+        this.currentCanva = currentCanva;
         config();
     }
 
@@ -133,6 +136,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 Components.ButtonChooseGraphicContent(this),
                 Components.LabelWithComboBox(translation.iconPosition(), this, "positioning-icon"),
                 Components.ColorPickerRow(translation.iconColor(), this, "icon-color"),
+                Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(10),
                 new ButtonRemoverComponent(this, componentsContext));
     }
