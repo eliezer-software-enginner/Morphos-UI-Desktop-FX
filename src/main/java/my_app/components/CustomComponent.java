@@ -1,28 +1,18 @@
 package my_app.components;
 
-import java.util.ArrayList;
-
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.ButtonComponentData;
-import my_app.data.ColumnComponentData;
-import my_app.data.Commons;
-import my_app.data.CustomComponentData;
-import my_app.data.ImageComponentData;
-import my_app.data.InputComponentData;
-import my_app.data.TextComponentData;
-import my_app.data.ViewContract;
-import my_app.themes.Typography;
+import my_app.data.*;
 import toolkit.Component;
+
+import java.util.ArrayList;
 
 public class CustomComponent extends Pane implements ViewContract<CustomComponentData> {
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -115,26 +105,26 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     }
 
     @Override
-    public void applyData(CustomComponentData data) {
-
+    public void applyData(ComponentData data) {
+        var cast = (CustomComponentData) data;
         this.setId(data.identification());
 
-        this.setLayoutX(data.x);
-        this.setLayoutY(data.y);
+        this.setLayoutX(cast.x);
+        this.setLayoutY(cast.y);
 
         // Aplicando as informações extraídas ao CanvaComponent
-        this.setPrefWidth(data.width);
-        this.setPrefHeight(data.height);
+        this.setPrefWidth(cast.width);
+        this.setPrefHeight(cast.height);
 
         // Ajustando o padding
         this.setPadding(
-                new Insets(data.padding_top,
-                        data.padding_right,
-                        data.padding_bottom,
-                        data.padding_left));
+                new Insets(cast.padding_top,
+                        cast.padding_right,
+                        cast.padding_bottom,
+                        cast.padding_left));
 
-        var bgType = data.bg_type;
-        var bgContent = data.bgContent;
+        var bgType = cast.bg_type;
+        var bgContent = cast.bgContent;
         // Definindo o fundo com base no tipo
         if (bgType.equals("color")) {
             this.setStyle("-fx-background-color:%s;".formatted(
@@ -145,14 +135,14 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
 
-        for (ButtonComponentData data_ : data.button_components) {
+        for (ButtonComponentData data_ : cast.button_components) {
             var node = new ButtonComponent(data_.text(), componentsContext);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
             getChildren().add(node);
         }
 
-        for (TextComponentData data_ : data.text_components) {
+        for (TextComponentData data_ : cast.text_components) {
             var node = new TextComponent(data_.text(), componentsContext, canva);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> {
@@ -163,7 +153,7 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
             getChildren().add(node);
         }
 
-        for (ImageComponentData data_ : data.image_components) {
+        for (ImageComponentData data_ : cast.image_components) {
             var node = new ImageComponent(data_.url(), componentsContext);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));

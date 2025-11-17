@@ -13,7 +13,6 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.screens.Home.Home;
 import my_app.themes.Typography;
 import toolkit.Component;
 
@@ -34,10 +33,6 @@ public class LeftSide extends VBox {
 
     @Component
     Label title = Typography.BodySecondary(translation.visualElements());
-    // new Text("Visual Elements");
-    // List<String> optionsText = List.of("Text", "Button", "Input", "Image",
-    // "Component", "Column items");
-
     private final TranslationContext.Translation enlishBase = TranslationContext.instance().getInEnglishBase();
 
     record Field(String name, String nameEngligh) {
@@ -48,7 +43,8 @@ public class LeftSide extends VBox {
             new Field(translation.button(), enlishBase.button()),
             new Field(translation.input(), enlishBase.input()),
             new Field(translation.image(), enlishBase.image()),
-            new Field(translation.component(), enlishBase.component())
+            new Field(translation.component(), enlishBase.component()),
+            new Field(translation.columnItems(), enlishBase.columnItems())
     );
 
 
@@ -100,7 +96,6 @@ public class LeftSide extends VBox {
 
     void styles() {
         getStyleClass().add("background-color");
-        //appName.setStyle("-fx-fill:#fff;-fx-font-size:17px;");
     }
 
     public void notifyError(String message) {

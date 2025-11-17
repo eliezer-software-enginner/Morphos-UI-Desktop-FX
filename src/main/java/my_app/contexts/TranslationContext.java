@@ -110,7 +110,8 @@ public class TranslationContext {
             String transparent,
             String iconPosition,
             String duplicate,
-            String centralizeHorizontally
+            String centralizeHorizontally,
+            String columnItems
     ) {
     }
 

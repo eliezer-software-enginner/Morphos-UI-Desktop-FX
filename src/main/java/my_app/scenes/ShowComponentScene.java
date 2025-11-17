@@ -1,4 +1,4 @@
-package my_app.scenes.ShowComponentScene;
+package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -13,26 +13,28 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
 import my_app.themes.ThemeManager;
+import toolkit.Component;
 
 public class ShowComponentScene extends Scene {
     public Stage stage = new Stage();
 
     ComponentsContext componentsContext = new ComponentsContext();
-    Home home = new Home(componentsContext, true);
 
+    @Component
     MenuBar mb = new MenuBar();
 
+    @Component
+    Home home = new Home(componentsContext, true);
+
+    @Component
     static BorderPane root = new BorderPane();
 
     ThemeManager themeManager = ThemeManager.Instance();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
     public ShowComponentScene(CanvaComponent mainCanva, ComponentsContext mainComponentsContext) {
-        super(root, 775, 300);
-        stage.setScene(this);
-
-        Commons.UseDefaultStyles(this);
-        themeManager.addScene(this);
+        super(root, 775, 500);
+        setup();
 
         Menu menu = new Menu(translation.menu());
         MenuItem is = new MenuItem(translation.save());
@@ -74,6 +76,13 @@ public class ShowComponentScene extends Scene {
         root.setTop(mb);
         root.setCenter(home);
 
+    }
+
+    void setup() {
+        stage.setScene(this);
+
+        Commons.UseDefaultStyles(this);
+        themeManager.addScene(this);
     }
 
 }

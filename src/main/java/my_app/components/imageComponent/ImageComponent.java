@@ -18,9 +18,7 @@ import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
-import my_app.data.ImageComponentData;
-import my_app.data.ViewContract;
+import my_app.data.*;
 import toolkit.Component;
 
 public class ImageComponent extends ImageView implements ViewContract<ImageComponentData> {
@@ -118,24 +116,24 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
-    public void applyData(ImageComponentData data) {
-
+    public void applyData(ComponentData data) {
+        var cast = (ImageComponentData) data;
         this.setId(data.identification());
 
-        this.setImage(new Image(data.url()));
+        this.setImage(new Image(cast.url()));
 
-        this.setPreserveRatio(data.preserve_ratio());
+        this.setPreserveRatio(cast.preserve_ratio());
 
-        this.setLayoutX(data.x());
-        this.setLayoutY(data.y());
+        this.setLayoutX(cast.x());
+        this.setLayoutY(cast.y());
 
-        this.setFitHeight(data.height());
-        this.setFitWidth(data.width());
-        this.name.set(data.name());
-        this.clipType = data.type_of_clip();
+        this.setFitHeight(cast.height());
+        this.setFitWidth(cast.width());
+        this.name.set(cast.name());
+        this.clipType = cast.type_of_clip();
 
-        if (data.type_of_clip().equals("Circle")) {
-            var size = data.height() / 2;
+        if (cast.type_of_clip().equals("Circle")) {
+            var size = cast.height() / 2;
             setClip(new Circle(size, size, size));
         }
     }

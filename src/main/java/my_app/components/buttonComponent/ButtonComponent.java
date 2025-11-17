@@ -15,10 +15,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.ButtonComponentData;
-import my_app.data.Commons;
-import my_app.data.IconData;
-import my_app.data.ViewContract;
+import my_app.data.*;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -68,38 +65,39 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     }
 
     @Override
-    public void applyData(ButtonComponentData data) {
+    public void applyData(ComponentData data) {
+        var cast = (ButtonComponentData) data;
         var node = (Button) currentState.get();
 
-        node.setId(data.identification());
-        node.setText(data.text());
+        node.setId(cast.identification());
+        node.setText(cast.text());
 
         String paddings = "%s %s %s %s"
-                .formatted(data.padding_top(), data.padding_right(), data.padding_bottom(),
-                        data.padding_left());
+                .formatted(cast.padding_top(), cast.padding_right(), cast.padding_bottom(),
+                        cast.padding_left());
 
         this.setPadding(
-                new Insets(data.padding_top(), data.padding_right(), data.padding_bottom(),
-                        data.padding_left()));
+                new Insets(cast.padding_top(), cast.padding_right(), cast.padding_bottom(),
+                        cast.padding_left()));
 
 
         node.setStyle(
                 "-fx-background-color:%s;-fx-padding:%s;-fx-font-weight:%s;-fx-background-radius:%s;-fx-border-radius:%s;-fx-text-fill:%s;-fx-font-size:%s;-fx-border-width:%s;-fx-border-color:%s;"
                         .formatted(
-                                data.bgColor(),
+                                cast.bgColor(),
                                 paddings,
-                                data.fontWeight(),
-                                data.borderRadius(),
-                                data.borderRadius(),
-                                data.color(),
-                                data.fontSize(),
-                                data.borderWidth(),
-                                data.border_color()));
+                                cast.fontWeight(),
+                                cast.borderRadius(),
+                                cast.borderRadius(),
+                                cast.color(),
+                                cast.fontSize(),
+                                cast.borderWidth(),
+                                cast.border_color()));
 
-        node.setLayoutX(data.x());
-        node.setLayoutY(data.y());
-        this.name.set(data.name());
-        final var ic = data.icon();
+        this.setLayoutX(cast.x());
+        this.setLayoutY(cast.y());
+        this.name.set(cast.name());
+        final var ic = cast.icon();
 
         //AntDesignIcons-Filled;ANDROID
         if (ic != null) {

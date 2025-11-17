@@ -59,5 +59,6 @@
   "iconColor": "Icon color",
   "iconPosition": "Icon position",
   "duplicate": "Duplicate",
-  "centralizeHorizontally": "Centralize horizontally"
+  "centralizeHorizontally": "Centralize horizontally",
+  "columnItems": "Column Items"
 }

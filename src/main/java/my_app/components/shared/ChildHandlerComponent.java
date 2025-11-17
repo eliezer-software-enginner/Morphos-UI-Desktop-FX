@@ -1,28 +1,28 @@
 package my_app.components.shared;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import my_app.components.ColumnComponent;
-import my_app.contexts.SubItemsContext;
+import my_app.contexts.ComponentsContext;
 import my_app.themes.Typography;
+import toolkit.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ChildHandlerComponent extends HBox {
 
+    @Component
     Label title = Typography.caption("Child component:");
-
+    @Component
     ComboBox<String> combo = new ComboBox<>();
-
-    SubItemsContext context = SubItemsContext.getInstance();
 
     public ChildHandlerComponent(
             String title,
-            ColumnComponent nodeTarget,
-            SimpleStringProperty currentNodeId) {
+            ColumnComponent self,
+            SimpleStringProperty currentNodeId, ComponentsContext context) {
 
         this.title.setText(title);
 
@@ -33,7 +33,7 @@ public class ChildHandlerComponent extends HBox {
         uniqueItems.add("None"); // adiciona o item padrão
 
         // Itera sobre os GRUPOS de componentes
-        for (var entry : context.getAllData().entrySet()) {
+        for (var entry : context.dataMap.entrySet()) {
             String componentType = entry.getKey();
 
             // Filtro 2: ignora ColumnItens
@@ -42,11 +42,11 @@ public class ChildHandlerComponent extends HBox {
             }
 
             // Itera sobre os IDs desse grupo
-            for (SimpleStringProperty idProperty : entry.getValue()) {
-                String id = idProperty.get();
+            for (var node : entry.getValue()) {
+                String id = node.getId();
 
-                // Filtro 1: ignora o próprio nodeTarget
-                if (id.equals(nodeTarget.getId())) {
+                // Filtro 1: ignora o próprio id
+                if (id.equals(self.getId())) {
                     continue;
                 }
 
@@ -68,7 +68,7 @@ public class ChildHandlerComponent extends HBox {
         combo.valueProperty().addListener((obs, old, newVal) -> {
             if (newVal != null && !newVal.equals(old)) {
                 currentNodeId.set(newVal);
-                nodeTarget.recreateChildren();
+                self.recreateChildren();
             }
         });
 

@@ -13,7 +13,7 @@ public interface ViewContract<T> {
 
     T getData();
 
-    void applyData(T data);
+    void applyData(ComponentData data);
 
     Node getCurrentNode();
 }

@@ -20,12 +20,10 @@ import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
-import my_app.data.CanvaProps;
-import my_app.data.Commons;
-import my_app.data.ViewContract;
+import my_app.data.*;
 import my_app.screens.Home.Home.VisualNodeCallback;
 
-public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
+public class CanvaComponent extends Pane implements ViewContract<CanvaComponentData> {
     ComponentsContext componentsContext;
 
     public CanvaComponent(ComponentsContext componentsContext) {
@@ -256,7 +254,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
     }
 
     @Override
-    public CanvaProps getData() {
+    public CanvaComponentData getData() {
 
         String canvastyle = this.getStyle();
 
@@ -289,26 +287,26 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaProps> {
             bgType = "image";
         }
 
-        return new CanvaProps(
+        return new CanvaComponentData(
                 paddingTop, paddingRight, paddingBottom, paddingLeft, width, height, bgType,
                 bgContent, this.getId(), 0, 0);
     }
 
     @Override
-    public void applyData(CanvaProps data) {
-
+    public void applyData(ComponentData data) {
+        var cast = (CanvaComponentData) data;
         // Aplicando as informações extraídas ao CanvaComponent
-        setPrefWidth(data.width);
-        setPrefHeight(data.height);
+        setPrefWidth(cast.width);
+        setPrefHeight(cast.height);
 
-        setId(data.identification);
+        setId(cast.identification);
 
         // Ajustando o padding
         setPadding(
-                new Insets(data.padding_top, data.padding_right, data.padding_bottom, data.padding_left));
+                new Insets(cast.padding_top, cast.padding_right, cast.padding_bottom, cast.padding_left));
 
-        var bgType = data.bg_type;
-        var bgContent = data.bgContent;
+        var bgType = cast.bg_type;
+        var bgContent = cast.bgContent;
         // Definindo o fundo com base no tipo
         if (bgType.equals("color")) {
             setStyle("-fx-background-color:%s;".formatted(

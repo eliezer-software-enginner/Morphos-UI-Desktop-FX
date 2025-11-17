@@ -11,9 +11,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
-import my_app.data.TextComponentData;
-import my_app.data.ViewContract;
+import my_app.data.*;
 import toolkit.Component;
 
 public class TextComponent extends Text implements ViewContract<TextComponentData> {
@@ -107,18 +105,19 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     }
 
     @Override
-    public void applyData(TextComponentData data) {
+    public void applyData(ComponentData data) {
+        var cast = (TextComponentData) data;
 
-        this.setText(data.text());
+        this.setText(cast.text());
         this.setId(data.identification());
 
         this.setStyle("-fx-fill:%s;-fx-font-size:%s;-fx-font-weight:%s;"
-                .formatted(data.color(), data.fontSize(), data.font_weight()));
+                .formatted(cast.color(), cast.fontSize(), cast.font_weight()));
 
-        this.setLayoutX(data.layout_x());
-        this.setLayoutY(data.layout_y());
-        this.name.set(data.name());
-        this.setWrappingWidth(data.wrapping_width());
+        this.setLayoutX(cast.layout_x());
+        this.setLayoutY(cast.layout_y());
+        this.name.set(cast.name());
+        this.setWrappingWidth(cast.wrapping_width());
 
     }
 

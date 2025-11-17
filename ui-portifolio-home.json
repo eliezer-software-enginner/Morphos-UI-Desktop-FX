@@ -1,1 +1,201 @@
-{"id_of_component_selected":"1763385207624","type_of_component_selected":"button","canva":{"padding_top":0,"padding_right":0,"padding_bottom":0,"padding_left":0,"width":800.0,"height":600.0,"bg_type":"color","bgContent":"#ffffff","identification":"1762718878915","x":0,"y":0},"text_components":[{"type":"text","type":"text","text":"Im new here","layout_x":178.234130859375,"layout_y":32.73828125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763221377378","in_canva":true,"canva_id":"1762718878915","name":null,"wrapping_width":0.0},{"type":"text","type":"text","text":"teste","layout_x":179.234130859375,"layout_y":57.73828125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763221390443","in_canva":true,"canva_id":"1762718878915","name":null,"wrapping_width":0.0},{"type":"text","type":"text","text":"Im new here","layout_x":365.234130859375,"layout_y":78.73828125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763387510409","in_canva":true,"canva_id":"1762718878915","name":null,"wrapping_width":0.0},{"type":"text","type":"text","text":"teste","layout_x":183.908203125,"layout_y":89.73828125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763387524295","in_canva":true,"canva_id":"1762718878915","name":null,"wrapping_width":0.0},{"type":"text","type":"text","text":"Minhas habilidades estão escondidas","layout_x":94.95654296875,"layout_y":496.73828125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763404139118","in_canva":true,"canva_id":"1762718878915","name":null,"wrapping_width":0.0}],"button_components":[{"type":"button","type":"button","text":"Im new here","fontSize":"16","fontWeight":"normal","color":"white","borderWidth":"0","borderRadius":"3","bgColor":"#664db3","x":181.0,"y":119.0,"padding_top":10,"padding_right":10,"padding_bottom":10,"padding_left":10,"identification":"1763385204371","in_canva":true,"canva_id":"1762718878915","border_color":"transparent","name":null,"icon":null},{"type":"button","type":"button","text":"Im new here","fontSize":"16","fontWeight":"normal","color":"white","borderWidth":"0","borderRadius":"3","bgColor":"#664db3","x":352.0,"y":118.0,"padding_top":10,"padding_right":10,"padding_bottom":10,"padding_left":10,"identification":"1763385207624","in_canva":true,"canva_id":"1762718878915","border_color":"transparent","name":null,"icon":null},{"type":"button","type":"button","text":"Im new here","fontSize":"16","fontWeight":"bold","color":"#000000","borderWidth":"0","borderRadius":"3","bgColor":"transparent","x":87.0,"y":441.0,"padding_top":10,"padding_right":10,"padding_bottom":10,"padding_left":10,"identification":"1763404153338","in_canva":true,"canva_id":"1762718878915","border_color":"transparent","name":null,"icon":{"pack":"org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled","name":"AMAZON_CIRCLE","size":14,"color":"#ffff4d","position":"right"}}],"image_components":[{"type":"image","url":"file:/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/target/classes/assets/images/mago.jpg","width":100.0,"height":100.0,"x":32.0,"y":18.0,"preserve_ratio":true,"identification":"1763222903445","in_canva":true,"canva_id":"1762718878915","name":null,"type_of_clip":"Circle","type":"image"},{"type":"image","url":"file:/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/target/classes/assets/images/mago.jpg","width":100.0,"height":100.0,"x":534.0,"y":25.0,"preserve_ratio":true,"identification":"1763386631828","in_canva":true,"canva_id":"1762718878915","name":null,"type_of_clip":"Circle","type":"image"}],"input_components":[],"column_components":[],"custom_components":[{"type":"component","type":"component","padding_top":0,"padding_right":0,"padding_bottom":0,"padding_left":0,"width":370.0,"height":80.0,"bg_type":"color","bgContent":"transparent","identification":"1763314414272","x":77,"y":302,"in_canva":true,"canva_id":"1762718878915","text_components":[{"type":"text","type":"text","text":"Minhas habilidades estão escondidas","layout_x":7.038490337900214,"layout_y":62.125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763314333038","in_canva":false,"canva_id":null,"name":null,"wrapping_width":0.0}],"button_components":[{"type":"button","type":"button","text":"Im new here","fontSize":"16","fontWeight":"bold","color":"#000000","borderWidth":"0","borderRadius":"3","bgColor":"transparent","x":0.0,"y":0.0,"padding_top":10,"padding_right":10,"padding_bottom":10,"padding_left":10,"identification":"1763314301792","in_canva":false,"canva_id":null,"border_color":"transparent","name":null,"icon":{"pack":"org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled","name":"AMAZON_CIRCLE","size":14,"color":"#ffff4d","position":"right"}}],"image_components":[],"input_components":[],"column_components":[],"custom_components":[]},{"type":"component","type":"component","padding_top":0,"padding_right":0,"padding_bottom":0,"padding_left":0,"width":370.0,"height":80.0,"bg_type":"color","bgContent":"transparent","identification":"1763383786129","x":407,"y":300,"in_canva":true,"canva_id":"1762718878915","text_components":[{"type":"text","type":"text","text":"Minhas habilidades estão escondidas","layout_x":7.038490337900214,"layout_y":62.125,"fontSize":"16","color":"black","font_weight":"normal","identification":"1763314333038","in_canva":false,"canva_id":null,"name":null,"wrapping_width":0.0}],"button_components":[{"type":"button","type":"button","text":"Im new here","fontSize":"16","fontWeight":"normal","color":"#000000","borderWidth":"0","borderRadius":"3","bgColor":"transparent","x":0.0,"y":0.0,"padding_top":10,"padding_right":10,"padding_bottom":10,"padding_left":10,"identification":"1763314301792","in_canva":false,"canva_id":null,"border_color":"transparent","name":null,"icon":{"pack":"org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled","name":"ANDROID","size":14,"color":"#000000","position":"right"}}],"image_components":[],"input_components":[],"column_components":[],"custom_components":[]}]}
+{
+  "id_of_component_selected": null,
+  "type_of_component_selected": null,
+  "canva": {
+    "padding_top": 0,
+    "padding_right": 0,
+    "padding_bottom": 0,
+    "padding_left": 0,
+    "width": 800.0,
+    "height": 600.0,
+    "bg_type": "color",
+    "bgContent": "#ffffff",
+    "identification": "1762718878915",
+    "x": 0,
+    "y": 0,
+    "type": "canva"
+  },
+  "text_components": [
+    {
+      "type": "text",
+      "text": "Portifolio",
+      "layout_x": 177.234130859375,
+      "layout_y": 48.73828125,
+      "fontSize": "25",
+      "color": "black",
+      "font_weight": "bold",
+      "identification": "1763221377378",
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "name": null,
+      "wrapping_width": 0.0
+    },
+    {
+      "type": "text",
+      "text": "Eliezer Brasilian",
+      "layout_x": 177.234130859375,
+      "layout_y": 75.73828125,
+      "fontSize": "16",
+      "color": "black",
+      "font_weight": "normal",
+      "identification": "1763221390443",
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "name": null,
+      "wrapping_width": 0.0
+    }
+  ],
+  "button_components": [],
+  "image_components": [
+    {
+      "type": "image",
+      "url": "file:/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/target/classes/assets/images/mago.jpg",
+      "width": 100.0,
+      "height": 100.0,
+      "x": 32.0,
+      "y": 18.0,
+      "preserve_ratio": true,
+      "identification": "1763222903445",
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "name": null,
+      "type_of_clip": "Circle"
+    }
+  ],
+  "input_components": [],
+  "column_components": [],
+  "custom_components": [
+    {
+      "type": "component",
+      "padding_top": 0,
+      "padding_right": 0,
+      "padding_bottom": 0,
+      "padding_left": 0,
+      "width": 370.0,
+      "height": 80.0,
+      "bg_type": "color",
+      "bgContent": "transparent",
+      "identification": "1763314414272",
+      "x": 70,
+      "y": 215,
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "text_components": [
+        {
+          "type": "text",
+          "text": "Minhas habilidades estão escondidas",
+          "layout_x": 7.038490337900214,
+          "layout_y": 62.125,
+          "fontSize": "16",
+          "color": "black",
+          "font_weight": "normal",
+          "identification": "1763314333038",
+          "in_canva": false,
+          "canva_id": null,
+          "name": null,
+          "wrapping_width": 0.0
+        }
+      ],
+      "button_components": [
+        {
+          "type": "button",
+          "text": "Im new here",
+          "fontSize": "16",
+          "fontWeight": "bold",
+          "color": "#000000",
+          "borderWidth": "0",
+          "borderRadius": "3",
+          "bgColor": "transparent",
+          "x": 0.0,
+          "y": 0.0,
+          "padding_top": 10,
+          "padding_right": 10,
+          "padding_bottom": 10,
+          "padding_left": 10,
+          "identification": "1763314301792",
+          "in_canva": false,
+          "canva_id": null,
+          "border_color": "transparent",
+          "name": null,
+          "icon": {
+            "pack": "org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled",
+            "name": "AMAZON_CIRCLE",
+            "size": 14,
+            "color": "#ffff4d",
+            "position": "right"
+          }
+        }
+      ],
+      "image_components": [],
+      "input_components": [],
+      "column_components": [],
+      "custom_components": []
+    },
+    {
+      "type": "component",
+      "padding_top": 0,
+      "padding_right": 0,
+      "padding_bottom": 0,
+      "padding_left": 0,
+      "width": 370.0,
+      "height": 80.0,
+      "bg_type": "color",
+      "bgContent": "transparent",
+      "identification": "1763383786129",
+      "x": 407,
+      "y": 212,
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "text_components": [
+        {
+          "type": "text",
+          "text": "Minhas habilidades estão escondidas",
+          "layout_x": 7.038490337900214,
+          "layout_y": 62.125,
+          "fontSize": "16",
+          "color": "black",
+          "font_weight": "normal",
+          "identification": "1763314333038",
+          "in_canva": false,
+          "canva_id": null,
+          "name": null,
+          "wrapping_width": 0.0
+        }
+      ],
+      "button_components": [
+        {
+          "type": "button",
+          "text": "Im new here",
+          "fontSize": "16",
+          "fontWeight": "normal",
+          "color": "#000000",
+          "borderWidth": "0",
+          "borderRadius": "3",
+          "bgColor": "transparent",
+          "x": 0.0,
+          "y": 0.0,
+          "padding_top": 10,
+          "padding_right": 10,
+          "padding_bottom": 10,
+          "padding_left": 10,
+          "identification": "1763314301792",
+          "in_canva": false,
+          "canva_id": null,
+          "border_color": "transparent",
+          "name": null,
+          "icon": {
+            "pack": "org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled",
+            "name": "ANDROID",
+            "size": 14,
+            "color": "#000000",
+            "position": "right"
+          }
+        }
+      ],
+      "image_components": [],
+      "input_components": [],
+      "column_components": [],
+      "custom_components": []
+    }
+  ]
+}

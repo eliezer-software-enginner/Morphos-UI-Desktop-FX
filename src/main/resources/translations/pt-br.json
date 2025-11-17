@@ -59,5 +59,6 @@
   "iconColor": "Cor do icone",
   "iconPosition": "Posição do ícone",
   "duplicate": "Duplicar",
-  "centralizeHorizontally": "Centralizar horizontalmente"
+  "centralizeHorizontally": "Centralizar horizontalmente",
+  "columnItems": "Coluna Itens"
 }

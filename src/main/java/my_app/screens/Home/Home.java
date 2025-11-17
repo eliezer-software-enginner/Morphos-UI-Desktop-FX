@@ -24,9 +24,9 @@ public class Home extends BorderPane {
     }
 
     public Home(ComponentsContext componentsContext, boolean openComponentScene) {
-        canva = new CanvaComponent(componentsContext);
-
+        this.canva = new CanvaComponent(componentsContext);
         this.leftSide = new LeftSide(canva, componentsContext);
+
         setLeft(this.leftSide);
 
         ScrollPane editor = new ScrollPane();

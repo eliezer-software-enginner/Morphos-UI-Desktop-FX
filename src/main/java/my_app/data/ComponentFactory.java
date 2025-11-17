@@ -44,7 +44,7 @@ public class ComponentFactory {
             case "column items":
                 // Em casos de contêineres, evite recursão desnecessária no Factory.
                 // O ColumnComponent aplica os dados e recria os filhos internamente.
-                component = new ColumnComponent(componentsContext);
+                component = new ColumnComponent(componentsContext, null);
                 ((ViewContract<ColumnComponentData>) component).applyData((ColumnComponentData) data);
                 break;
 

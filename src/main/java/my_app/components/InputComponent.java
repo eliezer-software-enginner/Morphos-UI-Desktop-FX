@@ -11,9 +11,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.*;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
-import my_app.data.InputComponentData;
-import my_app.data.ViewContract;
+import my_app.data.*;
 import toolkit.Component;
 
 public class InputComponent extends TextField implements ViewContract<InputComponentData> {
@@ -55,20 +53,21 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     }
 
     @Override
-    public void applyData(InputComponentData data) {
+    public void applyData(ComponentData data) {
+        var cast = (InputComponentData) data;
 
         this.setId(data.identification());
-        this.setText(data.text());
+        this.setText(cast.text());
 
         this.setStyle("-fx-text-fill:%s;-fx-font-size:%s;-fx-font-weight:%s;-fx-prompt-text-fill:%s;-fx-focus-color:%s;-fx-text-box-border:%s;"
-                .formatted(data.color(), data.font_size(), data.font_weight(),
-                        data.placeholder_color(), data.focus_color(), data.no_focus_color()
+                .formatted(cast.color(), cast.font_size(), cast.font_weight(),
+                        cast.placeholder_color(), cast.focus_color(), cast.no_focus_color()
                 ));
 
-        this.setLayoutX(data.x());
-        this.setLayoutY(data.y());
-        this.setPromptText(data.placeholder());
-        this.name.set(data.name());
+        this.setLayoutX(cast.x());
+        this.setLayoutY(cast.y());
+        this.setPromptText(cast.placeholder());
+        this.name.set(cast.name());
     }
 
     @Override

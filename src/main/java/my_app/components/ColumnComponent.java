@@ -1,41 +1,36 @@
 package my_app.components;
 
-import java.util.ArrayList;
-
 import javafx.beans.property.*;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.ChildHandlerComponent;
 import my_app.components.shared.ItemsAmountPreviewComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.ColumnComponentData;
-import my_app.data.Commons;
-import my_app.data.ComponentData;
-import my_app.data.ComponentFactory;
-import my_app.data.ViewContract;
+import my_app.data.*;
+
+import java.util.ArrayList;
 
 // ColumnItens.java
 public class ColumnComponent extends VBox implements ViewContract<ColumnComponentData> {
-
     SimpleStringProperty currentChildIdState = new SimpleStringProperty("None");
     SimpleStringProperty onEmptyComponentState = new SimpleStringProperty("None"); // Novo padrão: "None"
-
-    // Mantemos o currentState e currentChild para a barra lateral de propriedades
-    ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
     public SimpleIntegerProperty childrenAmountState = new SimpleIntegerProperty(3);
     public StringProperty name = new SimpleStringProperty();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
-    ComponentsContext componentsContext;
+    private final ComponentsContext componentsContext;
+    private final CanvaComponent canva;
 
-    public ColumnComponent(ComponentsContext componentsContext) {
+    public ColumnComponent(ComponentsContext componentsContext, CanvaComponent canva) {
         // Configuração inicial como VBox
         setSpacing(5);
         setStyle("-fx-background-color:red;");
@@ -44,36 +39,41 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         setPrefWidth(Region.USE_COMPUTED_SIZE); // Permite que o VBox se ajuste ao conteúdo/pai
 
         setId(String.valueOf(System.currentTimeMillis()));
-        currentState.set(this);
+
         this.componentsContext = componentsContext;
+        this.canva = canva;
+
+        getChildren().add(new TextComponent("Im new here", componentsContext, canva));
     }
 
     @Override
-    public void applyData(ColumnComponentData data) {
+    public void applyData(ComponentData data) {
+        var cast = (ColumnComponentData) data;
         // Limpa os filhos existentes antes de aplicar o novo estado
         getChildren().clear();
 
-        this.setLayoutX(data.x());
-        this.setLayoutY(data.y());
+        this.setLayoutX(cast.x());
+        this.setLayoutY(cast.y());
 
         this.setId(data.identification());
 
-        String childId = data.childId() == null ? "None" : data.childId();
-        String alternativeChildId = data.alternativeChildId() == null ? "None" : data.alternativeChildId();
+        String childId = cast.childId() == null ? "None" : cast.childId();
+        String alternativeChildId = cast.alternativeChildId() == null ? "None" : cast.alternativeChildId();
 
         currentChildIdState.set(childId);
         onEmptyComponentState.set(alternativeChildId);
-        childrenAmountState.set(data.pref_child_amount_for_preview());
+        childrenAmountState.set(cast.pref_child_amount_for_preview());
 
         // 3. Chamar a lógica centralizada (permanece igual)
         recreateChildren();
-
     }
 
     @Override
     public Node getCurrentNode() {
         return this;
     }
+
+    TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
     // -------------------------------------------------------------------
     // NOVO MÉTODO: Lógica Centralizada para Recriar os Filhos
@@ -97,19 +97,45 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             var op = componentsContext.SearchNodeById(emptyComponentId);
 
             op.ifPresent(existingNode -> {
-                if (existingNode instanceof ViewContract existingView) {
-                    ComponentData originalData = (ComponentData) existingView.getData();
+                if (existingNode instanceof ViewContract<?> existingView) {
+                    var originalData = (ComponentData) existingView.getData();
 
-                    // Cria uma NOVA cópia do nó a partir dos dados originais
-                    Node emptyNode = ComponentFactory.createNodeFromData(originalData, componentsContext);
-                    // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-                    emptyNode.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+                    var type = originalData.type();
 
-                    // Remove o nó de seu pai anterior e adiciona
-                    if (emptyNode.getParent() != null) {
-                        ((Pane) emptyNode.getParent()).getChildren().remove(emptyNode);
+                    ViewContract<?> nodeWrapper = null;
+
+                    if (type.equalsIgnoreCase(englishBase.button())) {
+                        nodeWrapper = new ButtonComponent(componentsContext, canva);
+                        nodeWrapper.applyData(originalData);
+                    } else if (type.equalsIgnoreCase(englishBase.image())) {
+                        nodeWrapper = new ImageComponent(componentsContext, canva);
+                        nodeWrapper.applyData(originalData);
+                    } else if (type.equalsIgnoreCase(englishBase.input())) {
+                        nodeWrapper = new InputComponent(componentsContext, canva);
+                        nodeWrapper.applyData(originalData);
+                    } else if (type.equalsIgnoreCase(englishBase.text())) {
+                        nodeWrapper = new TextComponent(componentsContext, canva);
+                        nodeWrapper.applyData(originalData);
+                    } else if (type.equalsIgnoreCase(englishBase.component())) {
+                        nodeWrapper = new CustomComponent(componentsContext, canva);
+                        nodeWrapper.applyData(originalData);
                     }
-                    getChildren().add(emptyNode);
+
+                    //aqui eu posso remover ele do header e do canva
+                    if (nodeWrapper != null) {
+                        // Cria uma NOVA cópia do nó a partir dos dados originais
+                        // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
+                        var node = nodeWrapper.getCurrentNode();
+                        node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+
+                        // Remove o nó de seu pai anterior e adiciona
+                        if (node.getParent() != null) {
+                            ((Pane) node.getParent()).getChildren().remove(node);
+                        }
+                        getChildren().add(node);
+
+                    }
+
                 }
             });
 
@@ -148,9 +174,9 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     @Override
     public void appearance(Pane father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new ChildHandlerComponent("Child component:", this, currentChildIdState),
+                new ChildHandlerComponent("Child component:", this, currentChildIdState, componentsContext),
                 new ItemsAmountPreviewComponent(this),
-                new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState),
+                new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState, componentsContext),
                 Components.spacerVertical(20),
                 new ButtonRemoverComponent(this, componentsContext));
     }

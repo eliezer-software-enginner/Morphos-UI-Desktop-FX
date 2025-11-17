@@ -1,11 +1,8 @@
 package my_app.data;
 
-import java.io.Serializable;
-
 //canvaProps
 @Deprecated
-public class CanvaComponentData implements Serializable {
-
+public class CanvaComponentData implements ComponentData {
     public int padding_top;
     public int padding_right;
     public int padding_bottom;
@@ -17,6 +14,7 @@ public class CanvaComponentData implements Serializable {
     public String identification;
     public int x;
     public int y;
+    public String type = "canva";
 
     public CanvaComponentData() {
     }
@@ -46,4 +44,13 @@ public class CanvaComponentData implements Serializable {
         this.y = y;
     }
 
+    @Override
+    public String type() {
+        return "canva";
+    }
+
+    @Override
+    public String identification() {
+        return "";
+    }
 }

@@ -1,10 +1,6 @@
 package my_app.contexts;
 
-import java.io.File;
-import java.util.Optional;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,15 +9,18 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
+import my_app.components.InputComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
-import my_app.components.ColumnComponent;
 import my_app.components.imageComponent.ImageComponent;
-import my_app.components.InputComponent;
 import my_app.data.*;
-import my_app.scenes.ShowComponentScene.ShowComponentScene;
+import my_app.scenes.ShowComponentScene;
+
+import java.io.File;
+import java.util.Optional;
 
 public class ComponentsContext {
 
@@ -154,7 +153,7 @@ public class ComponentsContext {
             }
 
             for (ColumnComponentData data : state.column_components) {
-                var comp = new ColumnComponent(this);
+                var comp = new ColumnComponent(this, mainCanvaComponent);
 
                 comp.applyData(data);
                 // nodes.add(comp);
@@ -231,6 +230,8 @@ public class ComponentsContext {
         return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
     }
 
+    TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+
     public void addComponent(String type, CanvaComponent currentCanva) {
 
         if (type == null || type.isBlank()) {
@@ -242,24 +243,24 @@ public class ComponentsContext {
 
         var typeNormalized = type.trim().toLowerCase();
 
-        if (type.equalsIgnoreCase("Button")) {
+        if (type.equalsIgnoreCase(englishBase.button())) {
             node = new ButtonComponent(content, this);
-        } else if (type.equalsIgnoreCase("Input")) {
+        } else if (type.equalsIgnoreCase(englishBase.input())) {
             node = new InputComponent(content, this, currentCanva);
 
-        } else if (type.equalsIgnoreCase("Text")) {
+        } else if (type.equalsIgnoreCase(englishBase.text())) {
             node = new TextComponent(content, this, mainCanvaComponent);
 
-        } else if (type.equalsIgnoreCase("Image")) {
+        } else if (type.equalsIgnoreCase(englishBase.image())) {
             node = new ImageComponent(
                     ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(),
                     this);
 
-        } else if (type.equalsIgnoreCase("Component")) {
+        } else if (type.equalsIgnoreCase(englishBase.component())) {
             new ShowComponentScene(currentCanva, this).stage.show();
             return;
-        } else if (type.equalsIgnoreCase("Column items")) {
-            node = new ColumnComponent(this);
+        } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
+            node = new ColumnComponent(this, mainCanvaComponent);
         }
 
         if (node != null) {
@@ -288,13 +289,13 @@ public class ComponentsContext {
         // mainCanvaComponent = mainCanva;
         // nodes.add(customComponent); // Adiciona à lista mestre
         System.out.println("(addCustomComponent) -> mainCanva in custom component: " + mainCanva);
-        addItem("component", customComponent);
+        addItem(englishBase.component(), customComponent);
 
-        SelectedComponent newSelection = new SelectedComponent("component", customComponent);
+        SelectedComponent newSelection = new SelectedComponent(englishBase.component(), customComponent);
         nodeSelected.set(newSelection);
 
         // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
-        headerSelected.set("component");
+        headerSelected.set(englishBase.component());
 
         // 4. Adiciona o nó à tela (Canva)
         mainCanva.addElementDragable(customComponent, true);
