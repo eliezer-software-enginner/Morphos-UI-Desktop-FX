@@ -85,60 +85,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         getChildren().clear();
 
         if (amount == 0) {
-            // SE A QUANTIDADE FOR ZERO, exibe o componente de placeholder
-            String emptyComponentId = onEmptyComponentState.get();
-
-            if (emptyComponentId.equals("None") || emptyComponentId.isEmpty()) {
-                // Não há placeholder para exibir
-                return;
-            }
-
-            // Busca o nó original pelo ID e faz a DEEP COPY
-            var op = componentsContext.SearchNodeById(emptyComponentId);
-
-            op.ifPresent(existingNode -> {
-                if (existingNode instanceof ViewContract<?> existingView) {
-                    var originalData = (ComponentData) existingView.getData();
-
-                    var type = originalData.type();
-
-                    ViewContract<?> nodeWrapper = null;
-
-                    if (type.equalsIgnoreCase(englishBase.button())) {
-                        nodeWrapper = new ButtonComponent(componentsContext, canva);
-                        nodeWrapper.applyData(originalData);
-                    } else if (type.equalsIgnoreCase(englishBase.image())) {
-                        nodeWrapper = new ImageComponent(componentsContext, canva);
-                        nodeWrapper.applyData(originalData);
-                    } else if (type.equalsIgnoreCase(englishBase.input())) {
-                        nodeWrapper = new InputComponent(componentsContext, canva);
-                        nodeWrapper.applyData(originalData);
-                    } else if (type.equalsIgnoreCase(englishBase.text())) {
-                        nodeWrapper = new TextComponent(componentsContext, canva);
-                        nodeWrapper.applyData(originalData);
-                    } else if (type.equalsIgnoreCase(englishBase.component())) {
-                        nodeWrapper = new CustomComponent(componentsContext, canva);
-                        nodeWrapper.applyData(originalData);
-                    }
-
-                    //aqui eu posso remover ele do header e do canva
-                    if (nodeWrapper != null) {
-                        // Cria uma NOVA cópia do nó a partir dos dados originais
-                        // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-                        var node = nodeWrapper.getCurrentNode();
-                        node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
-
-                        // Remove o nó de seu pai anterior e adiciona
-                        if (node.getParent() != null) {
-                            ((Pane) node.getParent()).getChildren().remove(node);
-                        }
-                        getChildren().add(node);
-
-                    }
-
-                }
-            });
-
+            renderComponentForStateEmpty();
             return; // Encerra a função, pois o placeholder foi adicionado
         }
 
@@ -169,6 +116,59 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             }
         });
 
+    }
+
+    private void renderComponentForStateEmpty() {
+        // SE A QUANTIDADE FOR ZERO, exibe o componente de placeholder
+        String emptyComponentId = onEmptyComponentState.get();
+
+        if (emptyComponentId.equals("None") || emptyComponentId.isEmpty()) {
+            // Não há placeholder para exibir
+            return;
+        }
+
+        // Busca o nó original pelo ID e faz a DEEP COPY
+        var op = componentsContext.SearchNodeById(emptyComponentId);
+
+        op.ifPresent(existingNode -> {
+            var originalData = (ComponentData) existingNode.getData();
+
+            var type = originalData.type();
+
+            ViewContract<?> newNodeWrapper = null;
+
+            if (type.equalsIgnoreCase(englishBase.button())) {
+                newNodeWrapper = new ButtonComponent(componentsContext, canva);
+                newNodeWrapper.applyData(originalData);
+            } else if (type.equalsIgnoreCase(englishBase.image())) {
+                newNodeWrapper = new ImageComponent(componentsContext, canva);
+                newNodeWrapper.applyData(originalData);
+            } else if (type.equalsIgnoreCase(englishBase.input())) {
+                newNodeWrapper = new InputComponent(componentsContext, canva);
+                newNodeWrapper.applyData(originalData);
+            } else if (type.equalsIgnoreCase(englishBase.text())) {
+                newNodeWrapper = new TextComponent(componentsContext, canva);
+                newNodeWrapper.applyData(originalData);
+            } else if (type.equalsIgnoreCase(englishBase.component())) {
+                newNodeWrapper = new CustomComponent(componentsContext, canva);
+                newNodeWrapper.applyData(originalData);
+            }
+
+            //aqui eu posso remover ele do header e do canva
+            if (newNodeWrapper != null) {
+                // Cria uma NOVA cópia do nó a partir dos dados originais
+                // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
+                var node = newNodeWrapper.getCurrentNode();
+                node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+
+                // Remove o nó de seu pai anterior e adiciona
+                componentsContext.removeComponentFromAllPlaces(existingNode, canva);
+//                if (existingNode.getCurrentNode().getParent() != null) {
+//                    ((Pane) node.getParent()).getChildren().remove(node);
+//                }
+                getChildren().add(node);
+            }
+        });
     }
 
     @Override

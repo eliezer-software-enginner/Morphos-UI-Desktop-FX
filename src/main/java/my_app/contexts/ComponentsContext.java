@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import my_app.components.ColumnComponent;
-import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
+import my_app.components.*;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
@@ -26,7 +23,7 @@ public class ComponentsContext {
 
     public SimpleObjectProperty<SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
 
-    public ObservableMap<String, ObservableList<Node>> dataMap = FXCollections
+    public ObservableMap<String, ObservableList<ViewContract<?>>> dataMap = FXCollections
             .observableHashMap();
 
     public SimpleStringProperty headerSelected = new SimpleStringProperty(null);
@@ -43,6 +40,26 @@ public class ComponentsContext {
         headerSelected.set(null);
         dataMap.clear();
         leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+    }
+
+    public void removeComponentFromAllPlaces(ViewContract<?> componentWrapper, CanvaComponent canvaComponent) {
+        removeComponentFromCanva(componentWrapper, canvaComponent);
+        removeComponentFromDataMap(componentWrapper);
+        refreshSubItems();
+    }
+
+    public void removeComponentFromCanva(ViewContract<?> componentWrapper, CanvaComponent canvaComponent) {
+        canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
+    }
+
+    public void removeComponentFromDataMap(ViewContract<?> componentWrapper) {
+        var data = (ComponentData) componentWrapper.getData();
+        var list = dataMap.get(data.type());
+
+        var currentNodeId = componentWrapper.getCurrentNode().getId();
+
+        list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
+        IO.println("removeu do datamap");
     }
 
     public record SelectedComponent(String type, Node node) {
@@ -165,7 +182,7 @@ public class ComponentsContext {
                 }
             }
 
-            SearchNodeById(idOfComponentSelected).ifPresent(node -> selectNode(node));
+            SearchNodeById(idOfComponentSelected).ifPresent(node -> selectNode(node.getCurrentNode()));
 
             leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
 
@@ -176,20 +193,46 @@ public class ComponentsContext {
 
     }
 
-    public void addItem(String type, Node node) {
+    public void addItem(String type, ViewContract<?> nodeWrapper) {
         dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
-                .add(node);
+                .add(nodeWrapper);
     }
 
-    public String getNodeType(Node targetNode) {
-        if (targetNode == null) {
+
+    public static Node SearchNodeByIdInMainCanva(String nodeId, CanvaComponent canva) {
+        ObservableList<Node> canvaChildren = canva.getChildren();
+        // lookin for custom component in main canva
+        return canvaChildren.stream()
+                .filter(n -> nodeId.equals(n.getId()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String getNodeType(Node node) {
+        if (node == null) {
             return null;
         }
-        String nodeId = targetNode.getId();
+        String nodeId = node.getId();
 
         // Itera sobre o mapa para encontrar a chave (tipo) que contém o Node.
         for (var entry : dataMap.entrySet()) {
-            if (entry.getValue().stream().anyMatch(n -> n.getId().equals(nodeId))) {
+            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(nodeId))) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public String getNodeType(ViewContract<?> targetNodeWrapper) {
+        if (targetNodeWrapper == null) {
+            return null;
+        }
+        var node = targetNodeWrapper.getCurrentNode();
+        String nodeId = node.getId();
+
+        // Itera sobre o mapa para encontrar a chave (tipo) que contém o Node.
+        for (var entry : dataMap.entrySet()) {
+            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(nodeId))) {
                 return entry.getKey();
             }
         }
@@ -226,7 +269,7 @@ public class ComponentsContext {
         System.out.println("Selecionado: " + node + " (Type: " + comp.type() + ")");
     }
 
-    public ObservableList<Node> getItemsByType(String type) {
+    public ObservableList<ViewContract<?>> getItemsByType(String type) {
         return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
     }
 
@@ -238,7 +281,7 @@ public class ComponentsContext {
             return;
         }
 
-        Node node = null;
+        ViewContract<?> node = null;
         var content = "Im new here";
 
         var typeNormalized = type.trim().toLowerCase();
@@ -271,34 +314,34 @@ public class ComponentsContext {
             // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
             // ESTA É A LINHA CORRIGIDA
 
-            SelectedComponent newSelection = new SelectedComponent(typeNormalized, node);
+            SelectedComponent newSelection = new SelectedComponent(typeNormalized, node.getCurrentNode());
             nodeSelected.set(newSelection);
 
             // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
             headerSelected.set(typeNormalized);
 
             // 4. Adiciona o nó à tela (Canva)
-            currentCanva.addElementDragable(node, true);
+            currentCanva.addElementDragable(node.getCurrentNode(), true);
 
             // 5. Notifica a UI lateral para atualizar a lista
             refreshSubItems();
         }
     }
 
-    public void addCustomComponent(Node customComponent, CanvaComponent mainCanva) {
+    public void addCustomComponent(ViewContract<?> customComponent, CanvaComponent mainCanva) {
         // mainCanvaComponent = mainCanva;
         // nodes.add(customComponent); // Adiciona à lista mestre
         System.out.println("(addCustomComponent) -> mainCanva in custom component: " + mainCanva);
         addItem(englishBase.component(), customComponent);
 
-        SelectedComponent newSelection = new SelectedComponent(englishBase.component(), customComponent);
+        SelectedComponent newSelection = new SelectedComponent(englishBase.component(), customComponent.getCurrentNode());
         nodeSelected.set(newSelection);
 
         // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
         headerSelected.set(englishBase.component());
 
         // 4. Adiciona o nó à tela (Canva)
-        mainCanva.addElementDragable(customComponent, true);
+        mainCanva.addElementDragable(customComponent.getCurrentNode(), true);
 
         // 5. Notifica a UI lateral para atualizar a lista
         refreshSubItems();
@@ -309,7 +352,7 @@ public class ComponentsContext {
         var node = nodeWrapper.getCurrentNode();
         var type = data.type();
         // 1. Adiciona o nó ao dataMap
-        addItem(type, node);
+        addItem(type, nodeWrapper);
 
         // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
         // ESTA É A LINHA CORRIGIDA
@@ -363,22 +406,20 @@ public class ComponentsContext {
         }
     }
 
-    public Optional<Node> SearchNodeById(String nodeId) {
+    public Optional<ViewContract<?>> SearchNodeById(String nodeId) {
         return dataMap.values()
                 .stream()
                 .flatMap(list -> list.stream()) // Achata todas as listas em um único stream
-                .filter(node -> node.getId().equals(nodeId))
+                .filter(node -> node.getCurrentNode().getId().equals(nodeId))
                 .findFirst();
     }
 
     public static Node SearchNodeByIdInMainCanva(String nodeId, ObservableList<Node> canvaChildren) {
         // lookin for custom component in main canva
-        var target = canvaChildren.stream()
+        return canvaChildren.stream()
                 .filter(n -> nodeId.equals(n.getId()))
                 .findFirst()
                 .orElse(null);
-
-        return target;
     }
 
     // public static void SelectNode(Node node) {
@@ -414,10 +455,12 @@ public class ComponentsContext {
 
         // 2. Itera sobre TODOS os nós (nodes) no dataMap
         // Para cada lista de nós (os VALUES do dataMap)...
-        for (ObservableList<Node> nodesList : dataMap.values()) {
+        for (ObservableList<ViewContract<?>> nodesList : dataMap.values()) {
             // ...itera sobre cada Node dentro dessa lista.
-            for (Node node : nodesList) {
+            for (var nodeWrapper : nodesList) {
                 // A LÓGICA DE SERIALIZAÇÃO PERMANECE A MESMA
+
+                var node = nodeWrapper.getCurrentNode();
 
                 if (node instanceof TextComponent component) {
                     // O .getData() deve retornar um TextComponentData que inclui a flag 'in_canva'
@@ -484,12 +527,12 @@ public class ComponentsContext {
 
     private boolean removeItemByIdentification(String identification) {
         // Itera sobre todas as listas de nós no dataMap.
-        for (ObservableList<Node> itemsList : dataMap.values()) {
+        for (ObservableList<ViewContract<?>> itemsList : dataMap.values()) {
 
             // Procura o item a ser removido (a forma mais garantida para ObservableList)
-            Node itemToRemove = null;
-            for (Node item : itemsList) {
-                if (identification.equals(item.getId())) {
+            ViewContract<?> itemToRemove = null;
+            for (var item : itemsList) {
+                if (identification.equals(item.getCurrentNode().getId())) {
                     itemToRemove = item;
                     break;
                 }

@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.data.ViewContract;
 import my_app.screens.Home.Home;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -63,10 +64,10 @@ public class Option extends VBox {
     private void loadSubItems() {
         subItemsContainer.getChildren().clear();
 
-        ObservableList<Node> nodes = componentsContext.getItemsByType(type);
+        ObservableList<ViewContract<?>> nodes = componentsContext.getItemsByType(type);
 
-        for (Node node : nodes) {
-            String itemId = node.getId();
+        for (var nodeWrapper : nodes) {
+            String itemId = nodeWrapper.getCurrentNode().getId();
 
             HBox subItemBox = createSubItemBox(itemId);
 
@@ -107,7 +108,7 @@ public class Option extends VBox {
             updateSubItemStyle(subItemBox, itemId);
         });
 
-        subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId, this.type, currentCanva));
+        subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId, currentCanva));
 
         subItemBox.setOnMouseEntered(_ -> {
             if (!componentsContext.currentNodeIsSelected(itemId)) {
@@ -134,7 +135,7 @@ public class Option extends VBox {
         }
     }
 
-    void onClickOnSubItem(String itemIdentification, String type,
+    void onClickOnSubItem(String itemIdentification,
                           CanvaComponent mainCanvaComponent) {
 
         var canvaChildren = mainCanvaComponent.getChildren();
@@ -149,7 +150,7 @@ public class Option extends VBox {
                 CanvaComponent.Shake(target);
             } else {
                 // if not, just add in canva
-                mainCanvaComponent.addElementDragable(op.get(), false);
+                mainCanvaComponent.addElementDragable(op.get().getCurrentNode(), false);
             }
         });
 

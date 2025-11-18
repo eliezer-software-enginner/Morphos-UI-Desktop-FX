@@ -1,7 +1,5 @@
 package my_app.data;
 
-//canvaProps
-@Deprecated
 public class CanvaComponentData implements ComponentData {
     public int padding_top;
     public int padding_right;
