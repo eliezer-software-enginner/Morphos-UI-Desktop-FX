@@ -78,6 +78,7 @@ public class Components {
         root.setSpacing(10);
         root.setAlignment(Pos.CENTER_LEFT);
 
+
         btn.setOnMouseClicked(ev -> {
             var is = new IconsScene();
             is.show();
@@ -85,8 +86,13 @@ public class Components {
             is.iconItemSelected.addListener((_, _, icon) -> {
                 if (icon != null) {
                     var ic = FontIcon.of(icon.getIconCode(), 16, Color.WHITE);
-                    if (loadedIcon != null) root.getChildren().set(1, ic);
-                    else root.getChildren().add(ic);
+
+                    if (root.getChildren().size() == 2) {
+                        root.getChildren().set(1, ic);
+                    } else {
+                        root.getChildren().add(ic);
+                    }
+
 
                     ic = FontIcon.of(icon.getIconCode(), 14, Color.WHITE);
                     nodeTarget.setGraphic(ic);
@@ -249,20 +255,46 @@ public class Components {
         // Layout (ColorPicker + Botão)
         HBox root = ItemRow(new HBox(10, colorPicker, transparentBtn), title);
 
+        //quando button foi montado vemos se já tem icone
         if (cssField.equals("icon-color")) {
             var btn = (ButtonComponent) selectedNode;
             var ic = (FontIcon) btn.getGraphic();
             if (ic != null) {
                 colorPicker.setValue((Color) ic.getIconColor());
 
+                //se tiver icone aqui ja funciona
                 colorPicker.setOnAction(e -> {
                     IO.println("aqui");
                     Color c = colorPicker.getValue();
+                    IO.println("color took: " + c);
+
+                    IO.println("current icon: " + ic);
 
                     var currentIc = (FontIcon) btn.getGraphic();
                     currentIc.setIconColor(c);
                 });
+            } else {
+                IO.println("ic is null");
+                btn.graphicProperty().addListener((_, _, newIcon) -> {
+                    var ic_ = (FontIcon) newIcon;
+
+                    if (newIcon != null) {
+                        colorPicker.setValue((Color) ic_.getIconColor());
+
+                        colorPicker.setOnAction(e -> {
+                            IO.println("aqui");
+                            Color c = colorPicker.getValue();
+                            IO.println("color took: " + c);
+
+                            IO.println("current icon: " + ic);
+
+                            var currentIc = (FontIcon) btn.getGraphic();
+                            currentIc.setIconColor(c);
+                        });
+                    }
+                });
             }
+
 
         } else {
             String color = "transparent";
@@ -309,8 +341,6 @@ public class Components {
                 transparentBtn.setStyle("-fx-opacity: 0.6;");
             });
         }
-
-
         return root;
     }
 
