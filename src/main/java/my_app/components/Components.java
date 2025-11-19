@@ -1,7 +1,6 @@
 package my_app.components;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,8 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponent;
@@ -20,13 +17,14 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.IconsScene;
 import my_app.themes.Typography;
-import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
+import toolkit.Component;
 
 import java.util.function.Consumer;
 
 
 public class Components {
+    @Component
     public static Region spacerVertical(int insets) {
         var region = new Region();
         region.setMinHeight(insets);
@@ -35,6 +33,7 @@ public class Components {
         return region;
     }
 
+    @Component
     public static Button ButtonPrimary() {
         var btn = new Button();
         btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
@@ -42,6 +41,7 @@ public class Components {
         return btn;
     }
 
+    @Component
     public static Button ButtonPrimary(String text) {
         var btn = new Button(text);
         btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
@@ -49,6 +49,7 @@ public class Components {
         return btn;
     }
 
+    @Component
     public static Button ButtonPrimary(String text, Runnable onClick) {
         var btn = new Button(text);
         btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
@@ -59,14 +60,17 @@ public class Components {
     }
 
 
+    @Component
     public static Button buttonRemove(String text) {
         var btn = new Button(text);
         btn.getStylesheets().add("btn-remove");
         return btn;
     }
 
+    @Component
     private static final TranslationContext.Translation translation = TranslationContext.instance().get();
 
+    @Component
     public static Node ButtonChooseGraphicContent(ButtonComponent nodeTarget) {
         var btn = ButtonPrimary(translation.chooseIcon());
         HBox root = new HBox(5, btn);
@@ -104,6 +108,7 @@ public class Components {
         return root;
     }
 
+    @Component
     public static Node LayoutXYComponent(Node node) {
         TextField tfX = new TextField();
         var xSide = ItemRow(tfX, "X");
@@ -127,6 +132,7 @@ public class Components {
         return root;
     }
 
+    @Component
     public static Node LabelWithTextContent(String name, String currentTextContent, Consumer<String> consume) {
         TextField tf = new TextField();
 
@@ -143,6 +149,7 @@ public class Components {
     }
 
     //se o campo recebido não for um css então é java, mexeremos no node!
+    @Component
     public static Node LabelWithInput(String name, Node node, String fieldCss) {
         TextField tf = new TextField();
 
@@ -185,6 +192,7 @@ public class Components {
     }
 
 
+    @Component
     public static HBox ToogleSwithItemRow(String title, Node selectedNode, Pane canvaFather) {
         Button btn = new Button("Centralize");
 
@@ -195,6 +203,7 @@ public class Components {
         return root;
     }
 
+    @Component
     public static HBox LabelWithComboBox(String title, Node selectedNode, String cssField) {
         ComboBox<String> comboBox = new ComboBox<>();
 
@@ -245,6 +254,7 @@ public class Components {
     }
 
 
+    @Component
     public static HBox ColorPickerRow(String title, Node selectedNode, String cssField) {
         ColorPicker colorPicker = new ColorPicker(Color.WHITE);
 
@@ -274,7 +284,7 @@ public class Components {
                     currentIc.setIconColor(c);
                 });
             }
-            
+
             btn.graphicProperty().addListener((_, _, newIcon) -> {
                 if (newIcon != null) {
                     var currentIc = (FontIcon) newIcon;
@@ -340,6 +350,7 @@ public class Components {
         return root;
     }
 
+    @Component
     private static HBox ItemRow(Node node, String text) {
         Label title = Typography.caption(text + ":");
 
