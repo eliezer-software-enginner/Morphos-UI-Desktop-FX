@@ -1,6 +1,8 @@
 package my_app.components;
 
-import javafx.beans.property.*;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -17,6 +19,7 @@ import my_app.contexts.TranslationContext;
 import my_app.data.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // ColumnItens.java
 public class ColumnComponent extends VBox implements ViewContract<ColumnComponentData> {
@@ -29,6 +32,8 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
     private final ComponentsContext componentsContext;
     private final CanvaComponent canva;
+
+    boolean isDeleted = false;
 
     public ColumnComponent(ComponentsContext componentsContext, CanvaComponent canva) {
         // Configuração inicial como VBox
@@ -47,22 +52,22 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     @Override
-    public void applyData(ComponentData data) {
-        var cast = (ColumnComponentData) data;
+    public void applyData(ColumnComponentData data) {
         // Limpa os filhos existentes antes de aplicar o novo estado
         getChildren().clear();
 
-        this.setLayoutX(cast.x());
-        this.setLayoutY(cast.y());
+        this.setLayoutX(data.x());
+        this.setLayoutY(data.y());
 
         this.setId(data.identification());
 
-        String childId = cast.childId() == null ? "None" : cast.childId();
-        String alternativeChildId = cast.alternativeChildId() == null ? "None" : cast.alternativeChildId();
+        String childId = data.childId() == null ? "None" : data.childId();
+        String alternativeChildId = data.alternativeChildId() == null ? "None" : data.alternativeChildId();
 
         currentChildIdState.set(childId);
         onEmptyComponentState.set(alternativeChildId);
-        childrenAmountState.set(cast.pref_child_amount_for_preview());
+        childrenAmountState.set(data.pref_child_amount_for_preview());
+        isDeleted = data.isDeleted();
 
         // 3. Chamar a lógica centralizada (permanece igual)
         recreateChildren();
@@ -73,7 +78,18 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         return this;
     }
 
-    TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+    @Override
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void delete() {
+        isDeleted = true;
+    }
+
+    private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+    private final List<ViewContract<?>> localComponents = new ArrayList<>();
 
     // -------------------------------------------------------------------
     // NOVO MÉTODO: Lógica Centralizada para Recriar os Filhos
@@ -91,30 +107,31 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
         // 2. SE A QUANTIDADE FOR MAIOR QUE ZERO...
         String currentChildId = currentChildIdState.get();
+        ViewContract<?> existingNode = searchNode(currentChildId);
 
-        // Recriação de CustomComponents (DEEP COPY)
-        var op = componentsContext.SearchNodeById(currentChildId);
+        var copies = new ArrayList<Node>();
+        boolean nodeOriginalRemoved = false;
+        for (int i = 0; i < amount; i++) {
+            ViewContract<ComponentData> newNodeWrapper = (ViewContract<ComponentData>) cloneExistingNode((ViewContract<ComponentData>) existingNode);
 
-        op.ifPresent(existingNode -> {
-            // ** Universalização: Usamos ViewContract e a Fábrica **
-            if (existingNode instanceof ViewContract existingView) {
+            if (newNodeWrapper != null) {
+                // Cria uma NOVA cópia do nó a partir dos dados originais
+                // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
+                var node = newNodeWrapper.getCurrentNode();
+                node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
 
-                ComponentData originalData = (ComponentData) existingView.getData(); // Pega os dados originais
-
-                var copies = new ArrayList<Node>();
-                for (int i = 0; i < amount; i++) {
-                    // Criamos uma nova cópia do nó a partir dos dados originais, só pra
-                    // visualizacao
-                    Node newCopy = ComponentFactory.createNodeFromData(originalData, componentsContext);
-                    // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-                    newCopy.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
-
-                    // Aplicamos o ID da cópia
-                    copies.add(newCopy);
+                if (!nodeOriginalRemoved) {
+                    localComponents.add(existingNode);
+                    componentsContext.removeComponentFromAllPlaces(existingNode, canva);
                 }
-                getChildren().addAll(copies);
+
+                // Aplicamos o ID da cópia
+                copies.add(node);
             }
-        });
+
+        }
+        getChildren().addAll(copies);
+
 
     }
 
@@ -127,48 +144,66 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             return;
         }
 
+        ViewContract<?> existingNode = searchNode(emptyComponentId);
+        ViewContract<?> newNodeWrapper = cloneExistingNode((ViewContract<ComponentData>) existingNode);
+
+        //aqui eu posso remover ele do header e do canva
+        if (newNodeWrapper != null) {
+            // Cria uma NOVA cópia do nó a partir dos dados originais
+            // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
+            var node = newNodeWrapper.getCurrentNode();
+            node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+
+            //adiciona em cache local e remove do contexto
+            localComponents.add(existingNode);
+            // Remove o nó de seu pai anterior e adiciona
+            componentsContext.removeComponentFromAllPlaces(existingNode, canva);
+            getChildren().add(node);
+        }
+
+
+    }
+
+    private ViewContract<? extends ComponentData> cloneExistingNode(ViewContract<ComponentData> existingNode) {
+        var originalData = existingNode.getData();
+        var type = originalData.type();
+
+        if (type.equalsIgnoreCase(englishBase.button())) {
+            var newNodeWrapper = new ButtonComponent(componentsContext, canva);
+            newNodeWrapper.applyData((ButtonComponentData) originalData);
+            return newNodeWrapper;
+        } else if (type.equalsIgnoreCase(englishBase.image())) {
+            var newNodeWrapper = new ImageComponent(componentsContext, canva);
+            newNodeWrapper.applyData((ImageComponentData) originalData);
+            return newNodeWrapper;
+        } else if (type.equalsIgnoreCase(englishBase.input())) {
+            var newNodeWrapper = new InputComponent(componentsContext, canva);
+            newNodeWrapper.applyData((InputComponentData) originalData);
+            return newNodeWrapper;
+        } else if (type.equalsIgnoreCase(englishBase.text())) {
+            var newNodeWrapper = new TextComponent(componentsContext, canva);
+            newNodeWrapper.applyData((TextComponentData) originalData);
+            return newNodeWrapper;
+        } else {
+            var newNodeWrapper = new CustomComponent(componentsContext, canva);
+            newNodeWrapper.applyData((CustomComponentData) originalData);
+            return newNodeWrapper;
+        }
+    }
+
+    private ViewContract<?> searchNode(String emptyComponentId) {
         // Busca o nó original pelo ID e faz a DEEP COPY
         var op = componentsContext.SearchNodeById(emptyComponentId);
+        ViewContract<?> existingNode = null;
 
-        op.ifPresent(existingNode -> {
-            var originalData = (ComponentData) existingNode.getData();
-
-            var type = originalData.type();
-
-            ViewContract<?> newNodeWrapper = null;
-
-            if (type.equalsIgnoreCase(englishBase.button())) {
-                newNodeWrapper = new ButtonComponent(componentsContext, canva);
-                newNodeWrapper.applyData(originalData);
-            } else if (type.equalsIgnoreCase(englishBase.image())) {
-                newNodeWrapper = new ImageComponent(componentsContext, canva);
-                newNodeWrapper.applyData(originalData);
-            } else if (type.equalsIgnoreCase(englishBase.input())) {
-                newNodeWrapper = new InputComponent(componentsContext, canva);
-                newNodeWrapper.applyData(originalData);
-            } else if (type.equalsIgnoreCase(englishBase.text())) {
-                newNodeWrapper = new TextComponent(componentsContext, canva);
-                newNodeWrapper.applyData(originalData);
-            } else if (type.equalsIgnoreCase(englishBase.component())) {
-                newNodeWrapper = new CustomComponent(componentsContext, canva);
-                newNodeWrapper.applyData(originalData);
-            }
-
-            //aqui eu posso remover ele do header e do canva
-            if (newNodeWrapper != null) {
-                // Cria uma NOVA cópia do nó a partir dos dados originais
-                // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-                var node = newNodeWrapper.getCurrentNode();
-                node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
-
-                // Remove o nó de seu pai anterior e adiciona
-                componentsContext.removeComponentFromAllPlaces(existingNode, canva);
-//                if (existingNode.getCurrentNode().getParent() != null) {
-//                    ((Pane) node.getParent()).getChildren().remove(node);
-//                }
-                getChildren().add(node);
-            }
-        });
+        if (op.isPresent()) {
+            existingNode = op.get();
+        } else {
+            existingNode = localComponents.stream().
+                    filter(it -> it.getCurrentNode().getId().equals(emptyComponentId))
+                    .findFirst().get();
+        }
+        return existingNode;
     }
 
     @Override
@@ -218,7 +253,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
                 (int) getLayoutY(),
                 location.inCanva(),
                 location.fatherId(),
-                childrenAmountState.get());
+                childrenAmountState.get(), isDeleted);
     }
 
 }

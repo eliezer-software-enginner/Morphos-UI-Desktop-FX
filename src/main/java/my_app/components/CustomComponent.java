@@ -21,6 +21,8 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     @Component
     public CanvaComponent canva;
 
+    boolean isDeleted = false;
+
     public CustomComponent(ComponentsContext componentsContext, CanvaComponent canva) {
         super();
         this.componentsContext = componentsContext;
@@ -101,30 +103,29 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
                 imgComponentsData,
                 inputComponentsData,
                 columnComponentsData,
-                customComponentsData);
+                customComponentsData, isDeleted);
     }
 
     @Override
-    public void applyData(ComponentData data) {
-        var cast = (CustomComponentData) data;
+    public void applyData(CustomComponentData data) {
         this.setId(data.identification());
 
-        this.setLayoutX(cast.x);
-        this.setLayoutY(cast.y);
+        this.setLayoutX(data.x);
+        this.setLayoutY(data.y);
 
         // Aplicando as informações extraídas ao CanvaComponent
-        this.setPrefWidth(cast.width);
-        this.setPrefHeight(cast.height);
+        this.setPrefWidth(data.width);
+        this.setPrefHeight(data.height);
 
         // Ajustando o padding
         this.setPadding(
-                new Insets(cast.padding_top,
-                        cast.padding_right,
-                        cast.padding_bottom,
-                        cast.padding_left));
+                new Insets(data.padding_top,
+                        data.padding_right,
+                        data.padding_bottom,
+                        data.padding_left));
 
-        var bgType = cast.bg_type;
-        var bgContent = cast.bgContent;
+        var bgType = data.bg_type;
+        var bgContent = data.bgContent;
         // Definindo o fundo com base no tipo
         if (bgType.equals("color")) {
             this.setStyle("-fx-background-color:%s;".formatted(
@@ -135,14 +136,14 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
 
-        for (ButtonComponentData data_ : cast.button_components) {
+        for (ButtonComponentData data_ : data.button_components) {
             var node = new ButtonComponent(data_.text(), componentsContext);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
             getChildren().add(node);
         }
 
-        for (TextComponentData data_ : cast.text_components) {
+        for (TextComponentData data_ : data.text_components) {
             var node = new TextComponent(data_.text(), componentsContext, canva);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> {
@@ -153,7 +154,7 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
             getChildren().add(node);
         }
 
-        for (ImageComponentData data_ : cast.image_components) {
+        for (ImageComponentData data_ : data.image_components) {
             var node = new ImageComponent(data_.url(), componentsContext);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
@@ -161,11 +162,22 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
         }
 
         //this.name.set(data.name());
+        isDeleted = data.isDeleted();
     }
 
     @Override
     public Node getCurrentNode() {
         return this;
+    }
+
+    @Override
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void delete() {
+        isDeleted = true;
     }
 
     @Override

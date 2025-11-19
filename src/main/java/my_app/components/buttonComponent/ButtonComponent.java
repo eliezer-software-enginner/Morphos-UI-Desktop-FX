@@ -27,6 +27,8 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
 
+    boolean isDeleted = false;
+
     @Component
     CanvaComponent currentCanva;
 
@@ -65,39 +67,37 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     }
 
     @Override
-    public void applyData(ComponentData data) {
-        var cast = (ButtonComponentData) data;
-        var node = (Button) currentState.get();
+    public void applyData(ButtonComponentData data) {
 
-        node.setId(cast.identification());
-        node.setText(cast.text());
+        setId(data.identification());
+        setText(data.text());
 
         String paddings = "%s %s %s %s"
-                .formatted(cast.padding_top(), cast.padding_right(), cast.padding_bottom(),
-                        cast.padding_left());
+                .formatted(data.padding_top(), data.padding_right(), data.padding_bottom(),
+                        data.padding_left());
 
         this.setPadding(
-                new Insets(cast.padding_top(), cast.padding_right(), cast.padding_bottom(),
-                        cast.padding_left()));
+                new Insets(data.padding_top(), data.padding_right(), data.padding_bottom(),
+                        data.padding_left()));
 
 
-        node.setStyle(
+        setStyle(
                 "-fx-background-color:%s;-fx-padding:%s;-fx-font-weight:%s;-fx-background-radius:%s;-fx-border-radius:%s;-fx-text-fill:%s;-fx-font-size:%s;-fx-border-width:%s;-fx-border-color:%s;"
                         .formatted(
-                                cast.bgColor(),
+                                data.bgColor(),
                                 paddings,
-                                cast.fontWeight(),
-                                cast.borderRadius(),
-                                cast.borderRadius(),
-                                cast.color(),
-                                cast.fontSize(),
-                                cast.borderWidth(),
-                                cast.border_color()));
+                                data.fontWeight(),
+                                data.borderRadius(),
+                                data.borderRadius(),
+                                data.color(),
+                                data.fontSize(),
+                                data.borderWidth(),
+                                data.border_color()));
 
-        this.setLayoutX(cast.x());
-        this.setLayoutY(cast.y());
-        this.name.set(cast.name());
-        final var ic = cast.icon();
+        this.setLayoutX(data.x());
+        this.setLayoutY(data.y());
+        this.name.set(data.name());
+        final var ic = data.icon();
 
         //AntDesignIcons-Filled;ANDROID
         if (ic != null) {
@@ -115,11 +115,22 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
 
         }
 
+        isDeleted = data.isDeleted();
     }
 
     @Override
     public Node getCurrentNode() {
         return this;
+    }
+
+    @Override
+    public boolean isDeleted() {
+        return false;
+    }
+
+    @Override
+    public void delete() {
+        isDeleted = true;
     }
 
     @Override
@@ -202,7 +213,8 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
                 location.fatherId(),
                 borderColor,
                 name.get(),
-                iconData
+                iconData,
+                isDeleted
         );
 
     }

@@ -9,9 +9,9 @@ public record ColumnComponentData(
         int y,
         boolean in_canva,
         String canva_id,
-        int pref_child_amount_for_preview) implements ComponentData {
+        int pref_child_amount_for_preview, boolean isDeleted) implements ComponentData {
 
-    public ColumnComponentData           {
+    public ColumnComponentData {
         if (type == null) {
             type = "column items";
         }

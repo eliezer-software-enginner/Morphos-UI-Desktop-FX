@@ -9,7 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import my_app.components.*;
+import my_app.components.ColumnComponent;
+import my_app.components.CustomComponent;
+import my_app.components.InputComponent;
+import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
@@ -17,6 +20,7 @@ import my_app.data.*;
 import my_app.scenes.ShowComponentScene;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 public class ComponentsContext {
@@ -39,8 +43,13 @@ public class ComponentsContext {
         nodeSelected.set(null);
         headerSelected.set(null);
         dataMap.clear();
+        refreshSubItems();
+    }
+
+    public void refreshSubItems() {
         leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
     }
+
 
     public void removeComponentFromAllPlaces(ViewContract<?> componentWrapper, CanvaComponent canvaComponent) {
         removeComponentFromCanva(componentWrapper, canvaComponent);
@@ -58,7 +67,11 @@ public class ComponentsContext {
 
         var currentNodeId = componentWrapper.getCurrentNode().getId();
 
-        list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
+        //list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
+        list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
+                .findFirst().ifPresent(it -> {
+                    it.delete();
+                });
         IO.println("removeu do datamap");
     }
 
@@ -199,35 +212,10 @@ public class ComponentsContext {
     }
 
 
-    public static Node SearchNodeByIdInMainCanva(String nodeId, CanvaComponent canva) {
-        ObservableList<Node> canvaChildren = canva.getChildren();
-        // lookin for custom component in main canva
-        return canvaChildren.stream()
-                .filter(n -> nodeId.equals(n.getId()))
-                .findFirst()
-                .orElse(null);
-    }
-
     public String getNodeType(Node node) {
         if (node == null) {
             return null;
         }
-        String nodeId = node.getId();
-
-        // Itera sobre o mapa para encontrar a chave (tipo) que contém o Node.
-        for (var entry : dataMap.entrySet()) {
-            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(nodeId))) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    public String getNodeType(ViewContract<?> targetNodeWrapper) {
-        if (targetNodeWrapper == null) {
-            return null;
-        }
-        var node = targetNodeWrapper.getCurrentNode();
         String nodeId = node.getId();
 
         // Itera sobre o mapa para encontrar a chave (tipo) que contém o Node.
@@ -269,8 +257,21 @@ public class ComponentsContext {
         System.out.println("Selecionado: " + node + " (Type: " + comp.type() + ")");
     }
 
-    public ObservableList<ViewContract<?>> getItemsByType(String type) {
-        return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
+//    public ObservableList<ViewContract<?>> getItemsByType(String type) {
+//        var data = dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
+//        IO.println("getItemsByType(): " + data.size());
+//        return data;
+//    }
+
+
+    public List<ViewContract<?>> getItemsByType(String type) {
+        ObservableList<ViewContract<?>> originalList =
+                dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
+
+        // Retorna uma lista simples filtrada (List)
+        return originalList.stream()
+                .filter(component -> !component.isDeleted())
+                .collect(java.util.stream.Collectors.toList());
     }
 
     TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
@@ -499,9 +500,6 @@ public class ComponentsContext {
         return jsonTarget;
     }
 
-    public void refreshSubItems() {
-        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
-    }
 
     public void removeNode(String nodeId) {
         System.out.println("mainCanva: " + mainCanvaComponent);

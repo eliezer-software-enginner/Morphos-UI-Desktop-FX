@@ -10,6 +10,7 @@ import my_app.components.ColumnComponent;
 import my_app.components.InputComponent;
 import my_app.contexts.ComponentsContext;
 
+@Deprecated(forRemoval = true, since = "19/nov/2025")
 public class ComponentFactory {
 
     @Deprecated(forRemoval = true, since = "17/nov/2025")

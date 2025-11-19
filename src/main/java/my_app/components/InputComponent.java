@@ -20,6 +20,8 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
 
+    boolean isDeleted = false;
+
     @Component
     CanvaComponent canvaFather;
 
@@ -53,26 +55,35 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
     }
 
     @Override
-    public void applyData(ComponentData data) {
-        var cast = (InputComponentData) data;
-
+    public void applyData(InputComponentData data) {
         this.setId(data.identification());
-        this.setText(cast.text());
+        this.setText(data.text());
 
         this.setStyle("-fx-text-fill:%s;-fx-font-size:%s;-fx-font-weight:%s;-fx-prompt-text-fill:%s;-fx-focus-color:%s;-fx-text-box-border:%s;"
-                .formatted(cast.color(), cast.font_size(), cast.font_weight(),
-                        cast.placeholder_color(), cast.focus_color(), cast.no_focus_color()
+                .formatted(data.color(), data.font_size(), data.font_weight(),
+                        data.placeholder_color(), data.focus_color(), data.no_focus_color()
                 ));
 
-        this.setLayoutX(cast.x());
-        this.setLayoutY(cast.y());
-        this.setPromptText(cast.placeholder());
-        this.name.set(cast.name());
+        this.setLayoutX(data.x());
+        this.setLayoutY(data.y());
+        this.setPromptText(data.placeholder());
+        this.name.set(data.name());
+        isDeleted = data.isDeleted();
     }
 
     @Override
     public Node getCurrentNode() {
         return this;
+    }
+
+    @Override
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void delete() {
+        isDeleted = true;
     }
 
     @Override
@@ -129,7 +140,7 @@ public class InputComponent extends TextField implements ViewContract<InputCompo
                 "input", text, placeholder, fontWeight, fontSize, color, x, y, this.getId(),
                 location.inCanva(),
                 location.fatherId(), focusColor, placeholderColor, noFocusColor,
-                name.get());
+                name.get(), isDeleted);
     }
 
 }

@@ -15,6 +15,6 @@ public record InputComponentData(
         String focus_color,
         String placeholder_color,
         String no_focus_color,
-        String name
+        String name, boolean isDeleted
 ) implements ComponentData {
 }

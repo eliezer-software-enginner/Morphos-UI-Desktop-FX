@@ -28,4 +28,6 @@ public interface ComponentData extends Serializable {
     String type();
 
     String identification();
+
+    boolean isDeleted();
 }

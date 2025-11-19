@@ -25,6 +25,8 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     @Component
     CanvaComponent canvaFather;
 
+    boolean isDeleted = false;
+
     public TextComponent(String content, ComponentsContext componentsContext, CanvaComponent canvaComponent) {
 
         super(content);
@@ -101,28 +103,36 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
                 "text",
                 text, x, y, fontSize, textFill, fontWeight, this.getId(),
                 location.inCanva(),
-                location.fatherId(), name.get(), this.getWrappingWidth());
+                location.fatherId(), name.get(), this.getWrappingWidth(), isDeleted);
     }
 
     @Override
-    public void applyData(ComponentData data) {
-        var cast = (TextComponentData) data;
-
-        this.setText(cast.text());
+    public void applyData(TextComponentData data) {
+        this.setText(data.text());
         this.setId(data.identification());
 
         this.setStyle("-fx-fill:%s;-fx-font-size:%s;-fx-font-weight:%s;"
-                .formatted(cast.color(), cast.fontSize(), cast.font_weight()));
+                .formatted(data.color(), data.fontSize(), data.font_weight()));
 
-        this.setLayoutX(cast.layout_x());
-        this.setLayoutY(cast.layout_y());
-        this.name.set(cast.name());
-        this.setWrappingWidth(cast.wrapping_width());
-
+        this.setLayoutX(data.layout_x());
+        this.setLayoutY(data.layout_y());
+        this.name.set(data.name());
+        this.setWrappingWidth(data.wrapping_width());
+        isDeleted = data.isDeleted();
     }
 
     @Override
     public Node getCurrentNode() {
         return this;
+    }
+
+    @Override
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void delete() {
+        isDeleted = true;
     }
 }

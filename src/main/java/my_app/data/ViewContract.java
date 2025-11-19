@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import my_app.components.canvaComponent.CanvaComponent;
 
-public interface ViewContract<T> {
+public interface ViewContract<T extends ComponentData> {
     void appearance(Pane father, CanvaComponent canva);
 
     void settings(Pane father, CanvaComponent canva);
@@ -13,7 +13,11 @@ public interface ViewContract<T> {
 
     T getData();
 
-    void applyData(ComponentData data);
+    void applyData(T data);
 
     Node getCurrentNode();
+
+    boolean isDeleted();
+
+    void delete();
 }

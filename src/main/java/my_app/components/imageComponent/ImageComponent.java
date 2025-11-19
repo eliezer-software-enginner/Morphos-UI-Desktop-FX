@@ -36,6 +36,8 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
 
     ComponentsContext componentsContext;
 
+    boolean isDeleted = false;
+
     @Component
     public VBox errorContainer = new VBox();
     @Component
@@ -112,28 +114,27 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
         return new ImageComponentData(url, width, height, x, y, preserveRatio, this.getId(),
                 location.inCanva(),
                 location.fatherId(),
-                name.get(), clipType, "image");
+                name.get(), clipType, "image", isDeleted);
     }
 
     @Override
-    public void applyData(ComponentData data) {
-        var cast = (ImageComponentData) data;
+    public void applyData(ImageComponentData data) {
         this.setId(data.identification());
 
-        this.setImage(new Image(cast.url()));
+        this.setImage(new Image(data.url()));
 
-        this.setPreserveRatio(cast.preserve_ratio());
+        this.setPreserveRatio(data.preserve_ratio());
 
-        this.setLayoutX(cast.x());
-        this.setLayoutY(cast.y());
+        this.setLayoutX(data.x());
+        this.setLayoutY(data.y());
 
-        this.setFitHeight(cast.height());
-        this.setFitWidth(cast.width());
-        this.name.set(cast.name());
-        this.clipType = cast.type_of_clip();
+        this.setFitHeight(data.height());
+        this.setFitWidth(data.width());
+        this.name.set(data.name());
+        this.clipType = data.type_of_clip();
 
-        if (cast.type_of_clip().equals("Circle")) {
-            var size = cast.height() / 2;
+        if (data.type_of_clip().equals("Circle")) {
+            var size = data.height() / 2;
             setClip(new Circle(size, size, size));
         }
     }
@@ -141,6 +142,16 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     @Override
     public Node getCurrentNode() {
         return this;
+    }
+
+    @Override
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void delete() {
+        isDeleted = true;
     }
 
 }

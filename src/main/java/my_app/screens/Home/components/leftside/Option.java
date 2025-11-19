@@ -2,9 +2,7 @@ package my_app.screens.Home.components.leftside;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,8 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
-import my_app.data.ViewContract;
-import my_app.screens.Home.Home;
 import my_app.themes.Typography;
 import toolkit.Component;
 
@@ -64,7 +60,8 @@ public class Option extends VBox {
     private void loadSubItems() {
         subItemsContainer.getChildren().clear();
 
-        ObservableList<ViewContract<?>> nodes = componentsContext.getItemsByType(type);
+        var nodes = componentsContext.getItemsByType(type);
+        IO.println("nodes: " + nodes.size());
 
         for (var nodeWrapper : nodes) {
             String itemId = nodeWrapper.getCurrentNode().getId();

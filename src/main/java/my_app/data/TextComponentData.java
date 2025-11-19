@@ -10,5 +10,5 @@ public record TextComponentData(
         String font_weight,
         String identification,
         boolean in_canva,
-        String canva_id, String name, double wrapping_width) implements ComponentData {
+        String canva_id, String name, double wrapping_width, boolean isDeleted) implements ComponentData {
 }
