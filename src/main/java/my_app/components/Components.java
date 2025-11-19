@@ -65,8 +65,10 @@ public class Components {
         return btn;
     }
 
+    private static final TranslationContext.Translation translation = TranslationContext.instance().get();
+
     public static Node ButtonChooseGraphicContent(ButtonComponent nodeTarget) {
-        var btn = ButtonPrimary("Choose icon");
+        var btn = ButtonPrimary(translation.chooseIcon());
         HBox root = new HBox(5, btn);
 
         var loadedIcon = nodeTarget.getGraphic();
@@ -93,11 +95,9 @@ public class Components {
                         root.getChildren().add(ic);
                     }
 
-
                     ic = FontIcon.of(icon.getIconCode(), 14, Color.WHITE);
                     nodeTarget.setGraphic(ic);
                 }
-
             });
         });
 
@@ -258,9 +258,9 @@ public class Components {
         //quando button foi montado vemos se já tem icone
         if (cssField.equals("icon-color")) {
             var btn = (ButtonComponent) selectedNode;
-            var ic = (FontIcon) btn.getGraphic();
-            if (ic != null) {
-                colorPicker.setValue((Color) ic.getIconColor());
+            var loadedIcon = (FontIcon) btn.getGraphic();
+            if (loadedIcon != null) {
+                colorPicker.setValue((Color) loadedIcon.getIconColor());
 
                 //se tiver icone aqui ja funciona
                 colorPicker.setOnAction(e -> {
@@ -268,32 +268,28 @@ public class Components {
                     Color c = colorPicker.getValue();
                     IO.println("color took: " + c);
 
-                    IO.println("current icon: " + ic);
+                    IO.println("current icon: " + loadedIcon);
 
                     var currentIc = (FontIcon) btn.getGraphic();
                     currentIc.setIconColor(c);
                 });
-            } else {
-                IO.println("ic is null");
-                btn.graphicProperty().addListener((_, _, newIcon) -> {
-                    var ic_ = (FontIcon) newIcon;
-
-                    if (newIcon != null) {
-                        colorPicker.setValue((Color) ic_.getIconColor());
-
-                        colorPicker.setOnAction(e -> {
-                            IO.println("aqui");
-                            Color c = colorPicker.getValue();
-                            IO.println("color took: " + c);
-
-                            IO.println("current icon: " + ic);
-
-                            var currentIc = (FontIcon) btn.getGraphic();
-                            currentIc.setIconColor(c);
-                        });
-                    }
-                });
             }
+            
+            btn.graphicProperty().addListener((_, _, newIcon) -> {
+                if (newIcon != null) {
+                    var currentIc = (FontIcon) newIcon;
+                    currentIc.setIconColor(colorPicker.getValue());
+
+                    colorPicker.setOnAction(e -> {
+                        IO.println("aqui");
+                        Color c = colorPicker.getValue();
+                        IO.println("color took: " + c);
+
+                        IO.println("current icon: " + currentIc);
+                        currentIc.setIconColor(c);
+                    });
+                }
+            });
 
 
         } else {

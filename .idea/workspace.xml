@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="introducing column component">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="fixed operations involving add icon">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui-portifolio-home.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui-portifolio-home.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -501,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763411671773</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="fixed operations involving add icon">
+      <option name="closed" value="true" />
+      <created>1763514710293</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1763514710294</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -516,7 +525,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added fallback for images that couldn be loaded" />
     <MESSAGE value="implementing a basic scenegrap" />
     <MESSAGE value="navigation completed" />
     <MESSAGE value="styling input" />
@@ -541,7 +549,8 @@
     <MESSAGE value="deleting custom component" />
     <MESSAGE value="consuming click on text inside CustomComponent" />
     <MESSAGE value="introducing column component" />
-    <option name="LAST_COMMIT_MESSAGE" value="introducing column component" />
+    <MESSAGE value="fixed operations involving add icon" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed operations involving add icon" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
