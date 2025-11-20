@@ -15,7 +15,7 @@ import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.scenes.IconsScene;
+import my_app.scenes.IconsScene.IconsScene;
 import my_app.themes.Typography;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -89,7 +89,7 @@ public class Components {
             var is = new IconsScene();
             is.show();
 
-            is.iconItemSelected.addListener((_, _, icon) -> {
+            is.iconItemSelected().addListener((_, _, icon) -> {
                 if (icon != null) {
                     var ic = FontIcon.of(icon.getIconCode(), 16, Color.WHITE);
 
