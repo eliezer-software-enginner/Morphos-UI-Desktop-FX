@@ -13,6 +13,7 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.scenes.DataScene.DataScene;
 import my_app.screens.Home.Home;
 import my_app.screens.ShowCode.ShowCode;
 import my_app.themes.ThemeManager;
@@ -37,6 +38,7 @@ public class MainScene extends Scene {
     VBox mainView;
 
     MainSceneController controller = new MainSceneController(componentsContext);
+    public Stage primaryStage;
 
     public MainScene() {
         var screenSize = Commons.ScreensSize.LARGE;
@@ -53,7 +55,7 @@ public class MainScene extends Scene {
     }
 
     void setup() {
-        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings(), createMenuUiPath());
+        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings(), createMenuDataTable(), createMenuUiPath());
         mainView = new VBox(menuBar, home);
 
         HBox.setHgrow(home, Priority.ALWAYS);
@@ -67,6 +69,18 @@ public class MainScene extends Scene {
     void styles() {
         mainView.getStyleClass().add("background-color");
         Commons.UseDefaultStyles(this);
+    }
+
+    @Component
+    Menu createMenuDataTable() {
+        var menu = new Menu();
+        Label menuText = Typography.caption("Data table");
+        menu.setGraphic(menuText);
+
+        menuText.setOnMouseClicked(ev -> {
+            new DataScene().show();
+        });
+        return menu;
     }
 
     @Component

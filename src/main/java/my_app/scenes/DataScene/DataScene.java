@@ -3,16 +3,21 @@ package my_app.scenes.DataScene;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import my_app.contexts.DataStore;
 
 public class DataScene extends Scene {
 
     private VBox dataListContainer; // Onde os dados criados serão exibidos
+    Stage stage = new Stage();
 
-    public DataScene(Stage primaryStage, Scene mainScene) {
+    public DataScene() {
         super(new VBox(), 1200, 650);
 
         VBox root = (VBox) this.getRoot();
@@ -21,7 +26,8 @@ public class DataScene extends Scene {
 
         // Botão voltar
         Button btnBack = new Button("Voltar");
-        btnBack.setOnAction(e -> primaryStage.setScene(mainScene));
+        //btnBack.setOnAction(e -> primaryStage.setScene(mainScene));
+        btnBack.setOnAction(ev -> stage.close());
         root.getChildren().add(btnBack);
 
         // Botão para criar novo dado
@@ -37,7 +43,6 @@ public class DataScene extends Scene {
         root.getChildren().add(dataListContainer);
 
         btnCreateData.setOnAction(e -> addNewDataRow(createDataContainer));
-
     }
 
     // Adiciona uma nova Row para criação de dado
@@ -137,4 +142,8 @@ public class DataScene extends Scene {
         dataListContainer.getChildren().add(dataRow);
     }
 
+    public void show() {
+        stage.setScene(this);
+        stage.show();
+    }
 }

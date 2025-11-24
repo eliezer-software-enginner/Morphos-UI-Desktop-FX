@@ -1,19 +1,23 @@
 package my_app;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.MainScene.MainScene;
+import my_app.windows.WindowPrimitiveListForm;
 
 import java.util.Locale;
 import java.util.Objects;
 
 public class App extends Application {
 
-    Stage stage;
+    public static Stage stage;
     TranslationContext translationContext;
+
+    public static Scene mainScene;
 
     @Override
     public void init() {
@@ -40,7 +44,8 @@ public class App extends Application {
         //Scene splashScene = new SplashScene(primaryStage);
         //this.stage.setScene(splashScene);
 
-        this.stage.setScene(new MainScene());
+        //mainScene = new MainScene();
+        //this.stage.setScene(mainScene);
 
         // this.stage.setScene(new IconsScene());
 
@@ -64,7 +69,9 @@ public class App extends Application {
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
         this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
-        this.stage.show();
+        //this.stage.show();
+
+        new WindowPrimitiveListForm().show();
     }
 
     public void changeLanguage(Locale locale) {

@@ -24,6 +24,15 @@ import java.util.function.Consumer;
 
 
 public class Components {
+
+    @Component
+    public static Button ButtonPrimaryOutline(String text) {
+        var btn = new Button(text);
+        btn.getStyleClass().addAll("button-primary", "body-typo", "text-primary-color");
+
+        return btn;
+    }
+
     @Component
     public static Region spacerVertical(int insets) {
         var region = new Region();

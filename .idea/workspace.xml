@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added annotation @Component for aesthetics">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene/IconsSceneViewModel.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added more icons and also a scrollpane">
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/WindowPrimitiveListForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene/IconsScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui-portifolio-home.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui-portifolio-home.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,36 +57,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AppNavTest.executor": "Run",
-    "Application.App[Linux].executor": "Run",
-    "Application.App_base.executor": "Run",
-    "Application.MainApp.executor": "Run",
-    "Application.SceneGraph.executor": "Run",
-    "Application.TranslationContext.executor": "Run",
-    "Application.run app ratinho.executor": "Run",
-    "Application.run layout preview.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/scenes/IconsScene",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "actions.on.save"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AppNavTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.App[Linux].executor&quot;: &quot;Run&quot;,
+    &quot;Application.App_base.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SceneGraph.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TranslationContext.executor&quot;: &quot;Run&quot;,
+    &quot;Application.run app ratinho.executor&quot;: &quot;Run&quot;,
+    &quot;Application.run layout preview.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene" />
       <recent name="$PROJECT_DIR$/.java_fx" />
       <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_ratinho" />
       <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/biscoito_da_sorte" />
-      <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/SplashScene" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="my_app.scenes" />
@@ -522,7 +525,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763554742627</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="added more icons and also a scrollpane">
+      <option name="closed" value="true" />
+      <created>1763667080042</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1763667080042</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -537,7 +548,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="navigation completed" />
     <MESSAGE value="styling input" />
     <MESSAGE value="centralizing components horizontally" />
     <MESSAGE value="image is now added as import" />
@@ -562,7 +572,8 @@
     <MESSAGE value="introducing column component" />
     <MESSAGE value="fixed operations involving add icon" />
     <MESSAGE value="added annotation @Component for aesthetics" />
-    <option name="LAST_COMMIT_MESSAGE" value="added annotation @Component for aesthetics" />
+    <MESSAGE value="added more icons and also a scrollpane" />
+    <option name="LAST_COMMIT_MESSAGE" value="added more icons and also a scrollpane" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
