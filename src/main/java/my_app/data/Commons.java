@@ -1,14 +1,6 @@
 package my_app.data;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,6 +9,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.scenes.MainScene.MainSceneController;
+import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreenViewModel;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Commons {
 
@@ -198,6 +199,30 @@ public class Commons {
         }
     }
 
+
+    public static Path morphosPathInFileSystem() {
+        String os = System.getProperty("os.name").toLowerCase();
+        String userHome = System.getProperty("user.home");
+        String appDataAbsolutePath;
+
+        if (os.contains("win")) {
+            // Windows
+            String appData = System.getenv("LOCALAPPDATA");
+            if (appData == null) {
+                appData = userHome + "\\AppData\\Local";
+            }
+            appDataAbsolutePath = appData;
+        } else if (os.contains("mac")) {
+            // macOS
+            appDataAbsolutePath = userHome + "/Library/Application Support";
+        } else {
+            // Linux e outros
+            appDataAbsolutePath = userHome + "/.local/share";
+        }
+
+        return Path.of(appDataAbsolutePath).resolve(AppNameAtAppData);
+    }
+
     public static void CentralizeComponent(Node node, Pane canva) {
 
         Runnable runnable = () -> {
@@ -220,4 +245,36 @@ public class Commons {
         });
 
     }
+
+    /**
+     * Operations related to current project
+     */
+
+    public record Project(String name, TableData tableData) {
+    }
+
+    public record TableData(
+            List<PrimitiveListFormScreenViewModel.PrimitiveData> primitiveDataList
+    ) {
+    }
+
+    public static void addPrimitiveData(PrimitiveListFormScreenViewModel.PrimitiveData data) {
+        //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
+        String tempName = "Teste";
+
+        var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
+
+        var mapper = new ObjectMapper();
+        //lista fixa temporarioa
+        var proj = new Project(tempName, new TableData(List.of(data)));
+
+        try {
+            var json = mapper.writeValueAsString(proj);
+
+            WriteJsonInDisc(projectPath.toFile(), json);
+        } catch (Exception _) {
+
+        }
+    }
+
 }

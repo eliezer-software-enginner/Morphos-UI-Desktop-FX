@@ -9,7 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import my_app.components.Components;
+import my_app.data.Commons;
 import toolkit.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class PrimitiveListFormScreenViewModel {
     private final String[] types = {"String", "Float", "Int", "Char"};
@@ -24,6 +29,37 @@ public class PrimitiveListFormScreenViewModel {
             });
             buttonsContainer.getChildren().add(btn);
         }
+    }
+
+    public record PrimitiveData(String id, String variableName, String type, List<String> values) {
+        public PrimitiveData(String variableName, String type, List<String> values) {
+            this(UUID.randomUUID().toString(), variableName, type, values);
+        }
+
+        // Canonical constructor para validar quando id vier nulo
+        public PrimitiveData {
+            if (id == null || id.isBlank()) {
+                id = UUID.randomUUID().toString();
+            }
+        }
+    }
+
+
+    void handleClickOnSave(VBox inputLinesContainer, TextField variabelNameInput) {
+        //recuperar info e concatenar novos dados
+        var type = typeSelected.get();
+        var variableName = variabelNameInput.getText();
+
+        var values = new ArrayList<String>();
+        for (var node : inputLinesContainer.getChildren()) {
+            if (node instanceof HBox hbox) {
+                var input = (TextField) hbox.getChildren().get(1);
+                values.add(input.getText());
+            }
+        }
+
+        var primitiveData = new PrimitiveData(variableName, type, values);
+        Commons.addPrimitiveData(primitiveData);
     }
 
     void handleClickOnButtonType(String type, VBox inputLinesContainer) {

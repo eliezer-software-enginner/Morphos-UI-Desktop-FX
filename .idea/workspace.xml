@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added more icons and also a scrollpane">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/WindowPrimitiveListForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui-portifolio-home.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui-portifolio-home.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
