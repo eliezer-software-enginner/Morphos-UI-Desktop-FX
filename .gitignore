@@ -12,3 +12,4 @@ src/main/java/my_app/GeneratedUI.java
 /prefs.json
 /src/main/java/tests
 /.java_fx/
+*.txt

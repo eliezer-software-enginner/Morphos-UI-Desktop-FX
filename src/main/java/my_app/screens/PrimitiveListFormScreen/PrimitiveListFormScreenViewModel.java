@@ -31,9 +31,10 @@ public class PrimitiveListFormScreenViewModel {
         }
     }
 
-    public record PrimitiveData(String id, String variableName, String type, List<String> values) {
+    public record PrimitiveData(String id, String variableName, String type, List<String> values,
+                                long createdAt) {
         public PrimitiveData(String variableName, String type, List<String> values) {
-            this(UUID.randomUUID().toString(), variableName, type, values);
+            this(UUID.randomUUID().toString(), variableName, type, values, System.currentTimeMillis());
         }
 
         // Canonical constructor para validar quando id vier nulo
