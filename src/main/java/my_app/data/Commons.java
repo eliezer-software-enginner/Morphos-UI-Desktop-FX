@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -136,10 +137,20 @@ public class Commons {
                 (int) (color.getBlue() * 255));
     }
 
+    @Deprecated
     public static void WriteJsonInDisc(File file, Object obj) {
 
         ObjectMapper om = new ObjectMapper();
 
+        try {
+            om.writeValue(file, obj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void WriteFileInDiscAsJson(File file, Object obj) {
+        ObjectMapper om = new ObjectMapper();
         try {
             om.writeValue(file, obj);
         } catch (IOException e) {
@@ -263,18 +274,63 @@ public class Commons {
         String tempName = "Teste";
 
         var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
-
-        var mapper = new ObjectMapper();
         //lista fixa temporarioa
         var proj = new Project(tempName, new TableData(List.of(data)));
 
         try {
-            var json = mapper.writeValueAsString(proj);
-
-            WriteJsonInDisc(projectPath.toFile(), json);
+            WriteFileInDiscAsJson(projectPath.toFile(), proj);
         } catch (Exception _) {
 
         }
+    }
+
+    public static List<String> getVariableNamesInDataTable() {
+        //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
+        String tempName = "Teste";
+        var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
+
+        var mapper = new ObjectMapper();
+        try {
+            var proj = mapper.readValue(projectPath.toFile(), Project.class);
+
+            var list = new ArrayList<String>();
+            for (var primitiveList : proj.tableData.primitiveDataList) {
+                list.add(primitiveList.variableName());
+            }
+            //TODO faltou lista complexa
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    public static List<String> getValuesFromVariablename(String variableName) {
+        //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
+        String tempName = "Teste";
+        var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
+
+        var mapper = new ObjectMapper();
+        try {
+            var proj = mapper.readValue(projectPath.toFile(), Project.class);
+
+            var list = new ArrayList<String>();
+            for (var primitiveList : proj.tableData.primitiveDataList) {
+                if (primitiveList.variableName().equals(variableName)) {
+                    list.addAll(primitiveList.values());
+                }
+            }
+            //TODO faltou lista complexa
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    static void main() {
+        getVariableNamesInDataTable().forEach(IO::println);
+        getValuesFromVariablename("colors").forEach(IO::println);
     }
 
 }
