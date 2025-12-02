@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="retrieving data from table data">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="added time of creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui-portifolio-home.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui-portifolio-home.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +62,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.AppNavTest.executor": "Run",
-    "Application.App[Linux].executor": "Run",
+    "Application.App[Linux].executor": "Debug",
     "Application.App_base.executor": "Run",
     "Application.Commons.executor": "Run",
     "Application.MainApp.executor": "Run",
@@ -205,8 +208,8 @@
     <list>
       <item itemvalue="Application.App[Linux]" />
       <item itemvalue="Application.run app ratinho" />
-      <item itemvalue="Application.Commons" />
       <item itemvalue="Application.AppNavTest" />
+      <item itemvalue="Application.Commons" />
       <item itemvalue="Application.MainApp" />
       <item itemvalue="Application.SceneGraph" />
       <item itemvalue="Application.run layout preview" />
@@ -549,7 +552,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764081023002</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="added time of creation">
+      <option name="closed" value="true" />
+      <created>1764081517282</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1764081517282</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -564,7 +575,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="image is now added as import" />
     <MESSAGE value="resizing right side automacally" />
     <MESSAGE value="cleanup and variable name" />
     <MESSAGE value="addes variable name" />
@@ -589,7 +599,8 @@
     <MESSAGE value="added more icons and also a scrollpane" />
     <MESSAGE value="creating primitive list" />
     <MESSAGE value="retrieving data from table data" />
-    <option name="LAST_COMMIT_MESSAGE" value="retrieving data from table data" />
+    <MESSAGE value="added time of creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added time of creation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -630,19 +641,14 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java</url>
-          <line>73</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/data/Commons.java</url>
-          <line>295</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/data/Commons.java</url>
-          <line>291</line>
-          <option name="timeStamp" value="42" />
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java</url>
+          <line>174</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,5 +1,5 @@
 {
-  "id_of_component_selected": "1763564622102",
+  "id_of_component_selected": "1764702716246",
   "type_of_component_selected": "button",
   "canva": {
     "type": "canva",
@@ -34,6 +34,22 @@
       "name": null,
       "wrapping_width": 0.0,
       "isDeleted": true
+    },
+    {
+      "type": "text",
+      "type": "text",
+      "text": "eu sou ${boom}",
+      "layout_x": 98.234130859375,
+      "layout_y": 104.73828125,
+      "fontSize": "16",
+      "color": "black",
+      "font_weight": "normal",
+      "identification": "1764702617871",
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "name": null,
+      "wrapping_width": 0.0,
+      "isDeleted": false
     }
   ],
   "button_components": [
@@ -76,6 +92,19 @@
       "in_canva": true,
       "canva_id": "1762718878915",
       "pref_child_amount_for_preview": 4,
+      "isDeleted": false
+    },
+    {
+      "type": "column items",
+      "type": "column items",
+      "identification": "1764702716246",
+      "childId": "1763564583694",
+      "alternativeChildId": null,
+      "x": 101,
+      "y": 215,
+      "in_canva": true,
+      "canva_id": "1762718878915",
+      "pref_child_amount_for_preview": 3,
       "isDeleted": false
     }
   ],

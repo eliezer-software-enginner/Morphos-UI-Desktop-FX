@@ -35,6 +35,8 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
     boolean isDeleted = false;
 
+    public String dataTableVariableName;
+
     public ColumnComponent(ComponentsContext componentsContext, CanvaComponent canva) {
         // Configuração inicial como VBox
         setSpacing(5);
@@ -112,27 +114,23 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         var copies = new ArrayList<Node>();
         boolean nodeOriginalRemoved = false;
         for (int i = 0; i < amount; i++) {
-            ViewContract<ComponentData> newNodeWrapper = (ViewContract<ComponentData>) cloneExistingNode((ViewContract<ComponentData>) existingNode);
+            ViewContract<ComponentData> newNodeWrapper = (ViewContract<ComponentData>) cloneExistingNode((ViewContract<ComponentData>) existingNode, i);
 
-            if (newNodeWrapper != null) {
-                // Cria uma NOVA cópia do nó a partir dos dados originais
-                // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-                var node = newNodeWrapper.getCurrentNode();
-                node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+            // Cria uma NOVA cópia do nó a partir dos dados originais
+            // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
+            var node = newNodeWrapper.getCurrentNode();
+            node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
 
-                if (!nodeOriginalRemoved) {
-                    localComponents.add(existingNode);
-                    componentsContext.removeComponentFromAllPlaces(existingNode, canva);
-                }
-
-                // Aplicamos o ID da cópia
-                copies.add(node);
+            if (!nodeOriginalRemoved) {
+                localComponents.add(existingNode);
+                componentsContext.removeComponentFromAllPlaces(existingNode, canva);
             }
+
+            // Aplicamos o ID da cópia
+            copies.add(node);
 
         }
         getChildren().addAll(copies);
-
-
     }
 
     private void renderComponentForStateEmpty() {
@@ -145,7 +143,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         }
 
         ViewContract<?> existingNode = searchNode(emptyComponentId);
-        ViewContract<?> newNodeWrapper = cloneExistingNode((ViewContract<ComponentData>) existingNode);
+        ViewContract<?> newNodeWrapper = cloneExistingNode((ViewContract<ComponentData>) existingNode, -1);
 
         //aqui eu posso remover ele do header e do canva
         if (newNodeWrapper != null) {
@@ -164,13 +162,19 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
     }
 
-    private ViewContract<? extends ComponentData> cloneExistingNode(ViewContract<ComponentData> existingNode) {
+    private ViewContract<? extends ComponentData> cloneExistingNode(ViewContract<ComponentData> existingNode, int currentIndex) {
         var originalData = existingNode.getData();
         var type = originalData.type();
 
         if (type.equalsIgnoreCase(englishBase.button())) {
             var newNodeWrapper = new ButtonComponent(componentsContext, canva);
             newNodeWrapper.applyData((ButtonComponentData) originalData);
+
+            if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
+                final var currentText = newNodeWrapper.getText();
+                newNodeWrapper.setText(currentText.replace("${boom}", valuesOfVariableName.get(currentIndex)));
+            }
+
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.image())) {
             var newNodeWrapper = new ImageComponent(componentsContext, canva);
@@ -179,10 +183,18 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         } else if (type.equalsIgnoreCase(englishBase.input())) {
             var newNodeWrapper = new InputComponent(componentsContext, canva);
             newNodeWrapper.applyData((InputComponentData) originalData);
+            if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
+                final var currentText = newNodeWrapper.getText();
+                newNodeWrapper.setText(currentText.replace("${boom}", valuesOfVariableName.get(currentIndex)));
+            }
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.text())) {
             var newNodeWrapper = new TextComponent(componentsContext, canva);
             newNodeWrapper.applyData((TextComponentData) originalData);
+            if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
+                final var currentText = newNodeWrapper.getText();
+                newNodeWrapper.setText(currentText.replace("${boom}", valuesOfVariableName.get(currentIndex)));
+            }
             return newNodeWrapper;
         } else {
             var newNodeWrapper = new CustomComponent(componentsContext, canva);
@@ -213,7 +225,8 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
                 new ItemsAmountPreviewComponent(this),
                 new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState, componentsContext),
                 Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, componentsContext));
+                new ButtonRemoverComponent(this, componentsContext),
+                Components.LabelWithComboBox("Data list", this, "data-list"));
     }
 
     @Override
@@ -254,6 +267,16 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
                 location.inCanva(),
                 location.fatherId(),
                 childrenAmountState.get(), isDeleted);
+    }
+
+
+    private List<String> valuesOfVariableName = new ArrayList<>();
+
+    public void setDataTableVariableName(String dataTableVariableName) {
+        this.dataTableVariableName = dataTableVariableName;
+
+        valuesOfVariableName.addAll(Commons.getValuesFromVariablename(dataTableVariableName));
+        recreateChildren();
     }
 
 }

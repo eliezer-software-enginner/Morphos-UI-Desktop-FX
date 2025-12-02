@@ -288,6 +288,7 @@ public class Commons {
         //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
         String tempName = "Teste";
         var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
+        // home/eliezer/.local/share/morphos_desktop_fx/Teste.json
 
         var mapper = new ObjectMapper();
         try {

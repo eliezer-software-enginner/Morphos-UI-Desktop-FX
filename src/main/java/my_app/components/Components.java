@@ -257,6 +257,22 @@ public class Components {
                     }
                 });
             }
+        } else if (cssField.equals("data-list")) {
+            if (selectedNode instanceof ColumnComponent component) {
+                Commons.getVariableNamesInDataTable().forEach(IO::println);
+                comboBox.setItems(FXCollections.observableArrayList(Commons.getVariableNamesInDataTable()));
+
+                //se já possui o data list aplicado
+//                var positioning = component.getContentDisplay();
+//                if (positioning != null) comboBox.setValue(
+//                        positioning.equals(ContentDisplay.LEFT) ? "Left" : "Right"
+//                );
+
+                comboBox.setOnAction(_ -> {
+                    component.setDataTableVariableName(comboBox.getValue());
+                    comboBox.setValue(comboBox.getValue());
+                });
+            }
         }
 
         return root;
