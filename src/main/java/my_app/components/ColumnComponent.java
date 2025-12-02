@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.components.buttonComponent.ButtonComponent;
@@ -70,6 +69,9 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         onEmptyComponentState.set(alternativeChildId);
         childrenAmountState.set(data.pref_child_amount_for_preview());
         isDeleted = data.isDeleted();
+        this.dataTableVariableName = data.dataTableVariableName();
+
+        valuesOfVariableName.addAll(Commons.getValuesFromVariablename(data.dataTableVariableName()));
 
         // 3. Chamar a lógica centralizada (permanece igual)
         recreateChildren();
@@ -219,25 +221,25 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     @Override
-    public void appearance(Pane father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 new ChildHandlerComponent("Child component:", this, currentChildIdState, componentsContext),
                 new ItemsAmountPreviewComponent(this),
                 new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState, componentsContext),
-                Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, componentsContext),
-                Components.LabelWithComboBox("Data list", this, "data-list"));
+                Components.LabelWithComboBox("Data list", this, "data-list"),
+                new ButtonRemoverComponent(this, componentsContext)
+        );
     }
 
     @Override
-    public void settings(Pane father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LayoutXYComponent(this),
                 Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
     }
 
     @Override
-    public void otherSettings(Pane father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }
@@ -266,7 +268,10 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
                 (int) getLayoutY(),
                 location.inCanva(),
                 location.fatherId(),
-                childrenAmountState.get(), isDeleted);
+                childrenAmountState.get(),
+                isDeleted,
+                this.dataTableVariableName
+        );
     }
 
 

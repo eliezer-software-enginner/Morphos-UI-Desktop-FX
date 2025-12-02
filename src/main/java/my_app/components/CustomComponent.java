@@ -3,6 +3,7 @@ package my_app.components;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
@@ -181,19 +182,19 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     }
 
     @Override
-    public void appearance(Pane father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 new ButtonRemoverComponent(this, componentsContext));
     }
 
     @Override
-    public void settings(Pane father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(Components.LayoutXYComponent(this));
     }
 
     @Override
-    public void otherSettings(Pane father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponent canva) {
 
     }
 

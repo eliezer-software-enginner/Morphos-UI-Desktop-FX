@@ -8,14 +8,17 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.*;
+import my_app.data.ButtonComponentData;
+import my_app.data.Commons;
+import my_app.data.IconData;
+import my_app.data.ViewContract;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -134,7 +137,7 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     }
 
     @Override
-    public void appearance(Pane father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.ColorPickerRow(translation.backgroundColor(), this, "-fx-background-color"),
                 Components.LabelWithInput(translation.padding(), this, "-fx-padding"),
@@ -155,14 +158,14 @@ public class ButtonComponent extends Button implements ViewContract<ButtonCompon
     }
 
     @Override
-    public void settings(Pane father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LayoutXYComponent(this),
                 Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
     }
 
     @Override
-    public void otherSettings(Pane father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }

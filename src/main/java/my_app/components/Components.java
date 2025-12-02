@@ -263,10 +263,7 @@ public class Components {
                 comboBox.setItems(FXCollections.observableArrayList(Commons.getVariableNamesInDataTable()));
 
                 //se já possui o data list aplicado
-//                var positioning = component.getContentDisplay();
-//                if (positioning != null) comboBox.setValue(
-//                        positioning.equals(ContentDisplay.LEFT) ? "Left" : "Right"
-//                );
+                if (component.dataTableVariableName != null) comboBox.setValue(component.dataTableVariableName);
 
                 comboBox.setOnAction(_ -> {
                     component.setDataTableVariableName(comboBox.getValue());

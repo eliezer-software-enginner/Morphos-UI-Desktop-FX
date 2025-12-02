@@ -7,7 +7,6 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -18,7 +17,9 @@ import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.*;
+import my_app.data.Commons;
+import my_app.data.ImageComponentData;
+import my_app.data.ViewContract;
 import toolkit.Component;
 
 public class ImageComponent extends ImageView implements ViewContract<ImageComponentData> {
@@ -67,7 +68,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
-    public void appearance(Pane father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 new WidthComponent(this),
                 new HeightComponent(this),
@@ -84,7 +85,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
-    public void settings(Pane father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponent canva) {
 
         father.getChildren().setAll(
                 Components.LayoutXYComponent(this),
@@ -92,7 +93,7 @@ public class ImageComponent extends ImageView implements ViewContract<ImageCompo
     }
 
     @Override
-    public void otherSettings(Pane father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }

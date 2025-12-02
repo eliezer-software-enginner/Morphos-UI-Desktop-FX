@@ -1,7 +1,7 @@
 package my_app.components;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.data.ComponentData;
 import my_app.data.ViewContract;
@@ -13,7 +13,9 @@ public class NodeWrapper {
         this.currentNodeWrapper = node;
     }
 
-    public void renderRightSideContainer(Pane father, IntegerProperty optionSelected, CanvaComponent canva) {
+    public void renderRightSideContainer(VBox father, IntegerProperty optionSelected, CanvaComponent canva) {
+        father.setSpacing(5);
+        
         if (optionSelected.get() == 1) {
             this.currentNodeWrapper.appearance(father, canva);
         } else if (optionSelected.get() == 2) {

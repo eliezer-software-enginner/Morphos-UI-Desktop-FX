@@ -9,11 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import my_app.components.shared.HeightComponent;
@@ -169,7 +165,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
     }
 
     @Override
-    public void appearance(Pane father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponent canva) {
 
         // Color Picker
         ColorPicker bgColorPicker = new ColorPicker(
@@ -215,12 +211,12 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
     }
 
     @Override
-    public void settings(Pane father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponent canva) {
         father.getChildren().clear();
     }
 
     @Override
-    public void otherSettings(Pane father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponent canva) {
 
     }
 

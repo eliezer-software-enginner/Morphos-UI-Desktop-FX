@@ -5,13 +5,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.*;
+import my_app.data.Commons;
+import my_app.data.TextComponentData;
+import my_app.data.ViewContract;
 import toolkit.Component;
 
 public class TextComponent extends Text implements ViewContract<TextComponentData> {
@@ -59,7 +61,7 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     }
 
     @Override
-    public void appearance(Pane father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-fill"),
@@ -72,14 +74,14 @@ public class TextComponent extends Text implements ViewContract<TextComponentDat
     }
 
     @Override
-    public void settings(Pane father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LayoutXYComponent(this),
                 Components.ToogleSwithItemRow("Centralize horizontally", this, canva));
     }
 
     @Override
-    public void otherSettings(Pane father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
                 Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }
