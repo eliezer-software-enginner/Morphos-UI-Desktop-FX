@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.themes.ThemeManager;
 import toolkit.Component;
@@ -19,7 +20,7 @@ public class ShowCode {
 
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
     private Stage stage;
-    private ShowCodeController controller = new ShowCodeController();
+    private final ShowCodeController controller;
 
     @Component
     VBox root = new VBox();
@@ -27,9 +28,11 @@ public class ShowCode {
     // por enquanto só os node do canva
     // mas adiante expandir para os componentes gerais também pra
     // ver como vou encaix-alos no codigo gerado
-    public ShowCode(CanvaComponent canvaComponent) {
+    public ShowCode(CanvaComponent canvaComponent, ComponentsContext mainComponentContext) {
         stage = new Stage();
         stage.setTitle("Showing code");
+
+        this.controller = new ShowCodeController(mainComponentContext);
 
         String importsContent = controller.createImports();
         String codeContent = controller.createRestOfCode(canvaComponent);
@@ -53,7 +56,7 @@ public class ShowCode {
         root.setSpacing(10);
         root.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-        
+
         Scene scene = new Scene(root, 500, 550);
         ThemeManager.Instance().addScene(scene);
 

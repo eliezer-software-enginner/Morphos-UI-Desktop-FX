@@ -149,7 +149,7 @@ public class MainScene extends Scene {
     }
 
     private void handleShowJavaCode(CanvaComponent canvaComponent) {
-        new ShowCode(canvaComponent)
+        new ShowCode(canvaComponent, componentsContext)
                 .abrir();
 
     }

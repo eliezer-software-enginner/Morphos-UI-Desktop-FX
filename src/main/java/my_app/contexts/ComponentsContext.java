@@ -70,9 +70,33 @@ public class ComponentsContext {
         //list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
         list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
                 .findFirst().ifPresent(it -> {
+                    //deletou de mentirinha
                     it.delete();
                 });
         IO.println("removeu do datamap");
+    }
+
+    public ViewContract<?> findNodeById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        // Itera sobre todas as listas de ViewContract no dataMap (os valores do mapa)
+        for (ObservableList<ViewContract<?>> viewList : dataMap.values()) {
+
+            // Itera sobre cada ViewContract dentro da lista atual
+            for (ViewContract<?> contract : viewList) {
+
+                // Verifica se o ID do ViewContract (que representa o Node) é igual ao ID procurado
+                // A verificação de null/empty deve ser feita dentro do contrato ou ao chamar getId()
+                if (id.equals(contract.getData().identification())) {
+                    return contract; // Encontrado! Retorna o contrato.
+                }
+            }
+        }
+
+        // Se o loop terminar e nada for encontrado
+        return null;
     }
 
     public record SelectedComponent(String type, Node node) {

@@ -156,12 +156,10 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
             //adiciona em cache local e remove do contexto
             localComponents.add(existingNode);
-            // Remove o nó de seu pai anterior e adiciona
+
             componentsContext.removeComponentFromAllPlaces(existingNode, canva);
             getChildren().add(node);
         }
-
-
     }
 
     private ViewContract<? extends ComponentData> cloneExistingNode(ViewContract<ComponentData> existingNode, int currentIndex) {
@@ -208,7 +206,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     private ViewContract<?> searchNode(String emptyComponentId) {
         // Busca o nó original pelo ID e faz a DEEP COPY
         var op = componentsContext.SearchNodeById(emptyComponentId);
-        ViewContract<?> existingNode = null;
+        ViewContract<?> existingNode;
 
         if (op.isPresent()) {
             existingNode = op.get();

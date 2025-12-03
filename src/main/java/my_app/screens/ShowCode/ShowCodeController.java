@@ -1,21 +1,30 @@
 package my_app.screens.ShowCode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
+import my_app.components.InputComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
-import my_app.components.InputComponent;
+import my_app.contexts.ComponentsContext;
+import my_app.data.ViewContract;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class ShowCodeController {
+    private final ComponentsContext mainComponentsContext;
+
+    public ShowCodeController(ComponentsContext mainComponentsContext) {
+        this.mainComponentsContext = mainComponentsContext;
+    }
+
     public String createImports() {
         return "import javafx.scene.Scene;\n" +
                 "import javafx.scene.control.*;\n" +
@@ -27,6 +36,10 @@ public class ShowCodeController {
                 "import javafx.stage.Stage;";
     }
 
+    //Aqui são classes componentes
+    // class Component1{
+    //
+    //    }
     public List<String> createComponentsForPreview(ObservableList<Node> nodesInCanva) {
 
         var componentsInstances = new ArrayList<String>();
@@ -230,23 +243,33 @@ public class ShowCodeController {
         ObservableList<Node> nodesInCanva = canvaComponent.getChildren();
         // codigo da classe
 
-        var componentsInstances = new ArrayList<String>();
-        var componentsInsideGetChildren = new ArrayList<String>();
-        var componentsInsideMethodSetup = new ArrayList<String>();
-        var componentsInsideMethodStyles = new ArrayList<String>();
+        final var componentsInstances = new ArrayList<String>();
+        final var componentsInsideGetChildren = new ArrayList<String>();
+        final var componentsInsideMethodSetup = new ArrayList<String>();
+        final var componentsInsideMethodStyles = new ArrayList<String>();
+
+        //exemplo: List<String> list1 = List.of("white","black");
+        final var listOf_Instances = new ArrayList<String>();
+
+        //exemplo: Text textEmptyColumn = new Text("Nothing")
+        final var listOfChildWhenColumnIsEmptyInstances = new ArrayList<String>();
 
         int textCount = 0;
         int btnCount = 0;
         int imgCount = 0;
         int inputCount = 0;
+        int columnComponentCount = 0;
         int customComponentCount = 0;
+        int listOf_InstancesCount = 0;
+        int emptyComponentCount_columnItem = 0;
+        int repeatableComponentCount_columnItem = 0;
 
         for (int i = 0; i < nodesInCanva.size(); i++) {
             Node node = nodesInCanva.get(i);
 
             if (node instanceof TextComponent component) {
-                String variableName = component.name.get();
-                if (variableName != null) textCount++;
+                final String variableName = component.name.get();
+                if (variableName == null) textCount++;
 
                 String textText = component.getText();
 
@@ -352,6 +375,45 @@ public class ShowCodeController {
                 componentsInsideMethodStyles.add(setStyle);
             }
 
+            if (node instanceof ColumnComponent component) {
+                final String variableName = component.name.get();
+                if (variableName == null) columnComponentCount++;
+
+                final String finalName = variableName != null ? variableName : "columnItens" + columnComponentCount;
+
+                final var childIdWhenSelfIsEmpty = component.getData().alternativeChildId();
+                final var childIdWhenSelfHasData = component.getData().childId();
+                final ViewContract<?> nodeWrapper_whenSelfIsEmpty = this.mainComponentsContext.findNodeById(childIdWhenSelfIsEmpty);
+                final ViewContract<?> nodeWrapper_whenSelfHasData = this.mainComponentsContext.findNodeById(childIdWhenSelfHasData);
+
+                String compWhenEmpty_Creation = "";
+                String compWhenHasData_Creation = "";
+
+                String finalNameForComp_WhenEmpty = "";
+
+                if (nodeWrapper_whenSelfIsEmpty instanceof TextComponent compWhenEmpty) {
+                    final String textText = compWhenEmpty.getText();
+                    finalNameForComp_WhenEmpty = "textEmptyColumn" + emptyComponentCount_columnItem;
+                    compWhenEmpty_Creation = "Text %s = new Text(\"%s\");".formatted(finalNameForComp_WhenEmpty, textText);
+
+                    listOfChildWhenColumnIsEmptyInstances.add(compWhenEmpty_Creation);
+                }
+
+                String compCreation = "VBox %s = new VBox(%s);".formatted(finalName, finalNameForComp_WhenEmpty);
+
+                componentsInstances.add(compCreation);
+                componentsInsideGetChildren.add(finalName);
+
+                String setX = String.format("%s.setLayoutX(%f);", finalName, node.getLayoutX());
+                String setY = String.format("%s.setLayoutY(%f);", finalName, node.getLayoutY());
+
+                componentsInsideMethodSetup.add(setX);
+                componentsInsideMethodSetup.add(setY);
+
+                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
+                componentsInsideMethodStyles.add(setStyle);
+            }
+
             //todo ver a questão de obter o name da variable aqui posteriormente
             if (node instanceof CustomComponent component) {
 
@@ -387,7 +449,10 @@ public class ShowCodeController {
                 .append("class Screen extends Pane {\n\t");
 
         // componentsInstances.
+        //code.append(String.join("\n\t", listOf_Instances));
 
+        code.append(String.join("\n\t", listOfChildWhenColumnIsEmptyInstances));
+        code.append("\n\t");
         code.append(String.join("\n\t", componentsInstances));
 
         code.append("\n\t{\n");
