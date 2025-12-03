@@ -12,6 +12,7 @@ import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.data.Commons;
 import my_app.data.ViewContract;
 
 import java.util.ArrayList;
@@ -26,14 +27,17 @@ public class ShowCodeController {
     }
 
     public String createImports() {
-        return "import javafx.scene.Scene;\n" +
-                "import javafx.scene.control.*;\n" +
-                "import javafx.scene.text.*;\n" +
-                "import javafx.scene.image.ImageView;\n" +
-                "import javafx.scene.image.Image;\n" +
-                "import javafx.scene.layout.*;\n" +
-                "import javafx.scene.paint.Color;\n" +
-                "import javafx.stage.Stage;";
+        return """
+                import javafx.scene.Scene;
+                import javafx.scene.control.*;
+                import javafx.scene.text.*;
+                import javafx.scene.image.ImageView;
+                import javafx.scene.image.Image;
+                import javafx.scene.layout.*;
+                import javafx.scene.paint.Color;
+                import javafx.scene.layout.VBox;
+                import javafx.stage.Stage;
+                """;
     }
 
     //Aqui são classes componentes
@@ -423,7 +427,8 @@ public class ShowCodeController {
                 final var dataTableListVariableName = component.dataTableVariableName;
                 var methodBuilder = new StringBuilder();
                 methodBuilder.append("\tvoid %s{".formatted(methodName));
-                methodBuilder.append("\n\t\tfor(var item : %s){".formatted(dataTableListVariableName));
+                if (dataTableListVariableName != null)
+                    methodBuilder.append("\n\t\tfor(var item : %s){".formatted(dataTableListVariableName));
 
                 if (nodeWrapper_whenSelfHasData instanceof TextComponent comp) {
                     //todo pegar dado primitivo ou complexo em cada iteracao
@@ -435,9 +440,39 @@ public class ShowCodeController {
                     methodBuilder.append(finalName).append("\n\t\t\tgetChildren().add(component);");
                 }
 
-                methodBuilder.append("\n\t\t}");//fim do for
+                if (dataTableListVariableName != null) methodBuilder.append("\n\t\t}");//fim do for
                 methodBuilder.append("\n\t}");
                 listOfLoadColumnItems_MethodsDeclaration.add(methodBuilder.toString());
+
+                if (dataTableListVariableName != null) {
+
+
+                    // 1. Obter a lista de valores (Exemplo: ["black", "white", "blue"])
+                    final List<String> list = Commons.getValuesFromVariablename(dataTableListVariableName);
+
+                    // Lista para armazenar cada valor entre aspas
+                    List<String> quotedValues = new ArrayList<>();
+
+                    // 2. Colocar cada valor entre aspas
+                    for (String value : list) {
+                        // Exemplo: "black" -> "\"black\""
+                        quotedValues.add("\"%s\"".formatted(value));
+                    }
+
+                    // 3. Juntar os valores com vírgula e espaço (", ")
+                    // Exemplo: "\"black\", \"white\", \"blue\""
+                    String joinedValues = String.join(", ", quotedValues);
+
+                    // 4. Construir a linha final no formato desejado
+                    String finalAssignment = "List<String> %s = List.of(%s);".formatted(
+                            dataTableListVariableName,
+                            joinedValues
+                    );
+
+                    // 5. Adicionar a linha gerada à sua lista final
+                    listOf_Instances.add(finalAssignment);
+                }
+
             }
 
             //todo ver a questão de obter o name da variable aqui posteriormente
@@ -476,6 +511,9 @@ public class ShowCodeController {
 
         // componentsInstances.
         //code.append(String.join("\n\t", listOf_Instances));
+
+        code.append(String.join("\n\t", listOf_Instances));
+        code.append("\n\t");
 
         code.append(String.join("\n\t", listOfChildWhenColumnIsEmptyInstances));
         code.append("\n\t");
