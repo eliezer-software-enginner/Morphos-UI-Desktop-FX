@@ -383,6 +383,7 @@ public class ShowCodeController {
                 componentsInsideMethodStyles.add(setStyle);
             }
 
+            //todo fiz só para filho Text, preciso fazer para os outros
             if (node instanceof ColumnComponent component) {
                 final String variableName = component.name.get();
                 if (variableName == null) columnComponentCount++;
@@ -445,8 +446,6 @@ public class ShowCodeController {
                 listOfLoadColumnItems_MethodsDeclaration.add(methodBuilder.toString());
 
                 if (dataTableListVariableName != null) {
-
-
                     // 1. Obter a lista de valores (Exemplo: ["black", "white", "blue"])
                     final List<String> list = Commons.getValuesFromVariablename(dataTableListVariableName);
 
@@ -500,6 +499,24 @@ public class ShowCodeController {
 
         }
 
+        return getFinalCode(canvaComponent, listOf_Instances,
+                listOfChildWhenColumnIsEmptyInstances, listOfRepeatableChildForColumn_Instances,
+                componentsInstances, componentsInsideGetChildren,
+                listOfLoadColumnItems_MethodsInvocation, componentsInsideMethodSetup,
+                componentsInsideMethodStyles, listOfLoadColumnItems_MethodsDeclaration);
+    }
+
+    private static String getFinalCode(
+            CanvaComponent canvaComponent,
+            ArrayList<String> listOf_Instances,
+            ArrayList<String> listOfChildWhenColumnIsEmptyInstances,
+            ArrayList<String> listOfRepeatableChildForColumn_Instances,
+            ArrayList<String> componentsInstances,
+            ArrayList<String> componentsInsideGetChildren,
+            ArrayList<String> listOfLoadColumnItems_MethodsInvocation,
+            ArrayList<String> componentsInsideMethodSetup,
+            ArrayList<String> componentsInsideMethodStyles,
+            ArrayList<String> listOfLoadColumnItems_MethodsDeclaration) {
         StringBuilder code = new StringBuilder();
         //
 
@@ -573,6 +590,7 @@ public class ShowCodeController {
         System.out.println(code.toString());
         return code.toString();
     }
+
 
 }
 
