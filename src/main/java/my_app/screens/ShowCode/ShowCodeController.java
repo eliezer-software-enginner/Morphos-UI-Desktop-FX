@@ -253,6 +253,10 @@ public class ShowCodeController {
 
         //exemplo: Text textEmptyColumn = new Text("Nothing")
         final var listOfChildWhenColumnIsEmptyInstances = new ArrayList<String>();
+        final var listOfRepeatableChildForColumn_Instances = new ArrayList<String>();
+
+        final var listOfLoadColumnItems_MethodsInvocation = new ArrayList<String>();
+        final var listOfLoadColumnItems_MethodsDeclaration = new ArrayList<String>();
 
         int textCount = 0;
         int btnCount = 0;
@@ -261,8 +265,8 @@ public class ShowCodeController {
         int columnComponentCount = 0;
         int customComponentCount = 0;
         int listOf_InstancesCount = 0;
-        int emptyComponentCount_columnItem = 0;
-        int repeatableComponentCount_columnItem = 0;
+        int emptyComponentCount_columnItem_Count = 0;
+        int repeatableComponentCount_columnItem_Count = 0;
 
         for (int i = 0; i < nodesInCanva.size(); i++) {
             Node node = nodesInCanva.get(i);
@@ -387,17 +391,18 @@ public class ShowCodeController {
                 final ViewContract<?> nodeWrapper_whenSelfHasData = this.mainComponentsContext.findNodeById(childIdWhenSelfHasData);
 
                 String compWhenEmpty_Creation = "";
-                String compWhenHasData_Creation = "";
-
                 String finalNameForComp_WhenEmpty = "";
 
                 if (nodeWrapper_whenSelfIsEmpty instanceof TextComponent compWhenEmpty) {
                     final String textText = compWhenEmpty.getText();
-                    finalNameForComp_WhenEmpty = "textEmptyColumn" + emptyComponentCount_columnItem;
+                    finalNameForComp_WhenEmpty = "textEmptyColumn" + emptyComponentCount_columnItem_Count;
                     compWhenEmpty_Creation = "Text %s = new Text(\"%s\");".formatted(finalNameForComp_WhenEmpty, textText);
 
                     listOfChildWhenColumnIsEmptyInstances.add(compWhenEmpty_Creation);
+
+                    emptyComponentCount_columnItem_Count++;
                 }
+
 
                 String compCreation = "VBox %s = new VBox(%s);".formatted(finalName, finalNameForComp_WhenEmpty);
 
@@ -412,6 +417,27 @@ public class ShowCodeController {
 
                 String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
                 componentsInsideMethodStyles.add(setStyle);
+
+                final String methodName = "load" + finalName + "()";
+                listOfLoadColumnItems_MethodsInvocation.add(methodName + ";");
+                final var dataTableListVariableName = component.dataTableVariableName;
+                var methodBuilder = new StringBuilder();
+                methodBuilder.append("\tvoid %s{".formatted(methodName));
+                methodBuilder.append("\n\t\tfor(var item : %s){".formatted(dataTableListVariableName));
+
+                if (nodeWrapper_whenSelfHasData instanceof TextComponent comp) {
+                    //todo pegar dado primitivo ou complexo em cada iteracao
+                    final String text = comp.getText();
+                    String comp_Creation = "\n\t\t\tfinal var component = new Text(\"%s\".replace(\"${boom}\", item));".formatted(text);
+
+                    methodBuilder.append(comp_Creation);
+                    // columnItens.children.add(btn)
+                    methodBuilder.append(finalName).append("\n\t\t\tgetChildren().add(component);");
+                }
+
+                methodBuilder.append("\n\t\t}");//fim do for
+                methodBuilder.append("\n\t}");
+                listOfLoadColumnItems_MethodsDeclaration.add(methodBuilder.toString());
             }
 
             //todo ver a questão de obter o name da variable aqui posteriormente
@@ -453,6 +479,8 @@ public class ShowCodeController {
 
         code.append(String.join("\n\t", listOfChildWhenColumnIsEmptyInstances));
         code.append("\n\t");
+        code.append(String.join("\n\t", listOfRepeatableChildForColumn_Instances));
+        code.append("\n\t");
         code.append(String.join("\n\t", componentsInstances));
 
         code.append("\n\t{\n");
@@ -465,7 +493,9 @@ public class ShowCodeController {
         // )
 
         code.append("\t\tsetup();\n");
-        code.append("\t\tstyles();\n");
+        code.append("\t\tstyles();\n\t\t");
+        code.append(String.join("\n\t\t", listOfLoadColumnItems_MethodsInvocation));
+        code.append("\n");
 
         code.append("\t}\n\n");
 
@@ -492,10 +522,15 @@ public class ShowCodeController {
         code.append("\tvoid styles(){\n\t\t");
         code.append("setStyle(\"%s\");\n\t\t".formatted(canvaComponent.getStyle()));
         code.append(String.join("\n\t\t", componentsInsideMethodStyles));
-        code.append("\n\t  }\n\n");
+        code.append("\n\t  }");
         // }
 
-        code.append("}");
+        // loadColumnItem1(){
+        code.append("\n\n");
+        code.append(String.join("\n\n", listOfLoadColumnItems_MethodsDeclaration));
+        // }
+
+        code.append("\n\n}");
 
         System.out.println(code.toString());
         return code.toString();
