@@ -61,5 +61,8 @@
   "duplicate": "Duplicar",
   "centralizeHorizontally": "Centralizar horizontalmente",
   "columnItems": "Coluna Itens",
-  "chooseIcon": "Escolher icone"
+  "chooseIcon": "Escolher icone",
+  "register": "Registro",
+  "chooseType": "Escolha o tipo",
+  "selectIconsPackToViewIconsHere": "Select a icon pack to view icons here"
 }

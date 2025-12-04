@@ -29,7 +29,6 @@ public class Commons {
         XLARGE(1600, 900),
         FULL(1920, 1080);
 
-
         public final double width, heigh;
 
         ScreensSize(int width, int height) {

@@ -112,7 +112,10 @@ public class TranslationContext {
             String duplicate,
             String centralizeHorizontally,
             String columnItems,
-            String chooseIcon
+            String chooseIcon,
+            String register,
+            String chooseType,
+            String selectIconsPackToViewIconsHere
     ) {
     }
 

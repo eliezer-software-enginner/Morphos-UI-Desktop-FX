@@ -62,14 +62,14 @@ public class App extends Application {
 
         // Cria a DataScene passando a referência da mainScene e do primaryStage
         DataScene dataScene = new DataScene();
-        //primaryStage.setScene(dataScene);
+        primaryStage.setScene(dataScene);
         dataScene.show();
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
         this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
         // this.stage.show();
 
-        //new WindowPrimitiveListForm().show();
+        // new WindowPrimitiveListForm().show();
     }
 
     public void changeLanguage(Locale locale) {

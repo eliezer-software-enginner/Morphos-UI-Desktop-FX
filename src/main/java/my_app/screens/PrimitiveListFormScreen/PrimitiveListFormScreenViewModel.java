@@ -2,14 +2,14 @@ package my_app.screens.PrimitiveListFormScreen;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import my_app.components.Components;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.themes.Typography;
 import toolkit.Component;
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class PrimitiveListFormScreenViewModel {
+    private final TranslationContext.Translation translation = TranslationContext.instance().get();
     private final String[] types = {"String", "Float", "Int", "Char"};
     StringProperty typeSelected = new SimpleStringProperty();
 
@@ -74,9 +75,9 @@ public class PrimitiveListFormScreenViewModel {
     @Component
     public HBox createInputLine(VBox inputLinesContainer) {
         var counter = inputLinesContainer.getChildren().size();
-        var text = new Text("Registro: " + counter + " = ");
+        var text = Typography.caption(translation.register() + ": " + counter + " = ");
         var input = new TextField();
-        var btnAdd = new Button("+");
+        var btnAdd = Components.ButtonPrimaryOutline("+");
 
         String currentType = typeSelected.get();
 

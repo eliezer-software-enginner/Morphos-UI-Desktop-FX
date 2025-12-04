@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import my_app.components.Components;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
@@ -25,8 +26,10 @@ public class IconsScene extends Scene {
     @Component
     VBox header = new VBox();
 
+    TranslationContext.Translation translation = TranslationContext.instance().get();
+
     @Component
-    TilePane content = new TilePane(10, 10, Typography.body("Select a icon pack to view icons here"));
+    TilePane content = new TilePane(10, 10, Typography.body(translation.selectIconsPackToViewIconsHere()));
 
     @Component
     ScrollPane scrollPane = new ScrollPane(content);

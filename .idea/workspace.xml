@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="creating dinamic methods for populationg columnItens(Vbox)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataSceneViewModel.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="datasecene was redesigned">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/DataScene/DataScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene/IconsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene/IconsScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen/PrimitiveListFormScreenViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/global_styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/global_styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui-portifolio-home.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui-portifolio-home.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/WindowPrimitiveListForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/WindowPrimitiveListForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -602,7 +604,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764790908240</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="datasecene was redesigned">
+      <option name="closed" value="true" />
+      <created>1764871640187</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1764871640187</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -617,7 +627,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added visual feedback for ui file" />
     <MESSAGE value="change theme on leftside" />
     <MESSAGE value="wrapping width of text" />
     <MESSAGE value="clipping image as circle" />
@@ -642,7 +651,8 @@
     <MESSAGE value="rendering each text using value of datatable list" />
     <MESSAGE value="output node for when columnItem is empty" />
     <MESSAGE value="creating dinamic methods for populationg columnItens(Vbox)" />
-    <option name="LAST_COMMIT_MESSAGE" value="creating dinamic methods for populationg columnItens(Vbox)" />
+    <MESSAGE value="datasecene was redesigned" />
+    <option name="LAST_COMMIT_MESSAGE" value="datasecene was redesigned" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
