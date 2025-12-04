@@ -1,11 +1,11 @@
 package my_app;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.scenes.DataScene.DataScene;
 import my_app.scenes.MainScene.MainScene;
 
 import java.util.Locale;
@@ -15,8 +15,6 @@ public class App extends Application {
 
     public static Stage stage;
     TranslationContext translationContext;
-
-    public static Scene mainScene;
 
     @Override
     public void init() {
@@ -43,10 +41,10 @@ public class App extends Application {
         //Scene splashScene = new SplashScene(primaryStage);
         //this.stage.setScene(splashScene);
 
-        mainScene = new MainScene();
-        this.stage.setScene(mainScene);
+        //mainScene = new MainScene();
+        //this.stage.setScene(mainScene);
 
-        // this.stage.setScene(new IconsScene());
+        //this.stage.setScene(new IconsScene());
 
         // themeManager.addScene(mainScene);
 
@@ -63,12 +61,13 @@ public class App extends Application {
         });
 
         // Cria a DataScene passando a referência da mainScene e do primaryStage
-        // DataScene dataScene = new DataScene(primaryStage, mainScene);
-
+        DataScene dataScene = new DataScene();
+        //primaryStage.setScene(dataScene);
+        dataScene.show();
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
         this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
-        this.stage.show();
+        // this.stage.show();
 
         //new WindowPrimitiveListForm().show();
     }

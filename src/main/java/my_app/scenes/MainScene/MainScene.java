@@ -38,7 +38,6 @@ public class MainScene extends Scene {
     VBox mainView;
 
     MainSceneController controller = new MainSceneController(componentsContext);
-    public Stage primaryStage;
 
     public MainScene() {
         var screenSize = Commons.ScreensSize.LARGE;
