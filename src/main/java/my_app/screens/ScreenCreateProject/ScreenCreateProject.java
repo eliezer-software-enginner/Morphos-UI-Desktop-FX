@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import my_app.components.Components;
+import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -16,8 +17,8 @@ public class ScreenCreateProject extends VBox {
 
     Toast toast = new Toast();
 
-    public ScreenCreateProject(Stage primaryStage) {
-        this.viewModel = new ScreenCreateProjectViewModel(primaryStage, toast);
+    public ScreenCreateProject(ComponentsContext mainComponentsContext, Stage primaryStage) {
+        this.viewModel = new ScreenCreateProjectViewModel(mainComponentsContext, primaryStage, toast);
 
         getChildren().addAll(
                 Typography.title(Commons.AppName),

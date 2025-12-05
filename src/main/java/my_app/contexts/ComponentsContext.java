@@ -113,6 +113,128 @@ public class ComponentsContext {
         return selected != null && selected.node() != null && selected.node().getId().equals(nodeId);
     }
 
+    public void loadJsonState_(File projectFile, CanvaComponent canvaComponent, Stage stage) {
+        canvaComponent.getChildren().clear();
+
+        mainCanvaComponent = canvaComponent;
+
+        String idOfComponentSelected = null;
+        nodeSelected.set(null);
+        headerSelected.set(null);
+        dataMap.clear();
+
+        ObjectMapper om = new ObjectMapper();
+
+        if (projectFile == null || !projectFile.exists() || projectFile.length() == 0) {
+            return;
+        }
+
+        try {
+            final var projectData = om.readValue(projectFile, Project.class);
+            final var state = projectData.screens().getFirst();
+
+            //var state = om.readValue(file, StateJson_v2.class);
+            mainCanvaComponent.applyData(state.canva);
+
+            if (state.id_of_component_selected != null) {
+                idOfComponentSelected = state.id_of_component_selected;
+            }
+
+            for (TextComponentData data : state.text_components) {
+                TextComponent comp = new TextComponent(data.text(), this, mainCanvaComponent);
+                comp.applyData(data);
+                // nodes.add(comp);
+
+                // subItemsContext.addItem("text", data.identification());
+                addItem("text", comp);
+
+                if (data.in_canva()) {
+                    mainCanvaComponent.addElementDragable(comp, false);
+                }
+            }
+
+            // Restaura os botões
+            for (ButtonComponentData data : state.button_components) {
+                ButtonComponent comp = new ButtonComponent(this, canvaComponent);
+
+                comp.applyData(data);
+                // nodes.add(comp);
+                // subItemsContext.addItem("button", data.identification());
+                addItem("button", comp);
+
+                if (data.in_canva()) {
+                    mainCanvaComponent.addElementDragable(comp, false);
+                }
+            }
+
+            // Restaura as imagens
+            for (ImageComponentData data : state.image_components) {
+                ImageComponent comp = new ImageComponent(this, canvaComponent);
+                comp.stage = stage;
+
+                comp.applyData(data);
+                // nodes.add(comp);
+
+                addItem("image", comp);
+                if (data.in_canva()) {
+                    mainCanvaComponent.addElementDragable(comp, false);
+                }
+            }
+
+            // Restaura inputs
+            for (InputComponentData data : state.input_components) {
+                InputComponent comp = new InputComponent("", this, canvaComponent);
+
+                comp.applyData(data);
+                // nodes.add(comp);
+
+                addItem("input", comp);
+
+                if (data.in_canva()) {
+                    mainCanvaComponent.addElementDragable(comp, false);
+
+                }
+            }
+
+            for (CustomComponentData data : state.custom_components) {
+                var comp = new CustomComponent(this, canvaComponent);
+
+                comp.applyData(data);
+                // nodes.add(comp);
+
+                addItem("component", comp);
+
+                if (data.in_canva) {
+                    mainCanvaComponent.addElementDragable(comp, false);
+                }
+            }
+
+            for (ColumnComponentData data : state.column_components) {
+                var comp = new ColumnComponent(this, mainCanvaComponent);
+
+                comp.applyData(data);
+                // nodes.add(comp);
+
+                addItem("column items", comp);
+
+                if (data.in_canva()) {
+                    mainCanvaComponent.addElementDragable(comp, false);
+                }
+            }
+
+            SearchNodeById(idOfComponentSelected).ifPresent(node -> selectNode(node.getCurrentNode()));
+
+            leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+
+            headerSelected.set(state.type_of_component_selected);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Deprecated
     public void loadJsonState(File file, CanvaComponent canvaComponent, Stage stage) {
         canvaComponent.getChildren().clear();
 

@@ -6,22 +6,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.FileManager;
-import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
-import my_app.screens.Home.HomeViewModel;
+import my_app.contexts.ComponentsContext;
+import my_app.scenes.AppScenes;
 import my_app.themes.Typography;
 import toolkit.Toast;
-
-import java.nio.file.Path;
-
-import static my_app.data.Commons.loadPrefs;
 
 public class ScreenCreateProjectViewModel {
     private final Toast toast;
     public StringProperty inputTextProperty = new SimpleStringProperty("projeto-teste");
     Stage stage;
+    private final ComponentsContext mainComponentsContext;
 
-    public ScreenCreateProjectViewModel(Stage primaryStage, Toast toast) {
+    public ScreenCreateProjectViewModel(ComponentsContext mainComponentsContext, Stage primaryStage, Toast toast) {
+        this.mainComponentsContext = mainComponentsContext;
         this.stage = primaryStage;
         this.toast = toast;
     }
@@ -49,24 +46,13 @@ public class ScreenCreateProjectViewModel {
             var file = fc.showSaveDialog(stage);
             if (file != null) {
                 FileManager.saveNewProject(text, file);
-
-                //saving also the prefs
-                //check if file exists
-                String appData = loadPrefs();
-                var prefsFile = Path.of(appData).resolve(Commons.AppNameAtAppData).resolve("prefs.json");
-
-                var defaultPrefs = new HomeViewModel.PrefsData(file.getAbsolutePath(), TranslationContext.instance().currentLanguage());
-                Commons.WriteJsonInDisc(prefsFile.toFile(), defaultPrefs);
-
                 errorContainer.getChildren().clear();
-
-                IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
                 this.toast.show("Project was created!");
+
+                stage.setScene(AppScenes.HomeScene(mainComponentsContext, stage));
             }
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            errorContainer.getChildren().setAll(Typography.error(e.getMessage()));
         }
-
-
     }
 }

@@ -1,8 +1,8 @@
 {
   "splashTranslation": {
-    "title": "Welcome to Morpho",
+    "title": "Welcome to Morphos Desktop UI Builder",
     "description": "Create your ui easily for your javaFX application",
-    "footer": "Copyright 2025 - By Plantfall"
+    "footer": "Copyright 2025 - By Eliezer Assunção de Paulo"
   },
   "optionsMenuMainScene": {
     "showCode": "Show code",

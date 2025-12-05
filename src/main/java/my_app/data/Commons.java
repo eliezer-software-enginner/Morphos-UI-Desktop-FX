@@ -24,6 +24,10 @@ public class Commons {
 
     public enum ScreensSize {
         SMALL(640, 480),
+
+        _700x500(700, 500),
+        _900x500(900, 500),
+
         MEDIUM(800, 600),
         LARGE(1280, 720),
         XLARGE(1600, 900),
@@ -176,12 +180,8 @@ public class Commons {
         }
     }
 
-    public static Path getPrefsFile() {
-        String appData = loadPrefs();
-        return Path.of(appData).resolve(Commons.AppNameAtAppData).resolve("prefs.json");
-    }
-
     //change this function in the future
+    @Deprecated
     public static String loadPrefs() {
         String os = System.getProperty("os.name").toLowerCase();
         String userHome = System.getProperty("user.home");

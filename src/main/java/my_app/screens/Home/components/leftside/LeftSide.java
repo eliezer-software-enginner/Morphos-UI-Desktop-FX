@@ -73,8 +73,6 @@ public class LeftSide extends VBox {
         getChildren().add(errorContainer);
     }
 
-    private final int WIDTH = 250;
-
     void config() {
         iv.setFitHeight(50);
         iv.setFitWidth(50);
@@ -85,6 +83,7 @@ public class LeftSide extends VBox {
         // Faz com que o LeftSide ocupe a altura toda
         setMaxHeight(Double.MAX_VALUE);
 
+        int WIDTH = 250;
         setPrefWidth(WIDTH);
         setMaxWidth(WIDTH);
         setMinWidth(WIDTH);

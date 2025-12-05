@@ -5,10 +5,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import my_app.FileManager;
 import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
 import my_app.components.InputComponent;
@@ -21,6 +23,7 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.StateJson_v2;
 import my_app.data.ViewContract;
+import my_app.scenes.DataScene.DataScene;
 import my_app.scenes.SettingsScene;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -46,6 +49,21 @@ public class HomeViewModel {
         this.stage = theirStage;
 
         fillMenuBar(home.menuBar);
+        loadScreenAndApplyToCanva();
+    }
+
+    private void loadScreenAndApplyToCanva() {
+        final var prefsData = FileManager.loadDataInPrefs();
+
+        //acessar o arqivo de projeto
+        final var absolutePath = prefsData.last_project_saved_path();
+        final var projectFile = new File(absolutePath);
+        uiJsonFile = projectFile;
+        uiPathProperty.set(uiJsonFile.getAbsolutePath());
+        //conteudo do arquivo é um json Project
+
+        //final var projectData = om.readValue(projectFile, Project.class);
+        componentsContext.loadJsonState_(uiJsonFile, home.canva, stage);
     }
 
     public void handleClickMenuSettings(Stage stage) {
@@ -53,8 +71,7 @@ public class HomeViewModel {
     }
 
     public void fillMenuBar(MenuBar menuBar) {
-        //menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings(), createMenuDataTable(), createMenuUiPath());
-        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings());
+        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings(), createMenuDataTable(), createMenuUiPath());
     }
 
     @Component
@@ -96,12 +113,38 @@ public class HomeViewModel {
     }
 
     @Component
-    javafx.scene.control.Menu createMenuSettings() {
-        javafx.scene.control.Menu menu = new javafx.scene.control.Menu();
+    Menu createMenuSettings() {
+        Menu menu = new Menu();
         Label menuText = Typography.caption(translation.settings());
         menu.setGraphic(menuText);
 
         menuText.setOnMouseClicked(_ -> handleClickMenuSettings(this.stage));
+
+        menuText.getStyleClass().add("text-primary-color");
+
+        return menu;
+    }
+
+    @Component
+    Menu createMenuDataTable() {
+        var menu = new Menu();
+        Label menuText = Typography.caption("Data table");
+        menu.setGraphic(menuText);
+
+        menuText.setOnMouseClicked(ev -> {
+            new DataScene().show();
+        });
+        return menu;
+    }
+
+
+    @Component
+    Menu createMenuUiPath() {
+        Menu menu = new Menu();
+        Label menuText = Typography.caption("path of ui file");
+        menuText.textProperty().bind(this.uiPathProperty);
+
+        menu.setGraphic(menuText);
 
         menuText.getStyleClass().add("text-primary-color");
 
@@ -115,6 +158,8 @@ public class HomeViewModel {
         uiPathProperty.set("");
     }
 
+
+    @Deprecated
     public record PrefsData(String last_project_saved_path, String language) {
     }
 
@@ -140,16 +185,6 @@ public class HomeViewModel {
 
     }
 
-    public void loadSceneFromJsonFile(Home home, Stage stage) {
-        try {
-            uiJsonFile = loadUiFileFromAppData();
-            componentsContext.loadJsonState(uiJsonFile, home.canva, stage);
-            uiPathProperty.set(uiJsonFile.getAbsolutePath());
-        } catch (Exception e) {
-            e.printStackTrace();
-            componentsContext.loadJsonState(null, home.canva, stage);
-        }
-    }
 
     public void handleSave(Home home, Stage stage) {
         // if (uiJsonFile == null) {
