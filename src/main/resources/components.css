@@ -1,0 +1,66 @@
+.card-create-project {
+    /* Cor de Fundo do Cartão (Roxo-escuro suave) */
+    -fx-background-color: #1E1E3F;
+
+    /* Cantos Arredondados */
+    -fx-background-radius: 12px;
+
+    /* Preenchimento interno para afastar os elementos das bordas */
+    -fx-padding: 20px;
+
+    /* Sombra sutil para flutuação (Drop Shadow) */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0.5, 0, 0);
+
+    /* Centraliza o card na tela (Se a classe 'background-color' estiver no VBox pai) */
+    -fx-alignment: center;
+
+    /* Define a largura máxima para que ele não ocupe a tela inteira */
+    -fx-max-width: 400px;
+}
+
+.project-name-input {
+    /* Cor de Fundo (Mais escura que o card) */
+    -fx-background-color: #121224;
+
+    /* Cor do Texto (Branco/Muito claro) */
+    -fx-text-fill: #FFFFFF;
+
+    /* Borda na cor de realce (Verde-água) */
+    -fx-border-color: #00CC99;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+
+    /* Remove a borda padrão do JavaFX */
+    -fx-background-insets: 0;
+
+    /* Ajusta o preenchimento */
+    -fx-padding: 8px 12px;
+
+    /* Placeholder Text (Pode precisar de um hack, mas tentamos aqui) */
+    -fx-prompt-text-fill: #B0B0C0;
+}
+
+.button-primary {
+    /* Cor de Fundo (Verde-água vibrante) */
+    -fx-background-color: #00CC99;
+
+    /* Cor do Texto (Branco) */
+    -fx-text-fill: #FFFFFF;
+
+    /* Tornar o texto em negrito (Se a classe Typography não fizer isso) */
+    -fx-font-weight: bold;
+
+    /* Cantos Arredondados (Estilo pílula/arredondado) */
+    -fx-background-radius: 20px;
+
+    /* Preenchimento maior para melhor visualização */
+    -fx-padding: 10px 20px;
+
+    /* Efeito de brilho ou sombra suave */
+    -fx-effect: dropshadow(gaussian, rgba(0, 204, 153, 0.5), 10, 0.6, 0, 0);
+}
+
+/* Efeito ao passar o mouse para indicar interatividade */
+.button-primary:hover {
+    -fx-background-color: #00e6a8; /* Uma cor um pouco mais clara */
+}

@@ -31,23 +31,26 @@ public class MainScene extends Scene {
     MenuBar menuBar = MenuBarPrimary();
 
     @Component
-    Home home = new Home(componentsContext, false);
-    Stage stage = new Stage();
+    Home home;
 
     @Component
     VBox mainView;
+    Stage stage;
 
     MainSceneController controller = new MainSceneController(componentsContext);
 
+    @Deprecated
     public MainScene() {
         var screenSize = Commons.ScreensSize.LARGE;
         super(new VBox(), 1410, screenSize.heigh);
+
+        this.home = new Home(null, componentsContext, false);
 
         setup();
         styles();
 
         try {
-            controller.loadSceneFromJsonFile(home, stage);
+            //controller.loadSceneFromJsonFile(home, stage);
         } catch (RuntimeException _) {
         }
 

@@ -63,6 +63,7 @@ public class Commons {
     public static String ButtonRadiusWidth = "0";
 
     public static void UseDefaultStyles(Scene scene) {
+
         scene.getStylesheets().addAll(
                 Commons.class.getResource("/global_styles.css").toExternalForm(),
                 Commons.class.getResource("/typography.css").toExternalForm());
@@ -148,14 +149,6 @@ public class Commons {
         }
     }
 
-    public static void WriteFileInDiscAsJson(File file, Object obj) {
-        ObjectMapper om = new ObjectMapper();
-        try {
-            om.writeValue(file, obj);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public record NodeInCanva(boolean inCanva, String fatherId) {
     }
@@ -210,6 +203,10 @@ public class Commons {
     }
 
 
+    /**
+     * Use de FileManager
+     */
+    @Deprecated
     public static Path morphosPathInFileSystem() {
         String os = System.getProperty("os.name").toLowerCase();
         String userHome = System.getProperty("user.home");
@@ -260,7 +257,8 @@ public class Commons {
      * Operations related to current project
      */
 
-    public record Project(String name, TableData tableData) {
+    @Deprecated
+    public record Project(String name, TableData tableData, List<StateJson_v2> screens) {
     }
 
     public record TableData(
@@ -274,10 +272,10 @@ public class Commons {
 
         var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
         //lista fixa temporarioa
-        var proj = new Project(tempName, new TableData(List.of(data)));
+        //var proj = new Project(tempName, new TableData(List.of(data)));
 
         try {
-            WriteFileInDiscAsJson(projectPath.toFile(), proj);
+            // WriteFileInDiscAsJson(projectPath.toFile(), proj);
         } catch (Exception _) {
 
         }

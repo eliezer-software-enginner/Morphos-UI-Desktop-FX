@@ -12,7 +12,6 @@ public class Toast extends Label {
                 -fx-background-color: #323232;
                 -fx-text-fill: white;
                 -fx-padding: 10px 20px;
-                -fx-font-size: 14px;
                 -fx-background-radius: 8px;
                 -fx-alignment: center;
                 """);

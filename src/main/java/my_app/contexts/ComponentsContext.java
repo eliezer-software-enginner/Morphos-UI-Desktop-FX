@@ -468,6 +468,7 @@ public class ComponentsContext {
         }
     }
 
+    @Deprecated
     private StateJson_v2 createStateData(CanvaComponent canva) {
         StateJson_v2 jsonTarget = new StateJson_v2();
         jsonTarget.id_of_component_selected = nodeSelected.get() == null ? null

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
@@ -24,6 +25,7 @@ import java.util.function.Consumer;
 
 
 public class Components {
+
 
     @Component
     public static Button ButtonPrimaryOutline(String text) {

@@ -1,10 +1,12 @@
 package my_app.screens.Home;
 
 import javafx.scene.Node;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
@@ -12,7 +14,11 @@ import my_app.screens.Home.components.RightSide;
 import my_app.screens.Home.components.leftside.LeftSide;
 import toolkit.Component;
 
+import static my_app.components.shared.UiComponents.MenuBarPrimary;
+
 public class Home extends BorderPane {
+    @Component
+    MenuBar menuBar = MenuBarPrimary();
 
     @Component
     public LeftSide leftSide;
@@ -23,9 +29,15 @@ public class Home extends BorderPane {
         void set(Node n);
     }
 
-    public Home(ComponentsContext componentsContext, boolean openComponentScene) {
+    HomeViewModel viewModel;
+
+    public Home(Stage theirStage, ComponentsContext componentsContext, boolean openComponentScene) {
         this.canva = new CanvaComponent(componentsContext);
         this.leftSide = new LeftSide(canva, componentsContext);
+
+        this.viewModel = new HomeViewModel(componentsContext);
+
+        setTop(menuBar);
 
         setLeft(this.leftSide);
 
@@ -74,5 +86,7 @@ public class Home extends BorderPane {
         //setRight(new RightSide(componentsContext, canva));
 
         getStyleClass().add("surface-color");
+
+        viewModel.init(this, theirStage);
     }
 }

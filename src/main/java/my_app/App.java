@@ -3,9 +3,10 @@ package my_app;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.scenes.DataScene.DataScene;
+import my_app.scenes.AppScenes;
 import my_app.scenes.MainScene.MainScene;
 
 import java.util.Locale;
@@ -41,8 +42,13 @@ public class App extends Application {
         //Scene splashScene = new SplashScene(primaryStage);
         //this.stage.setScene(splashScene);
 
-        //mainScene = new MainScene();
-        //this.stage.setScene(mainScene);
+        final var componentsContext = new ComponentsContext();
+        //final var mainWindow = new MainWindow(componentsContext);
+        //mainWindow.show();
+
+        //final var mainScene = new MainScene();
+        //primaryStage.setScene(AppScenes.HomeScene(componentsContext, primaryStage));
+        primaryStage.setScene(AppScenes.CreateProjectScene(primaryStage));
 
         //this.stage.setScene(new IconsScene());
 
@@ -61,13 +67,14 @@ public class App extends Application {
         });
 
         // Cria a DataScene passando a referência da mainScene e do primaryStage
-        DataScene dataScene = new DataScene();
-        primaryStage.setScene(dataScene);
-        dataScene.show();
+        //DataScene dataScene = new DataScene();
+        //primaryStage.setScene(dataScene);
+        //dataScene.show();
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
         this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
-        // this.stage.show();
+
+        primaryStage.show();
 
         // new WindowPrimitiveListForm().show();
     }
