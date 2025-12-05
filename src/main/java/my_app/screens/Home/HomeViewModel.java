@@ -27,9 +27,9 @@ import my_app.data.Commons;
 import my_app.data.StateJson_v2;
 import my_app.data.ViewContract;
 import my_app.mappers.CanvaMapper;
-import my_app.scenes.DataScene.DataScene;
 import my_app.scenes.SettingsScene;
 import my_app.themes.Typography;
+import my_app.windows.AllWindows;
 import toolkit.Component;
 
 import java.awt.*;
@@ -145,7 +145,7 @@ public class HomeViewModel {
         menu.setGraphic(menuText);
 
         menuText.setOnMouseClicked(ev -> {
-            new DataScene().show();
+            AllWindows.showWindowForDataTable(componentsContext);
         });
         return menu;
     }

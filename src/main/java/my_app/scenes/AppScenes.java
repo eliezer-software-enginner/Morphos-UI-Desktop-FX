@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
+import my_app.screens.DataTableScreen.DataTableScreen;
 import my_app.screens.Home.Home;
 import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreen;
 import my_app.screens.ScreenCreateProject.ScreenCreateProject;
@@ -27,9 +28,6 @@ public class AppScenes {
         return scene;
     }
 
-    public static Scene PrimitiveListFormScene() {
-        return new Scene(new PrimitiveListFormScreen());
-    }
 
     public static Scene CreateProjectScene(ComponentsContext mainComponentsContext, Stage theirStage) {
         var scene = new Scene(new ScreenCreateProject(mainComponentsContext, theirStage));
@@ -52,6 +50,33 @@ public class AppScenes {
 
         var screenSize = Commons.ScreensSize.LARGE;
         theirStage.setWidth(1410);
+        theirStage.setHeight(screenSize.heigh);
+        theirStage.centerOnScreen();
+        theirStage.setResizable(true);
+
+        Commons.UseDefaultStyles(scene);
+        ThemeManager.Instance().addScene(scene);
+        return scene;
+    }
+
+    public static Scene DataTableScene(ComponentsContext mainComponentsContext, Stage theirStage) {
+        var scene = new Scene(new DataTableScreen(mainComponentsContext));
+
+        var screenSize = Commons.ScreensSize._1200x650;
+        theirStage.setWidth(screenSize.width);
+        theirStage.setHeight(screenSize.heigh);
+        theirStage.centerOnScreen();
+        theirStage.setResizable(true);
+
+        Commons.UseDefaultStyles(scene);
+        ThemeManager.Instance().addScene(scene);
+        return scene;
+    }
+
+    public static Scene PrimitiveListFormScene(Stage theirStage) {
+        var scene = new Scene(new PrimitiveListFormScreen());
+        var screenSize = Commons.ScreensSize._1200x650;
+        theirStage.setWidth(screenSize.width);
         theirStage.setHeight(screenSize.heigh);
         theirStage.centerOnScreen();
         theirStage.setResizable(true);

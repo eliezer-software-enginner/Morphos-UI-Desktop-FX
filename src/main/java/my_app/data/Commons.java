@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.scenes.MainScene.MainSceneController;
-import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreenViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +26,8 @@ public class Commons {
 
         _700x500(700, 500),
         _900x500(900, 500),
+
+        _1200x650(1200, 650),
 
         MEDIUM(800, 600),
         LARGE(1280, 720),
@@ -261,26 +262,6 @@ public class Commons {
     public record Project(String name, TableData tableData, List<StateJson_v2> screens) {
     }
 
-    public record TableData(
-            List<PrimitiveListFormScreenViewModel.PrimitiveData> primitiveDataList
-    ) {
-    }
-
-    public static void addPrimitiveData(PrimitiveListFormScreenViewModel.PrimitiveData data) {
-        //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
-        String tempName = "Teste";
-
-        var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
-        //lista fixa temporarioa
-        //var proj = new Project(tempName, new TableData(List.of(data)));
-
-        try {
-            // WriteFileInDiscAsJson(projectPath.toFile(), proj);
-        } catch (Exception _) {
-
-        }
-    }
-
     public static List<String> getVariableNamesInDataTable() {
         //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
         String tempName = "Teste";
@@ -292,7 +273,7 @@ public class Commons {
             var proj = mapper.readValue(projectPath.toFile(), Project.class);
 
             var list = new ArrayList<String>();
-            for (var primitiveList : proj.tableData.primitiveDataList) {
+            for (var primitiveList : proj.tableData.primitiveDataList()) {
                 list.add(primitiveList.variableName());
             }
             //TODO faltou lista complexa
@@ -313,7 +294,7 @@ public class Commons {
             var proj = mapper.readValue(projectPath.toFile(), Project.class);
 
             var list = new ArrayList<String>();
-            for (var primitiveList : proj.tableData.primitiveDataList) {
+            for (var primitiveList : proj.tableData.primitiveDataList()) {
                 if (primitiveList.variableName().equals(variableName)) {
                     list.addAll(primitiveList.values());
                 }

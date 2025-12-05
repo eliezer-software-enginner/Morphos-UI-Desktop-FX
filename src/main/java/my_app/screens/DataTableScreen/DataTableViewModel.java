@@ -1,32 +1,39 @@
-package my_app.scenes.DataScene;
+package my_app.screens.DataTableScreen;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import my_app.data.Commons;
-import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreenViewModel;
+import my_app.FileManager;
+import my_app.data.TableData;
 import my_app.themes.Typography;
 
-import java.util.List;
+public class DataTableViewModel {
 
-public class DataSceneViewModel {
+    BooleanProperty refreshDataProperty = new SimpleBooleanProperty();
 
-    private Commons.TableData getDataTable() {
-        //todo buscar o nome do projeto atual
-
-        var primitiveDataList = new PrimitiveListFormScreenViewModel.PrimitiveData(
-                "colors", "String", List.of("black", "yellow", "blue")
-        );
-        var primitiveDataList2 = new PrimitiveListFormScreenViewModel.PrimitiveData(
-                "colors", "String", List.of("black", "yellow", "blue")
-        );
-        return new Commons.TableData(List.of(primitiveDataList, primitiveDataList2));
+    public void toggleRefreshData() {
+        refreshDataProperty.set(!refreshDataProperty.get());
     }
 
-    public void createCardsIntoTilePane(TilePane titlePane) {
-        var dataTable = getDataTable();
+    private TableData getDataTable() {
+        var projectData = FileManager.getProjectData();
+        return projectData.tableData();
+    }
 
-        dataTable.primitiveDataList().forEach(primitiveData -> {
+    public void createCardsIntoTilePane(TilePane titlePane, VBox contentContainer, Label textForEmpty) {
+        var dataTable = getDataTable();
+        final var primitives = dataTable.primitiveDataList();
+
+        if (primitives.isEmpty()) {
+            contentContainer.getChildren().setAll(textForEmpty);
+            return;
+        }
+
+
+        primitives.forEach(primitiveData -> {
             final var header = new HBox(Typography.body(primitiveData.variableName()));
             final var list_Of_type = (Typography.body("List<%s>".formatted(primitiveData.type())));
 
@@ -45,5 +52,8 @@ public class DataSceneViewModel {
 
             titlePane.getChildren().add(comp);
         });
+
+
+        contentContainer.getChildren().setAll(titlePane);
     }
 }

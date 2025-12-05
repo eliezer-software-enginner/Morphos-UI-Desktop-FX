@@ -1,16 +1,13 @@
 package my_app.windows;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import my_app.data.Commons;
-import my_app.scenes.AppScenes;
-import my_app.themes.ThemeManager;
 
+@Deprecated
 public class WindowPrimitiveListForm extends Stage {
-    Scene scene = AppScenes.PrimitiveListFormScene();
+    // Scene scene = AppScenes.PrimitiveListFormScene(window);
 
     public WindowPrimitiveListForm() {
-        setScene(scene);
+        //  setScene(scene);
         setWidth(800);
         setHeight(500);
 
@@ -18,7 +15,7 @@ public class WindowPrimitiveListForm extends Stage {
     }
 
     public void setup() {
-        ThemeManager.Instance().addScene(scene);
-        Commons.UseDefaultStyles(scene);
+        //   ThemeManager.Instance().addScene(scene);
+        //  Commons.UseDefaultStyles(scene);
     }
 }

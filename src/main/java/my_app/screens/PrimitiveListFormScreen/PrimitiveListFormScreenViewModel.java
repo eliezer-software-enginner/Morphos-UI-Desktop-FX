@@ -6,15 +6,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import my_app.FileManager;
 import my_app.components.Components;
 import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
+import my_app.data.PrimitiveData;
 import my_app.themes.Typography;
 import toolkit.Component;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class PrimitiveListFormScreenViewModel {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -32,23 +31,6 @@ public class PrimitiveListFormScreenViewModel {
         }
     }
 
-    public record PrimitiveData(String id, String variableName,
-                                String type,
-                                List<String> values,
-                                long createdAt) {
-        public PrimitiveData(String variableName, String type, List<String> values) {
-            this(UUID.randomUUID().toString(), variableName, type, values, System.currentTimeMillis());
-        }
-
-        // Canonical constructor para validar quando id vier nulo
-        public PrimitiveData {
-            if (id == null || id.isBlank()) {
-                id = UUID.randomUUID().toString();
-            }
-        }
-    }
-
-
     void handleClickOnSave(VBox inputLinesContainer, TextField variabelNameInput) {
         //recuperar info e concatenar novos dados
         var type = typeSelected.get();
@@ -62,8 +44,8 @@ public class PrimitiveListFormScreenViewModel {
             }
         }
 
-        var primitiveData = new PrimitiveData(variableName, type, values);
-        Commons.addPrimitiveData(primitiveData);
+        final var primitiveData = new PrimitiveData(variableName, type, values);
+        FileManager.addPrimitiveDataInProject(primitiveData);
     }
 
     void handleClickOnButtonType(String type, VBox inputLinesContainer) {

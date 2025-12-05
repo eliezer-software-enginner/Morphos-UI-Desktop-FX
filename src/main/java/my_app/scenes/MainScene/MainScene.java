@@ -13,7 +13,6 @@ import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.scenes.DataScene.DataScene;
 import my_app.screens.Home.Home;
 import my_app.screens.ShowCode.ShowCode;
 import my_app.themes.ThemeManager;
@@ -22,6 +21,7 @@ import toolkit.Component;
 
 import static my_app.components.shared.UiComponents.MenuBarPrimary;
 
+@Deprecated
 public class MainScene extends Scene {
 
     ComponentsContext componentsContext = new ComponentsContext();
@@ -80,7 +80,7 @@ public class MainScene extends Scene {
         menu.setGraphic(menuText);
 
         menuText.setOnMouseClicked(ev -> {
-            new DataScene().show();
+            // new DataScene().show();
         });
         return menu;
     }

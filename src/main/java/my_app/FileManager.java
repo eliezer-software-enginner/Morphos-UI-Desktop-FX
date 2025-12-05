@@ -2,10 +2,7 @@ package my_app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
-import my_app.data.PrefsData;
-import my_app.data.Project;
-import my_app.data.StateJson_v2;
+import my_app.data.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +59,7 @@ public class FileManager {
             String name, File file) {
 
         try {
-            var project = new Project(name, new Commons.TableData(List.of()), List.of());
+            var project = new Project(name, new TableData(List.of()), List.of());
             writeDataAsJsonInFileInDisc(project, file);
             IO.println("project was saved");
 
@@ -171,6 +168,19 @@ public class FileManager {
 
         } catch (IOException e) {
             throw new RuntimeException("Error updating project: " + e.getMessage());
+        }
+    }
+
+    public static void addPrimitiveDataInProject(PrimitiveData data) {
+        try {
+            var projectData = getProjectData();
+            projectData.tableData().primitiveDataList().add(data);
+
+            final var prefsData = getPrefsData();
+            writeDataAsJsonInFileInDisc(projectData, new File(prefsData.last_project_saved_path()));
+            IO.println("Project updated! primitive types were added");
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
