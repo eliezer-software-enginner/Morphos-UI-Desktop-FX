@@ -34,10 +34,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.stage = primaryStage;
+        stage = primaryStage;
 
-        this.stage.setTitle(Commons.AppName + " " + Commons.AppVersion);
-        this.stage.setMinWidth(Commons.ScreensSize.LARGE.width);
+        stage.setTitle(Commons.AppName + " " + Commons.AppVersion);
+        stage.setMinWidth(Commons.ScreensSize.LARGE.width);
 
         //Scene splashScene = new SplashScene(primaryStage);
         //this.stage.setScene(splashScene);
@@ -47,15 +47,15 @@ public class App extends Application {
         //mainWindow.show();
 
         //final var mainScene = new MainScene();
-        primaryStage.setScene(AppScenes.SplashScene(componentsContext, primaryStage));
+        // primaryStage.setScene(AppScenes.SplashScene(componentsContext, primaryStage));
         //primaryStage.setScene(AppScenes.CreateProjectScene(componentsContext, primaryStage));
-
+        primaryStage.setScene(AppScenes.HomeScene(componentsContext, primaryStage));
         //this.stage.setScene(new IconsScene());
 
         // themeManager.addScene(mainScene);
 
         // getStylesheets().add(getClass().getResource("/global_styles.css").toExternalForm());
-        this.stage.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+        stage.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             javafx.scene.Node node = event.getPickResult().getIntersectedNode();
             if (node != null) {
                 System.out.println("Clique em: " + node.getClass().getSimpleName());
@@ -72,7 +72,7 @@ public class App extends Application {
         //dataScene.show();
         // Botão muda para DataScene
         // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
-        this.stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
 
         primaryStage.show();
 

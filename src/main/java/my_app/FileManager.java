@@ -5,6 +5,7 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.PrefsData;
 import my_app.data.Project;
+import my_app.data.StateJson_v2;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,50 @@ import java.util.List;
 
 public class FileManager {
 
-    public static void saveNewProject(
+    public static void updateProject(StateJson_v2 currentCanvaScreen) {
+        // ... (Verificações de ID)
+        if (currentCanvaScreen.screen_id == null || currentCanvaScreen.screen_id.isEmpty()) {
+            // Lide com erro: A tela atual deve ter um ID para ser atualizada.
+            throw new IllegalArgumentException("currentCanvaScreen deve ter um 'screen_id' definido para a atualização.");
+        }
+
+        try {
+            final var projectData = getProjectData();
+            List<StateJson_v2> screens = projectData.screens();
+
+            boolean updated = false;
+
+            // Itera para encontrar e remover a tela antiga
+            for (int i = 0; i < screens.size(); i++) {
+                StateJson_v2 existingScreen = screens.get(i);
+
+                // Se o ID da tela atual for igual ao ID de uma tela existente...
+                if (currentCanvaScreen.screen_id.equals(existingScreen.screen_id)) {
+                    // 1. Remove a versão antiga
+                    screens.remove(i);
+
+                    // 2. Adiciona a nova versão atualizada
+                    screens.add(currentCanvaScreen);
+                    updated = true;
+                    break;
+                }
+            }
+
+            // Se não encontrou uma tela existente (é uma tela nova), apenas a adiciona.
+            if (!updated) {
+                screens.add(currentCanvaScreen);
+            }
+
+            final var prefsData = getPrefsData();
+            writeDataAsJsonInFileInDisc(projectData, new File(prefsData.last_project_saved_path()));
+            IO.println("Project updated successfully (screen ID: " + currentCanvaScreen.screen_id + ")");
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error updating project: " + e.getMessage());
+        }
+    }
+
+    public static void saveProject(
             //StateJson_v2 currentCanvaScreen,
             String name, File file) {
 
@@ -23,6 +67,18 @@ public class FileManager {
             IO.println("project was saved");
 
             saveDataInPrefs(file.getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static Project getProjectData() {
+        try {
+            final var prefsData = getPrefsData();
+            final var projectAbsolutePath = prefsData.last_project_saved_path();
+
+            final var om = new ObjectMapper();
+            return om.readValue(new File(projectAbsolutePath), Project.class);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -51,6 +107,16 @@ public class FileManager {
             //return path == null || path.isBlank() ? null : new File(path);
         } catch (IOException e) {
             throw new RuntimeException("Não foi possível carregar prefs.json", e);
+        }
+    }
+
+    private static PrefsData getPrefsData() {
+        try {
+            final var prefsFile = getPrefsFile();
+            final var om = new ObjectMapper();
+            return om.readValue(prefsFile.toFile(), PrefsData.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 

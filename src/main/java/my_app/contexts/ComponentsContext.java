@@ -575,6 +575,7 @@ public class ComponentsContext {
     // System.out.println("Selecionado: " + node);
     // }
 
+    @Deprecated
     public void saveStateInJsonFile_v2(File file, CanvaComponent mainCanvaComponent) {
         try {
             // Gera o StateJson_v2 a partir dos Nodes e do CanvaComponent

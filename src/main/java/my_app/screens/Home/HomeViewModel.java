@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -23,6 +24,7 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.StateJson_v2;
 import my_app.data.ViewContract;
+import my_app.mappers.CanvaMapper;
 import my_app.scenes.DataScene.DataScene;
 import my_app.scenes.SettingsScene;
 import my_app.themes.Typography;
@@ -75,22 +77,23 @@ public class HomeViewModel {
     }
 
     @Component
-    javafx.scene.control.Menu createMenuOptions() {
-        javafx.scene.control.Menu menu = new javafx.scene.control.Menu();
-        javafx.scene.control.Label menuText = Typography.caption(translation.common().option());
+    Menu createMenuOptions() {
+        Menu menu = new javafx.scene.control.Menu();
+        Label menuText = Typography.caption(translation.common().option());
         menu.setGraphic(menuText);
 
-        javafx.scene.control.MenuItem itemNovo = new javafx.scene.control.MenuItem(translation.new_());
-        javafx.scene.control.MenuItem itemSalvar = new javafx.scene.control.MenuItem(translation.common().save());
-        javafx.scene.control.MenuItem itemSaveAs = new javafx.scene.control.MenuItem(translation.common().saveAs());
-        javafx.scene.control.MenuItem itemLoad = new javafx.scene.control.MenuItem(translation.common().load());
-        javafx.scene.control.MenuItem itemShowCode = new javafx.scene.control.MenuItem(translation.optionsMenuMainScene().showCode());
-        javafx.scene.control.MenuItem itemContribute = new javafx.scene.control.MenuItem(translation.optionsMenuMainScene().becomeContributor());
+        MenuItem itemNovo = new MenuItem(translation.new_());
+        MenuItem itemSalvar = new MenuItem(translation.common().save());
+        MenuItem itemSaveAs = new MenuItem(translation.common().saveAs());
+        MenuItem itemLoad = new MenuItem(translation.common().load());
+        MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
+        MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
+
         menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemShowCode, itemContribute);
 
 
         //itemNovo.setOnAction(_ -> handleNew(home, stage));
-        //itemSalvar.setOnAction(_ -> handleSave(home, stage));
+        itemSalvar.setOnAction(_ -> handleSave(home, stage));
         itemSaveAs.setOnAction(_ -> {
 
             try {
@@ -182,19 +185,12 @@ public class HomeViewModel {
             componentsContext.loadJsonState(uiFile, home.canva, stage);
             uiPathProperty.set(uiFile.getAbsolutePath());
         }
-
     }
 
-
     public void handleSave(Home home, Stage stage) {
-        // if (uiJsonFile == null) {
-        // handleSaveAs(home, stage);
-        // return;
-        // }
-
-        updateUiJsonFilePathOnAppData(uiJsonFile);
-
-        componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
+        //updateUiJsonFilePathOnAppData(uiJsonFile);
+        FileManager.updateProject(CanvaMapper.toStateJson(home.canva, componentsContext));
+        //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
     }
 
     private File loadUiFileFromAppData() {

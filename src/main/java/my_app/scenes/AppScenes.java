@@ -54,6 +54,7 @@ public class AppScenes {
         theirStage.setWidth(1410);
         theirStage.setHeight(screenSize.heigh);
         theirStage.centerOnScreen();
+        theirStage.setResizable(true);
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);

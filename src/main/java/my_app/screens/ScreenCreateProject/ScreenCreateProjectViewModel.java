@@ -45,7 +45,7 @@ public class ScreenCreateProjectViewModel {
         try {
             var file = fc.showSaveDialog(stage);
             if (file != null) {
-                FileManager.saveNewProject(text, file);
+                FileManager.saveProject(text, file);
                 errorContainer.getChildren().clear();
                 this.toast.show("Project was created!");
 

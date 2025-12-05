@@ -3,13 +3,14 @@ package my_app.screens.Home;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import my_app.FileManager;
+import my_app.components.Components;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
+import my_app.data.StateJson_v2;
 import my_app.screens.Home.components.RightSide;
 import my_app.screens.Home.components.leftside.LeftSide;
 import toolkit.Component;
@@ -40,6 +41,17 @@ public class Home extends BorderPane {
         setTop(menuBar);
 
         setLeft(this.leftSide);
+
+        //center
+
+        final var vbox = new VBox();
+        final var projectData = FileManager.getProjectData();
+
+        final var hboxScreensBox = new HBox(5);
+        for (StateJson_v2 screen : projectData.screens()) {
+            hboxScreensBox.getChildren().add(Components.ButtonPrimary(screen.screen_id));
+        }
+        hboxScreensBox.getChildren().add(Components.ButtonPrimary("+"));
 
         ScrollPane editor = new ScrollPane();
 
@@ -72,7 +84,11 @@ public class Home extends BorderPane {
         // scrollPane mostra o canva com barras se for maior que a janela
 
         // setCenter(this.canva);
-        setCenter(editor);
+        //setCenter(editor);
+
+
+        vbox.getChildren().addAll(hboxScreensBox, editor);
+        setCenter(vbox);
 
         var rightSide = new RightSide(componentsContext, canva);
         StackPane rightWrapper = new StackPane(rightSide);
