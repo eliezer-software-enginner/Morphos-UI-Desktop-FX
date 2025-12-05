@@ -113,6 +113,8 @@ public class ComponentsContext {
         return selected != null && selected.node() != null && selected.node().getId().equals(nodeId);
     }
 
+    //todo mover para CanvaMapper em fromStateScreenToCanva()
+    @Deprecated
     public void loadJsonState_(File projectFile, CanvaComponent canvaComponent, Stage stage) {
         canvaComponent.getChildren().clear();
 
@@ -133,6 +135,7 @@ public class ComponentsContext {
             final var projectData = om.readValue(projectFile, Project.class);
             final var state = projectData.screens().getFirst();
 
+            state.canva.name = state.name;
             //var state = om.readValue(file, StateJson_v2.class);
             mainCanvaComponent.applyData(state.canva);
 

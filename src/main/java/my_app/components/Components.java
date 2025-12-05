@@ -8,11 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
 import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
@@ -159,6 +159,37 @@ public class Components {
         return root;
     }
 
+    @Component
+    public static Node LabelWithInputAndButton(String name, Node node, String fieldCss, Runnable doAction) {
+        TextField tf = new TextField();
+        final var btn = ButtonPrimary(name);
+
+        HBox root = ItemRow(new HBox(tf, btn), name);
+
+        if (fieldCss.equals("screen-name")) {
+            if (node instanceof CanvaComponent component) {
+                tf.setText(component.name);
+            }
+        }
+
+        tf.textProperty().addListener((_, _, newVal) -> {
+            if (!newVal.isBlank()) {
+                try {
+                    if (fieldCss.equals("screen-name")) {
+                        if (node instanceof CanvaComponent component) {
+                            component.name = newVal.trim();
+                        }
+                    }
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        });
+
+        btn.setOnMouseClicked(ev -> doAction.run());
+
+        return root;
+    }
+
     //se o campo recebido não for um css então é java, mexeremos no node!
     @Component
     public static Node LabelWithInput(String name, Node node, String fieldCss) {
@@ -169,6 +200,10 @@ public class Components {
         if (fieldCss.equals("text-wrapping-width")) {
             if (node instanceof TextComponent component) {
                 tf.setText(String.valueOf(component.getWrappingWidth()));
+            }
+        } else if (fieldCss.equals("screen-name")) {
+            if (node instanceof CanvaComponent component) {
+                tf.setText(component.name);
             }
         } else {
             String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
@@ -186,6 +221,12 @@ public class Components {
                         if (node instanceof TextComponent component) {
                             //validate if is number
                             component.setWrappingWidth(Double.parseDouble(newVal.trim()));
+                        }
+                    } else if (fieldCss.equals("screen-name")) {
+                        if (node instanceof CanvaComponent component) {
+                            //validate if is number
+                            component.name = newVal.trim();
+                            //FileManager.updateScreenNameInProject(component.screenFatherId, newVal.trim());
                         }
                     } else {
                         String currentStyle = node.getStyle();

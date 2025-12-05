@@ -12,20 +12,29 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import my_app.FileManager;
+import my_app.components.Components;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.data.*;
 import my_app.screens.Home.Home.VisualNodeCallback;
+import my_app.screens.Home.HomeViewModel;
 
 public class CanvaComponent extends Pane implements ViewContract<CanvaComponentData> {
     ComponentsContext componentsContext;
 
     boolean isDeleted = false;
 
-    public CanvaComponent(ComponentsContext componentsContext) {
+    public String name;
+    public String screenFatherId;
+
+    HomeViewModel viewModel;
+
+    public CanvaComponent(ComponentsContext componentsContext, HomeViewModel viewModel) {
         this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
 
         config();
 
@@ -217,7 +226,11 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
 
     @Override
     public void otherSettings(VBox father, CanvaComponent canva) {
-
+        father.getChildren().addAll(Components.LabelWithInputAndButton("Screen name",
+                this, "screen-name", () -> {
+                    FileManager.updateScreenNameInProject(screenFatherId, name);
+                    viewModel.toggleRefreshScreenTabs();
+                }));
     }
 
     void config() {
@@ -287,7 +300,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
 
         return new CanvaComponentData(
                 paddingTop, paddingRight, paddingBottom, paddingLeft, width, height, bgType,
-                bgContent, this.getId(), 0, 0, isDeleted);
+                bgContent, this.getId(), 0, 0, isDeleted, this.name, this.screenFatherId);
     }
 
     @Override
@@ -297,6 +310,8 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
         setPrefHeight(data.height);
 
         setId(data.identification);
+        this.screenFatherId = data.screenFatherId;
+        this.name = data.name;
 
         // Ajustando o padding
         setPadding(

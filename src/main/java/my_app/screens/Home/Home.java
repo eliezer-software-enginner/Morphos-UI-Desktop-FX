@@ -33,10 +33,11 @@ public class Home extends BorderPane {
     HomeViewModel viewModel;
 
     public Home(Stage theirStage, ComponentsContext componentsContext, boolean openComponentScene) {
-        this.canva = new CanvaComponent(componentsContext);
+        this.viewModel = new HomeViewModel(componentsContext);
+
+        this.canva = new CanvaComponent(componentsContext, this.viewModel);
         this.leftSide = new LeftSide(canva, componentsContext);
 
-        this.viewModel = new HomeViewModel(componentsContext);
 
         setTop(menuBar);
 
@@ -45,13 +46,20 @@ public class Home extends BorderPane {
         //center
 
         final var vbox = new VBox();
-        final var projectData = FileManager.getProjectData();
 
         final var hboxScreensBox = new HBox(5);
-        for (StateJson_v2 screen : projectData.screens()) {
-            hboxScreensBox.getChildren().add(Components.ButtonPrimary(screen.screen_id));
-        }
-        hboxScreensBox.getChildren().add(Components.ButtonPrimary("+"));
+
+        viewModel.refreshScreensTabs.addListener((_, _, _) -> {
+            final var updatedProjectData = FileManager.getProjectData();
+
+            hboxScreensBox.getChildren().clear();
+            for (StateJson_v2 screen : updatedProjectData.screens()) {
+                hboxScreensBox.getChildren().add(Components.ButtonPrimary(screen.name));
+            }
+
+            hboxScreensBox.getChildren().add(Components.ButtonPrimary("+"));
+        });
+
 
         ScrollPane editor = new ScrollPane();
 

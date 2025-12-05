@@ -151,4 +151,26 @@ public class FileManager {
         }
         return Path.of(appDataAbsolutePath).resolve(Commons.AppNameAtAppData);
     }
+
+    public static void updateScreenNameInProject(String screenId, String newName) {
+        try {
+            final var projectData = getProjectData();
+            List<StateJson_v2> screens = projectData.screens();
+
+            var screenOp = screens.stream().filter(it -> it.screen_id.equals(screenId))
+                    .findFirst();
+
+            screenOp.ifPresent(it -> {
+                it.name = newName;
+                IO.println("atualizou nome");
+            });
+
+            final var prefsData = getPrefsData();
+            writeDataAsJsonInFileInDisc(projectData, new File(prefsData.last_project_saved_path()));
+            IO.println("Project updated successfully (screen ID: " + screenId + ")");
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error updating project: " + e.getMessage());
+        }
+    }
 }

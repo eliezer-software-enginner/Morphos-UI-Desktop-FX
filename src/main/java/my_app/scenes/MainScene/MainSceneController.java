@@ -15,13 +15,12 @@ import my_app.screens.Home.Home;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static my_app.data.Commons.loadPrefs;
 
+@Deprecated
 public class MainSceneController {
     ComponentsContext componentsContext;
     public StringProperty uiPathProperty = new SimpleStringProperty();

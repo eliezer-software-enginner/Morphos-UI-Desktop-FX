@@ -1,6 +1,8 @@
 package my_app.screens.Home;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -46,12 +48,20 @@ public class HomeViewModel {
     private Home home;
     private Stage stage;
 
+    BooleanProperty refreshScreensTabs = new SimpleBooleanProperty();
+
     public void init(Home home, Stage theirStage) {
         this.home = home;
         this.stage = theirStage;
 
         fillMenuBar(home.menuBar);
         loadScreenAndApplyToCanva();
+
+        toggleRefreshScreenTabs();
+    }
+
+    public void toggleRefreshScreenTabs() {
+        refreshScreensTabs.set(!refreshScreensTabs.get());
     }
 
     private void loadScreenAndApplyToCanva() {

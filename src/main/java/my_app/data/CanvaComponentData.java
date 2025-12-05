@@ -14,6 +14,8 @@ public class CanvaComponentData implements ComponentData {
     public int y;
     public String type = "canva";
     public boolean isDeleted;
+    public String name;
+    public String screenFatherId;
 
     public CanvaComponentData() {
     }
@@ -28,7 +30,7 @@ public class CanvaComponentData implements ComponentData {
             String bg_type,
             String bgContent,
             String identification,
-            int x, int y, boolean isDeleted) {
+            int x, int y, boolean isDeleted, String name, String screenFatherId) {
 
         this.padding_top = padding_top;
         this.padding_right = padding_right;
@@ -42,6 +44,8 @@ public class CanvaComponentData implements ComponentData {
         this.x = x;
         this.y = y;
         this.isDeleted = isDeleted;
+        this.name = name;
+        this.screenFatherId = screenFatherId;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class CanvaComponentData implements ComponentData {
 
     @Override
     public String identification() {
-        return "";
+        return this.identification;
     }
 
     @Override
