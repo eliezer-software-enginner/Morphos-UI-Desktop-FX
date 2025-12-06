@@ -27,16 +27,17 @@ public class PrimitiveListFormScreen extends VBox {
 
     PrimitiveListFormScreenViewModel viewModel = new PrimitiveListFormScreenViewModel();
 
-    {
-        getChildren().addAll(btnSave, variabelNameText, variabelNameInput, text, buttonsContainer,
-                inputLinesContainer);
-        setup();
-    }
 
-    void setup() {
+    public PrimitiveListFormScreen(Runnable callback) {
+        getChildren().addAll(btnSave, variabelNameText, variabelNameInput, text,
+                buttonsContainer,
+                inputLinesContainer);
+
         viewModel.createButtonsType(buttonsContainer, inputLinesContainer);
-        btnSave.setOnMouseClicked(ev ->
-                viewModel.handleClickOnSave(inputLinesContainer, variabelNameInput));
+        btnSave.setOnMouseClicked(ev -> {
+            viewModel.handleClickOnSave(inputLinesContainer, variabelNameInput);
+            callback.run();
+        });
         //viewModel.createInputLines(inputLinesContainer);
 
         getStyleClass().add("background-color");

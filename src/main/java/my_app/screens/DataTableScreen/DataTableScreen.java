@@ -36,8 +36,9 @@ public class DataTableScreen extends VBox {
             viewModel.createCardsIntoTilePane(cardsTitlePane, contentContainer, textForEmpty);
         });
 
-        //todo executar o toogle lá no btn salvar
-        btnCreateData.setOnAction(e -> AllWindows.showWindowForDataTableForm_PrimitiveData());
+        btnCreateData.setOnAction(e -> {
+            AllWindows.showWindowForDataTableForm_PrimitiveData(() -> viewModel.toggleRefreshData());
+        });
 
         getStyleClass().add("background-color");
     }

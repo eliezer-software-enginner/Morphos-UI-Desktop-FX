@@ -12,9 +12,9 @@ public class AllWindows {
         window.show();
     }
 
-    public static void showWindowForDataTableForm_PrimitiveData() {
+    public static void showWindowForDataTableForm_PrimitiveData(Runnable callack) {
         final var window = new Stage();
-        window.setScene(AppScenes.PrimitiveListFormScene(window));
+        window.setScene(AppScenes.PrimitiveListFormScene(window, callack));
         window.show();
     }
 }

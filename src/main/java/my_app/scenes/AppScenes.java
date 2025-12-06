@@ -73,8 +73,8 @@ public class AppScenes {
         return scene;
     }
 
-    public static Scene PrimitiveListFormScene(Stage theirStage) {
-        var scene = new Scene(new PrimitiveListFormScreen());
+    public static Scene PrimitiveListFormScene(Stage theirStage, Runnable callack) {
+        var scene = new Scene(new PrimitiveListFormScreen(callack));
         var screenSize = Commons.ScreensSize._1200x650;
         theirStage.setWidth(screenSize.width);
         theirStage.setHeight(screenSize.heigh);
