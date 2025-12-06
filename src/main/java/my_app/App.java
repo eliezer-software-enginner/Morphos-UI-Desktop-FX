@@ -50,6 +50,10 @@ public class App extends Application {
         // primaryStage.setScene(AppScenes.SplashScene(componentsContext, primaryStage));
         //primaryStage.setScene(AppScenes.CreateProjectScene(componentsContext, primaryStage));
         primaryStage.setScene(AppScenes.HomeScene(componentsContext, primaryStage));
+        //primaryStage.setScene(AppScenes.PrimitiveListFormScene());
+
+//        AllWindows.showWindowForDataTableForm_PrimitiveData(() -> {
+//        });
         //this.stage.setScene(new IconsScene());
 
         // themeManager.addScene(mainScene);

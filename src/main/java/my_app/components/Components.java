@@ -26,7 +26,6 @@ import java.util.function.Consumer;
 
 public class Components {
 
-
     @Component
     public static Button ButtonPrimaryOutline(String text) {
         var btn = new Button(text);

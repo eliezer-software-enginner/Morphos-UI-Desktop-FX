@@ -36,6 +36,9 @@ public class PrimitiveListFormScreenViewModel {
         var type = typeSelected.get();
         var variableName = variabelNameInput.getText();
 
+        if (type == null) throw new RuntimeException("Você deve escolher o tipo!");
+        if (variableName.trim().isEmpty()) throw new RuntimeException("Nome de variável não pode estar vazio!");
+
         var values = new ArrayList<String>();
         for (var node : inputLinesContainer.getChildren()) {
             if (node instanceof HBox hbox) {
@@ -43,6 +46,12 @@ public class PrimitiveListFormScreenViewModel {
                 values.add(input.getText());
             }
         }
+
+        if (values.isEmpty()) throw new RuntimeException("A lista está vazia!");
+
+        values.forEach(value -> {
+            if (value.trim().isEmpty()) throw new RuntimeException("Toda lista deve estar preenchida!");
+        });
 
         final var primitiveData = new PrimitiveData(variableName, type, values);
         FileManager.addPrimitiveDataInProject(primitiveData);
@@ -109,7 +118,8 @@ public class PrimitiveListFormScreenViewModel {
 
         // ======== BOTÃO DE + ========
         btnAdd.setOnMouseClicked(ev -> {
-            inputLinesContainer.getChildren().add(createInputLine(inputLinesContainer));
+            if (!input.getText().trim().isEmpty())
+                inputLinesContainer.getChildren().add(createInputLine(inputLinesContainer));
         });
 
         return new HBox(10, text, input, btnAdd);

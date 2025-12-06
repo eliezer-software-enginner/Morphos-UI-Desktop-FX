@@ -1,5 +1,6 @@
 package my_app.screens.PrimitiveListFormScreen;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -9,6 +10,7 @@ import my_app.components.Components;
 import my_app.contexts.TranslationContext;
 import my_app.themes.Typography;
 import toolkit.Component;
+
 
 public class PrimitiveListFormScreen extends VBox {
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -23,23 +25,33 @@ public class PrimitiveListFormScreen extends VBox {
     @Component
     HBox buttonsContainer = new HBox(10);
     @Component
-    VBox inputLinesContainer = new VBox();
+    VBox inputLinesContainer = new VBox(10);
+
+    @Component
+    VBox errorContainer = new VBox();
 
     PrimitiveListFormScreenViewModel viewModel = new PrimitiveListFormScreenViewModel();
 
-
     public PrimitiveListFormScreen(Runnable callback) {
-        getChildren().addAll(btnSave, variabelNameText, variabelNameInput, text,
+        getChildren().addAll(new HBox(10, btnSave, errorContainer), variabelNameText, variabelNameInput, text,
                 buttonsContainer,
                 inputLinesContainer);
 
         viewModel.createButtonsType(buttonsContainer, inputLinesContainer);
         btnSave.setOnMouseClicked(ev -> {
-            viewModel.handleClickOnSave(inputLinesContainer, variabelNameInput);
-            callback.run();
+            try {
+                errorContainer.getChildren().clear();
+                viewModel.handleClickOnSave(inputLinesContainer, variabelNameInput);
+                callback.run();
+            } catch (Exception e) {
+                errorContainer.getChildren().add(Typography.error(e.getMessage()));
+            }
+
         });
         //viewModel.createInputLines(inputLinesContainer);
 
+        setPadding(new Insets(20, 20, 20, 20));
+        setSpacing(15);
         getStyleClass().add("background-color");
     }
 }
