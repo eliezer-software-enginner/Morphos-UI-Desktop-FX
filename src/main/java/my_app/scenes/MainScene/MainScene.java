@@ -14,7 +14,6 @@ import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
-import my_app.screens.ShowCode.ShowCode;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -151,8 +150,8 @@ public class MainScene extends Scene {
     }
 
     private void handleShowJavaCode(CanvaComponent canvaComponent) {
-        new ShowCode(canvaComponent, componentsContext)
-                .abrir();
+//        new ShowCode(canvaComponent, componentsContext)
+//                .abrir();
 
     }
 

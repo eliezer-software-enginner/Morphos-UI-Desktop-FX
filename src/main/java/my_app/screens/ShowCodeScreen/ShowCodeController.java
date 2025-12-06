@@ -1,4 +1,4 @@
-package my_app.screens.ShowCode;
+package my_app.screens.ShowCodeScreen;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

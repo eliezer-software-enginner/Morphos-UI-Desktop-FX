@@ -1,37 +1,26 @@
-package my_app.screens.ShowCode;
+package my_app.screens.ShowCodeScreen;
 
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.themes.ThemeManager;
 import toolkit.Component;
 
 import java.util.List;
 
-public class ShowCode {
-
+public class ShowCodeScreen extends VBox {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
-    private Stage stage;
     private final ShowCodeController controller;
-
-    @Component
-    VBox root = new VBox();
 
     // por enquanto só os node do canva
     // mas adiante expandir para os componentes gerais também pra
     // ver como vou encaix-alos no codigo gerado
-    public ShowCode(CanvaComponent canvaComponent, ComponentsContext mainComponentContext) {
-        stage = new Stage();
-        stage.setTitle("Showing code");
-
+    public ShowCodeScreen(ComponentsContext mainComponentContext, CanvaComponent canvaComponent) {
         this.controller = new ShowCodeController(mainComponentContext);
 
         String importsContent = controller.createImports();
@@ -39,30 +28,24 @@ public class ShowCode {
         List<String> customComponentsContent = controller.createComponentsForPreview(canvaComponent.getChildren());
 
         VBox importsColumnContent = columnItem(importsContent, translation.imports());
-        root.getChildren().add(importsColumnContent);
+        getChildren().add(importsColumnContent);
 
         VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
 
         VBox codeColumnContent = columnItem(codeContent, translation.codeContent());
-        root.getChildren().add(codeColumnContent);
+        getChildren().add(codeColumnContent);
 
         for (String text : customComponentsContent) {
             VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
 
             VBox customComponentsColumnContent = columnItem(text, translation.codeContentOfCustomComponent());
-            root.getChildren().add(customComponentsColumnContent);
+            getChildren().add(customComponentsColumnContent);
         }
 
-        root.setSpacing(10);
-        root.setStyle("-fx-padding: 20; -fx-alignment: center;");
+        setSpacing(10);
+        setStyle("-fx-padding: 20; -fx-alignment: center;");
 
-
-        Scene scene = new Scene(root, 500, 550);
-        ThemeManager.Instance().addScene(scene);
-
-        root.getStyleClass().add("background-color");
-
-        stage.setScene(scene);
+        getStyleClass().add("background-color");
     }
 
     @Component
@@ -106,9 +89,5 @@ public class ShowCode {
         st.play();
 
         return column;
-    }
-
-    public void abrir() {
-        stage.show();
     }
 }

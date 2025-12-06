@@ -29,10 +29,6 @@ class SplashScreen extends VBox {
     }
 }
 
-class ShowCodeScreen extends VBox {
-    public ShowCodeScreen(SceneGraph.NavigatorHandler navigatorHandler) {
-    }
-}
 
 public class SceneGraph {
     private final Stage globalStage;

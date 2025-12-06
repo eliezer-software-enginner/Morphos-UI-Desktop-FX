@@ -2,12 +2,14 @@ package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.DataTableScreen.DataTableScreen;
 import my_app.screens.Home.Home;
 import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreen;
 import my_app.screens.ScreenCreateProject.ScreenCreateProject;
+import my_app.screens.ShowCodeScreen.ShowCodeScreen;
 import my_app.screens.SplashScreen.SplashScreen;
 import my_app.themes.ThemeManager;
 
@@ -80,6 +82,21 @@ public class AppScenes {
         theirStage.setHeight(screenSize.heigh);
         theirStage.centerOnScreen();
         theirStage.setResizable(true);
+
+        Commons.UseDefaultStyles(scene);
+        ThemeManager.Instance().addScene(scene);
+        return scene;
+    }
+
+    public static Scene ShowCodeFormScene(ComponentsContext mainComponentsContext, Stage theirStage,
+                                          CanvaComponent canvaComponent) {
+        var scene = new Scene(new ShowCodeScreen(mainComponentsContext, canvaComponent));
+        var screenSize = Commons.ScreensSize._1200x650;
+        theirStage.setWidth(screenSize.width);
+        theirStage.setHeight(screenSize.heigh);
+        theirStage.centerOnScreen();
+        theirStage.setResizable(true);
+        theirStage.setTitle("Showing code");
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);

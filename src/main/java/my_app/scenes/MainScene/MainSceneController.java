@@ -79,7 +79,7 @@ public class MainSceneController {
 
         updateUiJsonFilePathOnAppData(uiJsonFile);
 
-        componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
+        //   componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
     }
 
     private File loadUiFileFromAppData() {
@@ -124,7 +124,7 @@ public class MainSceneController {
             var file = fc.showSaveDialog(stage);
             if (file != null) {
                 // json bening saved on specfif file
-                componentsContext.saveStateInJsonFile_v2(file, home.canva);
+                // componentsContext.saveStateInJsonFile_v2(file, home.canva);
 
                 //saving also the prefs
                 //check if file exists

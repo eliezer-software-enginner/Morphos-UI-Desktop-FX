@@ -2,6 +2,8 @@ package my_app.screens.Home;
 
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -9,10 +11,12 @@ import my_app.FileManager;
 import my_app.components.Components;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.StateJson_v2;
 import my_app.screens.Home.components.RightSide;
 import my_app.screens.Home.components.leftside.LeftSide;
+import my_app.windows.AllWindows;
 import toolkit.Component;
 
 import static my_app.components.shared.UiComponents.MenuBarPrimary;
@@ -31,6 +35,8 @@ public class Home extends BorderPane {
     }
 
     HomeViewModel viewModel;
+
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     public Home(Stage theirStage, ComponentsContext componentsContext, boolean openComponentScene) {
         this.viewModel = new HomeViewModel(componentsContext);
@@ -54,7 +60,15 @@ public class Home extends BorderPane {
 
             hboxScreensBox.getChildren().clear();
             for (StateJson_v2 screen : updatedProjectData.screens()) {
-                hboxScreensBox.getChildren().add(Components.ButtonPrimary(screen.name));
+                MenuButton menu = new MenuButton(screen.name);
+                MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
+                itemShowCode.setOnAction(ev -> {
+                    AllWindows.showWindowForShowCode(componentsContext, canva);
+                });
+
+                menu.getItems().add(itemShowCode);
+
+                hboxScreensBox.getChildren().add(menu);
             }
 
             hboxScreensBox.getChildren().add(Components.ButtonPrimary("+"));
