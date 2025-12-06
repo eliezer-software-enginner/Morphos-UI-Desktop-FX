@@ -64,5 +64,7 @@
   "chooseIcon": "Escolher icone",
   "register": "Registro",
   "chooseType": "Escolha o tipo",
-  "selectIconsPackToViewIconsHere": "Select a icon pack to view icons here"
+  "selectIconsPackToViewIconsHere": "Selecione um pacote de icones para visualizar os ícones aqui",
+  "screenName": "Nome da Screen",
+  "update": "Atualizar"
 }

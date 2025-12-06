@@ -18,6 +18,7 @@ import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
+import my_app.contexts.TranslationContext;
 import my_app.data.*;
 import my_app.screens.Home.Home.VisualNodeCallback;
 import my_app.screens.Home.HomeViewModel;
@@ -29,6 +30,8 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
 
     public String name;
     public String screenFatherId;
+
+    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     HomeViewModel viewModel;
 
@@ -226,7 +229,8 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
 
     @Override
     public void otherSettings(VBox father, CanvaComponent canva) {
-        father.getChildren().addAll(Components.LabelWithInputAndButton("Screen name",
+        father.getChildren().addAll(Components.LabelWithInputAndButton(
+                translation.screenName(), translation.update(),
                 this, "screen-name", () -> {
                     FileManager.updateScreenNameInProject(screenFatherId, name);
                     viewModel.toggleRefreshScreenTabs();

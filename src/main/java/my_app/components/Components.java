@@ -159,9 +159,12 @@ public class Components {
     }
 
     @Component
-    public static Node LabelWithInputAndButton(String name, Node node, String fieldCss, Runnable doAction) {
+    public static Node LabelWithInputAndButton(
+            String name, String btnTitle,
+            Node node, String fieldCss, Runnable doAction) {
+
         TextField tf = new TextField();
-        final var btn = ButtonPrimary(name);
+        final var btn = ButtonPrimary(btnTitle);
 
         HBox root = ItemRow(new HBox(tf, btn), name);
 

@@ -115,7 +115,9 @@ public class TranslationContext {
             String chooseIcon,
             String register,
             String chooseType,
-            String selectIconsPackToViewIconsHere
+            String selectIconsPackToViewIconsHere,
+            String screenName,
+            String update
     ) {
     }
 
