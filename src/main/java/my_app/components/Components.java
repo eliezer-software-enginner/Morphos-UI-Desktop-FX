@@ -315,6 +315,7 @@ public class Components {
                     if (component.dataTableVariableName != null) comboBox.setValue(component.dataTableVariableName);
 
                     comboBox.setOnAction(_ -> {
+
                         component.setDataTableVariableName(comboBox.getValue());
                         comboBox.setValue(comboBox.getValue());
                     });

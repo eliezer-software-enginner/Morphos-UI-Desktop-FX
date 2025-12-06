@@ -71,7 +71,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         isDeleted = data.isDeleted();
         this.dataTableVariableName = data.dataTableVariableName();
 
-        valuesOfVariableName.addAll(Commons.getValuesFromVariablename(data.dataTableVariableName()));
+        valuesOfVariableName.addAll(FileManager.getValuesFromVariableName(data.dataTableVariableName()));
 
         // 3. Chamar a lógica centralizada (permanece igual)
         recreateChildren();
@@ -115,23 +115,29 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
         var copies = new ArrayList<Node>();
         boolean nodeOriginalRemoved = false;
-        for (int i = 0; i < amount; i++) {
-            ViewContract<ComponentData> newNodeWrapper = (ViewContract<ComponentData>) cloneExistingNode((ViewContract<ComponentData>) existingNode, i);
 
-            // Cria uma NOVA cópia do nó a partir dos dados originais
-            // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-            var node = newNodeWrapper.getCurrentNode();
-            node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+        if (valuesOfVariableName.size() >= amount) {
+            for (int i = 0; i < amount; i++) {
+                ViewContract<ComponentData> newNodeWrapper =
+                        (ViewContract<ComponentData>) cloneExistingNode((ViewContract<ComponentData>) existingNode, i);
 
-            if (!nodeOriginalRemoved) {
-                localComponents.add(existingNode);
-                componentsContext.removeComponentFromAllPlaces(existingNode, canva);
+
+                // Cria uma NOVA cópia do nó a partir dos dados originais
+                // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
+                var node = newNodeWrapper.getCurrentNode();
+                node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+
+                if (!nodeOriginalRemoved) {
+                    localComponents.add(existingNode);
+                    componentsContext.removeComponentFromAllPlaces(existingNode, canva);
+                }
+
+                // Aplicamos o ID da cópia
+                copies.add(node);
+
             }
-
-            // Aplicamos o ID da cópia
-            copies.add(node);
-
         }
+
         getChildren().addAll(copies);
     }
 
@@ -277,7 +283,13 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     public void setDataTableVariableName(String dataTableVariableName) {
         this.dataTableVariableName = dataTableVariableName;
 
-        valuesOfVariableName.addAll(FileManager.getValuesFromVariableName(dataTableVariableName));
+        IO.println("value selected: " + dataTableVariableName);
+        valuesOfVariableName.clear();
+
+        var values = FileManager.getValuesFromVariableName(dataTableVariableName);
+        IO.println(values);
+
+        valuesOfVariableName.addAll(values);
         recreateChildren();
     }
 
