@@ -24,7 +24,6 @@ import toolkit.Component;
 
 import java.util.function.Consumer;
 
-
 public class Components {
 
     @Component

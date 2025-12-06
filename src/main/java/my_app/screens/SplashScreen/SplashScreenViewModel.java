@@ -35,16 +35,22 @@ public class SplashScreenViewModel {
         scale.play();
 
         scale.setOnFinished(_ -> {
-            final var prefsData = FileManager.loadDataInPrefs();
-            //acessar o arquivo de projeto
-            final var absolutePath = prefsData.last_project_saved_path();
-            final var projectFile = new File(absolutePath);
-            if (!projectFile.exists()) {
+            try {
+                //acessar o arquivo de projeto
+                final var prefsData = FileManager.loadDataInPrefs();
+                final var absolutePath = prefsData.last_project_saved_path();
+                final var projectFile = new File(absolutePath);
+                if (!projectFile.exists()) {
+                    stage.setScene(AppScenes.CreateProjectScene(mainComponentsContext, stage));
+                    stage.centerOnScreen();
+                    return;
+                }
+
+                stage.setScene(AppScenes.HomeScene(mainComponentsContext, stage));
+            } catch (Exception e) {
                 stage.setScene(AppScenes.CreateProjectScene(mainComponentsContext, stage));
                 stage.centerOnScreen();
-                return;
             }
-            stage.setScene(AppScenes.HomeScene(mainComponentsContext, stage));
         });
     }
 }

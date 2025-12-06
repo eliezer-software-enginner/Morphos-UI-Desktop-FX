@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="correção ao atualizar nome da Screen">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="correção ao listar a lista de dados em vbox (columnItens)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreenViewModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,14 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00007" summary="javafx module">
-      <option name="closed" value="true" />
-      <created>1762814852058</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1762814852058</updated>
     </task>
     <task id="LOCAL-00008" summary="ui">
       <option name="closed" value="true" />
@@ -623,7 +615,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764984360007</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="correção ao listar a lista de dados em vbox (columnItens)">
+      <option name="closed" value="true" />
+      <created>1764985450756</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1764985450756</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -638,7 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="some options were translated" />
     <MESSAGE value="fixed indes out bounds" />
     <MESSAGE value="duplicating custom component" />
     <MESSAGE value="duplicating all other components" />
@@ -663,7 +662,8 @@
     <MESSAGE value="validações em salvar registros em TableData list" />
     <MESSAGE value="traduções no canva component e adicionado passando titulo para o botão" />
     <MESSAGE value="correção ao atualizar nome da Screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="correção ao atualizar nome da Screen" />
+    <MESSAGE value="correção ao listar a lista de dados em vbox (columnItens)" />
+    <option name="LAST_COMMIT_MESSAGE" value="correção ao listar a lista de dados em vbox (columnItens)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
