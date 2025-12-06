@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
+import my_app.FileManager;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
@@ -263,57 +264,61 @@ public class Components {
 
         HBox root = ItemRow(comboBox, title);
 
-        if (cssField.equals("clip-image-as-circle")) {
-            if (selectedNode instanceof ImageComponent component) {
-                comboBox.setItems(FXCollections.observableArrayList("Circle"));
+        switch (cssField) {
+            case "clip-image-as-circle" -> {
+                if (selectedNode instanceof ImageComponent component) {
+                    comboBox.setItems(FXCollections.observableArrayList("Circle"));
 
-                //se tem type de clip definido
-                if (component.clipType != null) comboBox.setValue(component.clipType);
+                    //se tem type de clip definido
+                    if (component.clipType != null) comboBox.setValue(component.clipType);
 
-                comboBox.setOnAction(ev -> {
-                    var value = comboBox.getValue();
-                    if (value.equals("Circle")) {
-                        //validar se a largura e tamanho são o mesmo
-                        //var size = component.getFitWidth() / 2;
+                    comboBox.setOnAction(ev -> {
+                        var value = comboBox.getValue();
+                        if (value.equals("Circle")) {
+                            //validar se a largura e tamanho são o mesmo
+                            //var size = component.getFitWidth() / 2;
 
-                        var size = component.getFitWidth() / 2;
-                        component.setClip(new Circle(size, size, size));
-                        component.clipType = "Circle";
-                    }
-                });
+                            var size = component.getFitWidth() / 2;
+                            component.setClip(new Circle(size, size, size));
+                            component.clipType = "Circle";
+                        }
+                    });
+                }
             }
-        } else if (cssField.equals("positioning-icon")) {
-            if (selectedNode instanceof ButtonComponent component) {
-                comboBox.setItems(FXCollections.observableArrayList("Left", "Right"));
+            case "positioning-icon" -> {
+                if (selectedNode instanceof ButtonComponent component) {
+                    comboBox.setItems(FXCollections.observableArrayList("Left", "Right"));
 
-                //se tem type de clip definido
-                var positioning = component.getContentDisplay();
-                if (positioning != null) comboBox.setValue(
-                        positioning.equals(ContentDisplay.LEFT) ? "Left" : "Right"
-                );
+                    //se tem type de clip definido
+                    var positioning = component.getContentDisplay();
+                    if (positioning != null) comboBox.setValue(
+                            positioning.equals(ContentDisplay.LEFT) ? "Left" : "Right"
+                    );
 
-                comboBox.setOnAction(ev -> {
-                    var value = comboBox.getValue();
-                    if (value.equals("Left")) {
-                        component.setContentDisplay(ContentDisplay.LEFT);
-                    }
-                    if (value.equals("Right")) {
-                        component.setContentDisplay(ContentDisplay.RIGHT);
-                    }
-                });
+                    comboBox.setOnAction(ev -> {
+                        var value = comboBox.getValue();
+                        if (value.equals("Left")) {
+                            component.setContentDisplay(ContentDisplay.LEFT);
+                        }
+                        if (value.equals("Right")) {
+                            component.setContentDisplay(ContentDisplay.RIGHT);
+                        }
+                    });
+                }
             }
-        } else if (cssField.equals("data-list")) {
-            if (selectedNode instanceof ColumnComponent component) {
-                Commons.getVariableNamesInDataTable().forEach(IO::println);
-                comboBox.setItems(FXCollections.observableArrayList(Commons.getVariableNamesInDataTable()));
+            case "data-list" -> {
+                if (selectedNode instanceof ColumnComponent component) {
+                    FileManager.getVariableNamesInDataTable().forEach(IO::println);
+                    comboBox.setItems(FXCollections.observableArrayList(FileManager.getVariableNamesInDataTable()));
 
-                //se já possui o data list aplicado
-                if (component.dataTableVariableName != null) comboBox.setValue(component.dataTableVariableName);
+                    //se já possui o data list aplicado
+                    if (component.dataTableVariableName != null) comboBox.setValue(component.dataTableVariableName);
 
-                comboBox.setOnAction(_ -> {
-                    component.setDataTableVariableName(comboBox.getValue());
-                    comboBox.setValue(comboBox.getValue());
-                });
+                    comboBox.setOnAction(_ -> {
+                        component.setDataTableVariableName(comboBox.getValue());
+                        comboBox.setValue(comboBox.getValue());
+                    });
+                }
             }
         }
 

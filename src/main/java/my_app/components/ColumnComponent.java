@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import my_app.FileManager;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
@@ -37,7 +38,6 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     public String dataTableVariableName;
 
     public ColumnComponent(ComponentsContext componentsContext, CanvaComponent canva) {
-        // Configuração inicial como VBox
         setSpacing(5);
         setStyle("-fx-background-color:red;");
 
@@ -239,7 +239,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     @Override
     public void otherSettings(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
-                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
+                Components.LabelWithTextContent(translation.variableName(), name.get(), v -> name.set(v)));
     }
 
     @Override
@@ -272,13 +272,12 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         );
     }
 
-
     private List<String> valuesOfVariableName = new ArrayList<>();
 
     public void setDataTableVariableName(String dataTableVariableName) {
         this.dataTableVariableName = dataTableVariableName;
 
-        valuesOfVariableName.addAll(Commons.getValuesFromVariablename(dataTableVariableName));
+        valuesOfVariableName.addAll(FileManager.getValuesFromVariableName(dataTableVariableName));
         recreateChildren();
     }
 

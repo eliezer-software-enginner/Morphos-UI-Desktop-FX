@@ -78,6 +78,12 @@ public class HomeViewModel {
         componentsContext.loadJsonState_(uiJsonFile, home.canva, stage);
     }
 
+    public void handleSave(Home home, Stage stage) {
+        //updateUiJsonFilePathOnAppData(uiJsonFile);
+        FileManager.updateProject(CanvaMapper.toStateJson(home.canva, componentsContext));
+        //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
+    }
+
     public void handleClickMenuSettings(Stage stage) {
         new SettingsScene().show();
     }
@@ -150,7 +156,6 @@ public class HomeViewModel {
         return menu;
     }
 
-
     @Component
     Menu createMenuUiPath() {
         Menu menu = new Menu();
@@ -197,11 +202,6 @@ public class HomeViewModel {
         }
     }
 
-    public void handleSave(Home home, Stage stage) {
-        //updateUiJsonFilePathOnAppData(uiJsonFile);
-        FileManager.updateProject(CanvaMapper.toStateJson(home.canva, componentsContext));
-        //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
-    }
 
     private File loadUiFileFromAppData() {
         String appData = loadPrefs();

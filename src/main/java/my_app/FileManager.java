@@ -7,6 +7,7 @@ import my_app.data.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileManager {
@@ -181,6 +182,41 @@ public class FileManager {
             IO.println("Project updated! primitive types were added");
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static List<String> getVariableNamesInDataTable() {
+        // home/eliezer/.local/share/morphos_desktop_fx/Teste.json
+        try {
+            var proj = getProjectData();
+
+            var list = new ArrayList<String>();
+            for (var primitiveList : proj.tableData().primitiveDataList()) {
+                list.add(primitiveList.variableName());
+            }
+            //TODO faltou lista complexa
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    public static List<String> getValuesFromVariableName(String variableName) {
+
+        try {
+            var proj = getProjectData();
+            var list = new ArrayList<String>();
+            for (var primitiveList : proj.tableData().primitiveDataList()) {
+                if (primitiveList.variableName().equals(variableName)) {
+                    list.addAll(primitiveList.values());
+                }
+            }
+            //TODO faltou lista complexa
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
         }
     }
 }

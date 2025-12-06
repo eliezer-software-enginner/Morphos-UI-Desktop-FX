@@ -19,6 +19,9 @@ public class CanvaMapper {
         final var dataMap = componentsContext.dataMap;
 
         StateJson_v2 jsonTarget = new StateJson_v2();
+        jsonTarget.screen_id = canva.screenFatherId;
+        jsonTarget.name = canva.name;
+        
         jsonTarget.id_of_component_selected = nodeSelected == null ? null
                 : nodeSelected.node().getId();
 

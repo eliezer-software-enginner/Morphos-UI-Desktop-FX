@@ -262,6 +262,8 @@ public class Commons {
     public record Project(String name, TableData tableData, List<StateJson_v2> screens) {
     }
 
+
+    @Deprecated
     public static List<String> getVariableNamesInDataTable() {
         //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
         String tempName = "Teste";
@@ -284,6 +286,7 @@ public class Commons {
         }
     }
 
+    @Deprecated
     public static List<String> getValuesFromVariablename(String variableName) {
         //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
         String tempName = "Teste";
