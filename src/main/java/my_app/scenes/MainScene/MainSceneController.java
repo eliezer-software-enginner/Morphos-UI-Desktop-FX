@@ -54,7 +54,7 @@ public class MainSceneController {
         var uiFile = fc.showOpenDialog(stage);
         if (uiFile != null) {
             uiJsonFile = uiFile;
-            componentsContext.loadJsonState(uiFile, home.canva, stage);
+            // componentsContext.loadJsonState(uiFile, home.canva, stage);
             uiPathProperty.set(uiFile.getAbsolutePath());
         }
 
@@ -63,11 +63,11 @@ public class MainSceneController {
     public void loadSceneFromJsonFile(Home home, Stage stage) {
         try {
             uiJsonFile = loadUiFileFromAppData();
-            componentsContext.loadJsonState(uiJsonFile, home.canva, stage);
+            //   componentsContext.loadJsonState(uiJsonFile, home.canva, stage);
             uiPathProperty.set(uiJsonFile.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
-            componentsContext.loadJsonState(null, home.canva, stage);
+            //  componentsContext.loadJsonState(null, home.canva, stage);
         }
     }
 

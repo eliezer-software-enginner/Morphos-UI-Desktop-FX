@@ -10,10 +10,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
-import my_app.screens.Home.Home;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
@@ -39,7 +38,7 @@ public class OptionHeader extends HBox {
 
     public OptionHeader(
             LeftSide.Field field,
-            CanvaComponent currentCanva, BooleanProperty expanded,
+            CanvaComponentV2 currentCanva, BooleanProperty expanded,
             ComponentsContext componentsContext) {
 
         this.componentsContext = componentsContext;

@@ -6,7 +6,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import my_app.components.CustomComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
@@ -42,29 +41,29 @@ public class ShowComponentScene extends Scene {
         is.setOnAction(_ -> {
             // O 'home.canva' é o CanvaComponent com o conteúdo que o usuário desenhou (aqui
             // é o 'contentCanva').
-            CanvaComponent contentCanva = home.canva;
+            var contentCanva = home.canva;
             // style-> "-fx-background-color:#1a4d4d;"
             // 1. Cria o CustomComponent
-            CustomComponent newCustomComponent = new CustomComponent(componentsContext, contentCanva);
-            newCustomComponent.setStyle(contentCanva.getStyle());
-            newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
-            newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());
-            newCustomComponent.mainComponentsContext = mainComponentsContext;
+//            CustomComponent newCustomComponent = new CustomComponent(componentsContext, contentCanva);
+//            newCustomComponent.setStyle(contentCanva.getStyle());
+//            newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
+//            newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());
+//            newCustomComponent.mainComponentsContext = mainComponentsContext;
 
             // 2. Transfere os filhos do canva temporário (home.canva) para o customComp.
             // **IMPORTANTE:** Isso move os Nodes, tirando-os do 'contentCanva'.
             // Se você precisar que os Nodes permaneçam no 'contentCanva', você precisa
             // CLONAR.
-            newCustomComponent.getChildren().addAll(contentCanva.getChildren());
+            //   newCustomComponent.getChildren().addAll(contentCanva.getChildren());
 
             // 3. Adiciona o nó à lista global e à sidebar.
             // O mainCanvaComponent aqui é usado apenas para a lógica interna (embora o
             // addCustomComponent não o use visualmente).
 
-            mainComponentsContext.addCustomComponent(newCustomComponent, mainCanva);
+            //   mainComponentsContext.addCustomComponent(newCustomComponent, mainCanva);
 
-            System.out.println(
-                    "Componente personalizado criado e adicionado ao sistema com ID: " + newCustomComponent.getId());
+            //   System.out.println(
+            //            "Componente personalizado criado e adicionado ao sistema com ID: " + newCustomComponent.getId());
 
             // 4. Fecha a janela
             stage.close();

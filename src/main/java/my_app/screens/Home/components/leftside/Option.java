@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -26,12 +27,12 @@ public class Option extends VBox {
     @Component
     OptionHeader header;
     @Component
-    CanvaComponent currentCanva;
+    CanvaComponentV2 currentCanva;
 
     ComponentsContext componentsContext;
 
 
-    public Option(LeftSide.Field field, CanvaComponent currentCanva, ComponentsContext componentsContext) {
+    public Option(LeftSide.Field field, CanvaComponentV2 currentCanva, ComponentsContext componentsContext) {
         this.type = field.nameEngligh().toLowerCase().trim();
 
         this.componentsContext = componentsContext;
@@ -133,7 +134,7 @@ public class Option extends VBox {
     }
 
     void onClickOnSubItem(String itemIdentification,
-                          CanvaComponent mainCanvaComponent) {
+                          CanvaComponentV2 mainCanvaComponent) {
 
         var canvaChildren = mainCanvaComponent.getChildren();
 

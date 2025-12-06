@@ -14,7 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.components.NodeWrapper;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.contexts.TranslationContext;
@@ -53,7 +53,7 @@ public class RightSide extends VBox {
 
     IntegerProperty optionSelected = new SimpleIntegerProperty(1);
 
-    public RightSide(ComponentsContext componentsContext, CanvaComponent canva) {
+    public RightSide(ComponentsContext componentsContext, CanvaComponentV2 canva) {
         // 1. ALTERADO: Atribui a propriedade com o tipo correto
         ObjectProperty<SelectedComponent> selectedCompProp = componentsContext.nodeSelected;
 
@@ -101,7 +101,7 @@ public class RightSide extends VBox {
         style();
     }
 
-    void mount(CanvaComponent canva) {
+    void mount(CanvaComponentV2 canva) {
         SelectedComponent currentSelectedComp = selectedComponentProperty.get();
         Node currentNode = (currentSelectedComp != null) ? currentSelectedComp.node() : null;
 

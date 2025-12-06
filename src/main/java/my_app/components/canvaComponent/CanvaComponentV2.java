@@ -14,6 +14,11 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import my_app.FileManager;
 import my_app.components.Components;
+import my_app.components.InputComponentv2;
+import my_app.components.TextComponent;
+import my_app.components.TextComponentv2;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.ComponentsContext;
@@ -23,7 +28,10 @@ import my_app.data.*;
 import my_app.screens.Home.Home.VisualNodeCallback;
 import my_app.screens.Home.HomeViewModel;
 
-public class CanvaComponent extends Pane implements ViewContract<CanvaComponentData> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponentDatav2> {
     ComponentsContext componentsContext;
 
     boolean isDeleted = false;
@@ -35,7 +43,18 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
 
     HomeViewModel viewModel;
 
-    public CanvaComponent(HomeViewModel viewModel) {
+    public List<TextComponentData> text_components = new ArrayList<>();
+    public List<ButtonComponentData> button_components = new ArrayList<>();
+    public List<ImageComponentData> image_components = new ArrayList<>();
+    public List<InputComponentData> input_components = new ArrayList<>();
+    // REMOVIDA: public List<FlexComponentData> flex_components = new ArrayList<>();
+
+    // ADICIONADA: Nova lista de componentes de Coluna
+    public List<ColumnComponentData> column_components = new ArrayList<>();
+
+    public List<CustomComponentData> custom_components = new ArrayList<>();
+
+    public CanvaComponentV2(HomeViewModel viewModel) {
         this.componentsContext = componentsContext;
         this.viewModel = viewModel;
 
@@ -57,7 +76,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
 
     }
 
-    public CanvaComponent(ComponentsContext componentsContext, HomeViewModel viewModel) {
+    public CanvaComponentV2(ComponentsContext componentsContext, HomeViewModel viewModel) {
         this.componentsContext = componentsContext;
         this.viewModel = viewModel;
 
@@ -291,7 +310,7 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
     }
 
     @Override
-    public CanvaComponentData getData() {
+    public CanvaComponentDatav2 getData() {
 
         String canvastyle = this.getStyle();
 
@@ -324,13 +343,21 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
             bgType = "image";
         }
 
-        return new CanvaComponentData(
+        return new CanvaComponentDatav2(
                 paddingTop, paddingRight, paddingBottom, paddingLeft, width, height, bgType,
-                bgContent, this.getId(), 0, 0, isDeleted, this.name, this.screenFatherId);
+                bgContent, this.getId(), 0, 0, isDeleted, this.name, this.screenFatherId,
+
+                text_components,
+                button_components,
+                image_components,
+                input_components,
+                column_components,
+                custom_components
+        );
     }
 
     @Override
-    public void applyData(CanvaComponentData data) {
+    public void applyData(CanvaComponentDatav2 data) {
         // Aplicando as informações extraídas ao CanvaComponent
         setPrefWidth(data.width);
         setPrefHeight(data.height);
@@ -354,6 +381,43 @@ public class CanvaComponent extends Pane implements ViewContract<CanvaComponentD
             setStyle("-fx-background-image: url('" + bgContent + "');" +
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
+
+        for (TextComponentData it : data.text_components) {
+            var comp = new TextComponentv2(it.text(), componentsContext, this);
+            comp.applyData(it);
+
+            if (it.in_canva()) {
+                this.addElementDragable(comp, false);
+            }
+        }
+
+        for (ButtonComponentData it : data.button_components) {
+            var comp = new ButtonComponentv2(componentsContext, this);
+            comp.applyData(it);
+
+            if (it.in_canva()) {
+                this.addElementDragable(comp, false);
+            }
+        }
+
+        for (ImageComponentData it : data.image_components) {
+            var comp = new ImageComponentv2(componentsContext, this);
+            comp.applyData(it);
+
+            if (it.in_canva()) {
+                this.addElementDragable(comp, false);
+            }
+        }
+
+        for (InputComponentData it : data.input_components) {
+            var comp = new InputComponentv2(componentsContext, this);
+            comp.applyData(it);
+
+            if (it.in_canva()) {
+                this.addElementDragable(comp, false);
+            }
+        }
+        //todo finalizar o restante
     }
 
     @Override

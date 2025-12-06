@@ -20,7 +20,8 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = InputComponentData.class, name = "input"),
         @JsonSubTypes.Type(value = CustomComponentData.class, name = "component"),
         @JsonSubTypes.Type(value = ColumnComponentData.class, name = "column items"),
-        @JsonSubTypes.Type(value = CanvaComponentData.class, name = "canva")
+        @JsonSubTypes.Type(value = CanvaComponentData.class, name = "canva"),
+        @JsonSubTypes.Type(value = CanvaComponentDatav2.class, name = "canvav2")
 })
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -13,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import my_app.FileManager;
+import my_app.components.Components;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
@@ -37,6 +39,8 @@ public class HomeViewModel {
     private Home home;
     private Stage stage;
 
+    StringProperty currentScreenId = new SimpleStringProperty();
+
     BooleanProperty refreshScreensTabs = new SimpleBooleanProperty();
 
     public void init(Home home, Stage theirStage) {
@@ -45,6 +49,25 @@ public class HomeViewModel {
 
         fillMenuBar(home.menuBar);
         loadScreenAndApplyToCanva();
+
+        this.refreshScreensTabs.addListener((_, _, _) -> {
+            final var updatedProjectData = FileManager.getProjectData();
+
+            this.home.screensTabs.getChildren().clear();
+            for (var screen : updatedProjectData.screens()) {
+                MenuButton menu = new MenuButton(screen.name);
+                MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
+                itemShowCode.setOnAction(ev -> {
+                    //AllWindows.showWindowForShowCode(componentsContext, canva);
+                });
+
+                menu.getItems().add(itemShowCode);
+
+                this.home.screensTabs.getChildren().add(menu);
+            }
+
+            this.home.screensTabs.getChildren().add(Components.ButtonPrimary("+"));
+        });
 
         toggleRefreshScreenTabs();
     }
@@ -56,6 +79,11 @@ public class HomeViewModel {
     private void loadScreenAndApplyToCanva() {
         final var prefsData = FileManager.loadDataInPrefs();
 
+        final var projectData = FileManager.getProjectData();
+        final var screen = projectData.screens().getFirst();
+
+        home.currentCanva = CanvaMapper.fromScreenToCanva(screen, this);
+
         //acessar o arqivo de projeto
         final var absolutePath = prefsData.last_project_saved_path();
         final var projectFile = new File(absolutePath);
@@ -64,12 +92,12 @@ public class HomeViewModel {
         //conteudo do arquivo é um json Project
 
         //final var projectData = om.readValue(projectFile, Project.class);
-        componentsContext.loadJsonState_(uiJsonFile, home.canva, stage);
+        //componentsContext.loadJsonState_(uiJsonFile, home.canva, stage);
     }
 
     public void handleSave(Home home, Stage stage) {
         //updateUiJsonFilePathOnAppData(uiJsonFile);
-        FileManager.updateProject(CanvaMapper.toStateJson(home.canva, componentsContext));
+        FileManager.updateProject(CanvaMapper.toStateJson(home.currentCanva, componentsContext));
         //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
     }
 
@@ -158,7 +186,7 @@ public class HomeViewModel {
 
 
     public void handleNew(Home home, Stage stage) {
-        home.canva.getChildren().clear();
+        home.currentCanva.getChildren().clear();
         componentsContext.reset();
         uiPathProperty.set("");
     }
@@ -184,7 +212,7 @@ public class HomeViewModel {
         var uiFile = fc.showOpenDialog(stage);
         if (uiFile != null) {
             uiJsonFile = uiFile;
-            componentsContext.loadJsonState(uiFile, home.canva, stage);
+            // componentsContext.loadJsonState(uiFile, home.canva, stage);
             uiPathProperty.set(uiFile.getAbsolutePath());
         }
     }

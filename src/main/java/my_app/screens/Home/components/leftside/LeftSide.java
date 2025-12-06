@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
@@ -54,7 +55,7 @@ public class LeftSide extends VBox {
     @Component
     VBox errorContainer = new VBox();
 
-    public LeftSide(CanvaComponent currentCanva, ComponentsContext componentsContext) {
+    public LeftSide(CanvaComponentV2 currentCanva, ComponentsContext componentsContext) {
 
         config();
         styles();

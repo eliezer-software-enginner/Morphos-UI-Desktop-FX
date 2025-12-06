@@ -15,9 +15,9 @@ import my_app.components.InputComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
+import my_app.components.canvaComponent.CanvaComponentV2;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.data.*;
-import my_app.scenes.ShowComponentScene;
 
 import java.io.File;
 import java.util.List;
@@ -425,7 +425,7 @@ public class ComponentsContext {
 
     TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
-    public void addComponent(String type, CanvaComponent currentCanva) {
+    public void addComponent(String type, CanvaComponentV2 currentCanva) {
 
         if (type == null || type.isBlank()) {
             return;
@@ -439,7 +439,7 @@ public class ComponentsContext {
         if (type.equalsIgnoreCase(englishBase.button())) {
             node = new ButtonComponent(content, this);
         } else if (type.equalsIgnoreCase(englishBase.input())) {
-            node = new InputComponent(content, this, currentCanva);
+            // node = new InputComponent(content, this, currentCanva);
 
         } else if (type.equalsIgnoreCase(englishBase.text())) {
             node = new TextComponent(content, this, mainCanvaComponent);
@@ -450,7 +450,7 @@ public class ComponentsContext {
                     this);
 
         } else if (type.equalsIgnoreCase(englishBase.component())) {
-            new ShowComponentScene(currentCanva, this).stage.show();
+            //  new ShowComponentScene(currentCanva, this).stage.show();
             return;
         } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
             node = new ColumnComponent(this, mainCanvaComponent);

@@ -114,7 +114,7 @@ public class MainScene extends Scene {
 
         itemLoad.setOnAction(_ -> controller.handleClickLoad(home, stage));
 
-        itemShowCode.setOnAction(_ -> handleShowJavaCode(home.canva));
+        //itemShowCode.setOnAction(_ -> handleShowJavaCode(home.canva));
 
         itemContribute.setOnAction(_ -> controller.handleBecomeContributor());
 
