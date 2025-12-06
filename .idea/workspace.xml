@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="tratamento ao carregar dados na splashcreen">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="refatorada forma de abrir a opção de exibir código">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/MainScene/MainSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/SceneGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/SceneGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCode/ShowCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCode/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,14 +231,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00009" summary="added fallback for images that couldn be loaded">
-      <option name="closed" value="true" />
-      <created>1762822164273</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1762822164273</updated>
     </task>
     <task id="LOCAL-00010" summary="implementing a basic scenegrap">
       <option name="closed" value="true" />
@@ -631,7 +616,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764986152125</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="refatorada forma de abrir a opção de exibir código">
+      <option name="closed" value="true" />
+      <created>1765038505604</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1765038505605</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -646,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="duplicating custom component" />
     <MESSAGE value="duplicating all other components" />
     <MESSAGE value="deleting custom component" />
     <MESSAGE value="consuming click on text inside CustomComponent" />
@@ -671,7 +663,8 @@
     <MESSAGE value="correção ao atualizar nome da Screen" />
     <MESSAGE value="correção ao listar a lista de dados em vbox (columnItens)" />
     <MESSAGE value="tratamento ao carregar dados na splashcreen" />
-    <option name="LAST_COMMIT_MESSAGE" value="tratamento ao carregar dados na splashcreen" />
+    <MESSAGE value="refatorada forma de abrir a opção de exibir código" />
+    <option name="LAST_COMMIT_MESSAGE" value="refatorada forma de abrir a opção de exibir código" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

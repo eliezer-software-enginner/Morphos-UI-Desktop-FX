@@ -14,8 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -203,34 +201,6 @@ public class Commons {
         }
     }
 
-
-    /**
-     * Use de FileManager
-     */
-    @Deprecated
-    public static Path morphosPathInFileSystem() {
-        String os = System.getProperty("os.name").toLowerCase();
-        String userHome = System.getProperty("user.home");
-        String appDataAbsolutePath;
-
-        if (os.contains("win")) {
-            // Windows
-            String appData = System.getenv("LOCALAPPDATA");
-            if (appData == null) {
-                appData = userHome + "\\AppData\\Local";
-            }
-            appDataAbsolutePath = appData;
-        } else if (os.contains("mac")) {
-            // macOS
-            appDataAbsolutePath = userHome + "/Library/Application Support";
-        } else {
-            // Linux e outros
-            appDataAbsolutePath = userHome + "/.local/share";
-        }
-
-        return Path.of(appDataAbsolutePath).resolve(AppNameAtAppData);
-    }
-
     public static void CentralizeComponent(Node node, Pane canva) {
 
         Runnable runnable = () -> {
@@ -254,65 +224,9 @@ public class Commons {
 
     }
 
-    /**
-     * Operations related to current project
-     */
-
-    @Deprecated
-    public record Project(String name, TableData tableData, List<StateJson_v2> screens) {
-    }
-
-
-    @Deprecated
-    public static List<String> getVariableNamesInDataTable() {
-        //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
-        String tempName = "Teste";
-        var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
-        // home/eliezer/.local/share/morphos_desktop_fx/Teste.json
-
-        var mapper = new ObjectMapper();
-        try {
-            var proj = mapper.readValue(projectPath.toFile(), Project.class);
-
-            var list = new ArrayList<String>();
-            for (var primitiveList : proj.tableData.primitiveDataList()) {
-                list.add(primitiveList.variableName());
-            }
-            //TODO faltou lista complexa
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of();
-        }
-    }
-
-    @Deprecated
-    public static List<String> getValuesFromVariablename(String variableName) {
-        //teriamos que ler o arquivo de projeto atual e concatenar o novo dado
-        String tempName = "Teste";
-        var projectPath = morphosPathInFileSystem().resolve(tempName + ".json");
-
-        var mapper = new ObjectMapper();
-        try {
-            var proj = mapper.readValue(projectPath.toFile(), Project.class);
-
-            var list = new ArrayList<String>();
-            for (var primitiveList : proj.tableData.primitiveDataList()) {
-                if (primitiveList.variableName().equals(variableName)) {
-                    list.addAll(primitiveList.values());
-                }
-            }
-            //TODO faltou lista complexa
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of();
-        }
-    }
-
     static void main() {
-        getVariableNamesInDataTable().forEach(IO::println);
-        getValuesFromVariablename("colors").forEach(IO::println);
+        //getVariableNamesInDataTable().forEach(IO::println);
+        // getValuesFromVariablename("colors").forEach(IO::println);
     }
 
 }

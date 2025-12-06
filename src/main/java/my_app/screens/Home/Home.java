@@ -44,9 +44,7 @@ public class Home extends BorderPane {
         this.canva = new CanvaComponent(componentsContext, this.viewModel);
         this.leftSide = new LeftSide(canva, componentsContext);
 
-
         setTop(menuBar);
-
         setLeft(this.leftSide);
 
         //center

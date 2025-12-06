@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import my_app.FileManager;
 import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
 import my_app.components.InputComponent;
@@ -12,7 +13,6 @@ import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.ComponentsContext;
-import my_app.data.Commons;
 import my_app.data.ViewContract;
 
 import java.util.ArrayList;
@@ -447,7 +447,7 @@ public class ShowCodeController {
 
                 if (dataTableListVariableName != null) {
                     // 1. Obter a lista de valores (Exemplo: ["black", "white", "blue"])
-                    final List<String> list = Commons.getValuesFromVariablename(dataTableListVariableName);
+                    final List<String> list = FileManager.getValuesFromVariableName(dataTableListVariableName);
 
                     // Lista para armazenar cada valor entre aspas
                     List<String> quotedValues = new ArrayList<>();
