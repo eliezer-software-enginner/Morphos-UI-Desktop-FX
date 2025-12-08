@@ -4,19 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="alternando entre screens">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/tab.css" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="excluindo tela atual">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_LAYOUT_REFACTORING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_REFACTORING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_STYLE_REUSE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_THEME.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/components.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tab.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,14 +230,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00016" summary="image is now added as import">
-      <option name="closed" value="true" />
-      <created>1762975721716</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1762975721716</updated>
     </task>
     <task id="LOCAL-00017" summary="resizing right side automacally">
       <option name="closed" value="true" />
@@ -632,7 +615,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765212544762</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="excluindo tela atual">
+      <option name="closed" value="true" />
+      <created>1765214976999</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1765214976999</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -647,7 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added more icons and also a scrollpane" />
     <MESSAGE value="creating primitive list" />
     <MESSAGE value="retrieving data from table data" />
     <MESSAGE value="added time of creation" />
@@ -672,7 +662,8 @@
     <MESSAGE value="componentes selecionados são marcados na leftside componentes na leftside" />
     <MESSAGE value="exibindo informação na rightSide" />
     <MESSAGE value="alternando entre screens" />
-    <option name="LAST_COMMIT_MESSAGE" value="alternando entre screens" />
+    <MESSAGE value="excluindo tela atual" />
+    <option name="LAST_COMMIT_MESSAGE" value="excluindo tela atual" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

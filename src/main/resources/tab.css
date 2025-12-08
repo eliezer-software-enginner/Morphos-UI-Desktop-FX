@@ -8,6 +8,8 @@
     -fx-padding: 5 10 0 10; /* Top (0 para o chão), Right, Bottom, Left */
     -fx-background-color: transparent;
     -fx-cursor: hand;
+    -fx-min-width:100;
+    -fx-max-width:200;
 }
 
 /* Estilo da tab não selecionada */
@@ -20,7 +22,7 @@
 }
 
 /* Estilo da tab selecionada */
-.screen-tab-content.selected {
+.screen-tab-content-selected {
     -fx-background-color: #303030; /* Fundo levemente diferente para a tab selecionada */
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -28,24 +30,31 @@
 
 /* Estilo do indicador (o "chão azul") */
 .screen-tab-indicator {
-    -fx-background-color: transparent;
-    -fx-pref-height: 4px; /* Altura do indicador */
-    -fx-max-height: 4px;
-    -fx-background-radius: 0 0 0 0;
+    -fx-fill: transparent;
+    -fx-stroke-width: 0; /* Garante que não há borda */
 }
 
-.screen-tab-indicator.selected {
-    -fx-background-color: #1e88e5; /* Cor azul do "chão" */
+.screen-tab-indicator-selected {
+    -fx-fill: #1e88e5; /* Mude background-color para fill */
 }
-
 /* Botão de Fechar/Excluir */
 .close-tab-button {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-cursor: hand;
-    -fx-text-fill: white;
 }
 
 .close-tab-button:hover {
-    -fx-text-fill: #cccccc;
+    /* 1. Altera a cor do ícone no hover (para um cinza claro, por exemplo) */
+    -fx-text-fill: #cccccc; /* Manter se houver texto, mas o importante é o fill */
+
+    /* 2. Opcional: Adiciona um fundo sutil e arredondado para o botão de fechar */
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 4px;
+    -fx-padding: 6px;
+}
+
+/* NOVO: Regra específica para o ícone no estado hover */
+.close-tab-button:hover .ikonli-font {
+    -fx-fill: #cccccc; /* Cor de hover para o ícone */
 }
