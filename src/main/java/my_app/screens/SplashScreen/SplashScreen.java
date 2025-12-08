@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -30,8 +29,8 @@ public class SplashScreen extends VBox {
 
     SplashScreenViewModel viewModel;
 
-    public SplashScreen(ComponentsContext mainComponentsContext, Stage theirStage) {
-        this.viewModel = new SplashScreenViewModel(mainComponentsContext, theirStage);
+    public SplashScreen(Stage theirStage) {
+        this.viewModel = new SplashScreenViewModel(theirStage);
         //super(new VBox(), 500, 400);
 
         getChildren().addAll(logo, title, description, footer);

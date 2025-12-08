@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="usando mvvm corretamente na ScreenCreateProject">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/data/PrefsDatav2.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="nova estrutura com projetos recentes">
+      <change afterPath="$PROJECT_DIR$/src/test/java/my_app/BaseFxTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModelTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/DataTableScreen/DataTableScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/DataTableScreen/DataTableScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreenViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreenViewModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +27,7 @@
       <list>
         <option value="Record" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -74,10 +74,13 @@
     "Application.TranslationContext.executor": "Run",
     "Application.run app ratinho.executor": "Run",
     "Application.run layout preview.executor": "Run",
+    "JUnit.ScreenCreateProjectViewModelTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "screens-big-refactor",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens",
@@ -95,6 +98,12 @@
       <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene" />
       <recent name="$PROJECT_DIR$/.java_fx" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="my_app.screens.ScreenCreateProject" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="my_app.screens.Home.components" />
       <recent name="my_app.components" />
@@ -103,7 +112,7 @@
       <recent name="my_app.components.buttonComponent" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App[Linux]">
+  <component name="RunManager" selected="JUnit.ScreenCreateProjectViewModelTest">
     <configuration name="AppNavTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="my_app.AppNavTest" />
       <module name="my_app" />
@@ -158,19 +167,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SceneGraph" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="my_app.scenes.SceneGraph" />
-      <module name="my_app" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="my_app.scenes.IconsScene.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="run app ratinho" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="layouts_generated_preview.app_ratinho.biscoito_da_sorte.App" />
       <module name="my_app" />
@@ -199,6 +195,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ScreenCreateProjectViewModelTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="my_app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="my_app.screens.ScreenCreateProject.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="my_app.screens.ScreenCreateProject" />
+      <option name="MAIN_CLASS_NAME" value="my_app.screens.ScreenCreateProject.ScreenCreateProjectViewModelTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Morphos-UI-Desktop-FX" />
       <method v="2">
@@ -216,16 +227,16 @@
       <item itemvalue="Application.IconDatabase" />
       <item itemvalue="Application.AppNavTest" />
       <item itemvalue="Application.Commons" />
-      <item itemvalue="Application.SceneGraph" />
       <item itemvalue="Application.run layout preview" />
+      <item itemvalue="JUnit.ScreenCreateProjectViewModelTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ScreenCreateProjectViewModelTest" />
         <item itemvalue="Application.IconDatabase" />
         <item itemvalue="Application.App[Linux]" />
         <item itemvalue="Application.Commons" />
         <item itemvalue="Application.AppNavTest" />
-        <item itemvalue="Application.run layout preview" />
       </list>
     </recent_temporary>
   </component>
@@ -236,14 +247,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00021" summary="change theme on leftside">
-      <option name="closed" value="true" />
-      <created>1763131747479</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1763131747479</updated>
     </task>
     <task id="LOCAL-00022" summary="wrapping width of text">
       <option name="closed" value="true" />
@@ -629,7 +632,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765222168328</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="nova estrutura com projetos recentes">
+      <option name="closed" value="true" />
+      <created>1765225264152</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1765225264152</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -644,7 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="output node for when columnItem is empty" />
     <MESSAGE value="creating dinamic methods for populationg columnItens(Vbox)" />
     <MESSAGE value="datasecene was redesigned" />
     <MESSAGE value="algumas refatorações e criando projeto e carregando-o" />
@@ -669,7 +679,8 @@
     <MESSAGE value="tab clicada marca node como selecionado" />
     <MESSAGE value="saindo do projeto" />
     <MESSAGE value="usando mvvm corretamente na ScreenCreateProject" />
-    <option name="LAST_COMMIT_MESSAGE" value="usando mvvm corretamente na ScreenCreateProject" />
+    <MESSAGE value="nova estrutura com projetos recentes" />
+    <option name="LAST_COMMIT_MESSAGE" value="nova estrutura com projetos recentes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -726,7 +737,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/SplashScreen/SplashScreenViewModel.java</url>
-          <line>39</line>
+          <line>37</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -788,6 +799,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
           <line>71</line>
           <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModelTest.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="90" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

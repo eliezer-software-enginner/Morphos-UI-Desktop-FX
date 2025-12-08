@@ -5,18 +5,16 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import my_app.FileManager;
-import my_app.contexts.ComponentsContext;
 import my_app.scenes.AppScenes;
 
 import java.io.File;
 
 public class SplashScreenViewModel {
 
-    private final ComponentsContext mainComponentsContext;
+
     private final Stage stage;
 
-    public SplashScreenViewModel(ComponentsContext mainComponentsContext, Stage theirStage) {
-        this.mainComponentsContext = mainComponentsContext;
+    public SplashScreenViewModel(Stage theirStage) {
         this.stage = theirStage;
     }
 

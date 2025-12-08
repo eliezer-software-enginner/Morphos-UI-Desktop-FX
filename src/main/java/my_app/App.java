@@ -45,8 +45,8 @@ public class App extends Application {
         //mainWindow.show();
 
         //final var mainScene = new MainScene();
-        //primaryStage.setScene(AppScenes.SplashScene(componentsContext, primaryStage));
-        primaryStage.setScene(AppScenes.CreateProjectScene(primaryStage));
+        primaryStage.setScene(AppScenes.SplashScene(primaryStage));
+        //primaryStage.setScene(AppScenes.CreateProjectScene(primaryStage));
         //primaryStage.setScene(AppScenes.HomeScene(primaryStage));
         //primaryStage.setScene(AppScenes.PrimitiveListFormScene());
 

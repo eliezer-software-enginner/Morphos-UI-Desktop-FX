@@ -2,7 +2,6 @@ package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.DataTableScreen.DataTableScreen;
 import my_app.screens.Home.Home;
@@ -26,8 +25,8 @@ public class AppScenes {
         currentWindow.setScene(sceneToGoTo);
     }
 
-    public static Scene SplashScene(ComponentsContext mainComponentsContext, Stage theirStage) {
-        var scene = new Scene(new SplashScreen(mainComponentsContext, theirStage));
+    public static Scene SplashScene(Stage theirStage) {
+        var scene = new Scene(new SplashScreen(theirStage));
 
         var screenSize = Commons.ScreensSize._900x500;
         theirStage.setWidth(screenSize.width);
