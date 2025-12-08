@@ -1,23 +1,20 @@
 package my_app.mappers;
 
-import javafx.collections.ObservableList;
 import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
 import my_app.components.InputComponentv2;
 import my_app.components.TextComponentv2;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import my_app.contexts.ComponentsContext;
 import my_app.data.StateJson_v3;
-import my_app.data.ViewContract;
 import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 public class CanvaMapper {
-    public static StateJson_v3 toStateJson(CanvaComponentV2 canva, ComponentsContext componentsContext) {
-        final var nodeSelected = componentsContext.nodeSelected.get();
-        final var headerSelected = componentsContext.headerSelected.get();
-        final var dataMap = componentsContext.dataMap;
+    public static StateJson_v3 toStateJson(CanvaComponentV2 canva, HomeViewModel homeViewModel) {
+        final var nodeSelected = homeViewModel.nodeSelected.get();
+        final var headerSelected = homeViewModel.headerSelected.get();
+        final var dataMap = homeViewModel.dataMap;
 
         var jsonTarget = new StateJson_v3();
         jsonTarget.screen_id = canva.screenFatherId;
@@ -34,7 +31,7 @@ public class CanvaMapper {
 
         // 2. Itera sobre TODOS os nós (nodes) no dataMap
         // Para cada lista de nós (os VALUES do dataMap)...
-        for (ObservableList<ViewContract<?>> nodesList : dataMap.values()) {
+        for (var nodesList : dataMap.values()) {
             // ...itera sobre cada Node dentro dessa lista.
             for (var nodeWrapper : nodesList) {
                 // A LÓGICA DE SERIALIZAÇÃO PERMANECE A MESMA
@@ -82,6 +79,9 @@ public class CanvaMapper {
         final var canvaComponent = new CanvaComponentV2(homeViewModel);
 
         canvaComponent.applyData(screen.canva);
+        canvaComponent.screenFatherId = screen.screen_id;
+        canvaComponent.name = screen.name;
+
         return canvaComponent;
     }
 }

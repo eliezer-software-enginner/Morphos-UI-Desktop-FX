@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 import java.io.File;
 import java.io.IOException;
@@ -154,7 +154,7 @@ public class Commons {
     }
 
     public static NodeInCanva NodeInCanva(Node node) {
-        if (node.getParent() instanceof CanvaComponent canva) {
+        if (node.getParent() instanceof CanvaComponentV2 canva) {
             // Caso POSITIVO: Retorna TRUE com o ID do Canva pai
             return new NodeInCanva(true, canva.getId());
         }

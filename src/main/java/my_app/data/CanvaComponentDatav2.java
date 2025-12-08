@@ -15,7 +15,7 @@ public class CanvaComponentDatav2 implements ComponentData {
     public String identification;
     public int x;
     public int y;
-    public String type = "canvav2";
+    public String type = "canva";
     public boolean isDeleted;
     public String name;
     public String screenFatherId;

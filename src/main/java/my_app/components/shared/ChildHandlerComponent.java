@@ -5,7 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import my_app.components.ColumnComponent;
-import my_app.contexts.ComponentsContext;
+import my_app.screens.Home.HomeViewModel;
 import my_app.themes.Typography;
 import toolkit.Component;
 
@@ -22,7 +22,7 @@ public class ChildHandlerComponent extends HBox {
     public ChildHandlerComponent(
             String title,
             ColumnComponent self,
-            SimpleStringProperty currentNodeId, ComponentsContext context) {
+            SimpleStringProperty currentNodeId, HomeViewModel viewModel) {
 
         this.title.setText(title);
 
@@ -33,7 +33,7 @@ public class ChildHandlerComponent extends HBox {
         uniqueItems.add("None"); // adiciona o item padrão
 
         // Itera sobre os GRUPOS de componentes
-        for (var entry : context.dataMap.entrySet()) {
+        for (var entry : viewModel.dataMap.entrySet()) {
             String componentType = entry.getKey();
 
             // Filtro 2: ignora ColumnItens

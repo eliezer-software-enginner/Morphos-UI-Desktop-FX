@@ -6,9 +6,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
 import java.util.List;
@@ -20,8 +20,8 @@ public class ShowCodeScreen extends VBox {
     // por enquanto só os node do canva
     // mas adiante expandir para os componentes gerais também pra
     // ver como vou encaix-alos no codigo gerado
-    public ShowCodeScreen(ComponentsContext mainComponentContext, CanvaComponent canvaComponent) {
-        this.controller = new ShowCodeController(mainComponentContext);
+    public ShowCodeScreen(HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
+        this.controller = new ShowCodeController(viewModel);
 
         String importsContent = controller.createImports();
         String codeContent = controller.createRestOfCode(canvaComponent);

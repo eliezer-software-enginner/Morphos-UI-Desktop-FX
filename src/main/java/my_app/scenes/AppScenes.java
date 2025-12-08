@@ -2,11 +2,12 @@ package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.DataTableScreen.DataTableScreen;
 import my_app.screens.Home.Home;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreen;
 import my_app.screens.ScreenCreateProject.ScreenCreateProject;
 import my_app.screens.ShowCodeScreen.ShowCodeScreen;
@@ -88,9 +89,10 @@ public class AppScenes {
         return scene;
     }
 
-    public static Scene ShowCodeFormScene(ComponentsContext mainComponentsContext, Stage theirStage,
-                                          CanvaComponent canvaComponent) {
-        var scene = new Scene(new ShowCodeScreen(mainComponentsContext, canvaComponent));
+    public static Scene ShowCodeFormScene(HomeViewModel homeViewModel,
+                                          Stage theirStage,
+                                          CanvaComponentV2 canvaComponent) {
+        var scene = new Scene(new ShowCodeScreen(homeViewModel, canvaComponent));
         var screenSize = Commons.ScreensSize._1200x650;
         theirStage.setWidth(screenSize.width);
         theirStage.setHeight(screenSize.heigh);

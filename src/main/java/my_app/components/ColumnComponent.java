@@ -15,14 +15,13 @@ import my_app.components.shared.ItemsAmountPreviewComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
 import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // ColumnItens.java
-public class ColumnComponent extends VBox implements ViewContract<ColumnComponentData> {
+public class ColumnComponent extends VBox implements ViewContractv2<ColumnComponentData> {
     SimpleStringProperty currentChildIdState = new SimpleStringProperty("None");
     SimpleStringProperty onEmptyComponentState = new SimpleStringProperty("None"); // Novo padrão: "None"
 
@@ -118,8 +117,8 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
         if (valuesOfVariableName.size() >= amount) {
             for (int i = 0; i < amount; i++) {
-                ViewContract<ComponentData> newNodeWrapper =
-                        (ViewContract<ComponentData>) cloneExistingNode((ViewContractv2<ComponentData>) existingNode, i);
+                final var newNodeWrapper =
+                        (ViewContractv2<ComponentData>) cloneExistingNode((ViewContractv2<ComponentData>) existingNode, i);
 
 
                 // Cria uma NOVA cópia do nó a partir dos dados originais
@@ -225,7 +224,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     @Override
-    public void appearance(VBox father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
                 //    new ChildHandlerComponent("Child component:", this, currentChildIdState, componentsContext),
                 new ItemsAmountPreviewComponent(this),
@@ -236,14 +235,14 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     @Override
-    public void settings(VBox father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
                 Components.LayoutXYComponent(this),
                 Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
     }
 
     @Override
-    public void otherSettings(VBox father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
                 Components.LabelWithTextContent(translation.variableName(), name.get(), v -> name.set(v)));
     }

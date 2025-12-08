@@ -6,11 +6,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.Home;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.ThemeManager;
 import toolkit.Component;
 
@@ -31,7 +31,7 @@ public class ShowComponentScene extends Scene {
     ThemeManager themeManager = ThemeManager.Instance();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
-    public ShowComponentScene(CanvaComponent mainCanva, ComponentsContext mainComponentsContext) {
+    public ShowComponentScene(CanvaComponentV2 mainCanva, ComponentsContext mainComponentsContext) {
         super(root, 775, 500);
         setup();
 

@@ -11,19 +11,19 @@ import my_app.components.InputComponentv2;
 import my_app.components.TextComponentv2;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.contexts.ComponentsContext;
-import my_app.data.ViewContract;
+import my_app.data.ViewContractv2;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ShowCodeController {
-    private final ComponentsContext mainComponentsContext;
+    private final HomeViewModel viewModel;
 
-    public ShowCodeController(ComponentsContext mainComponentsContext) {
-        this.mainComponentsContext = mainComponentsContext;
+    public ShowCodeController(HomeViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     public String createImports() {
@@ -242,7 +242,7 @@ public class ShowCodeController {
     }
 
     public String createRestOfCode(
-            CanvaComponent canvaComponent) {
+            CanvaComponentV2 canvaComponent) {
 
         ObservableList<Node> nodesInCanva = canvaComponent.getChildren();
         // codigo da classe
@@ -392,8 +392,8 @@ public class ShowCodeController {
 
                 final var childIdWhenSelfIsEmpty = component.getData().alternativeChildId();
                 final var childIdWhenSelfHasData = component.getData().childId();
-                final ViewContract<?> nodeWrapper_whenSelfIsEmpty = this.mainComponentsContext.findNodeById(childIdWhenSelfIsEmpty);
-                final ViewContract<?> nodeWrapper_whenSelfHasData = this.mainComponentsContext.findNodeById(childIdWhenSelfHasData);
+                final ViewContractv2<?> nodeWrapper_whenSelfIsEmpty = this.viewModel.findNodeById(childIdWhenSelfIsEmpty);
+                final ViewContractv2<?> nodeWrapper_whenSelfHasData = this.viewModel.findNodeById(childIdWhenSelfHasData);
 
                 String compWhenEmpty_Creation = "";
                 String finalNameForComp_WhenEmpty = "";
@@ -507,7 +507,7 @@ public class ShowCodeController {
     }
 
     private static String getFinalCode(
-            CanvaComponent canvaComponent,
+            CanvaComponentV2 canvaComponent,
             ArrayList<String> listOf_Instances,
             ArrayList<String> listOfChildWhenColumnIsEmptyInstances,
             ArrayList<String> listOfRepeatableChildForColumn_Instances,

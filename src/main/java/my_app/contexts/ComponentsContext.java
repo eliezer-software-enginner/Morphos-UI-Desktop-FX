@@ -1,23 +1,8 @@
 package my_app.contexts;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.scene.Node;
-import javafx.stage.Stage;
-import my_app.data.*;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-
-import java.io.File;
-import java.util.List;
-import java.util.Optional;
-
 public class ComponentsContext {
 
+    /*
     public SimpleObjectProperty<SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
 
     public ObservableMap<String, ObservableList<ViewContract<?>>> dataMap = FXCollections
@@ -44,28 +29,7 @@ public class ComponentsContext {
     }
 
 
-    public ViewContract<?> findNodeById(String id) {
-        if (id == null || id.isEmpty()) {
-            return null;
-        }
 
-        // Itera sobre todas as listas de ViewContract no dataMap (os valores do mapa)
-        for (ObservableList<ViewContract<?>> viewList : dataMap.values()) {
-
-            // Itera sobre cada ViewContract dentro da lista atual
-            for (ViewContract<?> contract : viewList) {
-
-                // Verifica se o ID do ViewContract (que representa o Node) é igual ao ID procurado
-                // A verificação de null/empty deve ser feita dentro do contrato ou ao chamar getId()
-                if (id.equals(contract.getData().identification())) {
-                    return contract; // Encontrado! Retorna o contrato.
-                }
-            }
-        }
-
-        // Se o loop terminar e nada for encontrado
-        return null;
-    }
 
     public record SelectedComponent(String type, Node node) {
     }
@@ -274,7 +238,7 @@ public class ComponentsContext {
 
     TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
-    /*
+    //inicio
     public void addComponent(String type, CanvaComponentV2 currentCanva) {
 
         if (type == null || type.isBlank()) {
@@ -328,7 +292,7 @@ public class ComponentsContext {
         }
     }
 
-     */
+     //fim
 
     public void addCustomComponent(ViewContract<?> customComponent, CanvaComponent mainCanva) {
         // mainCanvaComponent = mainCanva;
@@ -375,7 +339,7 @@ public class ComponentsContext {
     public void duplicateComponentInCanva(ViewContract<?> nodeWrapper, CanvaComponent currentCanva) {
         var data = nodeWrapper.getData();
 
-        /*
+        //inicio
         if (data instanceof CustomComponentData d) {
             var copyComponent = new CustomComponent(this, currentCanva);
             copyComponent.applyData(d);
@@ -408,7 +372,7 @@ public class ComponentsContext {
             this.addComponent(copyComponent, currentCanva);
         }
 
-         */
+         //fim
     }
 
     public Optional<ViewContract<?>> SearchNodeById(String nodeId) {
@@ -419,13 +383,6 @@ public class ComponentsContext {
                 .findFirst();
     }
 
-    public static Node SearchNodeByIdInMainCanva(String nodeId, ObservableList<Node> canvaChildren) {
-        // lookin for custom component in main canva
-        return canvaChildren.stream()
-                .filter(n -> nodeId.equals(n.getId()))
-                .findFirst()
-                .orElse(null);
-    }
 
     // public static void SelectNode(Node node) {
     // nodeSelected.set(node);
@@ -434,4 +391,5 @@ public class ComponentsContext {
     // }
 
 
+    */
 }

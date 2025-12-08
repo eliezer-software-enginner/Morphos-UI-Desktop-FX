@@ -12,43 +12,69 @@ import java.util.List;
 
 public class FileManager {
 
-    public static void updateProject(StateJson_v3 currentCanvaScreen) {
-        // ... (Verificações de ID)
-        if (currentCanvaScreen.screen_id == null || currentCanvaScreen.screen_id.isEmpty()) {
-            // Lide com erro: A tela atual deve ter um ID para ser atualizada.
-            throw new IllegalArgumentException("currentCanvaScreen deve ter um 'screen_id' definido para a atualização.");
+
+    // FileManager.java
+
+    public static void addScreenToProjectAndSave(StateJson_v3 newScreen) {
+        if (newScreen.screen_id == null || newScreen.screen_id.isEmpty()) {
+            throw new IllegalArgumentException("Nova tela deve ter um 'screen_id'.");
         }
 
         try {
             final var projectData = getProjectData();
             var screens = projectData.screens();
 
-            boolean updated = false;
+            // Adiciona a nova tela no final da lista
+            screens.add(newScreen);
 
-            // Itera para encontrar e remover a tela antiga
+            // Persiste a mudança no arquivo
+            final var prefsData = getPrefsData();
+            writeDataAsJsonInFileInDisc(projectData, new File(prefsData.last_project_saved_path()));
+            IO.println("Project updated successfully: New screen added (ID: " + newScreen.screen_id + ")");
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error adding new screen to project: " + e.getMessage());
+        }
+    }
+
+    public static void updateScreen(StateJson_v3 currentCanvaScreen) {
+        if (currentCanvaScreen.screen_id == null || currentCanvaScreen.screen_id.isEmpty()) {
+            throw new IllegalArgumentException("currentCanvaScreen deve ter um 'screen_id' definido para a atualização.");
+        }
+
+        try {
+            final var projectData = getProjectData();
+            // **IMPORTANTE:** Assumimos que 'projectData.screens()' retorna uma List que suporta
+            // modificações (ex: ArrayList). Se for imutável, você precisará criar uma cópia mutável.
+            var screens = projectData.screens();
+
+            // Variável para armazenar o índice da tela que será atualizada
+            int foundIndex = -1;
+
+            // 1. Encontrar o índice da tela existente
             for (int i = 0; i < screens.size(); i++) {
                 final var existingScreen = screens.get(i);
 
                 // Se o ID da tela atual for igual ao ID de uma tela existente...
                 if (currentCanvaScreen.screen_id.equals(existingScreen.screen_id)) {
-                    // 1. Remove a versão antiga
-                    screens.remove(i);
-
-                    // 2. Adiciona a nova versão atualizada
-                    screens.add(currentCanvaScreen);
-                    updated = true;
-                    break;
+                    foundIndex = i;
+                    break; // Encontrou, pode sair do loop
                 }
             }
 
-            // Se não encontrou uma tela existente (é uma tela nova), apenas a adiciona.
-            if (!updated) {
+            if (foundIndex != -1) {
+                // 2. Se a tela foi encontrada, SUBSTITUA-A (mantendo o índice)
+                screens.set(foundIndex, currentCanvaScreen);
+                IO.println("Screen updated at index " + foundIndex + " (ID: " + currentCanvaScreen.screen_id + ")");
+            } else {
+                // 3. Se a tela NÃO foi encontrada, é uma nova tela, então adicione-a no final.
                 screens.add(currentCanvaScreen);
+                IO.println("New screen added (ID: " + currentCanvaScreen.screen_id + ")");
             }
 
             final var prefsData = getPrefsData();
+            // Assumindo que 'writeDataAsJsonInFileInDisc' salva a lista 'screens' atualizada dentro de 'projectData'
             writeDataAsJsonInFileInDisc(projectData, new File(prefsData.last_project_saved_path()));
-            IO.println("Project updated successfully (screen ID: " + currentCanvaScreen.screen_id + ")");
 
         } catch (IOException e) {
             throw new RuntimeException("Error updating project: " + e.getMessage());
@@ -60,7 +86,7 @@ public class FileManager {
             String name, File file) {
 
         try {
-            var project = new Project(name, new TableData(List.of()), List.of());
+            var project = new Projectv2(name, new TableData(List.of()), List.of());
             writeDataAsJsonInFileInDisc(project, file);
             IO.println("project was saved");
 

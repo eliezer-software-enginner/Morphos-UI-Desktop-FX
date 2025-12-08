@@ -4,35 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="componentes selecionados são marcados na leftside componentes na leftside">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapperv2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev2.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo informação na rightSide">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponentv2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponentv2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponentv2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/FitComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/PreserveRatioComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ButtonRemoverComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ButtonRemoverComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Project.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponent.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,30 +86,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AppNavTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.App[Linux].executor&quot;: &quot;Run&quot;,
-    &quot;Application.App_base.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Commons.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SceneGraph.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TranslationContext.executor&quot;: &quot;Run&quot;,
-    &quot;Application.run app ratinho.executor&quot;: &quot;Run&quot;,
-    &quot;Application.run layout preview.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;screens-big-refactor&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AppNavTest.executor": "Run",
+    "Application.App[Linux].executor": "Run",
+    "Application.App_base.executor": "Run",
+    "Application.Commons.executor": "Run",
+    "Application.MainApp.executor": "Run",
+    "Application.SceneGraph.executor": "Run",
+    "Application.TranslationContext.executor": "Run",
+    "Application.run app ratinho.executor": "Run",
+    "Application.run layout preview.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "screens-big-refactor",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "actions.on.save"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens" />
@@ -255,14 +260,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00014" summary="styling input">
-      <option name="closed" value="true" />
-      <created>1762970929814</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1762970929814</updated>
     </task>
     <task id="LOCAL-00015" summary="centralizing components horizontally">
       <option name="closed" value="true" />
@@ -648,7 +645,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765193094269</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="exibindo informação na rightSide">
+      <option name="closed" value="true" />
+      <created>1765196525935</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1765196525935</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -663,7 +668,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed operations involving add icon" />
     <MESSAGE value="added annotation @Component for aesthetics" />
     <MESSAGE value="added more icons and also a scrollpane" />
     <MESSAGE value="creating primitive list" />
@@ -688,7 +692,8 @@
     <MESSAGE value="o canva agora é que lida com o spawn de componentes filhos dele" />
     <MESSAGE value="carregando os componentes na leftside" />
     <MESSAGE value="componentes selecionados são marcados na leftside componentes na leftside" />
-    <option name="LAST_COMMIT_MESSAGE" value="componentes selecionados são marcados na leftside componentes na leftside" />
+    <MESSAGE value="exibindo informação na rightSide" />
+    <option name="LAST_COMMIT_MESSAGE" value="exibindo informação na rightSide" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -725,12 +730,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java</url>
-          <line>351</line>
+          <line>315</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java</url>
-          <line>180</line>
+          <line>179</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -740,7 +745,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/FileManager.java</url>
-          <line>160</line>
+          <line>186</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -749,14 +754,44 @@
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="54" />
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="55" />
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>301</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>367</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>149</line>
+          <option name="timeStamp" value="70" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

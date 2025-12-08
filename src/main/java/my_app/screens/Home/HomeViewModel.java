@@ -1,6 +1,5 @@
 package my_app.screens.Home;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,15 +10,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import my_app.FileManager;
+import my_app.components.ColumnComponent;
 import my_app.components.Components;
+import my_app.components.InputComponentv2;
+import my_app.components.TextComponentv2;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
-import my_app.data.Commons;
 import my_app.data.ComponentData;
+import my_app.data.StateJson_v3;
 import my_app.data.ViewContractv2;
 import my_app.mappers.CanvaMapper;
 import my_app.scenes.SettingsScene;
@@ -30,12 +32,9 @@ import toolkit.Component;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-
-import static my_app.data.Commons.loadPrefs;
 
 public class HomeViewModel {
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -52,6 +51,117 @@ public class HomeViewModel {
 
     public SimpleStringProperty headerSelected = new SimpleStringProperty(null);
 
+    //key é o type
+    public ObservableMap<String, ObservableList<ViewContractv2<?>>> dataMap = FXCollections
+            .observableHashMap();
+
+    public void init(Home home, Stage theirStage) {
+        this.home = home;
+        this.stage = theirStage;
+
+        fillMenuBar(home.menuBar);
+
+        final var projectData = FileManager.getProjectData();
+        final var firstScreen = projectData.screens().getFirst();
+        loadScreenAndApplyToCanva(firstScreen);
+
+        // Criando as tabs que ficam sobre o Canva central
+        this.refreshScreensTabs.addListener((_, _, _) -> {
+            final var updatedProjectData = FileManager.getProjectData();
+
+            this.home.screensTabs.getChildren().clear();
+            for (var screen : updatedProjectData.screens()) {
+                MenuButton menu = new MenuButton(screen.name);
+                MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
+
+                menu.setOnMouseClicked(ev -> {
+                    dataMap.clear();
+                    headerSelected.set(null);
+                    nodeSelected.set(null);
+                    leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+
+                    IO.println("alvo: " + screen.name); // Nome é seguro, ID é crucial
+
+                    final String screenIdToLoad = screen.screen_id; // Capture o ID para uso no clique
+
+                    // 1. VERIFICAÇÃO DE ECONOMIA: Se a tela já está carregada, saia.
+                    if (this.currentScreenId.get() != null && this.currentScreenId.get().equals(screenIdToLoad)) {
+                        IO.println("Tela " + screen.name + " já está ativa. Pulando recarregamento.");
+                        return; // Sai do método sem carregar/processar
+                    }
+
+                    // SOLUÇÃO: Busque a versão MAIS RECENTE da tela no disco USANDO O ID
+                    final var latestProjectData = FileManager.getProjectData();
+                    final var latestScreenOptional = latestProjectData.screens().stream()
+                            .filter(s -> s.screen_id.equals(screenIdToLoad))
+                            .findFirst();
+
+                    if (latestScreenOptional.isPresent()) {
+                        // Carrega a tela diretamente do disco, garantindo o estado atualizado
+                        this.loadScreenAndApplyToCanva(latestScreenOptional.get());
+                    } else {
+                        IO.println("Erro: Tela com ID " + screenIdToLoad + " não encontrada ao clicar.");
+                    }
+
+                    // Re-executa o refresh do LeftSide
+                    leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+                });
+                itemShowCode.setOnAction(ev -> {
+                    //AllWindows.showWindowForShowCode(componentsContext, canva);
+                });
+
+                menu.getItems().add(itemShowCode);
+
+                this.home.screensTabs.getChildren().add(menu);
+            }
+
+            final var btnAdd = Components.ButtonPrimary("+");
+            btnAdd.setOnMouseClicked(ev -> {
+                dataMap.clear();
+                headerSelected.set(null);
+                nodeSelected.set(null);
+                leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+
+                // 1. Cria o novo objeto StateJson_v3 (sem salvar no disco ainda)
+                final var screen = new StateJson_v3();
+                // 3. Atualiza a referência da UI
+                final var canvaGerado = loadScreenAndApplyToCanva(screen);
+
+                // 4. Salva a nova tela (com dados iniciais do canva) e o projeto:
+                // Serializa os dados padrão do Canva recém-criado de volta para o objeto screen.
+                final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
+
+                // Adiciona a tela (agora com dados básicos) à lista do projeto e salva no disco.
+                FileManager.addScreenToProjectAndSave(updatedScreen); // <<< NOVO MÉTODO NO FileManager
+
+                toggleRefreshScreenTabs();
+            });
+
+            this.home.screensTabs.getChildren().add(btnAdd);
+        });
+
+        toggleRefreshScreenTabs();
+    }
+
+    private CanvaComponentV2 loadScreenAndApplyToCanva(StateJson_v3 screen) {
+
+        IO.println("vai tentar atualizar a ui atual do canva: " + screen.name);
+
+        final var newCanva = CanvaMapper.fromScreenToCanva(screen, this);
+        this.currentScreenId.set(screen.screen_id);
+
+        // Chame o novo método da Home para atualizar a UI
+        this.home.updateCanvaInEditor(newCanva);
+
+        final var prefsData = FileManager.loadDataInPrefs();
+        //acessar o arqivo de projeto
+        final var absolutePath = prefsData.last_project_saved_path();
+        final var projectFile = new File(absolutePath);
+        uiJsonFile = projectFile;
+        uiPathProperty.set(uiJsonFile.getAbsolutePath());
+
+        return newCanva;
+    }
 
     public void removeNode(String nodeId) {
         final var currentCanva = home.currentCanva;
@@ -100,67 +210,16 @@ public class HomeViewModel {
         return false;
     }
 
+
     public record SelectedComponent(String type, Node node) {
     }
 
-    public SimpleObjectProperty<ComponentsContext.SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
-
-
-    //key é o type
-    public ObservableMap<String, ObservableList<ViewContractv2<?>>> dataMap = FXCollections
-            .observableHashMap();
-
-    public void init(Home home, Stage theirStage) {
-        this.home = home;
-        this.stage = theirStage;
-
-        fillMenuBar(home.menuBar);
-        loadScreenAndApplyToCanva();
-
-        this.refreshScreensTabs.addListener((_, _, _) -> {
-            final var updatedProjectData = FileManager.getProjectData();
-
-            this.home.screensTabs.getChildren().clear();
-            for (var screen : updatedProjectData.screens()) {
-                MenuButton menu = new MenuButton(screen.name);
-                MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
-                itemShowCode.setOnAction(ev -> {
-                    //AllWindows.showWindowForShowCode(componentsContext, canva);
-                });
-
-                menu.getItems().add(itemShowCode);
-
-                this.home.screensTabs.getChildren().add(menu);
-            }
-
-            this.home.screensTabs.getChildren().add(Components.ButtonPrimary("+"));
-        });
-
-        toggleRefreshScreenTabs();
-    }
+    public SimpleObjectProperty<SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
 
     public void toggleRefreshScreenTabs() {
         refreshScreensTabs.set(!refreshScreensTabs.get());
     }
 
-    private void loadScreenAndApplyToCanva() {
-        final var prefsData = FileManager.loadDataInPrefs();
-
-        final var projectData = FileManager.getProjectData();
-        final var screen = projectData.screens().getFirst();
-
-        home.currentCanva = CanvaMapper.fromScreenToCanva(screen, this);
-
-        //acessar o arqivo de projeto
-        final var absolutePath = prefsData.last_project_saved_path();
-        final var projectFile = new File(absolutePath);
-        uiJsonFile = projectFile;
-        uiPathProperty.set(uiJsonFile.getAbsolutePath());
-        //conteudo do arquivo é um json Project
-
-        //final var projectData = om.readValue(projectFile, Project.class);
-        //componentsContext.loadJsonState_(uiJsonFile, home.canva, stage);
-    }
 
     public void addItemOnDataMap(String type, ViewContractv2<?> nodeWrapper) {
         dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
@@ -188,7 +247,7 @@ public class HomeViewModel {
 
     public boolean currentNodeIsSelected(String nodeId) {
 
-        ComponentsContext.SelectedComponent selected = nodeSelected.get();
+        final var selected = nodeSelected.get();
 
         // 1. Verifica se algo está selecionado (selected != null)
         // 2. Verifica se o Node dentro do SelectedComponent não é nulo (selected.node()
@@ -205,7 +264,7 @@ public class HomeViewModel {
         } else {
             String type = getNodeType(node);
             if (type != null) {
-                ComponentsContext.SelectedComponent newSelection = new ComponentsContext.SelectedComponent(type, node);
+                SelectedComponent newSelection = new SelectedComponent(type, node);
                 nodeSelected.set(newSelection);
                 headerSelected.set(type); // Mantemos o headerSelected por compatibilidade com a UI
                 System.out.println("Selecionado: " + node + " (Type: " + type + ")");
@@ -236,7 +295,9 @@ public class HomeViewModel {
 
     TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
-    public void addComponent(String type, CanvaComponentV2 currentCanva) {
+    public void addComponent(String type) {
+
+        final var currentCanva = home.currentCanva;
 
         if (type == null || type.isBlank()) {
             return;
@@ -247,17 +308,17 @@ public class HomeViewModel {
 
         var typeNormalized = type.trim().toLowerCase();
 
-        /*
+
         if (type.equalsIgnoreCase(englishBase.button())) {
             node = new ButtonComponentv2(content, this);
         } else if (type.equalsIgnoreCase(englishBase.input())) {
-            // node = new InputComponent(content, this, currentCanva);
+            node = new InputComponentv2(content, this, currentCanva);
 
         } else if (type.equalsIgnoreCase(englishBase.text())) {
-            node = new TextComponent(content, this, mainCanvaComponent);
+            node = new TextComponentv2(content, this, currentCanva);
 
         } else if (type.equalsIgnoreCase(englishBase.image())) {
-            node = new ImageComponent(
+            node = new ImageComponentv2(
                     ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(),
                     this);
 
@@ -265,7 +326,7 @@ public class HomeViewModel {
             //  new ShowComponentScene(currentCanva, this).stage.show();
             return;
         } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
-            node = new ColumnComponent(this, mainCanvaComponent);
+            node = new ColumnComponent(this, currentCanva);
         }
 
         if (node != null) {
@@ -276,7 +337,7 @@ public class HomeViewModel {
             // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
             // ESTA É A LINHA CORRIGIDA
 
-            ComponentsContext.SelectedComponent newSelection = new ComponentsContext.SelectedComponent(typeNormalized, node.getCurrentNode());
+            final var newSelection = new SelectedComponent(typeNormalized, node.getCurrentNode());
             nodeSelected.set(newSelection);
 
             // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
@@ -288,7 +349,7 @@ public class HomeViewModel {
             // 5. Notifica a UI lateral para atualizar a lista
             refreshSubItems();
         }
-         */
+
     }
 
     public void refreshSubItems() {
@@ -300,9 +361,13 @@ public class HomeViewModel {
                 .add(nodeWrapper);
     }
 
-    public void handleSave(Home home, Stage stage) {
-        //updateUiJsonFilePathOnAppData(uiJsonFile);
-        FileManager.updateProject(CanvaMapper.toStateJson(home.currentCanva, componentsContext));
+    public void handleSave() {
+        home.leftSide.removeError();
+        final var screen = CanvaMapper.toStateJson(home.currentCanva, this);
+
+        FileManager.updateScreen(screen);
+
+        // FileManager.updateProject(CanvaMapper.toStateJson( home.currentCanva));
         //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
     }
 
@@ -324,13 +389,12 @@ public class HomeViewModel {
         MenuItem itemSalvar = new MenuItem(translation.common().save());
         MenuItem itemSaveAs = new MenuItem(translation.common().saveAs());
         MenuItem itemLoad = new MenuItem(translation.common().load());
-        MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
         MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
 
-        menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemShowCode, itemContribute);
+        menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemContribute);
 
         //itemNovo.setOnAction(_ -> handleNew(home, stage));
-        itemSalvar.setOnAction(_ -> handleSave(home, stage));
+        itemSalvar.setOnAction(_ -> handleSave());
         itemSaveAs.setOnAction(_ -> {
 
             try {
@@ -390,13 +454,6 @@ public class HomeViewModel {
     }
 
 
-    public void handleNew(Home home, Stage stage) {
-        home.currentCanva.getChildren().clear();
-        componentsContext.reset();
-        uiPathProperty.set("");
-    }
-
-
     @Deprecated
     public record PrefsData(String last_project_saved_path, String language) {
     }
@@ -407,78 +464,11 @@ public class HomeViewModel {
 
     private File uiJsonFile;
 
-    public void handleClickLoad(Home home, Stage stage) {
-        var fc = new FileChooser();
-
-        fc.setTitle("open selected project");
-        fc.getExtensionFilters().add(
-                new ExtensionFilter("ui extension", "*.json"));
-
-        var uiFile = fc.showOpenDialog(stage);
-        if (uiFile != null) {
-            uiJsonFile = uiFile;
-            // componentsContext.loadJsonState(uiFile, home.canva, stage);
-            uiPathProperty.set(uiFile.getAbsolutePath());
-        }
-    }
-
-
-    private File loadUiFileFromAppData() {
-        String appData = loadPrefs();
-
-        var appFolder = new File(appData, Commons.AppNameAtAppData);
-        if (!appFolder.exists()) {
-            appFolder.mkdirs();
-        }
-
-        var prefsJsonFile = new File(appFolder, "prefs.json");
-
-        if (!prefsJsonFile.exists()) {
-            // cria arquivo padrão na primeira execução
-            var defaultPrefs = new PrefsData("", TranslationContext.instance().currentLanguage());
-            Commons.WriteJsonInDisc(prefsJsonFile, defaultPrefs);
-            return null; // ainda não há projeto salvo
-        }
-
-        try (var stream = new FileInputStream(prefsJsonFile)) {
-            var om = new ObjectMapper();
-            final var path = om.readValue(stream, PrefsData.class).last_project_saved_path;
-            return path == null || path.isBlank() ? null : new File(path);
-        } catch (Exception e) {
-            throw new RuntimeException("Não foi possível carregar prefs.json", e);
-        }
-    }
-
-
     public void handleSaveAs_(Home home, Stage stage) {
         home.leftSide.removeError();
 
         //...
     }
-
-
-    private void updateUiJsonFilePathOnAppData(File file) {
-
-        String appData = loadPrefs();
-
-        var appFolder = new File(appData, Commons.AppNameAtAppData);
-        if (!appFolder.exists()) {
-            appFolder.mkdirs();
-        }
-
-        var fileInCurrentDirectory = new File(appFolder, "prefs.json");
-
-        var pref = new PrefsData(file.getAbsolutePath(), TranslationContext.instance().currentLanguage());
-        Commons.WriteJsonInDisc(fileInCurrentDirectory, pref);
-    }
-
-//    private String loadPrefs() {
-//        String appData = System.getenv("LOCALAPPDATA"); // C:\Users\<user>\AppData\Local
-//        if (appData == null) {
-//            appData = System.getProperty("user.home") + "\\AppData\\Local";
-//        }
-//        return appData;
-//    }
 
 
     public void handleBecomeContributor() {
@@ -518,6 +508,37 @@ public class HomeViewModel {
                     it.delete();
                 });
         IO.println("removeu do datamap");
+    }
+
+    public ViewContractv2<?> findNodeById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        // Itera sobre todas as listas de ViewContract no dataMap (os valores do mapa)
+        for (var viewList : dataMap.values()) {
+
+            // Itera sobre cada ViewContract dentro da lista atual
+            for (ViewContractv2<?> contract : viewList) {
+
+                // Verifica se o ID do ViewContract (que representa o Node) é igual ao ID procurado
+                // A verificação de null/empty deve ser feita dentro do contrato ou ao chamar getId()
+                if (id.equals(contract.getData().identification())) {
+                    return contract; // Encontrado! Retorna o contrato.
+                }
+            }
+        }
+
+        // Se o loop terminar e nada for encontrado
+        return null;
+    }
+
+    public static Node SearchNodeByIdInMainCanva(String nodeId, ObservableList<Node> canvaChildren) {
+        // lookin for custom component in main canva
+        return canvaChildren.stream()
+                .filter(n -> nodeId.equals(n.getId()))
+                .findFirst()
+                .orElse(null);
     }
 
 }

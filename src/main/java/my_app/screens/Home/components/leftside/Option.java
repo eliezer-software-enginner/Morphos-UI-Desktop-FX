@@ -8,10 +8,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import my_app.contexts.ComponentsContext;
 import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import toolkit.Component;
 
@@ -106,7 +104,7 @@ public class Option extends VBox {
             updateSubItemStyle(subItemBox, itemId);
         });
 
-        subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId, currentCanva));
+        subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId));
 
         subItemBox.setOnMouseEntered(_ -> {
             if (!viewModel.currentNodeIsSelected(itemId)) {
@@ -133,25 +131,29 @@ public class Option extends VBox {
         }
     }
 
-    void onClickOnSubItem(String itemIdentification,
-                          CanvaComponentV2 mainCanvaComponent) {
+    void onClickOnSubItem(String itemIdentification) {
 
-        var canvaChildren = mainCanvaComponent.getChildren();
+        var canvaChildren = this.currentCanva.getChildren();
 
         var op = viewModel.SearchNodeById(itemIdentification);
 
         op.ifPresent(_ -> {
-            var target = ComponentsContext.SearchNodeByIdInMainCanva(itemIdentification, canvaChildren);
+            var target = HomeViewModel.SearchNodeByIdInMainCanva(itemIdentification, canvaChildren);
             // 2. finded in main canva so, selected
             if (target != null) {
                 viewModel.selectNode(target);
-                CanvaComponent.Shake(target);
+                CanvaComponentV2.Shake(target);
             } else {
                 // if not, just add in canva
-                mainCanvaComponent.addElementDragable(op.get().getCurrentNode(), false);
+                this.currentCanva.addElementDragable(op.get().getCurrentNode(), false);
             }
         });
 
     }
 
+    // NOVO MÉTODO: Chamado por LeftSide para atualizar a referência
+    public void updateCanva(CanvaComponentV2 newCanva) {
+        this.currentCanva = newCanva; // 1. Atualiza a referência em Option
+        this.header.updateCanva(newCanva); // 2. Chama a atualização no OptionHeader
+    }
 }

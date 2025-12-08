@@ -14,10 +14,10 @@ import javafx.util.converter.NumberStringConverter;
 import my_app.FileManager;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.IconsScene.IconsScene;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -169,7 +169,7 @@ public class Components {
         HBox root = ItemRow(new HBox(tf, btn), name);
 
         if (fieldCss.equals("screen-name")) {
-            if (node instanceof CanvaComponent component) {
+            if (node instanceof CanvaComponentV2 component) {
                 tf.setText(component.name);
             }
         }
@@ -178,7 +178,7 @@ public class Components {
             if (!newVal.isBlank()) {
                 try {
                     if (fieldCss.equals("screen-name")) {
-                        if (node instanceof CanvaComponent component) {
+                        if (node instanceof CanvaComponentV2 component) {
                             component.name = newVal.trim();
                         }
                     }
@@ -204,7 +204,7 @@ public class Components {
                 tf.setText(String.valueOf(component.getWrappingWidth()));
             }
         } else if (fieldCss.equals("screen-name")) {
-            if (node instanceof CanvaComponent component) {
+            if (node instanceof CanvaComponentV2 component) {
                 tf.setText(component.name);
             }
         } else {
@@ -225,7 +225,7 @@ public class Components {
                             component.setWrappingWidth(Double.parseDouble(newVal.trim()));
                         }
                     } else if (fieldCss.equals("screen-name")) {
-                        if (node instanceof CanvaComponent component) {
+                        if (node instanceof CanvaComponentV2 component) {
                             //validate if is number
                             component.name = newVal.trim();
                             //FileManager.updateScreenNameInProject(component.screenFatherId, newVal.trim());

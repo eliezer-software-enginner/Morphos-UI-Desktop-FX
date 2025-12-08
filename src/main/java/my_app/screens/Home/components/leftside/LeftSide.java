@@ -54,8 +54,13 @@ public class LeftSide extends VBox {
     @Component
     VBox errorContainer = new VBox();
 
+    @Component // Este campo precisa ser atualizado
+    CanvaComponentV2 currentCanva;
+
+
     public LeftSide(CanvaComponentV2 currentCanva, HomeViewModel viewModel) {
 
+        this.currentCanva = currentCanva;
         config();
         styles();
 
@@ -67,7 +72,7 @@ public class LeftSide extends VBox {
 
         getChildren().add(spacer);
 
-        optionsField.forEach(field -> options.add(new Option(field, currentCanva, viewModel)));
+        optionsField.forEach(field -> options.add(new Option(field, this.currentCanva, viewModel)));
 
         getChildren().addAll(options);
         getChildren().add(errorContainer);
@@ -109,6 +114,18 @@ public class LeftSide extends VBox {
 
     public void removeError() {
         errorContainer.getChildren().clear();
+    }
+
+    // Certifique-se de que essa anotação está na classe Home
+    public void updateCanva(CanvaComponentV2 newCanva) {
+        // 1. Atualize a referência para o canva dentro de LeftSide
+        // (Não é estritamente necessário, mas boa prática se LeftSide for usá-lo)
+        // Se você não o armazena como campo, apenas itere sobre os Options.
+
+        // 2. Itere sobre as opções e atualize o canva em cada uma delas.
+        for (Option option : options) {
+            option.updateCanva(newCanva); // Chama o novo método em Option
+        }
     }
 
 }

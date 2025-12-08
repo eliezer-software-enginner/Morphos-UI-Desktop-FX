@@ -34,12 +34,17 @@ public class OptionHeader extends HBox {
     MaterialTheme theme = MaterialTheme.getInstance();
     ThemeManager themeManager = ThemeManager.Instance();
 
+    // Adicione um campo para armazenar a referência atualizada do Canva
+    private CanvaComponentV2 currentCanva;
+
     public OptionHeader(
             LeftSide.Field field,
             CanvaComponentV2 currentCanva, BooleanProperty expanded,
             HomeViewModel viewModel) {
 
         this.viewModel = viewModel;
+        // Armazena a referência inicial
+        this.currentCanva = currentCanva;
 
         label = Typography.caption(field.name());
 
@@ -53,7 +58,7 @@ public class OptionHeader extends HBox {
         String type = field.nameEngligh().toLowerCase();
 
         btnAdd.setOnAction(_ -> {
-            viewModel.addComponent(type, currentCanva);
+            viewModel.addComponent(type);
             viewModel.headerSelected.set(type);
             expanded.set(true);
         });
@@ -105,7 +110,7 @@ public class OptionHeader extends HBox {
 
         // Lógica de clique do botão Add Component
         btnAdd.setOnAction(_ -> {
-            viewModel.addComponent(type, currentCanva);
+            viewModel.addComponent(type);
             // REMOVEMOS: ComponentsContext.headerSelected.set(type); // Não é mais
             // necessário se o AddComponent chamar SelectNode
             expanded.set(true);
@@ -188,5 +193,10 @@ public class OptionHeader extends HBox {
         btnAdd.setStyle(styleUpdated);
 
         //label.setStyle("-fx-text-fill: #F8FAFC;-fx-font-size:15px;");
+    }
+
+
+    public void updateCanva(CanvaComponentV2 newCanva) {
+        this.currentCanva = newCanva;
     }
 }

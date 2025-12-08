@@ -22,6 +22,9 @@ public class Home extends BorderPane {
     public LeftSide leftSide;
 
     @Component
+    public ScrollPane editor = new ScrollPane();
+
+    @Component
     public VBox canvaHolder = new VBox(5);
     @Component
     public HBox screensTabs = new HBox(5);
@@ -39,15 +42,10 @@ public class Home extends BorderPane {
 
         viewModel.init(this, theirStage);
 
-        //this.canva = new CanvaComponent(componentsContext, this.viewModel);
-        this.leftSide = new LeftSide(currentCanva, this.viewModel);
-
         setTop(menuBar);
         setLeft(this.leftSide);
 
         //center
-        ScrollPane editor = new ScrollPane();
-
         editor.setContent(currentCanva);
         editor.setFitToWidth(false);
         editor.setFitToHeight(false);
@@ -97,5 +95,18 @@ public class Home extends BorderPane {
         getStyleClass().add("surface-color");
 
 
+    }
+
+    //chamado no init()
+    public void updateCanvaInEditor(CanvaComponentV2 newCanva) {
+        this.currentCanva = newCanva; // Atualiza a referência
+        if (this.leftSide == null) {
+            this.leftSide = new LeftSide(newCanva, this.viewModel);
+            this.leftSide.updateCanva(newCanva);
+        } else {
+            this.leftSide.updateCanva(newCanva); // Talvez o LeftSide precise ser atualizado também
+        }
+
+        this.editor.setContent(newCanva); // <<< ESSA É A LINHA QUE FALTAVA
     }
 }

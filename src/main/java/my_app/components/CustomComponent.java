@@ -7,7 +7,6 @@ import javafx.scene.layout.VBox;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
