@@ -1,29 +1,71 @@
 package my_app.screens.ScreenCreateProject;
 
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.FileManager;
 import my_app.scenes.AppScenes;
 
+import java.util.List;
+
 public class ScreenCreateProjectViewModel {
 
-    // Propriedades observáveis para que a View reaja ao estado da ViewModel.
-    public StringProperty inputTextProperty = new SimpleStringProperty("projeto-teste");
-    public StringProperty errorMessageProperty = new SimpleStringProperty(null); // Para exibir erros na UI
-    public StringProperty showToastProperty = new SimpleStringProperty(null);    // Para notificar a View a exibir um Toast
+    // --- Propriedades de Estado e Reatividade ---
+    public StringProperty inputTextProperty = new SimpleStringProperty("projeto-teste-v2");
+    public StringProperty errorMessageProperty = new SimpleStringProperty(null);
+    public StringProperty showToastProperty = new SimpleStringProperty(null);
 
-    private final Stage stage; // Mantido para a lógica de navegação (mudança de cena)
+    // NOVO: Lista de projetos recentes para a UI
+    public final ObservableList<String> recentProjects = FXCollections.observableArrayList();
+    public final SimpleListProperty<String> recentProjectsProperty = new SimpleListProperty<>(recentProjects);
+
+    private final Stage stage;
 
     public ScreenCreateProjectViewModel(Stage primaryStage) {
         this.stage = primaryStage;
+        loadRecentProjects();
     }
 
-    // 1. Validação (Lógica de Negócios)
-    private boolean validateInput(String text) {
-        errorMessageProperty.set(null); // Limpa erros anteriores
+    // --- Comandos e Lógica de Negócios ---
 
+    private void loadRecentProjects() {
+        try {
+            final var prefsData = FileManager.loadDataInPrefsv2();
+
+            // Adiciona a lista de caminhos. Filtra nulls para segurança.
+            final var paths = prefsData.recent_projects_paths() != null
+                    ? prefsData.recent_projects_paths()
+                    : List.<String>of();
+
+            recentProjects.setAll(paths);
+
+        } catch (RuntimeException e) {
+            // Ignoramos o erro de carregamento (por exemplo, arquivo prefs.json não existe ainda)
+            System.err.println("Aviso: Não foi possível carregar projetos recentes: " + e.getMessage());
+            recentProjects.clear();
+        }
+    }
+
+    // NOVO: Comando para abrir um projeto existente (clique na lista)
+    public void handleOpenExistingProject(String path) {
+        try {
+            // A lógica do FileManager deve ser atualizada para registrar o projeto como ativo
+            FileManager.setLastProject(path);
+
+            // Navegação
+            stage.setScene(AppScenes.HomeScene(stage));
+
+        } catch (Exception e) {
+            errorMessageProperty.set("Erro ao abrir projeto: " + e.getMessage());
+        }
+    }
+
+    private boolean validateInput(String text) {
+        errorMessageProperty.set(null);
         if (text.isEmpty()) {
             errorMessageProperty.set("O nome do projeto está vazio!");
             return false;
@@ -35,19 +77,16 @@ public class ScreenCreateProjectViewModel {
         return true;
     }
 
-    // 2. Comando (Chamado pela View)
     public void handleClickCreateProject() {
         String text = inputTextProperty.get().trim();
 
         if (!validateInput(text)) {
-            return; // Validação falhou, o errorMessageProperty já foi setado
+            return;
         }
 
-        // Limpar possíveis erros de validação antes da I/O
         errorMessageProperty.set(null);
 
         var fc = new FileChooser();
-
         fc.setTitle("save project as");
         fc.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("ui.json", "*.json"));
@@ -56,17 +95,13 @@ public class ScreenCreateProjectViewModel {
         try {
             var file = fc.showSaveDialog(stage);
             if (file != null) {
-                // 3. Interação com o Model/Serviços
-                FileManager.saveProject(text, file);
+                // A lógica do FileManager deve ser atualizada para adicionar este novo caminho à lista de recentes
+                FileManager.saveProjectAndAddToRecents(text, file);
 
-                // 4. Notificação da View e Navegação
-                showToastProperty.set("Project was created!"); // A View vai reagir a isso
-
-                // Navegação (A ViewModel decide para onde ir, mas não sabe como a cena é construída)
+                showToastProperty.set("Project was created!");
                 stage.setScene(AppScenes.HomeScene(stage));
             }
         } catch (Exception e) {
-            // Se houver exceção na I/O, notificar a View
             errorMessageProperty.set("Erro ao salvar projeto: " + e.getMessage());
         }
     }

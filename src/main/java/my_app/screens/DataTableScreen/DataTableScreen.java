@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import my_app.components.Components;
-import my_app.contexts.ComponentsContext;
 import my_app.themes.Typography;
 import my_app.windows.AllWindows;
 import toolkit.Component;
@@ -23,7 +22,7 @@ public class DataTableScreen extends VBox {
 
     DataTableViewModel viewModel = new DataTableViewModel();
 
-    public DataTableScreen(ComponentsContext mainComponentsContext) {
+    public DataTableScreen() {
         setSpacing(10);
         setPadding(new Insets(20));
 

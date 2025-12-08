@@ -143,6 +143,7 @@ public class FileManager {
         }
     }
 
+
     private static void saveDataInPrefs(String absolutePathOfCurrentProject) {
         var prefsFile = getPrefsFile();
 
@@ -152,6 +153,20 @@ public class FileManager {
             IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public static PrefsDatav2 loadDataInPrefsv2() {
+        var prefsFile = getPrefsFile();
+
+        var om = new ObjectMapper();
+
+        try {
+            return om.readValue(prefsFile.toFile(), PrefsDatav2.class);
+            //final var path = prefsData.last_project_saved_path();
+            //return path == null || path.isBlank() ? null : new File(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Não foi possível carregar prefs.json", e);
         }
     }
 
@@ -169,11 +184,12 @@ public class FileManager {
         }
     }
 
-    private static PrefsData getPrefsData() {
+
+    private static PrefsDatav2 getPrefsData() {
         try {
             final var prefsFile = getPrefsFile();
             final var om = new ObjectMapper();
-            return om.readValue(prefsFile.toFile(), PrefsData.class);
+            return om.readValue(prefsFile.toFile(), PrefsDatav2.class);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -279,5 +295,78 @@ public class FileManager {
             e.printStackTrace();
             return List.of();
         }
+    }
+
+    // FileManager.java (Adicione estes métodos)
+
+    /**
+     * Atualiza o PrefsData para definir o último projeto ativo e adiciona o caminho
+     * à lista de projetos recentes, se ainda não estiver lá.
+     */
+    // FileManager.java
+    private static void updateRecents(String absolutePathOfCurrentProject) {
+        var prefsFile = getPrefsFile();
+
+        // 1. Carrega os dados atuais
+        PrefsDatav2 currentPrefs;
+        try {
+            currentPrefs = loadDataInPrefsv2();
+        } catch (RuntimeException e) {
+            // Se a carga falhar (arquivo não existe), usa um padrão com a lista vazia
+            currentPrefs = new PrefsDatav2(
+                    null,
+                    TranslationContext.instance().currentLanguage(),
+                    List.of() // Garante uma lista vazia no padrão
+            );
+        }
+
+        // A CORREÇÃO ESTÁ AQUI: Verifica se a lista é nula antes de passá-la para o ArrayList.
+        List<String> pathsToCopy = currentPrefs.recent_projects_paths() != null
+                ? currentPrefs.recent_projects_paths()
+                : List.of();
+
+        var recents = new ArrayList<>(pathsToCopy); // Agora pathsToCopy nunca será nulo
+
+        // ... (restante da lógica de ordenação e limite) ...
+
+        // 2. Garante que o projeto atual esteja no topo (ou o adiciona)
+        recents.remove(absolutePathOfCurrentProject);
+        recents.addFirst(absolutePathOfCurrentProject);
+
+        // 3. Limita o tamanho da lista (ex: 10 projetos)
+        if (recents.size() > 10) {
+            recents.removeLast();
+        }
+
+        // 4. Cria o novo PrefsData e salva
+        var newPrefs = new PrefsDatav2(absolutePathOfCurrentProject, currentPrefs.language(), recents);
+
+        try {
+            writeDataAsJsonInFileInDisc(newPrefs, prefsFile.toFile());
+            IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // 5. Novo método para salvar e atualizar a lista de recentes (substitui o antigo saveProject)
+    public static void saveProjectAndAddToRecents(String name, File file) {
+        try {
+            var project = new Projectv2(name, new TableData(List.of()), List.of());
+            writeDataAsJsonInFileInDisc(project, file);
+            IO.println("project was saved");
+
+            // NOVO: Atualiza a lista de recentes
+            updateRecents(file.getAbsolutePath());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    // 6. Novo método para apenas definir um projeto como ativo (para cliques na lista de recentes)
+    public static void setLastProject(String absolutePathOfCurrentProject) {
+        updateRecents(absolutePathOfCurrentProject);
+        IO.println("Project set as active: " + absolutePathOfCurrentProject);
     }
 }

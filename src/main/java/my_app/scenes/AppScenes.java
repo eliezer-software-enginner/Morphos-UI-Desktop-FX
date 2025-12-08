@@ -21,7 +21,7 @@ public class AppScenes {
     final static String componentsCssFile = Path.of("/components.css").toFile().getAbsolutePath();
     final static String tabCssFile = Path.of("/tab.css").toFile().getAbsolutePath();
 
-    
+
     public static void SwapScene(Stage currentWindow, Scene sceneToGoTo) {
         currentWindow.setScene(sceneToGoTo);
     }
@@ -72,8 +72,8 @@ public class AppScenes {
         return scene;
     }
 
-    public static Scene DataTableScene(ComponentsContext mainComponentsContext, Stage theirStage) {
-        var scene = new Scene(new DataTableScreen(mainComponentsContext));
+    public static Scene DataTableScene(Stage theirStage) {
+        var scene = new Scene(new DataTableScreen());
 
         var screenSize = Commons.ScreensSize._1200x650;
         theirStage.setWidth(screenSize.width);

@@ -40,7 +40,6 @@ import java.util.Optional;
 
 public class HomeViewModel {
     TranslationContext.Translation translation = TranslationContext.instance().get();
-    ComponentsContext componentsContext;
     public StringProperty uiPathProperty = new SimpleStringProperty();
 
     private Home home;
@@ -64,8 +63,24 @@ public class HomeViewModel {
         fillMenuBar(home.menuBar);
 
         final var projectData = FileManager.getProjectData();
-        final var firstScreen = projectData.screens().getFirst();
-        loadScreenAndApplyToCanva(firstScreen);
+        try {
+            final var firstScreen = projectData.screens().getFirst();
+            loadScreenAndApplyToCanva(firstScreen);
+        } catch (Exception e) {
+            IO.println(e.getMessage());
+
+            final var screen = new StateJson_v3();
+            // 3. Atualiza a referência da UI
+            final var canvaGerado = loadScreenAndApplyToCanva(screen);
+
+            // 4. Salva a nova tela (com dados iniciais do canva) e o projeto:
+            // Serializa os dados padrão do Canva recém-criado de volta para o objeto screen.
+            final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
+
+            // Adiciona a tela (agora com dados básicos) à lista do projeto e salva no disco.
+            FileManager.addScreenToProjectAndSave(updatedScreen); // <<< NOVO MÉTODO NO FileManager
+        }
+
 
         // Criando as tabs que ficam sobre o Canva central
         this.refreshScreensTabs.addListener((_, _, _) -> {
@@ -150,7 +165,7 @@ public class HomeViewModel {
         // todo funciona com canva
         this.nodeSelected.set(newSelection);
 
-        final var prefsData = FileManager.loadDataInPrefs();
+        final var prefsData = FileManager.loadDataInPrefsv2();
         //acessar o arqivo de projeto
         final var absolutePath = prefsData.last_project_saved_path();
         final var projectFile = new File(absolutePath);
@@ -484,7 +499,7 @@ public class HomeViewModel {
         menu.setGraphic(menuText);
 
         menuText.setOnMouseClicked(ev -> {
-            AllWindows.showWindowForDataTable(componentsContext);
+            AllWindows.showWindowForDataTable();
         });
         return menu;
     }
