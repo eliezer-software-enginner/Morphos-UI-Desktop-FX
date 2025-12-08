@@ -450,7 +450,7 @@ public class HomeViewModel {
         });
 
         itemSair.setOnAction(_ -> {
-            AppScenes.SwapToScene(AppScenes.CreateProjectScene(App.stage));
+            AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(App.stage));
         });
 
         // itemLoad.setOnAction(_ -> handleClickLoad(home, stage));

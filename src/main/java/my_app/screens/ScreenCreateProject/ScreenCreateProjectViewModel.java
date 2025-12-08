@@ -2,36 +2,49 @@ package my_app.screens.ScreenCreateProject;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.FileManager;
-import my_app.contexts.ComponentsContext;
 import my_app.scenes.AppScenes;
-import my_app.themes.Typography;
-import toolkit.Toast;
 
 public class ScreenCreateProjectViewModel {
-    private final Toast toast;
-    public StringProperty inputTextProperty = new SimpleStringProperty("projeto-teste");
-    Stage stage;
 
-    public ScreenCreateProjectViewModel(Stage primaryStage, Toast toast) {
+    // Propriedades observáveis para que a View reaja ao estado da ViewModel.
+    public StringProperty inputTextProperty = new SimpleStringProperty("projeto-teste");
+    public StringProperty errorMessageProperty = new SimpleStringProperty(null); // Para exibir erros na UI
+    public StringProperty showToastProperty = new SimpleStringProperty(null);    // Para notificar a View a exibir um Toast
+
+    private final Stage stage; // Mantido para a lógica de navegação (mudança de cena)
+
+    public ScreenCreateProjectViewModel(Stage primaryStage) {
         this.stage = primaryStage;
-        this.toast = toast;
     }
 
-    public void handleClickCreateProject(VBox errorContainer) {
-        String text = inputTextProperty.get().trim();
+    // 1. Validação (Lógica de Negócios)
+    private boolean validateInput(String text) {
+        errorMessageProperty.set(null); // Limpa erros anteriores
 
         if (text.isEmpty()) {
-            errorContainer.getChildren().setAll(Typography.error("O nome do projeto está vazio!"));
-            return;
+            errorMessageProperty.set("O nome do projeto está vazio!");
+            return false;
         }
         if (text.length() < 5) {
-            errorContainer.getChildren().setAll(Typography.error("O nome do projeto está muito curto!"));
-            return;
+            errorMessageProperty.set("O nome do projeto está muito curto!");
+            return false;
         }
+        return true;
+    }
+
+    // 2. Comando (Chamado pela View)
+    public void handleClickCreateProject() {
+        String text = inputTextProperty.get().trim();
+
+        if (!validateInput(text)) {
+            return; // Validação falhou, o errorMessageProperty já foi setado
+        }
+
+        // Limpar possíveis erros de validação antes da I/O
+        errorMessageProperty.set(null);
 
         var fc = new FileChooser();
 
@@ -43,14 +56,18 @@ public class ScreenCreateProjectViewModel {
         try {
             var file = fc.showSaveDialog(stage);
             if (file != null) {
+                // 3. Interação com o Model/Serviços
                 FileManager.saveProject(text, file);
-                errorContainer.getChildren().clear();
-                this.toast.show("Project was created!");
 
+                // 4. Notificação da View e Navegação
+                showToastProperty.set("Project was created!"); // A View vai reagir a isso
+
+                // Navegação (A ViewModel decide para onde ir, mas não sabe como a cena é construída)
                 stage.setScene(AppScenes.HomeScene(stage));
             }
         } catch (Exception e) {
-            errorContainer.getChildren().setAll(Typography.error(e.getMessage()));
+            // Se houver exceção na I/O, notificar a View
+            errorMessageProperty.set("Erro ao salvar projeto: " + e.getMessage());
         }
     }
 }

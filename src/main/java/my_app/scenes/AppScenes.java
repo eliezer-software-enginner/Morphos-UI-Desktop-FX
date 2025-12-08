@@ -2,7 +2,6 @@ package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import my_app.App;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.DataTableScreen.DataTableScreen;
@@ -22,8 +21,9 @@ public class AppScenes {
     final static String componentsCssFile = Path.of("/components.css").toFile().getAbsolutePath();
     final static String tabCssFile = Path.of("/tab.css").toFile().getAbsolutePath();
 
-    public static void SwapToScene(Scene scene) {
-        App.stage.setScene(scene);
+    
+    public static void SwapScene(Stage currentWindow, Scene sceneToGoTo) {
+        currentWindow.setScene(sceneToGoTo);
     }
 
     public static Scene SplashScene(ComponentsContext mainComponentsContext, Stage theirStage) {

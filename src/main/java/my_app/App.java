@@ -3,7 +3,6 @@ package my_app;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.AppScenes;
@@ -42,14 +41,13 @@ public class App extends Application {
         //Scene splashScene = new SplashScene(primaryStage);
         //this.stage.setScene(splashScene);
 
-        final var componentsContext = new ComponentsContext();
         //final var mainWindow = new MainWindow(componentsContext);
         //mainWindow.show();
 
         //final var mainScene = new MainScene();
         //primaryStage.setScene(AppScenes.SplashScene(componentsContext, primaryStage));
-        //primaryStage.setScene(AppScenes.CreateProjectScene(componentsContext, primaryStage));
-        primaryStage.setScene(AppScenes.HomeScene(primaryStage));
+        primaryStage.setScene(AppScenes.CreateProjectScene(primaryStage));
+        //primaryStage.setScene(AppScenes.HomeScene(primaryStage));
         //primaryStage.setScene(AppScenes.PrimitiveListFormScene());
 
 //        AllWindows.showWindowForDataTableForm_PrimitiveData(() -> {
