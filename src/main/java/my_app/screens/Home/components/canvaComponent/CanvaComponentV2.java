@@ -127,7 +127,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
         enableDrag(node, relX, relY);
 
         node.setOnMouseClicked(e -> {
-            componentsContext.selectNode(node);
+            this.viewModel.selectNode(node);
             Shake(node);
         });
 
