@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
@@ -26,19 +27,20 @@ public class InputComponentv2 extends TextField implements ViewContractv2<InputC
 
     @Component
     CanvaComponentV2 canvaFather;
+    private final HomeViewModel homeViewModel;
 
-    public InputComponentv2(String content, ComponentsContext componentsContext, CanvaComponentV2 canva) {
+    public InputComponentv2(String content, HomeViewModel homeViewModel, CanvaComponentV2 canva) {
         super(content);
+        this.homeViewModel = homeViewModel;
         config();
 
-        this.componentsContext = componentsContext;
         this.canvaFather = canva;
     }
 
-    public InputComponentv2(ComponentsContext componentsContext, CanvaComponentV2 canva) {
+    public InputComponentv2(HomeViewModel homeViewModel, CanvaComponentV2 canva) {
+        this.homeViewModel = homeViewModel;
         config();
 
-        this.componentsContext = componentsContext;
         this.canvaFather = canva;
     }
 
@@ -101,7 +103,7 @@ public class InputComponentv2 extends TextField implements ViewContractv2<InputC
                 Components.ColorPickerRow(translation.noFocusColor(), this, "-fx-text-box-border"),
                 //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, componentsContext));
+                new ButtonRemoverComponent(this, this.homeViewModel));
     }
 
     @Override

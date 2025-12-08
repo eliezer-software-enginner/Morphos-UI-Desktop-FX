@@ -13,12 +13,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import my_app.components.NodeWrapper;
-import my_app.contexts.ComponentsContext;
+import my_app.components.NodeWrapperv2;
 import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.data.ViewContract;
+import my_app.data.ViewContractv2;
+import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import toolkit.Component;
@@ -26,7 +26,7 @@ import toolkit.Component;
 import static my_app.components.shared.UiComponents.ButtonPrimary;
 import static my_app.components.shared.UiComponents.ButtonSecondary;
 
-public class RightSide extends VBox {
+public class RightSidev2 extends VBox {
     private TranslationContext.Translation translation = TranslationContext.instance().get();
     final double width = 350;
     // 1. ALTERADO: Tipo da propriedade é agora SelectedComponent
@@ -53,9 +53,9 @@ public class RightSide extends VBox {
 
     IntegerProperty optionSelected = new SimpleIntegerProperty(1);
 
-    public RightSide(ComponentsContext componentsContext, CanvaComponentV2 canva) {
+    public RightSidev2(CanvaComponentV2 canva, HomeViewModel viewModel) {
         // 1. ALTERADO: Atribui a propriedade com o tipo correto
-        ObjectProperty<SelectedComponent> selectedCompProp = componentsContext.nodeSelected;
+        ObjectProperty<SelectedComponent> selectedCompProp = viewModel.nodeSelected;
 
         this.selectedComponentProperty = selectedCompProp; // Renomeado para clareza
 
@@ -88,8 +88,8 @@ public class RightSide extends VBox {
             // Extrai o Node do SelectedComponent. Será null se a seleção for limpa.
             Node newNode = (newComp != null) ? newComp.node() : null;
 
-            if (newNode instanceof ViewContract renderable) {
-                NodeWrapper nw = new NodeWrapper(renderable);
+            if (newNode instanceof ViewContractv2 renderable) {
+                final var nw = new NodeWrapperv2(renderable);
                 nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
             } else {
                 // Se newNode for null (desseleção) ou não for ViewContract
@@ -112,8 +112,8 @@ public class RightSide extends VBox {
         else title.setText(translation.otherSettings());
 
 
-        if (currentNode instanceof ViewContract renderable) {
-            NodeWrapper nw = new NodeWrapper(renderable);
+        if (currentNode instanceof ViewContractv2 renderable) {
+            final var nw = new NodeWrapperv2(renderable);
             nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
         } else {
             // Garante que o container esteja limpo se nada estiver selecionado ao montar

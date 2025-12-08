@@ -4,8 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
@@ -19,7 +19,7 @@ public class HeightComponent extends HBox {
     public HeightComponent(Node node) {
         config();
 
-        if (node instanceof ImageComponent imgview) {
+        if (node instanceof ImageComponentv2 imgview) {
             tf.setText(String.valueOf(imgview.getFitHeight()));
         }
 
@@ -36,7 +36,7 @@ public class HeightComponent extends HBox {
             try {
                 double v = Double.parseDouble(newVal);
 
-                if (node instanceof ImageComponent imgview)
+                if (node instanceof ImageComponentv2 imgview)
                     imgview.setFitHeight(v);
                 if (node instanceof CanvaComponent c)
                     c.setPrefHeight(v);

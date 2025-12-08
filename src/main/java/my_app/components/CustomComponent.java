@@ -4,29 +4,31 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
+import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.components.imageComponent.ImageComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
 import java.util.ArrayList;
 
-public class CustomComponent extends Pane implements ViewContract<CustomComponentData> {
+public class CustomComponent extends Pane implements ViewContractv2<CustomComponentData> {
     TranslationContext.Translation translation = TranslationContext.instance().get();
     ComponentsContext componentsContext;
     public ComponentsContext mainComponentsContext;
     @Component
-    public CanvaComponent canva;
+    public CanvaComponentV2 canva;
 
     boolean isDeleted = false;
+    private final HomeViewModel viewModel;
 
-    public CustomComponent(ComponentsContext componentsContext, CanvaComponent canva) {
-        super();
-        this.componentsContext = componentsContext;
+    public CustomComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
+        this.viewModel = viewModel;
         this.canva = canva;
 
         this.setId(System.currentTimeMillis() + "");
@@ -73,19 +75,19 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
 
         for (Node node : getChildren()) {
 
-            if (node instanceof TextComponent component) {
+            if (node instanceof TextComponentv2 component) {
                 textComponentsData.add(component.getData());
             }
 
-            if (node instanceof ButtonComponent component) {
+            if (node instanceof ButtonComponentv2 component) {
                 btnComponentsData.add(component.getData());
             }
 
-            if (node instanceof ImageComponent component) {
+            if (node instanceof ImageComponentv2 component) {
                 imgComponentsData.add(component.getData());
             }
 
-            if (node instanceof InputComponent component) {
+            if (node instanceof InputComponentv2 component) {
                 inputComponentsData.add(component.getData());
             }
 
@@ -137,30 +139,32 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
 
-        for (ButtonComponentData data_ : data.button_components) {
-            var node = new ButtonComponent(data_.text(), componentsContext);
-            node.applyData(data_);
-            node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
-            getChildren().add(node);
-        }
+//        for (ButtonComponentData data_ : data.button_components) {
+//            var node = new ButtonComponentv2(data_.text(), componentsContext);
+//            node.applyData(data_);
+//         //   node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
+//            getChildren().add(node);
+//        }
 
-        for (TextComponentData data_ : data.text_components) {
-            var node = new TextComponent(data_.text(), componentsContext, canva);
-            node.applyData(data_);
-            node.setOnMouseClicked((e) -> {
-                // ESSENCIAL: Consome o evento para evitar que o pai (CustomComponent) o veja.
-                e.consume();
-                componentsContext.selectNodePartially(node);
-            });
-            getChildren().add(node);
-        }
+//        for (TextComponentData data_ : data.text_components) {
+//            var node = new TextComponentv2(data_.text(), componentsContext, canva);
+//            node.applyData(data_);
+//            node.setOnMouseClicked((e) -> {
+//                // ESSENCIAL: Consome o evento para evitar que o pai (CustomComponent) o veja.
+//                e.consume();
+//            //    componentsContext.selectNodePartially(node);
+//            });
+//            getChildren().add(node);
+//        }
+//
+//        for (ImageComponentData data_ : data.image_components) {
+//            var node = new ImageComponentv2(data_.url(), componentsContext);
+//            node.applyData(data_);
+//          //  node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
+//            getChildren().add(node);
+//        }
+//
 
-        for (ImageComponentData data_ : data.image_components) {
-            var node = new ImageComponent(data_.url(), componentsContext);
-            node.applyData(data_);
-            node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
-            getChildren().add(node);
-        }
 
         //this.name.set(data.name());
         isDeleted = data.isDeleted();
@@ -182,19 +186,19 @@ public class CustomComponent extends Pane implements ViewContract<CustomComponen
     }
 
     @Override
-    public void appearance(VBox father, CanvaComponent canva) {
+    public void appearance(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
-                Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
-                new ButtonRemoverComponent(this, componentsContext));
+                //  Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
+                new ButtonRemoverComponent(this, this.viewModel));
     }
 
     @Override
-    public void settings(VBox father, CanvaComponent canva) {
+    public void settings(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(Components.LayoutXYComponent(this));
     }
 
     @Override
-    public void otherSettings(VBox father, CanvaComponent canva) {
+    public void otherSettings(VBox father, CanvaComponentV2 canva) {
 
     }
 

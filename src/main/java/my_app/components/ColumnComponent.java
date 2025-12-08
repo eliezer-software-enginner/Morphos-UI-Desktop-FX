@@ -8,15 +8,15 @@ import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.FileManager;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.components.imageComponent.ImageComponent;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.ButtonRemoverComponent;
-import my_app.components.shared.ChildHandlerComponent;
 import my_app.components.shared.ItemsAmountPreviewComponent;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,14 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     public StringProperty name = new SimpleStringProperty();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
-    private final ComponentsContext componentsContext;
-    private final CanvaComponent canva;
+    private final HomeViewModel viewModel;
+    private final CanvaComponentV2 canva;
 
     boolean isDeleted = false;
 
     public String dataTableVariableName;
 
-    public ColumnComponent(ComponentsContext componentsContext, CanvaComponent canva) {
+    public ColumnComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
         setSpacing(5);
         setStyle("-fx-background-color:red;");
 
@@ -46,10 +46,10 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
         setId(String.valueOf(System.currentTimeMillis()));
 
-        this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
         this.canva = canva;
 
-        getChildren().add(new TextComponent("Im new here", componentsContext, canva));
+        getChildren().add(new TextComponentv2("Im new here", viewModel, canva));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     }
 
     private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
-    private final List<ViewContract<?>> localComponents = new ArrayList<>();
+    private final List<ViewContractv2<?>> localComponents = new ArrayList<>();
 
     // -------------------------------------------------------------------
     // NOVO MÉTODO: Lógica Centralizada para Recriar os Filhos
@@ -111,7 +111,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
         // 2. SE A QUANTIDADE FOR MAIOR QUE ZERO...
         String currentChildId = currentChildIdState.get();
-        ViewContract<?> existingNode = searchNode(currentChildId);
+        final var existingNode = searchNode(currentChildId);
 
         var copies = new ArrayList<Node>();
         boolean nodeOriginalRemoved = false;
@@ -119,7 +119,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
         if (valuesOfVariableName.size() >= amount) {
             for (int i = 0; i < amount; i++) {
                 ViewContract<ComponentData> newNodeWrapper =
-                        (ViewContract<ComponentData>) cloneExistingNode((ViewContract<ComponentData>) existingNode, i);
+                        (ViewContract<ComponentData>) cloneExistingNode((ViewContractv2<ComponentData>) existingNode, i);
 
 
                 // Cria uma NOVA cópia do nó a partir dos dados originais
@@ -129,7 +129,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
                 if (!nodeOriginalRemoved) {
                     localComponents.add(existingNode);
-                    componentsContext.removeComponentFromAllPlaces(existingNode, canva);
+                    this.viewModel.removeComponentFromAllPlaces(existingNode, canva);
                 }
 
                 // Aplicamos o ID da cópia
@@ -150,8 +150,8 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             return;
         }
 
-        ViewContract<?> existingNode = searchNode(emptyComponentId);
-        ViewContract<?> newNodeWrapper = cloneExistingNode((ViewContract<ComponentData>) existingNode, -1);
+        final var existingNode = searchNode(emptyComponentId);
+        final var newNodeWrapper = cloneExistingNode((ViewContractv2<ComponentData>) existingNode, -1);
 
         //aqui eu posso remover ele do header e do canva
         if (newNodeWrapper != null) {
@@ -163,17 +163,17 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             //adiciona em cache local e remove do contexto
             localComponents.add(existingNode);
 
-            componentsContext.removeComponentFromAllPlaces(existingNode, canva);
+            this.viewModel.removeComponentFromAllPlaces(existingNode, canva);
             getChildren().add(node);
         }
     }
 
-    private ViewContract<? extends ComponentData> cloneExistingNode(ViewContract<ComponentData> existingNode, int currentIndex) {
+    private ViewContractv2<? extends ComponentData> cloneExistingNode(ViewContractv2<ComponentData> existingNode, int currentIndex) {
         var originalData = existingNode.getData();
         var type = originalData.type();
 
         if (type.equalsIgnoreCase(englishBase.button())) {
-            var newNodeWrapper = new ButtonComponent(componentsContext, canva);
+            var newNodeWrapper = new ButtonComponentv2(this.viewModel, canva);
             newNodeWrapper.applyData((ButtonComponentData) originalData);
 
             if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
@@ -183,11 +183,11 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
 
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.image())) {
-            var newNodeWrapper = new ImageComponent(componentsContext, canva);
+            var newNodeWrapper = new ImageComponentv2(this.viewModel, canva);
             newNodeWrapper.applyData((ImageComponentData) originalData);
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.input())) {
-            var newNodeWrapper = new InputComponent(componentsContext, canva);
+            var newNodeWrapper = new InputComponentv2(this.viewModel, canva);
             newNodeWrapper.applyData((InputComponentData) originalData);
             if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
                 final var currentText = newNodeWrapper.getText();
@@ -195,7 +195,7 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             }
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.text())) {
-            var newNodeWrapper = new TextComponent(componentsContext, canva);
+            var newNodeWrapper = new TextComponentv2(this.viewModel, canva);
             newNodeWrapper.applyData((TextComponentData) originalData);
             if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
                 final var currentText = newNodeWrapper.getText();
@@ -203,16 +203,16 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
             }
             return newNodeWrapper;
         } else {
-            var newNodeWrapper = new CustomComponent(componentsContext, canva);
+            var newNodeWrapper = new CustomComponent(this.viewModel, canva);
             newNodeWrapper.applyData((CustomComponentData) originalData);
             return newNodeWrapper;
         }
     }
 
-    private ViewContract<?> searchNode(String emptyComponentId) {
+    private ViewContractv2<?> searchNode(String emptyComponentId) {
         // Busca o nó original pelo ID e faz a DEEP COPY
-        var op = componentsContext.SearchNodeById(emptyComponentId);
-        ViewContract<?> existingNode;
+        var op = this.viewModel.SearchNodeById(emptyComponentId);
+        ViewContractv2<?> existingNode;
 
         if (op.isPresent()) {
             existingNode = op.get();
@@ -227,11 +227,11 @@ public class ColumnComponent extends VBox implements ViewContract<ColumnComponen
     @Override
     public void appearance(VBox father, CanvaComponent canva) {
         father.getChildren().setAll(
-                new ChildHandlerComponent("Child component:", this, currentChildIdState, componentsContext),
+                //    new ChildHandlerComponent("Child component:", this, currentChildIdState, componentsContext),
                 new ItemsAmountPreviewComponent(this),
-                new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState, componentsContext),
+                //  new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState, componentsContext),
                 Components.LabelWithComboBox("Data list", this, "data-list"),
-                new ButtonRemoverComponent(this, componentsContext)
+                new ButtonRemoverComponent(this, this.viewModel)
         );
     }
 

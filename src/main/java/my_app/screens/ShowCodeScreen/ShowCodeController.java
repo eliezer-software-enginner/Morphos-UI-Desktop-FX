@@ -7,11 +7,11 @@ import javafx.scene.image.Image;
 import my_app.FileManager;
 import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.InputComponentv2;
+import my_app.components.TextComponentv2;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.ViewContract;
 
@@ -75,7 +75,7 @@ public class ShowCodeController {
                         .append("class Component%d extends Pane {\n\t".formatted(customComponentCount));
 
                 for (var child : customComponent.getChildren()) {
-                    if (child instanceof TextComponent component) {
+                    if (child instanceof TextComponentv2 component) {
 
                         textCount++;
 
@@ -120,7 +120,7 @@ public class ShowCodeController {
                         componentsInsideMethodStyles.add(setStyle);
                     }
 
-                    if (node instanceof ImageComponent component) {
+                    if (node instanceof ImageComponentv2 component) {
 
                         imgCount++;
 
@@ -160,7 +160,7 @@ public class ShowCodeController {
                         componentsInsideMethodStyles.add(setStyle);
                     }
 
-                    if (node instanceof InputComponent component) {
+                    if (node instanceof InputComponentv2 component) {
 
                         inputCount++;
 
@@ -275,7 +275,7 @@ public class ShowCodeController {
         for (int i = 0; i < nodesInCanva.size(); i++) {
             Node node = nodesInCanva.get(i);
 
-            if (node instanceof TextComponent component) {
+            if (node instanceof TextComponentv2 component) {
                 final String variableName = component.name.get();
                 if (variableName == null) textCount++;
 
@@ -297,7 +297,7 @@ public class ShowCodeController {
                 componentsInsideMethodStyles.add(setStyle);
             }
 
-            if (node instanceof ButtonComponent component) {
+            if (node instanceof ButtonComponentv2 component) {
                 String variableName = component.name.get();
                 if (variableName != null) btnCount++;
 
@@ -319,7 +319,7 @@ public class ShowCodeController {
                 componentsInsideMethodStyles.add(setStyle);
             }
 
-            if (node instanceof ImageComponent component) {
+            if (node instanceof ImageComponentv2 component) {
                 String variableName = component.name.get();
                 if (variableName != null) imgCount++;
 
@@ -359,7 +359,7 @@ public class ShowCodeController {
                 componentsInsideMethodStyles.add(setStyle);
             }
 
-            if (node instanceof InputComponent component) {
+            if (node instanceof InputComponentv2 component) {
                 String variableName = component.name.get();
                 if (variableName != null) inputCount++;
 
@@ -398,7 +398,7 @@ public class ShowCodeController {
                 String compWhenEmpty_Creation = "";
                 String finalNameForComp_WhenEmpty = "";
 
-                if (nodeWrapper_whenSelfIsEmpty instanceof TextComponent compWhenEmpty) {
+                if (nodeWrapper_whenSelfIsEmpty instanceof TextComponentv2 compWhenEmpty) {
                     final String textText = compWhenEmpty.getText();
                     finalNameForComp_WhenEmpty = "textEmptyColumn" + emptyComponentCount_columnItem_Count;
                     compWhenEmpty_Creation = "Text %s = new Text(\"%s\");".formatted(finalNameForComp_WhenEmpty, textText);
@@ -431,7 +431,7 @@ public class ShowCodeController {
                 if (dataTableListVariableName != null)
                     methodBuilder.append("\n\t\tfor(var item : %s){".formatted(dataTableListVariableName));
 
-                if (nodeWrapper_whenSelfHasData instanceof TextComponent comp) {
+                if (nodeWrapper_whenSelfHasData instanceof TextComponentv2 comp) {
                     //todo pegar dado primitivo ou complexo em cada iteracao
                     final String text = comp.getText();
                     String comp_Creation = "\n\t\t\tfinal var component = new Text(\"%s\".replace(\"${boom}\", item));".formatted(text);

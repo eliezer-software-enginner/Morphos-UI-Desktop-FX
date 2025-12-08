@@ -12,9 +12,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
 import my_app.FileManager;
-import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.IconsScene.IconsScene;
@@ -81,7 +81,7 @@ public class Components {
     private static final TranslationContext.Translation translation = TranslationContext.instance().get();
 
     @Component
-    public static Node ButtonChooseGraphicContent(ButtonComponent nodeTarget) {
+    public static Node ButtonChooseGraphicContent(ButtonComponentv2 nodeTarget) {
         var btn = ButtonPrimary(translation.chooseIcon());
         HBox root = new HBox(5, btn);
 
@@ -200,7 +200,7 @@ public class Components {
         HBox root = ItemRow(tf, name);
 
         if (fieldCss.equals("text-wrapping-width")) {
-            if (node instanceof TextComponent component) {
+            if (node instanceof TextComponentv2 component) {
                 tf.setText(String.valueOf(component.getWrappingWidth()));
             }
         } else if (fieldCss.equals("screen-name")) {
@@ -220,7 +220,7 @@ public class Components {
 //                }
                 try {
                     if (fieldCss.equals("text-wrapping-width")) {
-                        if (node instanceof TextComponent component) {
+                        if (node instanceof TextComponentv2 component) {
                             //validate if is number
                             component.setWrappingWidth(Double.parseDouble(newVal.trim()));
                         }
@@ -265,7 +265,7 @@ public class Components {
 
         switch (cssField) {
             case "clip-image-as-circle" -> {
-                if (selectedNode instanceof ImageComponent component) {
+                if (selectedNode instanceof ImageComponentv2 component) {
                     comboBox.setItems(FXCollections.observableArrayList("Circle"));
 
                     //se tem type de clip definido
@@ -285,7 +285,7 @@ public class Components {
                 }
             }
             case "positioning-icon" -> {
-                if (selectedNode instanceof ButtonComponent component) {
+                if (selectedNode instanceof ButtonComponentv2 component) {
                     comboBox.setItems(FXCollections.observableArrayList("Left", "Right"));
 
                     //se tem type de clip definido
@@ -339,7 +339,7 @@ public class Components {
 
         //quando button foi montado vemos se já tem icone
         if (cssField.equals("icon-color")) {
-            var btn = (ButtonComponent) selectedNode;
+            var btn = (ButtonComponentv2) selectedNode;
             var loadedIcon = (FontIcon) btn.getGraphic();
             if (loadedIcon != null) {
                 colorPicker.setValue((Color) loadedIcon.getIconColor());
@@ -377,11 +377,11 @@ public class Components {
         } else {
             String color = "transparent";
 
-            if (selectedNode instanceof InputComponent node) {
+            if (selectedNode instanceof InputComponentv2 node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-            } else if (selectedNode instanceof ButtonComponent node) {
+            } else if (selectedNode instanceof ButtonComponentv2 node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-            } else if (selectedNode instanceof TextComponent node) {
+            } else if (selectedNode instanceof TextComponentv2 node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
             }
 

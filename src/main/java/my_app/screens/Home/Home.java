@@ -5,10 +5,10 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
-import my_app.screens.Home.components.RightSide;
+import my_app.screens.Home.components.RightSidev2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.screens.Home.components.leftside.LeftSide;
 import toolkit.Component;
 
@@ -83,7 +83,7 @@ public class Home extends BorderPane {
         canvaHolder.getChildren().addAll(screensTabs, editor);
         setCenter(canvaHolder);
 
-        var rightSide = new RightSide(componentsContext, currentCanva);
+        var rightSide = new RightSidev2(currentCanva, this.viewModel);
         StackPane rightWrapper = new StackPane(rightSide);
         rightWrapper.setMinWidth(Region.USE_PREF_SIZE);
         rightWrapper.setMaxWidth(Region.USE_PREF_SIZE);

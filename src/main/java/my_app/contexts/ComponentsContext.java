@@ -9,15 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import my_app.components.ColumnComponent;
-import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.screens.Home.components.canvaComponent.CanvaComponent;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import my_app.components.imageComponent.ImageComponent;
 import my_app.data.*;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 
 import java.io.File;
 import java.util.List;
@@ -50,31 +43,6 @@ public class ComponentsContext {
         leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
     }
 
-
-    public void removeComponentFromAllPlaces(ViewContract<?> componentWrapper, CanvaComponent canvaComponent) {
-        removeComponentFromCanva(componentWrapper, canvaComponent);
-        removeComponentFromDataMap(componentWrapper);
-        refreshSubItems();
-    }
-
-    public void removeComponentFromCanva(ViewContract<?> componentWrapper, CanvaComponent canvaComponent) {
-        canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
-    }
-
-    public void removeComponentFromDataMap(ViewContract<?> componentWrapper) {
-        var data = (ComponentData) componentWrapper.getData();
-        var list = dataMap.get(data.type());
-
-        var currentNodeId = componentWrapper.getCurrentNode().getId();
-
-        //list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
-        list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
-                .findFirst().ifPresent(it -> {
-                    //deletou de mentirinha
-                    it.delete();
-                });
-        IO.println("removeu do datamap");
-    }
 
     public ViewContract<?> findNodeById(String id) {
         if (id == null || id.isEmpty()) {
@@ -144,203 +112,84 @@ public class ComponentsContext {
             }
 
             for (TextComponentData data : state.text_components) {
-                TextComponent comp = new TextComponent(data.text(), this, mainCanvaComponent);
-                comp.applyData(data);
+                //TextComponent comp = new TextComponent(data.text(), this, mainCanvaComponent);
+                //    comp.applyData(data);
                 // nodes.add(comp);
 
                 // subItemsContext.addItem("text", data.identification());
-                addItem("text", comp);
+                //   addItem("text", comp);
 
                 if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
+                    //     mainCanvaComponent.addElementDragable(comp, false);
                 }
             }
 
             // Restaura os botões
             for (ButtonComponentData data : state.button_components) {
-                ButtonComponent comp = new ButtonComponent(this, canvaComponent);
+                // ButtonComponent comp = new ButtonComponent(this, canvaComponent);
 
-                comp.applyData(data);
+                //  comp.applyData(data);
                 // nodes.add(comp);
                 // subItemsContext.addItem("button", data.identification());
-                addItem("button", comp);
+                //  addItem("button", comp);
 
                 if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
+                    //      mainCanvaComponent.addElementDragable(comp, false);
                 }
             }
 
             // Restaura as imagens
             for (ImageComponentData data : state.image_components) {
-                ImageComponent comp = new ImageComponent(this, canvaComponent);
-                comp.stage = stage;
+                //   ImageComponent comp = new ImageComponent(this, canvaComponent);
+                //    comp.stage = stage;
 
-                comp.applyData(data);
+                //    comp.applyData(data);
                 // nodes.add(comp);
 
-                addItem("image", comp);
+                ///   addItem("image", comp);
                 if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
+                    //        mainCanvaComponent.addElementDragable(comp, false);
                 }
             }
 
             // Restaura inputs
             for (InputComponentData data : state.input_components) {
-                InputComponent comp = new InputComponent("", this, canvaComponent);
+                //  InputComponent comp = new InputComponent("", this, canvaComponent);
 
-                comp.applyData(data);
+                //   comp.applyData(data);
                 // nodes.add(comp);
 
-                addItem("input", comp);
+                //  addItem("input", comp);
 
                 if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
+                    //   mainCanvaComponent.addElementDragable(comp, false);
 
                 }
             }
 
             for (CustomComponentData data : state.custom_components) {
-                var comp = new CustomComponent(this, canvaComponent);
+                // var comp = new CustomComponent(this, canvaComponent);
 
-                comp.applyData(data);
+                //   comp.applyData(data);
                 // nodes.add(comp);
 
-                addItem("component", comp);
+                //  addItem("component", comp);
 
                 if (data.in_canva) {
-                    mainCanvaComponent.addElementDragable(comp, false);
+                    //      mainCanvaComponent.addElementDragable(comp, false);
                 }
             }
 
             for (ColumnComponentData data : state.column_components) {
-                var comp = new ColumnComponent(this, mainCanvaComponent);
+                //   var comp = new ColumnComponent(this, mainCanvaComponent);
 
-                comp.applyData(data);
+                //    comp.applyData(data);
                 // nodes.add(comp);
 
-                addItem("column items", comp);
+                //   addItem("column items", comp);
 
                 if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
-                }
-            }
-
-            SearchNodeById(idOfComponentSelected).ifPresent(node -> selectNode(node.getCurrentNode()));
-
-            leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
-
-            headerSelected.set(state.type_of_component_selected);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    @Deprecated
-    public void loadJsonState(File file, CanvaComponent canvaComponent, Stage stage) {
-        canvaComponent.getChildren().clear();
-
-        mainCanvaComponent = canvaComponent;
-
-        String idOfComponentSelected = null;
-        nodeSelected.set(null);
-        headerSelected.set(null);
-        dataMap.clear();
-
-        ObjectMapper om = new ObjectMapper();
-
-        if (file == null || !file.exists() || file.length() == 0) {
-            return;
-        }
-
-        try {
-            var state = om.readValue(file, StateJson_v2.class);
-            mainCanvaComponent.applyData(state.canva);
-
-            if (state.id_of_component_selected != null) {
-                idOfComponentSelected = state.id_of_component_selected;
-            }
-
-            for (TextComponentData data : state.text_components) {
-                TextComponent comp = new TextComponent(data.text(), this, mainCanvaComponent);
-                comp.applyData(data);
-                // nodes.add(comp);
-
-                // subItemsContext.addItem("text", data.identification());
-                addItem("text", comp);
-
-                if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
-                }
-            }
-
-            // Restaura os botões
-            for (ButtonComponentData data : state.button_components) {
-                ButtonComponent comp = new ButtonComponent(this, canvaComponent);
-
-                comp.applyData(data);
-                // nodes.add(comp);
-                // subItemsContext.addItem("button", data.identification());
-                addItem("button", comp);
-
-                if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
-                }
-            }
-
-            // Restaura as imagens
-            for (ImageComponentData data : state.image_components) {
-                ImageComponent comp = new ImageComponent(this, canvaComponent);
-                comp.stage = stage;
-
-                comp.applyData(data);
-                // nodes.add(comp);
-
-                addItem("image", comp);
-                if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
-                }
-            }
-
-            // Restaura inputs
-            for (InputComponentData data : state.input_components) {
-                InputComponent comp = new InputComponent("", this, canvaComponent);
-
-                comp.applyData(data);
-                // nodes.add(comp);
-
-                addItem("input", comp);
-
-                if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
-
-                }
-            }
-
-            for (CustomComponentData data : state.custom_components) {
-                var comp = new CustomComponent(this, canvaComponent);
-
-                comp.applyData(data);
-                // nodes.add(comp);
-
-                addItem("component", comp);
-
-                if (data.in_canva) {
-                    mainCanvaComponent.addElementDragable(comp, false);
-                }
-            }
-
-            for (ColumnComponentData data : state.column_components) {
-                var comp = new ColumnComponent(this, mainCanvaComponent);
-
-                comp.applyData(data);
-                // nodes.add(comp);
-
-                addItem("column items", comp);
-
-                if (data.in_canva()) {
-                    mainCanvaComponent.addElementDragable(comp, false);
+                    //      mainCanvaComponent.addElementDragable(comp, false);
                 }
             }
 
@@ -425,6 +274,7 @@ public class ComponentsContext {
 
     TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
+    /*
     public void addComponent(String type, CanvaComponentV2 currentCanva) {
 
         if (type == null || type.isBlank()) {
@@ -478,6 +328,8 @@ public class ComponentsContext {
         }
     }
 
+     */
+
     public void addCustomComponent(ViewContract<?> customComponent, CanvaComponent mainCanva) {
         // mainCanvaComponent = mainCanva;
         // nodes.add(customComponent); // Adiciona à lista mestre
@@ -523,6 +375,7 @@ public class ComponentsContext {
     public void duplicateComponentInCanva(ViewContract<?> nodeWrapper, CanvaComponent currentCanva) {
         var data = nodeWrapper.getData();
 
+        /*
         if (data instanceof CustomComponentData d) {
             var copyComponent = new CustomComponent(this, currentCanva);
             copyComponent.applyData(d);
@@ -554,6 +407,8 @@ public class ComponentsContext {
             copyComponent.setId(String.valueOf(System.currentTimeMillis()));
             this.addComponent(copyComponent, currentCanva);
         }
+
+         */
     }
 
     public Optional<ViewContract<?>> SearchNodeById(String nodeId) {
@@ -579,49 +434,4 @@ public class ComponentsContext {
     // }
 
 
-    public void removeNode(String nodeId) {
-        System.out.println("mainCanva: " + mainCanvaComponent);
-        // 1. Tenta remover o Node do mainCanva (UI)
-        ObservableList<Node> canvaChildren = mainCanvaComponent.getChildren();
-        boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));
-
-        // 2. Remove do dataMap (a coleção de dados)
-        boolean removedFromDataMap = removeItemByIdentification(nodeId);
-
-        Node currentlySelectedNode = nodeSelected.get() != null ? nodeSelected.get().node() : null;
-
-        if (currentlySelectedNode != null && nodeId.equals(currentlySelectedNode.getId())) {
-            nodeSelected.set(null);
-            headerSelected.set(null); // Limpa o header também
-        }
-
-        // 4. Atualiza a UI lateral SOMENTE se a remoção foi bem-sucedida em algum lugar
-        if (removedFromCanva || removedFromDataMap) {
-            refreshSubItems();
-        }
-    }
-
-    private boolean removeItemByIdentification(String identification) {
-        // Itera sobre todas as listas de nós no dataMap.
-        for (ObservableList<ViewContract<?>> itemsList : dataMap.values()) {
-
-            // Procura o item a ser removido (a forma mais garantida para ObservableList)
-            ViewContract<?> itemToRemove = null;
-            for (var item : itemsList) {
-                if (identification.equals(item.getCurrentNode().getId())) {
-                    itemToRemove = item;
-                    break;
-                }
-            }
-
-            if (itemToRemove != null) {
-                // Remove o item da ObservableList do dataMap
-                itemsList.remove(itemToRemove);
-                // Retorna true assim que o item for removido
-                return true;
-            }
-        }
-        // Retorna false se o item não for encontrado em nenhuma lista
-        return false;
-    }
 }

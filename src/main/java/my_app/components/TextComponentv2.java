@@ -7,32 +7,30 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.TextComponentData;
 import my_app.data.ViewContractv2;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
 public class TextComponentv2 extends Text implements ViewContractv2<TextComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
-    private final ComponentsContext componentsContext;
-
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
-
     @Component
     CanvaComponentV2 canvaFather;
 
     boolean isDeleted = false;
+    private HomeViewModel viewModel;
 
-    public TextComponentv2(String content, ComponentsContext componentsContext, CanvaComponentV2 canvaComponent) {
+    public TextComponentv2(String content, HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
 
         super(content);
-        this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
         this.canvaFather = canvaComponent;
 
         setStyle("-fx-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
@@ -45,9 +43,9 @@ public class TextComponentv2 extends Text implements ViewContractv2<TextComponen
         currentState.set(this);
     }
 
-    public TextComponentv2(ComponentsContext componentsContext, CanvaComponentV2 canvaComponent) {
+    public TextComponentv2(HomeViewModel homeViewModel, CanvaComponentV2 canvaComponent) {
+        this.viewModel = homeViewModel;
 
-        this.componentsContext = componentsContext;
         this.canvaFather = canvaComponent;
 
         setStyle("-fx-fill:black;-fx-font-size:%s;-fx-font-weight:normal;"
@@ -70,7 +68,7 @@ public class TextComponentv2 extends Text implements ViewContractv2<TextComponen
                 Components.LabelWithInput(translation.width(), this, "text-wrapping-width"),
                 // Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, componentsContext));
+                new ButtonRemoverComponent(this, this.viewModel));
     }
 
     @Override

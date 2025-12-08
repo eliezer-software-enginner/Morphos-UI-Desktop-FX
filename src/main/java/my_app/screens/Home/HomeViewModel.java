@@ -19,6 +19,7 @@ import my_app.components.Components;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.data.ComponentData;
 import my_app.data.ViewContractv2;
 import my_app.mappers.CanvaMapper;
 import my_app.scenes.SettingsScene;
@@ -50,6 +51,54 @@ public class HomeViewModel {
     public SimpleBooleanProperty leftItemsStateRefreshed = new SimpleBooleanProperty(false);
 
     public SimpleStringProperty headerSelected = new SimpleStringProperty(null);
+
+
+    public void removeNode(String nodeId) {
+        final var currentCanva = home.currentCanva;
+        System.out.println("mainCanva: " + currentCanva);
+        // 1. Tenta remover o Node do mainCanva (UI)
+        ObservableList<Node> canvaChildren = currentCanva.getChildren();
+        boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));
+
+        // 2. Remove do dataMap (a coleção de dados)
+        boolean removedFromDataMap = removeItemByIdentification(nodeId);
+
+        Node currentlySelectedNode = nodeSelected.get() != null ? nodeSelected.get().node() : null;
+
+        if (currentlySelectedNode != null && nodeId.equals(currentlySelectedNode.getId())) {
+            nodeSelected.set(null);
+            headerSelected.set(null); // Limpa o header também
+        }
+
+        // 4. Atualiza a UI lateral SOMENTE se a remoção foi bem-sucedida em algum lugar
+        if (removedFromCanva || removedFromDataMap) {
+            refreshSubItems();
+        }
+    }
+
+    private boolean removeItemByIdentification(String identification) {
+        // Itera sobre todas as listas de nós no dataMap.
+        for (var itemsList : dataMap.values()) {
+
+            // Procura o item a ser removido (a forma mais garantida para ObservableList)
+            ViewContractv2<?> itemToRemove = null;
+            for (var item : itemsList) {
+                if (identification.equals(item.getCurrentNode().getId())) {
+                    itemToRemove = item;
+                    break;
+                }
+            }
+
+            if (itemToRemove != null) {
+                // Remove o item da ObservableList do dataMap
+                itemsList.remove(itemToRemove);
+                // Retorna true assim que o item for removido
+                return true;
+            }
+        }
+        // Retorna false se o item não for encontrado em nenhuma lista
+        return false;
+    }
 
     public record SelectedComponent(String type, Node node) {
     }
@@ -443,6 +492,32 @@ public class HomeViewModel {
                 throw new RuntimeException("Was not possible to go to donation");
             }
         });
+    }
+
+
+    public void removeComponentFromAllPlaces(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
+        removeComponentFromCanva(componentWrapper, canvaComponent);
+        removeComponentFromDataMap(componentWrapper);
+        refreshSubItems();
+    }
+
+    public void removeComponentFromCanva(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
+        canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
+    }
+
+    public void removeComponentFromDataMap(ViewContractv2<?> componentWrapper) {
+        var data = (ComponentData) componentWrapper.getData();
+        var list = dataMap.get(data.type());
+
+        var currentNodeId = componentWrapper.getCurrentNode().getId();
+
+        //list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
+        list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
+                .findFirst().ifPresent(it -> {
+                    //deletou de mentirinha
+                    it.delete();
+                });
+        IO.println("removeu do datamap");
     }
 
 }

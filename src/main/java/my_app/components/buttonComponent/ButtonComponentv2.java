@@ -11,14 +11,14 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
-import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.ButtonComponentData;
 import my_app.data.Commons;
 import my_app.data.IconData;
 import my_app.data.ViewContractv2;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -26,7 +26,6 @@ import toolkit.Component;
 public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonComponentData> {
 
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
-    ComponentsContext componentsContext;
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
 
@@ -34,17 +33,18 @@ public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonCo
 
     @Component
     CanvaComponentV2 currentCanva;
+    private final HomeViewModel viewModel;
 
-    public ButtonComponentv2(ComponentsContext componentsContext, CanvaComponentV2 currentCanva) {
+    public ButtonComponentv2(HomeViewModel viewModel, CanvaComponentV2 currentCanva) {
         super();
-        this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
         this.currentCanva = currentCanva;
         config();
     }
 
-    public ButtonComponentv2(String content, ComponentsContext componentsContext) {
+    public ButtonComponentv2(String content, HomeViewModel viewModel) {
         super(content);
-        this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
         config();
     }
 
@@ -154,7 +154,7 @@ public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonCo
                 Components.ColorPickerRow(translation.iconColor(), this, "icon-color"),
                 //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(10),
-                new ButtonRemoverComponent(this, componentsContext));
+                new ButtonRemoverComponent(this, this.viewModel));
     }
 
     @Override

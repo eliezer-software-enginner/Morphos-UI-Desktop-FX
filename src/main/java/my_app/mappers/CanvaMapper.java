@@ -3,11 +3,11 @@ package my_app.mappers;
 import javafx.collections.ObservableList;
 import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponent;
+import my_app.components.InputComponentv2;
+import my_app.components.TextComponentv2;
+import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.imageComponent.ImageComponentv2;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.StateJson_v3;
 import my_app.data.ViewContract;
@@ -41,20 +41,20 @@ public class CanvaMapper {
 
                 var node = nodeWrapper.getCurrentNode();
 
-                if (node instanceof TextComponent component) {
+                if (node instanceof TextComponentv2 component) {
                     // O .getData() deve retornar um TextComponentData que inclui a flag 'in_canva'
                     canvaData.text_components.add(component.getData());
                 }
 
-                if (node instanceof ButtonComponent component) {
+                if (node instanceof ButtonComponentv2 component) {
                     canvaData.button_components.add(component.getData());
                 }
 
-                if (node instanceof ImageComponent component) {
+                if (node instanceof ImageComponentv2 component) {
                     canvaData.image_components.add(component.getData());
                 }
 
-                if (node instanceof InputComponent component) {
+                if (node instanceof InputComponentv2 component) {
                     canvaData.input_components.add(component.getData());
                 }
 

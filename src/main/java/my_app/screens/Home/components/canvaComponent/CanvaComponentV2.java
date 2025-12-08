@@ -90,7 +90,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
                 SelectedComponent newSelection = new SelectedComponent(canvaType, this);
 
                 // 3. Defina a propriedade com o objeto correto
-                componentsContext.nodeSelected.set(newSelection);
+                this.viewModel.nodeSelected.set(newSelection);
                 System.out.println("Canva selecionado");
             }
         });
@@ -382,7 +382,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
         }
 
         for (TextComponentData it : data.text_components) {
-            var comp = new TextComponentv2(it.text(), componentsContext, this);
+            var comp = new TextComponentv2(it.text(), this.viewModel, this);
             comp.applyData(it);
 
             viewModel.addItemOnDataMap("text", comp);
@@ -393,7 +393,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
         }
 
         for (ButtonComponentData it : data.button_components) {
-            var comp = new ButtonComponentv2(componentsContext, this);
+            var comp = new ButtonComponentv2(this.viewModel, this);
             comp.applyData(it);
 
             viewModel.addItemOnDataMap("button", comp);
@@ -403,7 +403,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
         }
 
         for (ImageComponentData it : data.image_components) {
-            var comp = new ImageComponentv2(componentsContext, this);
+            var comp = new ImageComponentv2(this.viewModel, this);
             comp.applyData(it);
 
             viewModel.addItemOnDataMap("image", comp);
@@ -414,7 +414,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
         }
 
         for (InputComponentData it : data.input_components) {
-            var comp = new InputComponentv2(componentsContext, this);
+            var comp = new InputComponentv2(this.viewModel, this);
             comp.applyData(it);
 
             viewModel.addItemOnDataMap("input", comp);

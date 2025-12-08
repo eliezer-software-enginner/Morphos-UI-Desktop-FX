@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import my_app.components.Components;
+import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
@@ -43,17 +44,18 @@ public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageC
     public VBox errorContainer = new VBox();
     @Component
     CanvaComponentV2 currentCanva;
+    private final HomeViewModel viewModel;
 
-    public ImageComponentv2(ComponentsContext componentsContext, CanvaComponentV2 canvaComponent) {
+    public ImageComponentv2(HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
+        this.viewModel = viewModel;
         config();
-        this.componentsContext = componentsContext;
         this.currentCanva = canvaComponent;
     }
 
-    public ImageComponentv2(String sourcePath, ComponentsContext componentsContext) {
+    public ImageComponentv2(String sourcePath, HomeViewModel viewModel) {
         super(new Image(sourcePath, true));
+        this.viewModel = viewModel;
         // 'true' ativa carregamento assíncrono
-        this.componentsContext = componentsContext;
         config();
     }
 
@@ -79,7 +81,7 @@ public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageC
                 Components.spacerVertical(10),
                 errorContainer,
                 Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, componentsContext)
+                new ButtonRemoverComponent(this, this.viewModel)
                 // new FitComponent(this)
         );
     }
