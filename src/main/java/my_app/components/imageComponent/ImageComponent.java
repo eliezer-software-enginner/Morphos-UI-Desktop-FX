@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import my_app.components.Components;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;

@@ -14,7 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.components.NodeWrapper;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.ComponentsContext.SelectedComponent;
 import my_app.contexts.TranslationContext;

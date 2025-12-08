@@ -1,4 +1,4 @@
-package my_app.components.canvaComponent;
+package my_app.screens.Home.components.canvaComponent;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -15,7 +15,6 @@ import javafx.util.Duration;
 import my_app.FileManager;
 import my_app.components.Components;
 import my_app.components.InputComponentv2;
-import my_app.components.TextComponent;
 import my_app.components.TextComponentv2;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
@@ -386,6 +385,8 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
             var comp = new TextComponentv2(it.text(), componentsContext, this);
             comp.applyData(it);
 
+            viewModel.addItemOnDataMap("text", comp);
+
             if (it.in_canva()) {
                 this.addElementDragable(comp, false);
             }
@@ -395,6 +396,7 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
             var comp = new ButtonComponentv2(componentsContext, this);
             comp.applyData(it);
 
+            viewModel.addItemOnDataMap("button", comp);
             if (it.in_canva()) {
                 this.addElementDragable(comp, false);
             }
@@ -404,6 +406,8 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
             var comp = new ImageComponentv2(componentsContext, this);
             comp.applyData(it);
 
+            viewModel.addItemOnDataMap("image", comp);
+
             if (it.in_canva()) {
                 this.addElementDragable(comp, false);
             }
@@ -412,6 +416,8 @@ public class CanvaComponentV2 extends Pane implements ViewContract<CanvaComponen
         for (InputComponentData it : data.input_components) {
             var comp = new InputComponentv2(componentsContext, this);
             comp.applyData(it);
+
+            viewModel.addItemOnDataMap("input", comp);
 
             if (it.in_canva()) {
                 this.addElementDragable(comp, false);

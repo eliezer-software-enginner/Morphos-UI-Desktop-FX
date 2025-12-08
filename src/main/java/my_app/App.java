@@ -7,7 +7,6 @@ import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.scenes.AppScenes;
-import my_app.scenes.MainScene.MainScene;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -22,14 +21,15 @@ public class App extends Application {
         translationContext = TranslationContext.instance();
         translationContext.onEntryPoint(this);
 
-        var prefsData = Commons.getPrefsData();
+//        var prefsData = Commons.getPrefsData();
+//
+//        if (prefsData != null) {
+//            translationContext.loadTranslation(Locale.of(prefsData.language()));
+//        } else {
+//            translationContext.loadTranslation(Locale.getDefault());
+//        }
 
-        if (prefsData != null) {
-            translationContext.loadTranslation(Locale.of(prefsData.language()));
-        } else {
-            translationContext.loadTranslation(Locale.getDefault());
-        }
-
+        translationContext.loadTranslation(Locale.getDefault());
     }
 
     @Override
@@ -86,8 +86,8 @@ public class App extends Application {
     public void changeLanguage(Locale locale) {
         translationContext.loadTranslation(locale);
 
-        MainScene mainScene = new MainScene();
-        stage.setScene(mainScene);
+//        MainScene mainScene = new MainScene();
+//        stage.setScene(mainScene);
     }
 
     static void main(String[] args) {

@@ -5,7 +5,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.Home.components.RightSide;
@@ -40,7 +40,7 @@ public class Home extends BorderPane {
         viewModel.init(this, theirStage);
 
         //this.canva = new CanvaComponent(componentsContext, this.viewModel);
-        this.leftSide = new LeftSide(currentCanva, componentsContext);
+        this.leftSide = new LeftSide(currentCanva, this.viewModel);
 
         setTop(menuBar);
         setLeft(this.leftSide);

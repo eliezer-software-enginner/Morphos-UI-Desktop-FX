@@ -2,7 +2,7 @@ package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.DataTableScreen.DataTableScreen;

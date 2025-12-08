@@ -13,7 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
 import my_app.FileManager;
 import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;

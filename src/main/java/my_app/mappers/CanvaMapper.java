@@ -6,7 +6,7 @@ import my_app.components.CustomComponent;
 import my_app.components.InputComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.data.StateJson_v3;

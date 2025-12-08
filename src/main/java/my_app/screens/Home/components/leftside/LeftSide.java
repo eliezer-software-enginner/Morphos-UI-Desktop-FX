@@ -9,11 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import my_app.components.canvaComponent.CanvaComponent;
-import my_app.components.canvaComponent.CanvaComponentV2;
-import my_app.contexts.ComponentsContext;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.screens.Home.HomeViewModel;
 import my_app.themes.Typography;
 import toolkit.Component;
 
@@ -55,7 +54,7 @@ public class LeftSide extends VBox {
     @Component
     VBox errorContainer = new VBox();
 
-    public LeftSide(CanvaComponentV2 currentCanva, ComponentsContext componentsContext) {
+    public LeftSide(CanvaComponentV2 currentCanva, HomeViewModel viewModel) {
 
         config();
         styles();
@@ -68,7 +67,7 @@ public class LeftSide extends VBox {
 
         getChildren().add(spacer);
 
-        optionsField.forEach(field -> options.add(new Option(field, currentCanva, componentsContext)));
+        optionsField.forEach(field -> options.add(new Option(field, currentCanva, viewModel)));
 
         getChildren().addAll(options);
         getChildren().add(errorContainer);

@@ -11,7 +11,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;

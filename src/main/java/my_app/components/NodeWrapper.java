@@ -2,8 +2,8 @@ package my_app.components;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.layout.VBox;
-import my_app.components.canvaComponent.CanvaComponent;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.data.ComponentData;
 import my_app.data.ViewContract;
 

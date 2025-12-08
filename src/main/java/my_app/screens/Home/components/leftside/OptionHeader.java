@@ -10,9 +10,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
-import my_app.components.canvaComponent.CanvaComponentV2;
-import my_app.contexts.ComponentsContext;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.data.Commons;
+import my_app.screens.Home.HomeViewModel;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
@@ -22,26 +22,24 @@ import toolkit.theme.MaterialTheme;
 
 public class OptionHeader extends HBox {
 
+    private final HomeViewModel viewModel;
     @Component
     Label label;
 
     @Component
     Region spacer = new Region();
 
-
     @Component
     Button btnAdd = Components.ButtonPrimary();//plus icon
-
-    ComponentsContext componentsContext;
     MaterialTheme theme = MaterialTheme.getInstance();
     ThemeManager themeManager = ThemeManager.Instance();
 
     public OptionHeader(
             LeftSide.Field field,
             CanvaComponentV2 currentCanva, BooleanProperty expanded,
-            ComponentsContext componentsContext) {
+            HomeViewModel viewModel) {
 
-        this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
 
         label = Typography.caption(field.name());
 
@@ -55,8 +53,8 @@ public class OptionHeader extends HBox {
         String type = field.nameEngligh().toLowerCase();
 
         btnAdd.setOnAction(_ -> {
-            componentsContext.addComponent(type, currentCanva);
-            componentsContext.headerSelected.set(type);
+            viewModel.addComponent(type, currentCanva);
+            viewModel.headerSelected.set(type);
             expanded.set(true);
         });
 
@@ -68,12 +66,12 @@ public class OptionHeader extends HBox {
         });
 
 
-        nodeSelectedListener(componentsContext, type);
+        nodeSelectedListener(viewModel, type);
 
         // Ajuste em setOnMouseExited para usar o novo estado
         setOnMouseExited(_ -> {
-            String selectedType = componentsContext.nodeSelected.get() != null
-                    ? componentsContext.nodeSelected.get().type()
+            String selectedType = viewModel.nodeSelected.get() != null
+                    ? viewModel.nodeSelected.get().type()
                     : null;
 
             if (selectedType == null || !selectedType.equalsIgnoreCase(type)) {
@@ -107,7 +105,7 @@ public class OptionHeader extends HBox {
 
         // Lógica de clique do botão Add Component
         btnAdd.setOnAction(_ -> {
-            componentsContext.addComponent(type, currentCanva);
+            viewModel.addComponent(type, currentCanva);
             // REMOVEMOS: ComponentsContext.headerSelected.set(type); // Não é mais
             // necessário se o AddComponent chamar SelectNode
             expanded.set(true);
@@ -126,8 +124,8 @@ public class OptionHeader extends HBox {
         });
     }
 
-    private void nodeSelectedListener(ComponentsContext componentsContext, String type) {
-        componentsContext.nodeSelected.addListener((_, _, newSelected) -> {
+    private void nodeSelectedListener(HomeViewModel viewModel, String type) {
+        viewModel.nodeSelected.addListener((_, _, newSelected) -> {
             // Pega o tipo do item recém-selecionado (pode ser null)
             String newType = newSelected != null ? newSelected.type() : null;
 

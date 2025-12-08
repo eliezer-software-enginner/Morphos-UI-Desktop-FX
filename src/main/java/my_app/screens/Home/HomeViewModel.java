@@ -1,10 +1,11 @@
 package my_app.screens.Home;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -18,8 +19,10 @@ import my_app.components.Components;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.data.ViewContractv2;
 import my_app.mappers.CanvaMapper;
 import my_app.scenes.SettingsScene;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import my_app.windows.AllWindows;
 import toolkit.Component;
@@ -28,6 +31,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 import static my_app.data.Commons.loadPrefs;
 
@@ -42,6 +47,19 @@ public class HomeViewModel {
     StringProperty currentScreenId = new SimpleStringProperty();
 
     BooleanProperty refreshScreensTabs = new SimpleBooleanProperty();
+    public SimpleBooleanProperty leftItemsStateRefreshed = new SimpleBooleanProperty(false);
+
+    public SimpleStringProperty headerSelected = new SimpleStringProperty(null);
+
+    public record SelectedComponent(String type, Node node) {
+    }
+
+    public SimpleObjectProperty<ComponentsContext.SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
+
+
+    //key é o type
+    public ObservableMap<String, ObservableList<ViewContractv2<?>>> dataMap = FXCollections
+            .observableHashMap();
 
     public void init(Home home, Stage theirStage) {
         this.home = home;
@@ -95,13 +113,151 @@ public class HomeViewModel {
         //componentsContext.loadJsonState_(uiJsonFile, home.canva, stage);
     }
 
+    public void addItemOnDataMap(String type, ViewContractv2<?> nodeWrapper) {
+        dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
+                .add(nodeWrapper);
+    }
+
+    public Optional<ViewContractv2<?>> SearchNodeById(String nodeId) {
+        return dataMap.values()
+                .stream()
+                .flatMap(list -> list.stream()) // Achata todas as listas em um único stream
+                .filter(node -> node.getCurrentNode().getId().equals(nodeId))
+                .findFirst();
+    }
+
+
+    public List<ViewContractv2<?>> getItemsByType(String type) {
+        final var originalList =
+                dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
+
+        // Retorna uma lista simples filtrada (List)
+        return originalList.stream()
+                .filter(component -> !component.isDeleted())
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public boolean currentNodeIsSelected(String nodeId) {
+
+        ComponentsContext.SelectedComponent selected = nodeSelected.get();
+
+        // 1. Verifica se algo está selecionado (selected != null)
+        // 2. Verifica se o Node dentro do SelectedComponent não é nulo (selected.node()
+        // != null)
+        // 3. Compara o ID do Node selecionado com o nodeId fornecido
+        return selected != null && selected.node() != null && selected.node().getId().equals(nodeId);
+    }
+
+    // --- NOVO MÉTODO SELECTNODE ---
+    public void selectNode(Node node) {
+        if (node == null) {
+            nodeSelected.set(null);
+            headerSelected.set(null); // Desseleciona o header também
+        } else {
+            String type = getNodeType(node);
+            if (type != null) {
+                ComponentsContext.SelectedComponent newSelection = new ComponentsContext.SelectedComponent(type, node);
+                nodeSelected.set(newSelection);
+                headerSelected.set(type); // Mantemos o headerSelected por compatibilidade com a UI
+                System.out.println("Selecionado: " + node + " (Type: " + type + ")");
+            } else {
+                // Lidar com o caso onde o nó existe mas não está no dataMap
+                System.err.println("Erro: Node encontrado, mas não está registrado no dataMap. ID: " + node.getId());
+                nodeSelected.set(null);
+                headerSelected.set(null);
+            }
+        }
+        refreshSubItems();
+    }
+
+    public String getNodeType(Node node) {
+        if (node == null) {
+            return null;
+        }
+        String nodeId = node.getId();
+
+        // Itera sobre o mapa para encontrar a chave (tipo) que contém o Node.
+        for (var entry : dataMap.entrySet()) {
+            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(nodeId))) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+
+    public void addComponent(String type, CanvaComponentV2 currentCanva) {
+
+        if (type == null || type.isBlank()) {
+            return;
+        }
+
+        ViewContractv2<?> node = null;
+        var content = "Im new here";
+
+        var typeNormalized = type.trim().toLowerCase();
+
+        /*
+        if (type.equalsIgnoreCase(englishBase.button())) {
+            node = new ButtonComponentv2(content, this);
+        } else if (type.equalsIgnoreCase(englishBase.input())) {
+            // node = new InputComponent(content, this, currentCanva);
+
+        } else if (type.equalsIgnoreCase(englishBase.text())) {
+            node = new TextComponent(content, this, mainCanvaComponent);
+
+        } else if (type.equalsIgnoreCase(englishBase.image())) {
+            node = new ImageComponent(
+                    ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(),
+                    this);
+
+        } else if (type.equalsIgnoreCase(englishBase.component())) {
+            //  new ShowComponentScene(currentCanva, this).stage.show();
+            return;
+        } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
+            node = new ColumnComponent(this, mainCanvaComponent);
+        }
+
+        if (node != null) {
+
+            // 1. Adiciona o nó ao dataMap
+            addItem(typeNormalized, node);
+
+            // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
+            // ESTA É A LINHA CORRIGIDA
+
+            ComponentsContext.SelectedComponent newSelection = new ComponentsContext.SelectedComponent(typeNormalized, node.getCurrentNode());
+            nodeSelected.set(newSelection);
+
+            // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
+            headerSelected.set(typeNormalized);
+
+            // 4. Adiciona o nó à tela (Canva)
+            currentCanva.addElementDragable(node.getCurrentNode(), true);
+
+            // 5. Notifica a UI lateral para atualizar a lista
+            refreshSubItems();
+        }
+         */
+    }
+
+    public void refreshSubItems() {
+        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+    }
+
+    public void addItem(String type, ViewContractv2<?> nodeWrapper) {
+        dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
+                .add(nodeWrapper);
+    }
+
     public void handleSave(Home home, Stage stage) {
         //updateUiJsonFilePathOnAppData(uiJsonFile);
         FileManager.updateProject(CanvaMapper.toStateJson(home.currentCanva, componentsContext));
         //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
     }
 
-    public void handleClickMenuSettings(Stage stage) {
+    public void handleClickMenuSettings() {
         new SettingsScene().show();
     }
 
@@ -152,7 +308,7 @@ public class HomeViewModel {
         Label menuText = Typography.caption(translation.settings());
         menu.setGraphic(menuText);
 
-        menuText.setOnMouseClicked(_ -> handleClickMenuSettings(this.stage));
+        menuText.setOnMouseClicked(_ -> handleClickMenuSettings());
 
         menuText.getStyleClass().add("text-primary-color");
 

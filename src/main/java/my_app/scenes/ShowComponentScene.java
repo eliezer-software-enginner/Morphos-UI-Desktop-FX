@@ -6,7 +6,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
@@ -41,7 +41,7 @@ public class ShowComponentScene extends Scene {
         is.setOnAction(_ -> {
             // O 'home.canva' é o CanvaComponent com o conteúdo que o usuário desenhou (aqui
             // é o 'contentCanva').
-            var contentCanva = home.canva;
+            // var contentCanva = home.canva;
             // style-> "-fx-background-color:#1a4d4d;"
             // 1. Cria o CustomComponent
 //            CustomComponent newCustomComponent = new CustomComponent(componentsContext, contentCanva);

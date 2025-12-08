@@ -1,7 +1,7 @@
 package my_app.windows;
 
 import javafx.stage.Stage;
-import my_app.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.scenes.AppScenes;
 

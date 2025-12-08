@@ -7,13 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import my_app.components.canvaComponent.CanvaComponent;
-import my_app.scenes.MainScene.MainSceneController;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -163,20 +160,6 @@ public class Commons {
         }
 
         return new NodeInCanva(false, null);
-    }
-
-    public static MainSceneController.PrefsData getPrefsData() {
-        String appData = loadPrefs();
-        var prefs = Path.of(appData).resolve(Commons.AppNameAtAppData).resolve("prefs.json");
-
-        try {
-            var om = new ObjectMapper();
-            var jsonContent = Files.readString(prefs);
-            return om.readValue(jsonContent, MainSceneController.PrefsData.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     //change this function in the future

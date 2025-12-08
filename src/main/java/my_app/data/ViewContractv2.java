@@ -2,7 +2,7 @@ package my_app.data;
 
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 public interface ViewContractv2<T extends ComponentData> {
     void appearance(VBox father, CanvaComponentV2 canva);

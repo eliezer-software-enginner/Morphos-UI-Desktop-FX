@@ -8,9 +8,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import my_app.components.canvaComponent.CanvaComponent;
-import my_app.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.Home.components.canvaComponent.CanvaComponent;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.ComponentsContext;
+import my_app.screens.Home.HomeViewModel;
 import my_app.themes.Typography;
 import toolkit.Component;
 
@@ -18,6 +19,7 @@ import toolkit.Component;
 //     -btn1 (subItem)
 
 public class Option extends VBox {
+    private final HomeViewModel viewModel;
     BooleanProperty expanded = new SimpleBooleanProperty(false);
 
     @Component
@@ -29,16 +31,14 @@ public class Option extends VBox {
     @Component
     CanvaComponentV2 currentCanva;
 
-    ComponentsContext componentsContext;
 
-
-    public Option(LeftSide.Field field, CanvaComponentV2 currentCanva, ComponentsContext componentsContext) {
+    public Option(LeftSide.Field field, CanvaComponentV2 currentCanva, HomeViewModel viewModel) {
         this.type = field.nameEngligh().toLowerCase().trim();
 
-        this.componentsContext = componentsContext;
+        this.viewModel = viewModel;
         this.currentCanva = currentCanva;
 
-        header = new OptionHeader(field, currentCanva, expanded, componentsContext);
+        header = new OptionHeader(field, currentCanva, expanded, viewModel);
 
         getChildren().add(header);
         getChildren().add(subItemsContainer);
@@ -47,7 +47,7 @@ public class Option extends VBox {
 
         loadSubItems();
 
-        componentsContext.leftItemsStateRefreshed.addListener((_, _, _) -> {
+        viewModel.leftItemsStateRefreshed.addListener((_, _, _) -> {
             loadSubItems();
         });
 
@@ -61,7 +61,7 @@ public class Option extends VBox {
     private void loadSubItems() {
         subItemsContainer.getChildren().clear();
 
-        var nodes = componentsContext.getItemsByType(type);
+        var nodes = viewModel.getItemsByType(type);
         IO.println("nodes: " + nodes.size());
 
         for (var nodeWrapper : nodes) {
@@ -102,20 +102,20 @@ public class Option extends VBox {
 
         // Adiciona um listener para que, se o nó for selecionado/deselecionado, o
         // estilo mude
-        componentsContext.nodeSelected.addListener((_, _, _) -> {
+        viewModel.nodeSelected.addListener((_, _, _) -> {
             updateSubItemStyle(subItemBox, itemId);
         });
 
         subItemBox.setOnMouseClicked(_ -> onClickOnSubItem(itemId, currentCanva));
 
         subItemBox.setOnMouseEntered(_ -> {
-            if (!componentsContext.currentNodeIsSelected(itemId)) {
+            if (!viewModel.currentNodeIsSelected(itemId)) {
                 subItemBox.setStyle("-fx-background-color: #2D2A6E;");
             }
         });
 
         subItemBox.setOnMouseExited(_ -> {
-            if (!componentsContext.currentNodeIsSelected(itemId)) {
+            if (!viewModel.currentNodeIsSelected(itemId)) {
                 subItemBox.setStyle("-fx-background-color: transparent;");
             }
         });
@@ -125,7 +125,7 @@ public class Option extends VBox {
 
     // Método auxiliar para aplicar/remover o estilo de seleção
     private void updateSubItemStyle(HBox subItemBox, String itemId) {
-        if (componentsContext.nodeSelected.get() != null && componentsContext.currentNodeIsSelected(itemId)) {
+        if (viewModel.nodeSelected.get() != null && viewModel.currentNodeIsSelected(itemId)) {
             subItemBox.setStyle("-fx-background-color: red;");
             expanded.set(true); // Opcional: Expande o menu se o nó for selecionado
         } else {
@@ -138,13 +138,13 @@ public class Option extends VBox {
 
         var canvaChildren = mainCanvaComponent.getChildren();
 
-        var op = componentsContext.SearchNodeById(itemIdentification);
+        var op = viewModel.SearchNodeById(itemIdentification);
 
         op.ifPresent(_ -> {
             var target = ComponentsContext.SearchNodeByIdInMainCanva(itemIdentification, canvaChildren);
             // 2. finded in main canva so, selected
             if (target != null) {
-                componentsContext.selectNode(target);
+                viewModel.selectNode(target);
                 CanvaComponent.Shake(target);
             } else {
                 // if not, just add in canva

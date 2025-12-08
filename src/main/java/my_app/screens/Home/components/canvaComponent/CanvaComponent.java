@@ -1,4 +1,4 @@
-package my_app.components.canvaComponent;
+package my_app.screens.Home.components.canvaComponent;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
