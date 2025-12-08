@@ -54,12 +54,11 @@ public class AppScenes {
     public static Scene HomeScene(ComponentsContext mainComponentsContext, Stage theirStage) {
         var scene = new Scene(new Home(theirStage, mainComponentsContext, false));
 
-        var screenSize = Commons.ScreensSize.LARGE;
-        theirStage.setWidth(1410);
+        var screenSize = Commons.ScreensSize._1500x900;
+        theirStage.setWidth(screenSize.width);
         theirStage.setHeight(screenSize.heigh);
         theirStage.centerOnScreen();
         theirStage.setResizable(true);
-
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);

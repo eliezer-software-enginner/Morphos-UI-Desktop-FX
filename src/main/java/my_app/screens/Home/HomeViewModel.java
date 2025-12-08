@@ -105,7 +105,6 @@ public class HomeViewModel {
 
 
     public void handleTabClicked(String screenIdToLoad) {
-
         // 1. VERIFICAÇÃO DE ECONOMIA: Se a tela já está carregada, saia.
         if (this.currentScreenId.get() != null && this.currentScreenId.get().equals(screenIdToLoad)) {
             IO.println("Tela já está ativa. Pulando recarregamento.");
@@ -141,6 +140,13 @@ public class HomeViewModel {
 
         // Chame o novo método da Home para atualizar a UI
         this.home.updateCanvaInEditor(newCanva);
+
+        //todo verificar, pois com canva não surte efeito
+        this.selectNode(newCanva);
+        final var newSelection = new SelectedComponent("canva", newCanva);
+
+        // todo funciona com canva
+        this.nodeSelected.set(newSelection);
 
         final var prefsData = FileManager.loadDataInPrefs();
         //acessar o arqivo de projeto
@@ -305,6 +311,7 @@ public class HomeViewModel {
                 System.out.println("Selecionado: " + node + " (Type: " + type + ")");
             } else {
                 // Lidar com o caso onde o nó existe mas não está no dataMap
+                //canva por exemplo, não está no datamap
                 System.err.println("Erro: Node encontrado, mas não está registrado no dataMap. ID: " + node.getId());
                 nodeSelected.set(null);
                 headerSelected.set(null);

@@ -28,6 +28,8 @@ import my_app.screens.Home.HomeViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static my_app.screens.Home.HomeViewModel.*;
+
 public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaComponentDatav2> {
     boolean isDeleted = false;
 
@@ -60,7 +62,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 String canvaType = "canva"; // Use uma string consistente
 
                 // 2. Crie o novo objeto SelectedComponent
-                HomeViewModel.SelectedComponent newSelection = new HomeViewModel.SelectedComponent(canvaType, this);
+                SelectedComponent newSelection = new SelectedComponent(canvaType, this);
 
                 // 3. Defina a propriedade com o objeto correto
                 this.viewModel.nodeSelected.set(newSelection);
@@ -355,10 +357,10 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
         String canvaType = "canva"; // Use uma string consistente
 
         // 2. Cria o novo objeto SelectedComponent
-        final var newSelection = new HomeViewModel.SelectedComponent(canvaType, this);
+        final var newSelection = new SelectedComponent(canvaType, this);
 
         // 3. Define a propriedade com o objeto correto
-        // componentsContext.nodeSelected.set(newSelection);
+        this.viewModel.nodeSelected.set(newSelection);
 
     }
 

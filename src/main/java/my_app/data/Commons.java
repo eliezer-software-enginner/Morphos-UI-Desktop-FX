@@ -26,6 +26,7 @@ public class Commons {
 
         MEDIUM(800, 600),
         LARGE(1280, 720),
+        _1500x900(1500, 900),
         XLARGE(1600, 900),
         FULL(1920, 1080);
 

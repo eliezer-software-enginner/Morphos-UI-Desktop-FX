@@ -1,5 +1,6 @@
 package my_app.screens.Home;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -39,6 +40,8 @@ public class Home extends BorderPane {
 
     public Home(Stage theirStage, ComponentsContext componentsContext, boolean openComponentScene) {
         this.viewModel = new HomeViewModel(componentsContext);
+
+        this.screensTabs.setAlignment(Pos.CENTER_LEFT);
 
         viewModel.init(this, theirStage);
 
