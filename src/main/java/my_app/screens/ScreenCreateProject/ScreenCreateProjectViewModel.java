@@ -15,10 +15,8 @@ public class ScreenCreateProjectViewModel {
     private final Toast toast;
     public StringProperty inputTextProperty = new SimpleStringProperty("projeto-teste");
     Stage stage;
-    private final ComponentsContext mainComponentsContext;
 
-    public ScreenCreateProjectViewModel(ComponentsContext mainComponentsContext, Stage primaryStage, Toast toast) {
-        this.mainComponentsContext = mainComponentsContext;
+    public ScreenCreateProjectViewModel(Stage primaryStage, Toast toast) {
         this.stage = primaryStage;
         this.toast = toast;
     }
@@ -49,7 +47,7 @@ public class ScreenCreateProjectViewModel {
                 errorContainer.getChildren().clear();
                 this.toast.show("Project was created!");
 
-                stage.setScene(AppScenes.HomeScene(mainComponentsContext, stage));
+                stage.setScene(AppScenes.HomeScene(stage));
             }
         } catch (Exception e) {
             errorContainer.getChildren().setAll(Typography.error(e.getMessage()));

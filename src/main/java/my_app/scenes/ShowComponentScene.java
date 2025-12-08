@@ -23,7 +23,8 @@ public class ShowComponentScene extends Scene {
     MenuBar mb = new MenuBar();
 
     @Component
-    Home home = new Home(stage, componentsContext, true);
+    //Home home = new Home(stage, componentsContext, true);
+    Home home = new Home(stage, true);
 
     @Component
     static BorderPane root = new BorderPane();

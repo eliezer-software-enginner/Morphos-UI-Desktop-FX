@@ -49,7 +49,7 @@ public class App extends Application {
         //final var mainScene = new MainScene();
         //primaryStage.setScene(AppScenes.SplashScene(componentsContext, primaryStage));
         //primaryStage.setScene(AppScenes.CreateProjectScene(componentsContext, primaryStage));
-        primaryStage.setScene(AppScenes.HomeScene(componentsContext, primaryStage));
+        primaryStage.setScene(AppScenes.HomeScene(primaryStage));
         //primaryStage.setScene(AppScenes.PrimitiveListFormScene());
 
 //        AllWindows.showWindowForDataTableForm_PrimitiveData(() -> {

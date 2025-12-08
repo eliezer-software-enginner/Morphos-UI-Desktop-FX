@@ -38,8 +38,8 @@ public class Home extends BorderPane {
 
     HomeViewModel viewModel;
 
-    public Home(Stage theirStage, ComponentsContext componentsContext, boolean openComponentScene) {
-        this.viewModel = new HomeViewModel(componentsContext);
+    public Home(Stage theirStage, boolean openComponentScene) {
+        this.viewModel = new HomeViewModel();
 
         this.screensTabs.setAlignment(Pos.CENTER_LEFT);
 

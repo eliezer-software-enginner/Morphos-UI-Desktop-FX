@@ -17,8 +17,8 @@ public class ScreenCreateProject extends VBox {
 
     Toast toast = new Toast();
 
-    public ScreenCreateProject(ComponentsContext mainComponentsContext, Stage primaryStage) {
-        this.viewModel = new ScreenCreateProjectViewModel(mainComponentsContext, primaryStage, toast);
+    public ScreenCreateProject(Stage primaryStage) {
+        this.viewModel = new ScreenCreateProjectViewModel(primaryStage, toast);
 
         getChildren().addAll(
                 Typography.title(Commons.AppName),

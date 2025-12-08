@@ -2,6 +2,7 @@ package my_app.scenes;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import my_app.App;
 import my_app.contexts.ComponentsContext;
 import my_app.data.Commons;
 import my_app.screens.DataTableScreen.DataTableScreen;
@@ -21,6 +22,10 @@ public class AppScenes {
     final static String componentsCssFile = Path.of("/components.css").toFile().getAbsolutePath();
     final static String tabCssFile = Path.of("/tab.css").toFile().getAbsolutePath();
 
+    public static void SwapToScene(Scene scene) {
+        App.stage.setScene(scene);
+    }
+
     public static Scene SplashScene(ComponentsContext mainComponentsContext, Stage theirStage) {
         var scene = new Scene(new SplashScreen(mainComponentsContext, theirStage));
 
@@ -35,8 +40,8 @@ public class AppScenes {
     }
 
 
-    public static Scene CreateProjectScene(ComponentsContext mainComponentsContext, Stage theirStage) {
-        var scene = new Scene(new ScreenCreateProject(mainComponentsContext, theirStage));
+    public static Scene CreateProjectScene(Stage theirStage) {
+        var scene = new Scene(new ScreenCreateProject(theirStage));
 
         var screenSize = Commons.ScreensSize._700x500;
         theirStage.setWidth(screenSize.width);
@@ -51,8 +56,8 @@ public class AppScenes {
         return scene;
     }
 
-    public static Scene HomeScene(ComponentsContext mainComponentsContext, Stage theirStage) {
-        var scene = new Scene(new Home(theirStage, mainComponentsContext, false));
+    public static Scene HomeScene(Stage theirStage) {
+        var scene = new Scene(new Home(theirStage, false));
 
         var screenSize = Commons.ScreensSize._1500x900;
         theirStage.setWidth(screenSize.width);

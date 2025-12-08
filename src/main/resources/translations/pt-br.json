@@ -66,5 +66,6 @@
   "chooseType": "Escolha o tipo",
   "selectIconsPackToViewIconsHere": "Selecione um pacote de icones para visualizar os ícones aqui",
   "screenName": "Nome da Screen",
-  "update": "Atualizar"
+  "update": "Atualizar",
+  "exit": "Sair"
 }

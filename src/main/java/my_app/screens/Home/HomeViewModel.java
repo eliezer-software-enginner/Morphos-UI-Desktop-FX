@@ -10,6 +10,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+import my_app.App;
 import my_app.FileManager;
 import my_app.components.ColumnComponent;
 import my_app.components.Components;
@@ -23,6 +24,7 @@ import my_app.data.ComponentData;
 import my_app.data.StateJson_v3;
 import my_app.data.ViewContractv2;
 import my_app.mappers.CanvaMapper;
+import my_app.scenes.AppScenes;
 import my_app.scenes.SettingsScene;
 import my_app.screens.Home.components.ScreenTab;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
@@ -431,9 +433,10 @@ public class HomeViewModel {
         MenuItem itemSalvar = new MenuItem(translation.common().save());
         MenuItem itemSaveAs = new MenuItem(translation.common().saveAs());
         MenuItem itemLoad = new MenuItem(translation.common().load());
+        MenuItem itemSair = new MenuItem(translation.exit());
         MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
 
-        menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemContribute);
+        menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemSair, itemContribute);
 
         //itemNovo.setOnAction(_ -> handleNew(home, stage));
         itemSalvar.setOnAction(_ -> handleSave());
@@ -444,6 +447,10 @@ public class HomeViewModel {
             } catch (RuntimeException e) {
                 home.leftSide.notifyError(e.getMessage());
             }
+        });
+
+        itemSair.setOnAction(_ -> {
+            AppScenes.SwapToScene(AppScenes.CreateProjectScene(App.stage));
         });
 
         // itemLoad.setOnAction(_ -> handleClickLoad(home, stage));
@@ -500,8 +507,7 @@ public class HomeViewModel {
     public record PrefsData(String last_project_saved_path, String language) {
     }
 
-    public HomeViewModel(ComponentsContext componentsContext) {
-        this.componentsContext = componentsContext;
+    public HomeViewModel() {
     }
 
     private File uiJsonFile;

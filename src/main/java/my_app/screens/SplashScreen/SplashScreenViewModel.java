@@ -41,14 +41,14 @@ public class SplashScreenViewModel {
                 final var absolutePath = prefsData.last_project_saved_path();
                 final var projectFile = new File(absolutePath);
                 if (!projectFile.exists()) {
-                    stage.setScene(AppScenes.CreateProjectScene(mainComponentsContext, stage));
+                    stage.setScene(AppScenes.CreateProjectScene(stage));
                     stage.centerOnScreen();
                     return;
                 }
 
-                stage.setScene(AppScenes.HomeScene(mainComponentsContext, stage));
+                stage.setScene(AppScenes.HomeScene(stage));
             } catch (Exception e) {
-                stage.setScene(AppScenes.CreateProjectScene(mainComponentsContext, stage));
+                stage.setScene(AppScenes.CreateProjectScene(stage));
                 stage.centerOnScreen();
             }
         });
