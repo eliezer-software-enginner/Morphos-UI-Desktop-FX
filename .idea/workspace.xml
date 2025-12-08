@@ -4,40 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo informação na rightSide">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="alternando entre screens">
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tab.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Project.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSide.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_LAYOUT_REFACTORING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_REFACTORING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_STYLE_REUSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/toolkit/theme/README_THEME.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/components.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +71,7 @@
     "Application.App[Linux].executor": "Run",
     "Application.App_base.executor": "Run",
     "Application.Commons.executor": "Run",
+    "Application.IconDatabase.executor": "Run",
     "Application.MainApp.executor": "Run",
     "Application.SceneGraph.executor": "Run",
     "Application.TranslationContext.executor": "Run",
@@ -168,10 +148,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="my_app.scenes.MainApp" />
+    <configuration name="IconDatabase" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.scenes.IconsScene.IconDatabase" />
       <module name="my_app" />
-      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="my_app.scenes.IconsScene.*" />
@@ -237,19 +216,19 @@
     <list>
       <item itemvalue="Application.run app ratinho" />
       <item itemvalue="Application.App[Linux]" />
+      <item itemvalue="Application.IconDatabase" />
       <item itemvalue="Application.AppNavTest" />
       <item itemvalue="Application.Commons" />
-      <item itemvalue="Application.MainApp" />
       <item itemvalue="Application.SceneGraph" />
       <item itemvalue="Application.run layout preview" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.IconDatabase" />
         <item itemvalue="Application.App[Linux]" />
         <item itemvalue="Application.Commons" />
         <item itemvalue="Application.AppNavTest" />
         <item itemvalue="Application.run layout preview" />
-        <item itemvalue="Application.SceneGraph" />
       </list>
     </recent_temporary>
   </component>
@@ -260,14 +239,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00015" summary="centralizing components horizontally">
-      <option name="closed" value="true" />
-      <created>1762973871422</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1762973871422</updated>
     </task>
     <task id="LOCAL-00016" summary="image is now added as import">
       <option name="closed" value="true" />
@@ -653,7 +624,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765196525935</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="alternando entre screens">
+      <option name="closed" value="true" />
+      <created>1765212544762</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1765212544762</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -668,7 +647,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added annotation @Component for aesthetics" />
     <MESSAGE value="added more icons and also a scrollpane" />
     <MESSAGE value="creating primitive list" />
     <MESSAGE value="retrieving data from table data" />
@@ -693,7 +671,8 @@
     <MESSAGE value="carregando os componentes na leftside" />
     <MESSAGE value="componentes selecionados são marcados na leftside componentes na leftside" />
     <MESSAGE value="exibindo informação na rightSide" />
-    <option name="LAST_COMMIT_MESSAGE" value="exibindo informação na rightSide" />
+    <MESSAGE value="alternando entre screens" />
+    <option name="LAST_COMMIT_MESSAGE" value="alternando entre screens" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -745,7 +724,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/FileManager.java</url>
-          <line>186</line>
+          <line>221</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -765,7 +744,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>301</line>
+          <line>336</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -785,12 +764,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>367</line>
+          <line>402</line>
           <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>149</line>
+          <line>138</line>
           <option name="timeStamp" value="70" />
         </line-breakpoint>
       </breakpoints>

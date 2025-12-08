@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -25,6 +24,7 @@ import my_app.data.StateJson_v3;
 import my_app.data.ViewContractv2;
 import my_app.mappers.CanvaMapper;
 import my_app.scenes.SettingsScene;
+import my_app.screens.Home.components.ScreenTab;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import my_app.windows.AllWindows;
@@ -44,7 +44,7 @@ public class HomeViewModel {
     private Home home;
     private Stage stage;
 
-    StringProperty currentScreenId = new SimpleStringProperty();
+    public StringProperty currentScreenId = new SimpleStringProperty();
 
     BooleanProperty refreshScreensTabs = new SimpleBooleanProperty();
     public SimpleBooleanProperty leftItemsStateRefreshed = new SimpleBooleanProperty(false);
@@ -71,50 +71,10 @@ public class HomeViewModel {
 
             this.home.screensTabs.getChildren().clear();
             for (var screen : updatedProjectData.screens()) {
-                MenuButton menu = new MenuButton(screen.name);
-                MenuItem itemShowCode = new MenuItem(translation.optionsMenuMainScene().showCode());
+                ScreenTab tab = new ScreenTab(screen, this);
 
-                menu.setOnMouseClicked(ev -> {
-                    dataMap.clear();
-                    headerSelected.set(null);
-                    nodeSelected.set(null);
-                    leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
-
-                    IO.println("alvo: " + screen.name); // Nome é seguro, ID é crucial
-
-                    final String screenIdToLoad = screen.screen_id; // Capture o ID para uso no clique
-
-                    // 1. VERIFICAÇÃO DE ECONOMIA: Se a tela já está carregada, saia.
-                    if (this.currentScreenId.get() != null && this.currentScreenId.get().equals(screenIdToLoad)) {
-                        IO.println("Tela " + screen.name + " já está ativa. Pulando recarregamento.");
-                        return; // Sai do método sem carregar/processar
-                    }
-
-                    // SOLUÇÃO: Busque a versão MAIS RECENTE da tela no disco USANDO O ID
-                    final var latestProjectData = FileManager.getProjectData();
-                    final var latestScreenOptional = latestProjectData.screens().stream()
-                            .filter(s -> s.screen_id.equals(screenIdToLoad))
-                            .findFirst();
-
-                    if (latestScreenOptional.isPresent()) {
-                        // Carrega a tela diretamente do disco, garantindo o estado atualizado
-                        this.loadScreenAndApplyToCanva(latestScreenOptional.get());
-                    } else {
-                        IO.println("Erro: Tela com ID " + screenIdToLoad + " não encontrada ao clicar.");
-                    }
-
-                    // Re-executa o refresh do LeftSide
-                    leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
-                });
-                itemShowCode.setOnAction(ev -> {
-                    //AllWindows.showWindowForShowCode(componentsContext, canva);
-                });
-
-                menu.getItems().add(itemShowCode);
-
-                this.home.screensTabs.getChildren().add(menu);
+                this.home.screensTabs.getChildren().add(tab);
             }
-
             final var btnAdd = Components.ButtonPrimary("+");
             btnAdd.setOnMouseClicked(ev -> {
                 dataMap.clear();
@@ -141,6 +101,35 @@ public class HomeViewModel {
         });
 
         toggleRefreshScreenTabs();
+    }
+
+
+    public void handleTabClicked(String screenIdToLoad) {
+
+        // 1. VERIFICAÇÃO DE ECONOMIA: Se a tela já está carregada, saia.
+        if (this.currentScreenId.get() != null && this.currentScreenId.get().equals(screenIdToLoad)) {
+            IO.println("Tela já está ativa. Pulando recarregamento.");
+            return; // Sai do método sem carregar/processar
+        }
+
+        // Limpeza de estados globais
+        dataMap.clear();
+        headerSelected.set(null);
+        nodeSelected.set(null);
+        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+
+
+        // SOLUÇÃO: Busque a versão MAIS RECENTE da tela no disco USANDO O ID
+        final var latestProjectData = FileManager.getProjectData();
+        final var latestScreenOptional = latestProjectData.screens().stream()
+                .filter(s -> s.screen_id.equals(screenIdToLoad))
+                .findFirst();
+
+        if (latestScreenOptional.isPresent()) {
+            this.loadScreenAndApplyToCanva(latestScreenOptional.get());
+        } else {
+            IO.println("Erro: Tela com ID " + screenIdToLoad + " não encontrada ao clicar.");
+        }
     }
 
     private CanvaComponentV2 loadScreenAndApplyToCanva(StateJson_v3 screen) {
@@ -210,6 +199,52 @@ public class HomeViewModel {
         return false;
     }
 
+// HomeViewModel.java
+
+    /**
+     * Exclui uma tela do projeto, lida com a mudança de tela se a tela atual for removida,
+     * e atualiza a interface de abas.
+     *
+     * @param screenId O ID da tela a ser excluída.
+     */
+    public void deleteScreen(String screenId) {
+
+        // 1. Verificar se a tela sendo excluída é a tela atualmente visível.
+        boolean wasCurrentScreen = this.currentScreenId.get() != null
+                && this.currentScreenId.get().equals(screenId);
+
+        // 2. Excluir a tela do arquivo JSON (persiste a mudança no disco).
+        FileManager.deleteScreenFromProject(screenId); // Usando o nome que definimos anteriormente
+
+        // 3. Obter a lista atualizada de telas após a exclusão.
+        final var projectData = FileManager.getProjectData();
+        final var remainingScreens = projectData.screens();
+
+        if (remainingScreens.isEmpty()) {
+            // Cenário 3a: Não há mais telas. Crie uma nova tela padrão para evitar um estado vazio.
+            IO.println("Todas as telas foram excluídas. Criando uma nova tela padrão.");
+
+            final var newDefaultScreen = new StateJson_v3();
+            final var canvaGerado = loadScreenAndApplyToCanva(newDefaultScreen);
+
+            final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
+            FileManager.addScreenToProjectAndSave(updatedScreen);
+
+        } else if (wasCurrentScreen) {
+            // Cenário 3b: A tela ativa foi excluída. Carregue a ultima tela restante.
+            final var nextScreen = remainingScreens.getLast();
+            this.loadScreenAndApplyToCanva(nextScreen);
+        }
+
+        // 4. Forçar o redesenho da barra de abas.
+        toggleRefreshScreenTabs();
+
+        // 5. Limpeza de estados, se necessário
+        dataMap.clear();
+        headerSelected.set(null);
+        nodeSelected.set(null);
+        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+    }
 
     public record SelectedComponent(String type, Node node) {
     }

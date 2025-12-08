@@ -15,6 +15,41 @@ public class FileManager {
 
     // FileManager.java
 
+    /**
+     * Remove uma tela específica do projeto usando seu ID e salva as mudanças no disco.
+     *
+     * @param screenId O ID (UUID) da tela a ser excluída.
+     */
+    public static void deleteScreenFromProject(String screenId) {
+        if (screenId == null || screenId.isEmpty()) {
+            throw new IllegalArgumentException("O ID da tela não pode ser nulo ou vazio para a exclusão.");
+        }
+
+        try {
+            final var projectData = getProjectData();
+            // Assumimos que projectData.screens() retorna uma lista modificável.
+            var screens = projectData.screens();
+
+            // 1. Encontra e remove a tela pelo ID usando Streams.
+            boolean removed = screens.removeIf(screen -> screen.screen_id.equals(screenId));
+
+            if (removed) {
+                // 2. Persiste a mudança no arquivo JSON.
+                final var prefsData = getPrefsData();
+                writeDataAsJsonInFileInDisc(projectData, new File(prefsData.last_project_saved_path()));
+                IO.println("Project updated successfully: Screen with ID " + screenId + " was removed.");
+
+                // Opcional: Se você tem um mecanismo de cache interno, você o invalidaria aqui.
+
+            } else {
+                IO.println("Aviso: Tela com ID " + screenId + " não encontrada para exclusão.");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao deletar tela no projeto: " + e.getMessage());
+        }
+    }
+
     public static void addScreenToProjectAndSave(StateJson_v3 newScreen) {
         if (newScreen.screen_id == null || newScreen.screen_id.isEmpty()) {
             throw new IllegalArgumentException("Nova tela deve ter um 'screen_id'.");

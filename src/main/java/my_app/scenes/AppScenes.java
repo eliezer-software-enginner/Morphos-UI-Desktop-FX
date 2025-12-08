@@ -18,6 +18,9 @@ import java.nio.file.Path;
 
 public class AppScenes {
 
+    final static String componentsCssFile = Path.of("/components.css").toFile().getAbsolutePath();
+    final static String tabCssFile = Path.of("/tab.css").toFile().getAbsolutePath();
+
     public static Scene SplashScene(ComponentsContext mainComponentsContext, Stage theirStage) {
         var scene = new Scene(new SplashScreen(mainComponentsContext, theirStage));
 
@@ -44,7 +47,7 @@ public class AppScenes {
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);
 
-        scene.getStylesheets().add(Path.of("/components.css").toFile().getAbsolutePath());
+        scene.getStylesheets().add(componentsCssFile);
         return scene;
     }
 
@@ -57,8 +60,11 @@ public class AppScenes {
         theirStage.centerOnScreen();
         theirStage.setResizable(true);
 
+
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);
+        scene.getStylesheets().add(tabCssFile);
+
         return scene;
     }
 

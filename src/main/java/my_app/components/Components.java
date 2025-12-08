@@ -80,6 +80,7 @@ public class Components {
     @Component
     private static final TranslationContext.Translation translation = TranslationContext.instance().get();
 
+
     @Component
     public static Node ButtonChooseGraphicContent(ButtonComponentv2 nodeTarget) {
         var btn = ButtonPrimary(translation.chooseIcon());

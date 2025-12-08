@@ -1,0 +1,51 @@
+/* Cores base */
+.tab-selected-color {
+    /* Assumindo azul para seleção, ajuste conforme sua MaterialTheme */
+    -fx-background-color: #1e88e5; /* Ex: Azul vibrante */
+}
+
+.tab-container {
+    -fx-padding: 5 10 0 10; /* Top (0 para o chão), Right, Bottom, Left */
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+/* Estilo da tab não selecionada */
+.screen-tab-content {
+    -fx-background-color: #424242; /* Cor de fundo da tab (cinza escuro) */
+    -fx-background-radius: 12px 12px 0 0; /* Bordas arredondadas (top-left, top-right, bottom-right, bottom-left) */
+    -fx-padding: 8 10 8 10; /* Espaçamento interno */
+    -fx-text-fill: white;
+    -fx-border-width: 0;
+}
+
+/* Estilo da tab selecionada */
+.screen-tab-content.selected {
+    -fx-background-color: #303030; /* Fundo levemente diferente para a tab selecionada */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Estilo do indicador (o "chão azul") */
+.screen-tab-indicator {
+    -fx-background-color: transparent;
+    -fx-pref-height: 4px; /* Altura do indicador */
+    -fx-max-height: 4px;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.screen-tab-indicator.selected {
+    -fx-background-color: #1e88e5; /* Cor azul do "chão" */
+}
+
+/* Botão de Fechar/Excluir */
+.close-tab-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+
+.close-tab-button:hover {
+    -fx-text-fill: #cccccc;
+}
