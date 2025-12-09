@@ -28,15 +28,14 @@ public class ChildHandlerComponent extends HBox {
 
         config();
 
-        // Usamos Set para evitar duplicados
         Set<String> uniqueItems = new HashSet<>();
-        uniqueItems.add("None"); // adiciona o item padrão
+        uniqueItems.add("None");
 
-        // Itera sobre os GRUPOS de componentes
+        // Itera sobre os componentes no ViewModel
         for (var entry : viewModel.dataMap.entrySet()) {
             String componentType = entry.getKey();
 
-            // Filtro 2: ignora ColumnItens
+            // Filtro 1: ignora ColumnItens como filhos
             if (componentType.equals("column items")) {
                 continue;
             }
@@ -45,25 +44,23 @@ public class ChildHandlerComponent extends HBox {
             for (var nodeWrapper : entry.getValue()) {
                 String id = nodeWrapper.getCurrentNode().getId();
 
-                // Filtro 1: ignora o próprio id
+                // Filtro 2: ignora o próprio id
                 if (id.equals(self.getId())) {
                     continue;
                 }
 
-                uniqueItems.add(id); // garante unicidade
+                uniqueItems.add(id);
             }
         }
 
-        // Garante que o item atual também esteja na lista
-        if (currentNodeId.get() != null && !currentNodeId.get().isEmpty()) {
-            uniqueItems.add(currentNodeId.get());
+        // Garante que o ID atualmente selecionado esteja na lista (evita que a ComboBox fique vazia se o item tiver sido deletado)
+        String currentId = currentNodeId.get();
+        if (currentId != null && !currentId.isEmpty() && !currentId.equals("None")) {
+            uniqueItems.add(currentId);
         }
 
-        // Adiciona todos ao combo de uma vez
         combo.getItems().setAll(uniqueItems);
-
-        // Mantém o valor selecionado
-        combo.setValue(currentNodeId.get());
+        combo.setValue(currentId);
 
         combo.valueProperty().addListener((obs, old, newVal) -> {
             if (newVal != null && !newVal.equals(old)) {
@@ -76,7 +73,6 @@ public class ChildHandlerComponent extends HBox {
     }
 
     void config() {
-
         setSpacing(10);
     }
 }

@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="refatoração home - homeviewmodel (mvvm)">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="alterada cor default do canva">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/PrefsData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,14 +242,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00026" summary="adding icon">
-      <option name="closed" value="true" />
-      <created>1763305932378</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1763305932378</updated>
     </task>
     <task id="LOCAL-00027" summary="changing position of icon">
       <option name="closed" value="true" />
@@ -637,7 +627,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765284761204</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="alterada cor default do canva">
+      <option name="closed" value="true" />
+      <created>1765290180965</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1765290180966</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -652,7 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refatorações e mudando nome da screen" />
     <MESSAGE value="salvando tabledata de lista simples" />
     <MESSAGE value="salvando tabledata de lista e exibindo na ui" />
     <MESSAGE value="validações em salvar registros em TableData list" />
@@ -677,7 +674,8 @@
     <MESSAGE value="saindo do projeto atual" />
     <MESSAGE value="escolhendo projeto para carregar" />
     <MESSAGE value="refatoração home - homeviewmodel (mvvm)" />
-    <option name="LAST_COMMIT_MESSAGE" value="refatoração home - homeviewmodel (mvvm)" />
+    <MESSAGE value="alterada cor default do canva" />
+    <option name="LAST_COMMIT_MESSAGE" value="alterada cor default do canva" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -719,7 +717,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java</url>
-          <line>179</line>
+          <line>166</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

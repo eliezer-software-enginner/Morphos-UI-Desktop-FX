@@ -11,6 +11,7 @@ import my_app.FileManager;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.ButtonRemoverComponent;
+import my_app.components.shared.ChildHandlerComponent;
 import my_app.components.shared.ItemsAmountPreviewComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
@@ -23,9 +24,9 @@ import java.util.List;
 // ColumnItens.java
 public class ColumnComponent extends VBox implements ViewContractv2<ColumnComponentData> {
     SimpleStringProperty currentChildIdState = new SimpleStringProperty("None");
-    SimpleStringProperty onEmptyComponentState = new SimpleStringProperty("None"); // Novo padrão: "None"
+    SimpleStringProperty onEmptyComponentState = new SimpleStringProperty("None");
 
-    public SimpleIntegerProperty childrenAmountState = new SimpleIntegerProperty(3);
+    public SimpleIntegerProperty childrenAmountState = new SimpleIntegerProperty(2);
     public StringProperty name = new SimpleStringProperty();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
@@ -36,12 +37,15 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
 
     public String dataTableVariableName;
 
+    private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+    private List<String> valuesOfVariableName = new ArrayList<>();
+
     public ColumnComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
         setSpacing(5);
         setStyle("-fx-background-color:red;");
 
         setAlignment(Pos.CENTER);
-        setPrefWidth(Region.USE_COMPUTED_SIZE); // Permite que o VBox se ajuste ao conteúdo/pai
+        setPrefWidth(Region.USE_COMPUTED_SIZE);
 
         setId(String.valueOf(System.currentTimeMillis()));
 
@@ -53,7 +57,6 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
 
     @Override
     public void applyData(ColumnComponentData data) {
-        // Limpa os filhos existentes antes de aplicar o novo estado
         getChildren().clear();
 
         this.setLayoutX(data.x());
@@ -70,9 +73,10 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
         isDeleted = data.isDeleted();
         this.dataTableVariableName = data.dataTableVariableName();
 
+        // Carrega os valores da variável (mantido, pois é um cache de dados, não de componentes)
+        valuesOfVariableName.clear();
         valuesOfVariableName.addAll(FileManager.getValuesFromVariableName(data.dataTableVariableName()));
 
-        // 3. Chamar a lógica centralizada (permanece igual)
         recreateChildren();
     }
 
@@ -91,49 +95,36 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
         isDeleted = true;
     }
 
-    private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
-    private final List<ViewContractv2<?>> localComponents = new ArrayList<>();
-
     // -------------------------------------------------------------------
-    // NOVO MÉTODO: Lógica Centralizada para Recriar os Filhos
+    // MÉTODO AJUSTADO: Lógica Centralizada para Recriar os Filhos
     // -------------------------------------------------------------------
     public void recreateChildren() {
         int amount = childrenAmountState.get();
 
-        // 1. Limpa todos os filhos existentes
         getChildren().clear();
 
         if (amount == 0) {
             renderComponentForStateEmpty();
-            return; // Encerra a função, pois o placeholder foi adicionado
+            return;
         }
 
-        // 2. SE A QUANTIDADE FOR MAIOR QUE ZERO...
         String currentChildId = currentChildIdState.get();
+        if (currentChildId.equals("None")) {
+            return;
+        }
+
         final var existingNode = searchNode(currentChildId);
 
         var copies = new ArrayList<Node>();
-        boolean nodeOriginalRemoved = false;
 
         if (valuesOfVariableName.size() >= amount) {
             for (int i = 0; i < amount; i++) {
                 final var newNodeWrapper =
                         (ViewContractv2<ComponentData>) cloneExistingNode((ViewContractv2<ComponentData>) existingNode, i);
 
-
-                // Cria uma NOVA cópia do nó a partir dos dados originais
-                // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
                 var node = newNodeWrapper.getCurrentNode();
-                node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
-
-                if (!nodeOriginalRemoved) {
-                    localComponents.add(existingNode);
-                    this.viewModel.removeComponentFromAllPlaces(existingNode, canva);
-                }
-
-                // Aplicamos o ID da cópia
+                node.setMouseTransparent(true); // Impede a interação com as cópias
                 copies.add(node);
-
             }
         }
 
@@ -141,33 +132,29 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
     }
 
     private void renderComponentForStateEmpty() {
-        // SE A QUANTIDADE FOR ZERO, exibe o componente de placeholder
         String emptyComponentId = onEmptyComponentState.get();
 
         if (emptyComponentId.equals("None") || emptyComponentId.isEmpty()) {
-            // Não há placeholder para exibir
             return;
         }
 
-        final var existingNode = searchNode(emptyComponentId);
-        final var newNodeWrapper = cloneExistingNode((ViewContractv2<ComponentData>) existingNode, -1);
+        try {
+            final var existingNode = searchNode(emptyComponentId);
+            final var newNodeWrapper = cloneExistingNode((ViewContractv2<ComponentData>) existingNode, -1);
 
-        //aqui eu posso remover ele do header e do canva
-        if (newNodeWrapper != null) {
-            // Cria uma NOVA cópia do nó a partir dos dados originais
-            // ⚠️ PASSO CRUCIAL: Torna o placeholder transparente ao mouse
-            var node = newNodeWrapper.getCurrentNode();
-            node.setMouseTransparent(true); // <-- ADICIONAR ESTA LINHA
+            if (newNodeWrapper != null) {
+                var node = newNodeWrapper.getCurrentNode();
+                node.setMouseTransparent(true); // Impede a interação com a cópia placeholder
 
-            //adiciona em cache local e remove do contexto
-            localComponents.add(existingNode);
-
-            this.viewModel.removeComponentFromAllPlaces(existingNode, canva);
-            getChildren().add(node);
+                getChildren().add(node);
+            }
+        } catch (IllegalStateException e) {
+            System.err.println("Aviso: Componente placeholder " + emptyComponentId + " não encontrado: " + e.getMessage());
         }
     }
 
     private ViewContractv2<? extends ComponentData> cloneExistingNode(ViewContractv2<ComponentData> existingNode, int currentIndex) {
+        // Lógica de clonagem mantida, pois é necessária para criar as cópias.
         var originalData = existingNode.getData();
         var type = originalData.type();
 
@@ -208,27 +195,18 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
         }
     }
 
-    private ViewContractv2<?> searchNode(String emptyComponentId) {
-        // Busca o nó original pelo ID e faz a DEEP COPY
-        var op = this.viewModel.SearchNodeById(emptyComponentId);
-        ViewContractv2<?> existingNode;
-
-        if (op.isPresent()) {
-            existingNode = op.get();
-        } else {
-            existingNode = localComponents.stream().
-                    filter(it -> it.getCurrentNode().getId().equals(emptyComponentId))
-                    .findFirst().get();
-        }
-        return existingNode;
+    // MÉTODO AJUSTADO: Agora depende SOMENTE da ViewModel
+    private ViewContractv2<?> searchNode(String componentId) {
+        var optionalNode = this.viewModel.SearchNodeById(componentId);
+        return optionalNode.orElseThrow(() -> new IllegalStateException("Template component with ID " + componentId + " not found in ViewModel."));
     }
 
     @Override
     public void appearance(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
-                //    new ChildHandlerComponent("Child component:", this, currentChildIdState, componentsContext),
+                new ChildHandlerComponent("Child component:", this, currentChildIdState, this.viewModel),
                 new ItemsAmountPreviewComponent(this),
-                //  new ChildHandlerComponent("Component (if empty):", this, onEmptyComponentState, componentsContext),
+                // ChildHandlerComponent para onEmptyComponentState removido daqui, se não era usado
                 Components.LabelWithComboBox("Data list", this, "data-list"),
                 new ButtonRemoverComponent(this, this.viewModel)
         );
@@ -250,22 +228,16 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
     @Override
     public ColumnComponentData getData() {
 
-        String childId = null;
-        if (!getChildren().isEmpty()) {
-            Node firstChild = getChildren().getFirst();
-            childId = firstChild.getId();
-        }
+        String childId = currentChildIdState.get().equals("None") ? null : currentChildIdState.get();
 
         String alternativeChildId = onEmptyComponentState.get().equals("None") ? null : onEmptyComponentState.get();
         var location = Commons.NodeInCanva(this);
 
         // Retorna o novo ColumnComponentData
         return new ColumnComponentData(
-                // NOVO: Adicione o tipo aqui
                 "column items",
                 this.getId(),
-                // currentChild.get(),
-                childId,
+                childId, // Usa o ID do estado (fonte correta)
                 alternativeChildId,
                 (int) getLayoutX(),
                 (int) getLayoutY(),
@@ -277,19 +249,14 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
         );
     }
 
-    private List<String> valuesOfVariableName = new ArrayList<>();
-
     public void setDataTableVariableName(String dataTableVariableName) {
         this.dataTableVariableName = dataTableVariableName;
 
-        IO.println("value selected: " + dataTableVariableName);
         valuesOfVariableName.clear();
 
         var values = FileManager.getValuesFromVariableName(dataTableVariableName);
-        IO.println(values);
 
         valuesOfVariableName.addAll(values);
         recreateChildren();
     }
-
 }
