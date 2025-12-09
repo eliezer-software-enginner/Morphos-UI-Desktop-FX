@@ -465,6 +465,7 @@ public class HomeViewModel {
         });
 
         itemSair.setOnAction(_ -> {
+            FileManager.updateCurrentProjectFIleInPrefs(null);
             AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(App.stage));
         });
 

@@ -168,6 +168,11 @@ public class ScreenCreateProject extends VBox {
 
         for (String path : projects) {
 
+            if (path == null) {
+                container.getChildren().add(Typography.caption("Error"));
+                continue;
+            }
+
             // 1. Extrair nome e caminho
             File projectFile = new File(path);
             String name = projectFile.getName().replace(".json", "");

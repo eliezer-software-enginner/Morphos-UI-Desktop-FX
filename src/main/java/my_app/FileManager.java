@@ -143,6 +143,19 @@ public class FileManager {
         }
     }
 
+    public static void updateCurrentProjectFIleInPrefs(String absolutePathOfCurrentProject) {
+        var prefsData = getPrefsData();
+        var prefsFile = getPrefsFile();
+
+        var defaultPrefs = new PrefsDatav2(absolutePathOfCurrentProject, prefsData.language(), prefsData.recent_projects_paths());
+        try {
+            writeDataAsJsonInFileInDisc(defaultPrefs, prefsFile.toFile());
+            IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 
     private static void saveDataInPrefs(String absolutePathOfCurrentProject) {
         var prefsFile = getPrefsFile();
