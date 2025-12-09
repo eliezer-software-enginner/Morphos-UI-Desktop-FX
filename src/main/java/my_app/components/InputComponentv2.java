@@ -7,14 +7,14 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.InputComponentData;
 import my_app.data.ViewContractv2;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
 public class InputComponentv2 extends TextField implements ViewContractv2<InputComponentData> {

@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="saindo do projeto atual">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="escolhendo projeto para carregar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponentv2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +28,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -246,14 +249,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00024" summary="icons scene">
-      <option name="closed" value="true" />
-      <created>1763239522603</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1763239522603</updated>
     </task>
     <task id="LOCAL-00025" summary="icons scene - optimizations">
       <option name="closed" value="true" />
@@ -639,7 +634,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765243113442</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="escolhendo projeto para carregar">
+      <option name="closed" value="true" />
+      <created>1765281769246</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1765281769246</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -654,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="algumas refatorações e criando projeto e carregando-o" />
     <MESSAGE value="refatorações e salvando tela no arquivo de projeto" />
     <MESSAGE value="refatorações e mudando nome da screen" />
     <MESSAGE value="salvando tabledata de lista simples" />
@@ -679,7 +681,8 @@
     <MESSAGE value="nova estrutura com projetos recentes" />
     <MESSAGE value="testes en create project view" />
     <MESSAGE value="saindo do projeto atual" />
-    <option name="LAST_COMMIT_MESSAGE" value="saindo do projeto atual" />
+    <MESSAGE value="escolhendo projeto para carregar" />
+    <option name="LAST_COMMIT_MESSAGE" value="escolhendo projeto para carregar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -745,12 +748,12 @@
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel_old.java</url>
           <line>364</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel_old.java</url>
           <line>430</line>
           <option name="timeStamp" value="68" />
         </line-breakpoint>
@@ -770,7 +773,7 @@
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel_old.java</url>
           <line>75</line>
           <option name="timeStamp" value="88" />
         </line-breakpoint>

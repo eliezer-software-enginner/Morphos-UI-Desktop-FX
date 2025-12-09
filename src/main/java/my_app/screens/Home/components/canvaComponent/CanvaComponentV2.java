@@ -22,13 +22,12 @@ import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
-import my_app.screens.Home.Home.VisualNodeCallback;
 import my_app.screens.Home.HomeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static my_app.screens.Home.HomeViewModel.*;
+import static my_app.screens.Home.HomeViewModel.SelectedComponent;
 
 public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaComponentDatav2> {
     boolean isDeleted = false;
@@ -153,23 +152,6 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     }
 
 
-    @Deprecated
-    public void addElementDragable(Node node, VisualNodeCallback callback) {
-        // posição inicial centralizada
-        double relX = 0.5;
-        double relY = 0.5;
-
-        node.setLayoutX((getWidth() - node.prefWidth(-1)) * relX);
-        node.setLayoutY((getHeight() - node.prefHeight(-1)) * relY);
-
-        // clique = seleciona
-        node.setOnMouseClicked(_ -> callback.set(node));
-
-        enableDrag(node, relX, relY);
-
-        getChildren().add(node);
-    }
-
     public void addElementDragable(Node node, boolean putInCenter) {
         // posição inicial centralizada
         double relX = 0.5;
@@ -215,12 +197,6 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 new KeyFrame(Duration.millis(600), new KeyValue(node.translateXProperty(), 0)));
         timeline.setCycleCount(1);
         timeline.play();
-    }
-
-    @Deprecated
-    public void setOnClickMethodToNode(Node node, VisualNodeCallback callback) {
-        // clique = seleciona
-        node.setOnMouseClicked(e -> callback.set(node));
     }
 
     private void enableDrag(Node node, double relX, double relY) {
@@ -329,7 +305,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 translation.screenName(), translation.update(),
                 this, "screen-name", () -> {
                     FileManager.updateScreenNameInProject(screenFatherId, name);
-                    viewModel.toggleRefreshScreenTabs();
+                    //  viewModel.toggleRefreshScreenTabs();
                 }));
     }
 

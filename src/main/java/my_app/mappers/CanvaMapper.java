@@ -11,6 +11,7 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
 public class CanvaMapper {
+
     public static StateJson_v3 toStateJson(CanvaComponentV2 canva, HomeViewModel homeViewModel) {
         final var nodeSelected = homeViewModel.nodeSelected.get();
         final var headerSelected = homeViewModel.headerSelected.get();

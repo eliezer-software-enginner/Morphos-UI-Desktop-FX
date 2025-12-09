@@ -11,8 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import my_app.components.Components;
-import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
@@ -21,6 +19,8 @@ import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.ImageComponentData;
 import my_app.data.ViewContractv2;
+import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
 public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageComponentData> {

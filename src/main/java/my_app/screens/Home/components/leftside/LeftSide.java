@@ -9,10 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.HomeViewModel;
+import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import toolkit.Component;
 

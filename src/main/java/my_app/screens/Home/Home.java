@@ -1,115 +1,234 @@
 package my_app.screens.Home;
 
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import my_app.contexts.ComponentsContext;
+import my_app.components.Components;
+import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.data.StateJson_v3;
 import my_app.screens.Home.components.RightSidev2;
+import my_app.screens.Home.components.ScreenTab;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.screens.Home.components.leftside.LeftSide;
+import my_app.themes.Typography;
+import my_app.windows.AllWindows;
 import toolkit.Component;
 
 import static my_app.components.shared.UiComponents.MenuBarPrimary;
 
 public class Home extends BorderPane {
+
+    // --- DEPENDÊNCIAS ---
+    private final HomeViewModel viewModel;
+    private final TranslationContext.Translation translation = TranslationContext.instance().get();
+
+    // --- COMPONENTES DE UI ---
     @Component
-    MenuBar menuBar = MenuBarPrimary();
+    private final MenuBar menuBar;
 
     @Component
-    public LeftSide leftSide;
+    public LeftSide leftSide; // Mantemos público caso precise ser acessado externamente, mas idealmente seria privado
 
     @Component
     public ScrollPane editor = new ScrollPane();
 
     @Component
     public VBox canvaHolder = new VBox(5);
+
     @Component
     public HBox screensTabs = new HBox(5);
-    public CanvaComponentV2 currentCanva;
 
-    @FunctionalInterface
-    public interface VisualNodeCallback {
-        void set(Node n);
-    }
+    // Wrapper para o RightSide para manter tamanho fixo
+    private final StackPane rightWrapper = new StackPane();
 
-    HomeViewModel viewModel;
+    // Flag de configuração (mantida do seu código original)
+    private final boolean openComponentScene;
 
-    public Home(Stage theirStage, boolean openComponentScene) {
-        this.viewModel = new HomeViewModel();
+    public Home(Stage stage, boolean openComponentScene) {
+        this.openComponentScene = openComponentScene;
 
-        this.screensTabs.setAlignment(Pos.CENTER_LEFT);
+        // 1. Inicializa a ViewModel
+        this.viewModel = new HomeViewModel(stage);
 
-        viewModel.init(this, theirStage);
+        // 2. Constrói a UI Estática (Menu, Layouts vazios)
+        this.menuBar = createMenuBar();
 
+        configLayout();
+        configEditorStyle();
+
+        // Montagem do Layout Principal
         setTop(menuBar);
-        setLeft(this.leftSide);
 
-        //center
-        editor.setContent(currentCanva);
-        editor.setFitToWidth(false);
-        editor.setFitToHeight(false);
-
-        //background-color is border
-//        editor.setStyle("-fx-background-color:%s;-fx-background: %s"
-//                .formatted("red",
-//                        "yellow"));
-
-//        editor.setStyle("-fx-background-color:%s;-fx-background: %s"
-//                .formatted(MaterialTheme.getInstance().getSurfaceColorStyle(),
-//                        MaterialTheme.getInstance().getSurfaceColorStyle()));
-
-        editor.getStyleClass().setAll("surface-color");
-        if (openComponentScene) {
-            currentCanva.setPrefSize(370, 250);
-            var style = currentCanva.getStyle();
-            var updated = Commons.UpdateEspecificStyle(style, "-fx-background-color", "transparent");
-
-            editor.setStyle("""
-                        -fx-background-color: transparent;
-                        -fx-background: transparent;
-                    """);
-
-            currentCanva.setStyle(updated);
-        }
-        // scrollPane mostra o canva com barras se for maior que a janela
-
-        // setCenter(this.canva);
-        //setCenter(editor);
-
+        // O LeftSide e o RightSide serão criados quando o primeiro Canva for carregado
+        // (via listener do activeCanva)
 
         canvaHolder.getChildren().addAll(screensTabs, editor);
         setCenter(canvaHolder);
 
-        var rightSide = new RightSidev2(currentCanva, this.viewModel);
-        StackPane rightWrapper = new StackPane(rightSide);
         rightWrapper.setMinWidth(Region.USE_PREF_SIZE);
         rightWrapper.setMaxWidth(Region.USE_PREF_SIZE);
         setRight(rightWrapper);
 
-        //StackPane.setAlignment(rightSide, Pos.CENTER_RIGHT);
-
-
-        //setRight(new RightSide(componentsContext, canva));
-
         getStyleClass().add("surface-color");
 
+        // 3. INICIA OS BINDINGS (A Mágica do MVVM)
+        initBindings();
 
+        // 4. Pede para a ViewModel carregar os dados iniciais
+        viewModel.init();
     }
 
-    //chamado no init()
-    public void updateCanvaInEditor(CanvaComponentV2 newCanva) {
-        this.currentCanva = newCanva; // Atualiza a referência
-        if (this.leftSide == null) {
-            this.leftSide = new LeftSide(newCanva, this.viewModel);
-            this.leftSide.updateCanva(newCanva);
-        } else {
-            this.leftSide.updateCanva(newCanva); // Talvez o LeftSide precise ser atualizado também
+    private void configLayout() {
+        this.screensTabs.setAlignment(Pos.CENTER_LEFT);
+    }
+
+    private void configEditorStyle() {
+        editor.setFitToWidth(false);
+        editor.setFitToHeight(false);
+        editor.getStyleClass().setAll("surface-color");
+
+        // Lógica de estilo transparente (do seu código original)
+        if (openComponentScene) {
+            editor.setStyle("""
+                        -fx-background-color: transparent;
+                        -fx-background: transparent;
+                    """);
+        }
+    }
+
+    /**
+     * Configura os ouvintes (listeners) que reagem às mudanças na ViewModel.
+     */
+    private void initBindings() {
+        // A. Ouve mudanças na lista de abas (Adição/Remoção de telas)
+        viewModel.screenTabs.addListener((ListChangeListener<StateJson_v3>) c -> {
+            updateTabsUI();
+        });
+
+        // B. Ouve mudanças no Canva Ativo (Troca de aba ou carregamento inicial)
+        viewModel.activeCanva.addListener((obs, oldCanva, newCanva) -> {
+            if (newCanva != null) {
+                updateEditorContent(newCanva);
+            }
+        });
+    }
+
+    /**
+     * Reconstrói a barra de abas baseada na lista da ViewModel.
+     */
+    private void updateTabsUI() {
+        screensTabs.getChildren().clear();
+
+        for (var screen : viewModel.screenTabs) {
+            // Cria a Tab passando a ViewModel (para lidar com cliques/exclusão)
+            ScreenTab tab = new ScreenTab(screen, viewModel);
+            screensTabs.getChildren().add(tab);
         }
 
-        this.editor.setContent(newCanva); // <<< ESSA É A LINHA QUE FALTAVA
+        // Botão de Adicionar Nova Tela
+        var btnAdd = Components.ButtonPrimary("+");
+        btnAdd.setOnMouseClicked(ev -> viewModel.addScreen());
+        screensTabs.getChildren().add(btnAdd);
+    }
+
+    /**
+     * Atualiza a área central e as laterais quando o Canva ativo muda.
+     */
+    private void updateEditorContent(CanvaComponentV2 newCanva) {
+        // 1. Atualiza o Centro (ScrollPane)
+        editor.setContent(newCanva);
+
+        // Aplica estilos específicos ao Canva se necessário (mantido do original)
+        if (openComponentScene) {
+            newCanva.setPrefSize(370, 250);
+            var style = newCanva.getStyle();
+            var updated = Commons.UpdateEspecificStyle(style, "-fx-background-color", "transparent");
+            newCanva.setStyle(updated);
+        }
+
+        // 2. Recria o LeftSide com a nova referência do Canva
+        this.leftSide = new LeftSide(newCanva, viewModel);
+        // Se o LeftSide precisar ser notificado explicitamente (método updateCanva que você criou antes)
+        this.leftSide.updateCanva(newCanva);
+        setLeft(this.leftSide);
+
+        // 3. Recria o RightSide com a nova referência do Canva
+        RightSidev2 newRightSide = new RightSidev2(newCanva, viewModel);
+        rightWrapper.getChildren().setAll(newRightSide);
+    }
+
+    // --- CRIAÇÃO DE MENUS (UI Factory Methods) ---
+    // Agora a View é dona da aparência dos menus, delegando ações para a ViewModel
+
+    private MenuBar createMenuBar() {
+        MenuBar bar = MenuBarPrimary();
+        bar.getMenus().setAll(
+                createMenuOptions(),
+                createMenuSettings(),
+                createMenuDataTable(),
+                createMenuUiPath()
+        );
+        return bar;
+    }
+
+    private Menu createMenuOptions() {
+        Menu menu = new Menu();
+        Label menuText = Typography.caption(translation.common().option());
+        menu.setGraphic(menuText);
+        menuText.getStyleClass().add("text-primary-color");
+
+        MenuItem itemNovo = new MenuItem(translation.newProject());
+        MenuItem itemSalvar = new MenuItem(translation.common().save());
+        MenuItem itemLoad = new MenuItem(translation.common().load());
+        MenuItem itemSair = new MenuItem(translation.exit());
+        MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
+
+        menu.getItems().addAll(itemNovo, itemSalvar, itemLoad, itemSair, itemContribute);
+
+        // BINDINGS DE AÇÃO: Chama métodos da ViewModel ou Janelas Globais
+        itemNovo.setOnAction(_ -> AllWindows.showWindowForCreateNewProject());
+        itemSalvar.setOnAction(_ -> viewModel.handleSave());
+        itemLoad.setOnAction(_ -> viewModel.handleOpenExistingProject());
+        itemSair.setOnAction(_ -> viewModel.exitProject());
+        itemContribute.setOnAction(_ -> viewModel.handleBecomeContributor());
+
+        return menu;
+    }
+
+    private Menu createMenuSettings() {
+        Menu menu = new Menu();
+        Label menuText = Typography.caption(translation.settings());
+        menu.setGraphic(menuText);
+
+        menuText.setOnMouseClicked(_ -> viewModel.handleClickMenuSettings());
+        menuText.getStyleClass().add("text-primary-color");
+
+        return menu;
+    }
+
+    private Menu createMenuDataTable() {
+        var menu = new Menu();
+        Label menuText = Typography.caption("Data table");
+        menu.setGraphic(menuText);
+
+        menuText.setOnMouseClicked(ev -> viewModel.handleClickDataTable());
+
+        return menu;
+    }
+
+    private Menu createMenuUiPath() {
+        Menu menu = new Menu();
+        Label menuText = Typography.caption("path of ui file");
+
+        // Data Binding: O texto do menu muda automaticamente se a propriedade na VM mudar
+        menuText.textProperty().bind(viewModel.uiPathProperty);
+
+        menu.setGraphic(menuText);
+        menuText.getStyleClass().add("text-primary-color");
+
+        return menu;
     }
 }

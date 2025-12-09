@@ -5,17 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.App;
 import my_app.FileManager;
 import my_app.components.ColumnComponent;
-import my_app.components.Components;
 import my_app.components.InputComponentv2;
 import my_app.components.TextComponentv2;
 import my_app.components.buttonComponent.ButtonComponentv2;
@@ -28,312 +22,414 @@ import my_app.data.ViewContractv2;
 import my_app.mappers.CanvaMapper;
 import my_app.scenes.AppScenes;
 import my_app.scenes.SettingsScene;
-import my_app.screens.Home.components.ScreenTab;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import my_app.themes.Typography;
 import my_app.windows.AllWindows;
-import toolkit.Component;
 
-import javafx.scene.control.Dialog;
-
+import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.awt.Desktop;
 
 public class HomeViewModel {
-    TranslationContext.Translation translation = TranslationContext.instance().get();
-    public StringProperty uiPathProperty = new SimpleStringProperty();
 
-    private Home home;
-    private Stage stage;
+    // --- DEPENDÊNCIAS & SERVIÇOS ---
+    private final TranslationContext.Translation translation = TranslationContext.instance().get();
+    private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
+    // Mantemos o Stage para diálogos de arquivo (FileChooser) e troca de cenas
+    private final Stage stage;
+
+    // --- ESTADO OBSERVÁVEL (A View faz Bind nisso) ---
+
+    // 1. Lista de Abas (Screens) para a UI renderizar
+    public ObservableList<StateJson_v3> screenTabs = FXCollections.observableArrayList();
+
+    // 2. O conteúdo central atual (O Canva Ativo)
+    public ObjectProperty<CanvaComponentV2> activeCanva = new SimpleObjectProperty<>();
+
+    // 3. ID da tela atual
     public StringProperty currentScreenId = new SimpleStringProperty();
 
-    BooleanProperty refreshScreensTabs = new SimpleBooleanProperty();
+    // 4. Propriedades de Interface
+    public StringProperty uiPathProperty = new SimpleStringProperty();
+    public StringProperty headerSelected = new SimpleStringProperty(null);
     public SimpleBooleanProperty leftItemsStateRefreshed = new SimpleBooleanProperty(false);
 
-    public SimpleStringProperty headerSelected = new SimpleStringProperty(null);
+    // 5. Seleção de Componentes
+    public SimpleObjectProperty<SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
 
-    //key é o type
-    public ObservableMap<String, ObservableList<ViewContractv2<?>>> dataMap = FXCollections
-            .observableHashMap();
+    // 6. Mapa de Dados dos Componentes (Lógica Interna)
+    // Key: Tipo do componente ("button", "text", etc.)
+    public ObservableMap<String, ObservableList<ViewContractv2<?>>> dataMap = FXCollections.observableHashMap();
 
-    public void init(Home home, Stage theirStage) {
-        this.home = home;
-        this.stage = theirStage;
+    // Propriedades para Toast/Erro (Opcional, se a View tiver um Toast)
+    public StringProperty errorMessageProperty = new SimpleStringProperty();
+    public StringProperty showToastProperty = new SimpleStringProperty();
 
-        fillMenuBar(home.menuBar);
 
-        final var projectData = FileManager.getProjectData();
-        try {
-            final var firstScreen = projectData.screens().getFirst();
-            loadScreenAndApplyToCanva(firstScreen);
-        } catch (Exception e) {
-            IO.println(e.getMessage());
+    // --- CONSTRUTOR & INICIALIZAÇÃO ---
 
-            final var screen = new StateJson_v3();
-            // 3. Atualiza a referência da UI
-            final var canvaGerado = loadScreenAndApplyToCanva(screen);
+    public HomeViewModel(Stage stage) {
+        this.stage = stage;
+    }
 
-            // 4. Salva a nova tela (com dados iniciais do canva) e o projeto:
-            // Serializa os dados padrão do Canva recém-criado de volta para o objeto screen.
-            final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
+    /**
+     * Chamado pela View logo após a criação para carregar os dados iniciais.
+     */
+    public void init() {
+        loadProjectData();
+    }
 
-            // Adiciona a tela (agora com dados básicos) à lista do projeto e salva no disco.
-            FileManager.addScreenToProjectAndSave(updatedScreen); // <<< NOVO MÉTODO NO FileManager
+    private void loadProjectData() {
+        var projectData = FileManager.getProjectData();
+
+        // Atualiza a lista observável de abas (A View reagirá a isso automaticamente)
+        if (projectData != null && !projectData.screens().isEmpty()) {
+            screenTabs.setAll(projectData.screens());
+
+            // Carrega a primeira tela
+            try {
+                loadScreenById(projectData.screens().getFirst().screen_id);
+            } catch (Exception e) {
+                IO.println("Erro ao carregar primeira tela: " + e.getMessage());
+                createDefaultScreen();
+            }
+        } else {
+            createDefaultScreen();
+        }
+    }
+
+    private void createDefaultScreen() {
+        var screen = new StateJson_v3();
+        // Lógica de criar e salvar tela padrão
+        // Precisamos gerar o canva para ter os dados padrão serializados
+        var tempCanva = CanvaMapper.fromScreenToCanva(screen, this);
+        var updatedScreen = CanvaMapper.toStateJson(tempCanva, this);
+
+        FileManager.addScreenToProjectAndSave(updatedScreen);
+
+        // Atualiza estado
+        screenTabs.add(updatedScreen);
+        loadScreenAndApplyState(updatedScreen);
+    }
+
+    // --- COMANDOS (Ações chamadas pela View) ---
+
+    /**
+     * Chamado quando o botão "+" é clicado na barra de abas.
+     */
+    public void addScreen() {
+        // Limpa seleção
+        clearSelectionState();
+
+        // 1. Cria nova estrutura de dados
+        final var screen = new StateJson_v3();
+
+        // 2. Gera o Canva em memória para pegar defaults
+        // Nota: Passamos 'this' (ViewModel) para o Canva, o que é aceitável
+        final var canvaGerado = CanvaMapper.fromScreenToCanva(screen, this);
+
+        // 3. Salva
+        final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
+        FileManager.addScreenToProjectAndSave(updatedScreen);
+
+        // 4. Atualiza a lista observável (A View adicionará a aba visualmente)
+        screenTabs.add(updatedScreen);
+
+        // 5. Carrega a nova tela
+        loadScreenAndApplyState(updatedScreen);
+    }
+
+    /**
+     * Corrigido: Persiste o estado da tela atual antes de carregar a próxima.
+     */
+    public void handleTabClicked(String screenIdToLoad) {
+        if (currentScreenId.get() != null && currentScreenId.get().equals(screenIdToLoad)) {
+            return;
         }
 
+        // 1. AÇÃO CORRETIVA: Salva o estado do Canva que está sendo DESCARREGADO
+        persistActiveScreenStateAndSave();
 
-        // Criando as tabs que ficam sobre o Canva central
-        this.refreshScreensTabs.addListener((_, _, _) -> {
-            final var updatedProjectData = FileManager.getProjectData();
+        // 2. Carrega a próxima tela
+        loadScreenById(screenIdToLoad);
+    }
 
-            this.home.screensTabs.getChildren().clear();
-            for (var screen : updatedProjectData.screens()) {
-                ScreenTab tab = new ScreenTab(screen, this);
+    /**
+     * Chamado para excluir uma tela.
+     */
+    public void deleteScreen(String screenId) {
+        boolean wasCurrentScreen = currentScreenId.get() != null && currentScreenId.get().equals(screenId);
 
-                this.home.screensTabs.getChildren().add(tab);
-            }
-            final var btnAdd = Components.ButtonPrimary("+");
-            btnAdd.setOnMouseClicked(ev -> {
-                dataMap.clear();
-                headerSelected.set(null);
-                nodeSelected.set(null);
-                leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
+        // 1. Remove do disco/projeto
+        FileManager.deleteScreenFromProject(screenId);
 
-                // 1. Cria o novo objeto StateJson_v3 (sem salvar no disco ainda)
-                final var screen = new StateJson_v3();
-                // 3. Atualiza a referência da UI
-                final var canvaGerado = loadScreenAndApplyToCanva(screen);
+        // 2. Atualiza a lista observável (A View removerá a aba visualmente)
+        screenTabs.removeIf(s -> s.screen_id.equals(screenId));
 
-                // 4. Salva a nova tela (com dados iniciais do canva) e o projeto:
-                // Serializa os dados padrão do Canva recém-criado de volta para o objeto screen.
-                final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
+        // 3. Lógica de fallback de navegação
+        if (screenTabs.isEmpty()) {
+            IO.println("Todas as telas excluídas. Criando padrão.");
+            createDefaultScreen();
+        } else if (wasCurrentScreen) {
+            // Carrega a última tela restante
+            loadScreenById(screenTabs.getLast().screen_id);
+        }
+    }
 
-                // Adiciona a tela (agora com dados básicos) à lista do projeto e salva no disco.
-                FileManager.addScreenToProjectAndSave(updatedScreen); // <<< NOVO MÉTODO NO FileManager
+    /**
+     * Centraliza a lógica de salvar o estado do canva atualmente ativo no arquivo.
+     */
+    public void persistActiveScreenStateAndSave() {
+        if (activeCanva.get() != null) {
+            // 1. Converte o objeto Canva (com as alterações de cor, etc.) em StateJson_v3
+            var screen = CanvaMapper.toStateJson(activeCanva.get(), this);
 
-                toggleRefreshScreenTabs();
-            });
+            // 2. Persiste no disco/estrutura global de dados
+            FileManager.updateScreen(screen);
 
-            this.home.screensTabs.getChildren().add(btnAdd);
-        });
-
-        toggleRefreshScreenTabs();
+            // 3. Opcional: Atualiza a lista observável screenTabs com o novo StateJson
+            screenTabs.stream()
+                    .filter(s -> s.screen_id.equals(screen.screen_id))
+                    .findFirst()
+                    .ifPresent(s -> {
+                        // Substitui a entrada na lista com o novo objeto StateJson serializado
+                        int index = screenTabs.indexOf(s);
+                        if (index != -1) {
+                            screenTabs.set(index, screen);
+                        }
+                    });
+        }
     }
 
 
-    public void handleTabClicked(String screenIdToLoad) {
-        // 1. VERIFICAÇÃO DE ECONOMIA: Se a tela já está carregada, saia.
-        if (this.currentScreenId.get() != null && this.currentScreenId.get().equals(screenIdToLoad)) {
-            IO.println("Tela já está ativa. Pulando recarregamento.");
-            return; // Sai do método sem carregar/processar
-        }
+    /**
+     * Salva o projeto atual.
+     */
+    public void handleSave() {
+        if (activeCanva.get() != null) {
+            // Notifica para remover erros da UI (via propriedade, se houver binding) ou callback
+            // home.leftSide.removeError(); // <-- Removido (View deve observar status)
 
-        // Limpeza de estados globais
+            final var screen = CanvaMapper.toStateJson(activeCanva.get(), this);
+            FileManager.updateScreen(screen);
+            showToastProperty.set("Projeto salvo com sucesso!");
+        }
+    }
+
+    /**
+     * Abre um projeto existente (FileChooser).
+     */
+    public void handleOpenExistingProject() {
+        var fc = new FileChooser();
+        fc.setTitle("load json project");
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("ui.json", "*.json"));
+
+        errorMessageProperty.set(null);
+        try {
+            var file = fc.showOpenDialog(stage);
+            if (file != null) {
+                final var text = FileManager.loadDataFromProjectFile(file).name();
+                FileManager.saveProjectAndAddToRecents(text, file);
+
+                showToastProperty.set("Project loaded successfully!");
+                // Reinicia a cena Home para carregar o novo contexto
+                AppScenes.SwapScene(stage, AppScenes.HomeScene(stage));
+            }
+        } catch (Exception e) {
+            errorMessageProperty.set("Erro ao carregar projeto: " + e.getMessage());
+        }
+    }
+
+    public void exitProject() {
+        FileManager.updateCurrentProjectFIleInPrefs(null);
+        AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(App.stage));
+    }
+
+    public void handleBecomeContributor() {
+        Thread.ofVirtual().start(() -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://buymeacoffee.com/plantfall"));
+            } catch (Exception e) {
+                System.err.println("Was not possible to go to donation");
+            }
+        });
+    }
+
+    // Delegações simples para janelas auxiliares
+    public void handleClickMenuSettings() {
+        new SettingsScene().show();
+    }
+
+    public void handleClickDataTable() {
+        AllWindows.showWindowForDataTable();
+    }
+
+
+    // --- LÓGICA INTERNA DE CARREGAMENTO ---
+
+    private void loadScreenById(String screenId) {
+        clearSelectionState();
+
+        // Busca dados frescos do disco (Otimização que fizemos antes)
+        final var projectData = FileManager.getProjectData();
+        final var screenOptional = projectData.screens().stream()
+                .filter(s -> s.screen_id.equals(screenId))
+                .findFirst();
+
+        if (screenOptional.isPresent()) {
+            loadScreenAndApplyState(screenOptional.get());
+        } else {
+            IO.println("Erro: Tela ID " + screenId + " não encontrada.");
+        }
+    }
+
+    private void loadScreenAndApplyState(StateJson_v3 screen) {
+        IO.println("Carregando tela: " + screen.name);
+
+        // Atualiza ID atual
+        this.currentScreenId.set(screen.screen_id);
+
+        // Gera o componente visual (Conteúdo)
+        final var newCanva = CanvaMapper.fromScreenToCanva(screen, this);
+
+        // Define o Canva Ativo -> A View vai observar isso e atualizar o editor.setContent()
+        this.activeCanva.set(newCanva);
+
+        // Seleciona o Canva por padrão
+        selectNode(newCanva);
+
+        // Atualiza caminho na UI
+        updateUiPathProperty();
+    }
+
+    private void updateUiPathProperty() {
+        try {
+            final var prefsData = FileManager.loadDataInPrefs();
+            final var file = new File(prefsData.last_project_saved_path());
+            uiPathProperty.set(file.getAbsolutePath());
+        } catch (Exception e) {
+            // ignore
+        }
+    }
+
+    private void clearSelectionState() {
         dataMap.clear();
         headerSelected.set(null);
         nodeSelected.set(null);
-        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
-
-
-        // SOLUÇÃO: Busque a versão MAIS RECENTE da tela no disco USANDO O ID
-        final var latestProjectData = FileManager.getProjectData();
-        final var latestScreenOptional = latestProjectData.screens().stream()
-                .filter(s -> s.screen_id.equals(screenIdToLoad))
-                .findFirst();
-
-        if (latestScreenOptional.isPresent()) {
-            this.loadScreenAndApplyToCanva(latestScreenOptional.get());
-        } else {
-            IO.println("Erro: Tela com ID " + screenIdToLoad + " não encontrada ao clicar.");
-        }
+        refreshSubItems();
     }
 
-    private CanvaComponentV2 loadScreenAndApplyToCanva(StateJson_v3 screen) {
+    // --- LÓGICA DE COMPONENTES E SELEÇÃO ---
 
-        IO.println("vai tentar atualizar a ui atual do canva: " + screen.name);
+    public void addComponent(String type) {
+        final var currentCanva = activeCanva.get(); // Pega da propriedade!
+        if (currentCanva == null || type == null || type.isBlank()) return;
 
-        final var newCanva = CanvaMapper.fromScreenToCanva(screen, this);
-        this.currentScreenId.set(screen.screen_id);
+        ViewContractv2<?> node = null;
+        var content = "Im new here";
+        var typeNormalized = type.trim().toLowerCase();
 
-        // Chame o novo método da Home para atualizar a UI
-        this.home.updateCanvaInEditor(newCanva);
+        // Factory simples (pode ser extraída depois)
+        if (type.equalsIgnoreCase(englishBase.button())) {
+            node = new ButtonComponentv2(content, this);
+        } else if (type.equalsIgnoreCase(englishBase.input())) {
+            node = new InputComponentv2(content, this, currentCanva);
+        } else if (type.equalsIgnoreCase(englishBase.text())) {
+            node = new TextComponentv2(content, this, currentCanva);
+        } else if (type.equalsIgnoreCase(englishBase.image())) {
+            node = new ImageComponentv2(
+                    ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
+        } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
+            node = new ColumnComponent(this, currentCanva);
+        }
 
-        //todo verificar, pois com canva não surte efeito
-        this.selectNode(newCanva);
-        final var newSelection = new SelectedComponent("canva", newCanva);
+        if (node != null) {
+            addItemOnDataMap(typeNormalized, node);
 
-        // todo funciona com canva
-        this.nodeSelected.set(newSelection);
+            // Seleciona o novo nó
+            final var newSelection = new SelectedComponent(typeNormalized, node.getCurrentNode());
+            nodeSelected.set(newSelection);
+            headerSelected.set(typeNormalized);
 
-        final var prefsData = FileManager.loadDataInPrefs();
-        //acessar o arqivo de projeto
-        final var absolutePath = prefsData.last_project_saved_path();
-        final var projectFile = new File(absolutePath);
-        uiJsonFile = projectFile;
-        uiPathProperty.set(uiJsonFile.getAbsolutePath());
+            // Adiciona visualmente ao Canva atual
+            currentCanva.addElementDragable(node.getCurrentNode(), true);
 
-        return newCanva;
+            refreshSubItems();
+        }
     }
 
     public void removeNode(String nodeId) {
-        final var currentCanva = home.currentCanva;
-        System.out.println("mainCanva: " + currentCanva);
-        // 1. Tenta remover o Node do mainCanva (UI)
+        final var currentCanva = activeCanva.get();
+        if (currentCanva == null) return;
+
         ObservableList<Node> canvaChildren = currentCanva.getChildren();
         boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));
-
-        // 2. Remove do dataMap (a coleção de dados)
         boolean removedFromDataMap = removeItemByIdentification(nodeId);
 
         Node currentlySelectedNode = nodeSelected.get() != null ? nodeSelected.get().node() : null;
-
         if (currentlySelectedNode != null && nodeId.equals(currentlySelectedNode.getId())) {
             nodeSelected.set(null);
-            headerSelected.set(null); // Limpa o header também
+            headerSelected.set(null);
         }
 
-        // 4. Atualiza a UI lateral SOMENTE se a remoção foi bem-sucedida em algum lugar
         if (removedFromCanva || removedFromDataMap) {
             refreshSubItems();
         }
     }
 
-    private boolean removeItemByIdentification(String identification) {
-        // Itera sobre todas as listas de nós no dataMap.
-        for (var itemsList : dataMap.values()) {
+    public void removeComponentFromAllPlaces(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
+        // Método auxiliar usado por componentes internos
+        canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
+        removeComponentFromDataMap(componentWrapper);
+        refreshSubItems();
+    }
 
-            // Procura o item a ser removido (a forma mais garantida para ObservableList)
-            ViewContractv2<?> itemToRemove = null;
-            for (var item : itemsList) {
-                if (identification.equals(item.getCurrentNode().getId())) {
-                    itemToRemove = item;
-                    break;
-                }
-            }
+    // --- MÉTODOS AUXILIARES DE DADOS ---
+
+    public void addItemOnDataMap(String type, ViewContractv2<?> nodeWrapper) {
+        dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList()).add(nodeWrapper);
+    }
+
+    private boolean removeItemByIdentification(String identification) {
+        for (var itemsList : dataMap.values()) {
+            var itemToRemove = itemsList.stream()
+                    .filter(item -> identification.equals(item.getCurrentNode().getId()))
+                    .findFirst()
+                    .orElse(null);
 
             if (itemToRemove != null) {
-                // Remove o item da ObservableList do dataMap
                 itemsList.remove(itemToRemove);
-                // Retorna true assim que o item for removido
                 return true;
             }
         }
-        // Retorna false se o item não for encontrado em nenhuma lista
         return false;
     }
 
-// HomeViewModel.java
-
-    /**
-     * Exclui uma tela do projeto, lida com a mudança de tela se a tela atual for removida,
-     * e atualiza a interface de abas.
-     *
-     * @param screenId O ID da tela a ser excluída.
-     */
-    public void deleteScreen(String screenId) {
-
-        // 1. Verificar se a tela sendo excluída é a tela atualmente visível.
-        boolean wasCurrentScreen = this.currentScreenId.get() != null
-                && this.currentScreenId.get().equals(screenId);
-
-        // 2. Excluir a tela do arquivo JSON (persiste a mudança no disco).
-        FileManager.deleteScreenFromProject(screenId); // Usando o nome que definimos anteriormente
-
-        // 3. Obter a lista atualizada de telas após a exclusão.
-        final var projectData = FileManager.getProjectData();
-        final var remainingScreens = projectData.screens();
-
-        if (remainingScreens.isEmpty()) {
-            // Cenário 3a: Não há mais telas. Crie uma nova tela padrão para evitar um estado vazio.
-            IO.println("Todas as telas foram excluídas. Criando uma nova tela padrão.");
-
-            final var newDefaultScreen = new StateJson_v3();
-            final var canvaGerado = loadScreenAndApplyToCanva(newDefaultScreen);
-
-            final var updatedScreen = CanvaMapper.toStateJson(canvaGerado, this);
-            FileManager.addScreenToProjectAndSave(updatedScreen);
-
-        } else if (wasCurrentScreen) {
-            // Cenário 3b: A tela ativa foi excluída. Carregue a ultima tela restante.
-            final var nextScreen = remainingScreens.getLast();
-            this.loadScreenAndApplyToCanva(nextScreen);
+    public void removeComponentFromDataMap(ViewContractv2<?> componentWrapper) {
+        var data = (ComponentData) componentWrapper.getData();
+        var list = dataMap.get(data.type());
+        if (list != null) {
+            var currentNodeId = componentWrapper.getCurrentNode().getId();
+            list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
+                    .findFirst().ifPresent(it -> it.delete());
         }
-
-        // 4. Forçar o redesenho da barra de abas.
-        toggleRefreshScreenTabs();
-
-        // 5. Limpeza de estados, se necessário
-        dataMap.clear();
-        headerSelected.set(null);
-        nodeSelected.set(null);
-        leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
     }
 
-    public record SelectedComponent(String type, Node node) {
-    }
-
-    public SimpleObjectProperty<SelectedComponent> nodeSelected = new SimpleObjectProperty<>();
-
-    public void toggleRefreshScreenTabs() {
-        refreshScreensTabs.set(!refreshScreensTabs.get());
-    }
-
-
-    public void addItemOnDataMap(String type, ViewContractv2<?> nodeWrapper) {
-        dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
-                .add(nodeWrapper);
-    }
-
-    public Optional<ViewContractv2<?>> SearchNodeById(String nodeId) {
-        return dataMap.values()
-                .stream()
-                .flatMap(list -> list.stream()) // Achata todas as listas em um único stream
-                .filter(node -> node.getCurrentNode().getId().equals(nodeId))
-                .findFirst();
-    }
-
-
-    public List<ViewContractv2<?>> getItemsByType(String type) {
-        final var originalList =
-                dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());
-
-        // Retorna uma lista simples filtrada (List)
-        return originalList.stream()
-                .filter(component -> !component.isDeleted())
-                .collect(java.util.stream.Collectors.toList());
-    }
-
-    public boolean currentNodeIsSelected(String nodeId) {
-
-        final var selected = nodeSelected.get();
-
-        // 1. Verifica se algo está selecionado (selected != null)
-        // 2. Verifica se o Node dentro do SelectedComponent não é nulo (selected.node()
-        // != null)
-        // 3. Compara o ID do Node selecionado com o nodeId fornecido
-        return selected != null && selected.node() != null && selected.node().getId().equals(nodeId);
-    }
-
-    // --- NOVO MÉTODO SELECTNODE ---
     public void selectNode(Node node) {
         if (node == null) {
             nodeSelected.set(null);
-            headerSelected.set(null); // Desseleciona o header também
+            headerSelected.set(null);
         } else {
             String type = getNodeType(node);
             if (type != null) {
                 SelectedComponent newSelection = new SelectedComponent(type, node);
                 nodeSelected.set(newSelection);
-                headerSelected.set(type); // Mantemos o headerSelected por compatibilidade com a UI
+                headerSelected.set(type);
                 System.out.println("Selecionado: " + node + " (Type: " + type + ")");
             } else {
-                // Lidar com o caso onde o nó existe mas não está no dataMap
-                //canva por exemplo, não está no datamap
-                System.err.println("Erro: Node encontrado, mas não está registrado no dataMap. ID: " + node.getId());
+                // Caso especial para o próprio Canva ou nós não mapeados
                 nodeSelected.set(null);
                 headerSelected.set(null);
             }
@@ -342,321 +438,59 @@ public class HomeViewModel {
     }
 
     public String getNodeType(Node node) {
-        if (node == null) {
-            return null;
-        }
+        if (node == null) return null;
         String nodeId = node.getId();
-
-        // Itera sobre o mapa para encontrar a chave (tipo) que contém o Node.
         for (var entry : dataMap.entrySet()) {
-            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(nodeId))) {
+            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(n.getCurrentNode().getId()))) {
                 return entry.getKey();
             }
         }
-        return null;
+        return null; // Pode retornar "canva" se for o background, dependendo da lógica desejada
     }
 
-    TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+    public Optional<ViewContractv2<?>> SearchNodeById(String nodeId) {
+        return dataMap.values().stream()
+                .flatMap(List::stream)
+                .filter(node -> node.getCurrentNode().getId().equals(nodeId))
+                .findFirst();
+    }
 
-    public void addComponent(String type) {
+    public List<ViewContractv2<?>> getItemsByType(String type) {
+        return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
+                .stream()
+                .filter(component -> !component.isDeleted())
+                .collect(java.util.stream.Collectors.toList());
+    }
 
-        final var currentCanva = home.currentCanva;
-
-        if (type == null || type.isBlank()) {
-            return;
-        }
-
-        ViewContractv2<?> node = null;
-        var content = "Im new here";
-
-        var typeNormalized = type.trim().toLowerCase();
-
-
-        if (type.equalsIgnoreCase(englishBase.button())) {
-            node = new ButtonComponentv2(content, this);
-        } else if (type.equalsIgnoreCase(englishBase.input())) {
-            node = new InputComponentv2(content, this, currentCanva);
-
-        } else if (type.equalsIgnoreCase(englishBase.text())) {
-            node = new TextComponentv2(content, this, currentCanva);
-
-        } else if (type.equalsIgnoreCase(englishBase.image())) {
-            node = new ImageComponentv2(
-                    ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(),
-                    this);
-
-        } else if (type.equalsIgnoreCase(englishBase.component())) {
-            //  new ShowComponentScene(currentCanva, this).stage.show();
-            return;
-        } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
-            node = new ColumnComponent(this, currentCanva);
-        }
-
-        if (node != null) {
-
-            // 1. Adiciona o nó ao dataMap
-            addItem(typeNormalized, node);
-
-            // 2. CRIA E ATUALIZA o nodeSelected com o novo objeto SelectedComponent
-            // ESTA É A LINHA CORRIGIDA
-
-            final var newSelection = new SelectedComponent(typeNormalized, node.getCurrentNode());
-            nodeSelected.set(newSelection);
-
-            // 3. Atualiza o headerSelected (para manter a compatibilidade da UI)
-            headerSelected.set(typeNormalized);
-
-            // 4. Adiciona o nó à tela (Canva)
-            currentCanva.addElementDragable(node.getCurrentNode(), true);
-
-            // 5. Notifica a UI lateral para atualizar a lista
-            refreshSubItems();
-        }
-
+    public boolean currentNodeIsSelected(String nodeId) {
+        final var selected = nodeSelected.get();
+        return selected != null && selected.node() != null && selected.node().getId().equals(nodeId);
     }
 
     public void refreshSubItems() {
         leftItemsStateRefreshed.set(!leftItemsStateRefreshed.get());
     }
 
-    public void addItem(String type, ViewContractv2<?> nodeWrapper) {
-        dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
-                .add(nodeWrapper);
-    }
-
-    public void handleSave() {
-        home.leftSide.removeError();
-        final var screen = CanvaMapper.toStateJson(home.currentCanva, this);
-
-        FileManager.updateScreen(screen);
-
-        // FileManager.updateProject(CanvaMapper.toStateJson( home.currentCanva));
-        //componentsContext.saveStateInJsonFile_v2(uiJsonFile, home.canva);
-    }
-
-    public void handleClickMenuSettings() {
-        new SettingsScene().show();
-    }
-
-    public void fillMenuBar(MenuBar menuBar) {
-        menuBar.getMenus().setAll(createMenuOptions(), createMenuSettings(), createMenuDataTable(), createMenuUiPath());
-    }
-
-    @Component
-    Menu createMenuOptions() {
-        Menu menu = new javafx.scene.control.Menu();
-        Label menuText = Typography.caption(translation.common().option());
-        menu.setGraphic(menuText);
-
-        MenuItem itemNovo = new MenuItem(translation.newProject());
-        MenuItem itemSalvar = new MenuItem(translation.common().save());
-        MenuItem itemLoad = new MenuItem(translation.common().load());
-        MenuItem itemSair = new MenuItem(translation.exit());
-        MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
-
-        menu.getItems().addAll(itemNovo, itemSalvar, itemLoad, itemSair, itemContribute);
-
-        itemNovo.setOnAction(_ -> handleNewProject());
-        itemSalvar.setOnAction(_ -> handleSave());
-
-        itemSair.setOnAction(_ -> {
-            FileManager.updateCurrentProjectFIleInPrefs(null);
-            AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(App.stage));
-        });
-
-        itemLoad.setOnAction(_ -> handleClickLoad());
-
-        //itemShowCode.setOnAction(_ -> handleShowJavaCode(home.canva));
-
-        itemContribute.setOnAction(_ -> handleBecomeContributor());
-
-        menuText.getStyleClass().add("text-primary-color");
-
-        return menu;
-    }
-
-    private void handleClickLoad() {
-        // 1. CORREÇÃO: Mudar o tipo da Dialog para ButtonType
-        ButtonType loadButtonType = new ButtonType("Load", ButtonBar.ButtonData.OK_DONE);
-        Dialog<ButtonType> dialog = new Dialog<>(); // <--- Mudança aqui
-
-        dialog.setTitle("Load project dialog");
-        dialog.setContentText("You will exit this project and open another one instead, you have sure?");
-
-        // Adiciona os botões de confirmação e um botão de Cancelar (padrão)
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, loadButtonType);
-
-        boolean disabled = false; // computed based on content of text fields, for example
-        dialog.getDialogPane().lookupButton(loadButtonType).setDisable(disabled);
-
-        // 2. CORREÇÃO: O resultado agora é um Optional<ButtonType>
-        Optional<ButtonType> result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            // O valor agora é o ButtonType clicado
-            ButtonType clickedButton = result.get();
-
-            // Verifica se o botão clicado é o de 'Load' (usando o objeto ButtonType)
-            boolean loadConfirmed = clickedButton == loadButtonType;
-
-            // Exemplo de uso
-            if (loadConfirmed) {
-                IO.println("Load confirmed!");
-                // Lógica para abrir o FileChooser e carregar o projeto
-                handleOpenExistingProject();
-            } else {
-                IO.println("Load canceled.");
-            }
-        }
-    }
-
-    StringProperty errorMessageProperty = new SimpleStringProperty();
-    StringProperty showToastProperty = new SimpleStringProperty();
-
-    public void handleOpenExistingProject() {
-        var fc = new FileChooser();
-        fc.setTitle("load json project");
-        fc.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("ui.json", "*.json"));
-
-        errorMessageProperty.set(null);
-        try {
-            var file = fc.showOpenDialog(stage);
-            if (file != null) {
-                final var text = FileManager.loadDataFromProjectFile(file).name();
-
-                FileManager.saveProjectAndAddToRecents(text, file);
-
-                showToastProperty.set("Project was loaded successfully!");
-                AppScenes.SwapScene(stage, AppScenes.HomeScene(stage));
-            }
-        } catch (Exception e) {
-            errorMessageProperty.set("Erro ao salvar projeto: " + e.getMessage());
-        }
-    }
-
-
-    private void handleNewProject() {
-        AllWindows.showWindowForCreateNewProject();
-    }
-
-    @Component
-    Menu createMenuSettings() {
-        Menu menu = new Menu();
-        Label menuText = Typography.caption(translation.settings());
-        menu.setGraphic(menuText);
-
-        menuText.setOnMouseClicked(_ -> handleClickMenuSettings());
-
-        menuText.getStyleClass().add("text-primary-color");
-
-        return menu;
-    }
-
-    @Component
-    Menu createMenuDataTable() {
-        var menu = new Menu();
-        Label menuText = Typography.caption("Data table");
-        menu.setGraphic(menuText);
-
-        menuText.setOnMouseClicked(ev -> {
-            AllWindows.showWindowForDataTable();
-        });
-        return menu;
-    }
-
-    @Component
-    Menu createMenuUiPath() {
-        Menu menu = new Menu();
-        Label menuText = Typography.caption("path of ui file");
-        menuText.textProperty().bind(this.uiPathProperty);
-
-        menu.setGraphic(menuText);
-
-        menuText.getStyleClass().add("text-primary-color");
-
-        return menu;
-    }
-
-
-    @Deprecated
-    public record PrefsData(String last_project_saved_path, String language) {
-    }
-
-    public HomeViewModel() {
-    }
-
-    private File uiJsonFile;
-
-
-    public void handleBecomeContributor() {
-        // https://buymeacoffee.com/plantfall
-
-        Thread.ofVirtual().start(() -> {
-            try {
-                Desktop.getDesktop().browse(
-                        new URI("https://buymeacoffee.com/plantfall"));
-            } catch (Exception e) {
-                throw new RuntimeException("Was not possible to go to donation");
-            }
-        });
-    }
-
-
-    public void removeComponentFromAllPlaces(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
-        removeComponentFromCanva(componentWrapper, canvaComponent);
-        removeComponentFromDataMap(componentWrapper);
-        refreshSubItems();
-    }
-
-    public void removeComponentFromCanva(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
-        canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
-    }
-
-    public void removeComponentFromDataMap(ViewContractv2<?> componentWrapper) {
-        var data = (ComponentData) componentWrapper.getData();
-        var list = dataMap.get(data.type());
-
-        var currentNodeId = componentWrapper.getCurrentNode().getId();
-
-        //list.removeIf(it -> it.getCurrentNode().getId().equals(currentNodeId));
-        list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
-                .findFirst().ifPresent(it -> {
-                    //deletou de mentirinha
-                    it.delete();
-                });
-        IO.println("removeu do datamap");
-    }
-
-    public ViewContractv2<?> findNodeById(String id) {
-        if (id == null || id.isEmpty()) {
-            return null;
-        }
-
-        // Itera sobre todas as listas de ViewContract no dataMap (os valores do mapa)
-        for (var viewList : dataMap.values()) {
-
-            // Itera sobre cada ViewContract dentro da lista atual
-            for (ViewContractv2<?> contract : viewList) {
-
-                // Verifica se o ID do ViewContract (que representa o Node) é igual ao ID procurado
-                // A verificação de null/empty deve ser feita dentro do contrato ou ao chamar getId()
-                if (id.equals(contract.getData().identification())) {
-                    return contract; // Encontrado! Retorna o contrato.
-                }
-            }
-        }
-
-        // Se o loop terminar e nada for encontrado
-        return null;
-    }
-
     public static Node SearchNodeByIdInMainCanva(String nodeId, ObservableList<Node> canvaChildren) {
-        // lookin for custom component in main canva
         return canvaChildren.stream()
                 .filter(n -> nodeId.equals(n.getId()))
                 .findFirst()
                 .orElse(null);
     }
 
+    public ViewContractv2<?> findNodeById(String id) {
+        if (id == null || id.isEmpty()) return null;
+        for (var viewList : dataMap.values()) {
+            for (ViewContractv2<?> contract : viewList) {
+                if (id.equals(contract.getData().identification())) {
+                    return contract;
+                }
+            }
+        }
+        return null;
+    }
+
+    // --- RECORDS ---
+    public record SelectedComponent(String type, Node node) {
+    }
 }
