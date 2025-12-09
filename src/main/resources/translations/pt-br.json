@@ -64,8 +64,9 @@
   "chooseIcon": "Escolher icone",
   "register": "Registro",
   "chooseType": "Escolha o tipo",
-  "selectIconsPackToViewIconsHere": "Selecione um pacote de icones para visualizar os ícones aqui",
+  "selectIconsPackToViewIconsHere": "Selecione um pacote de ícones para visualizar os ícones aqui",
   "screenName": "Nome da Screen",
   "update": "Atualizar",
-  "exit": "Sair"
+  "exit": "Sair",
+  "newProject": "Novo Projeto"
 }

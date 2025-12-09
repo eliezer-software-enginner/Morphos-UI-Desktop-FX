@@ -5,10 +5,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.App;
 import my_app.FileManager;
@@ -32,11 +34,13 @@ import my_app.themes.Typography;
 import my_app.windows.AllWindows;
 import toolkit.Component;
 
-import java.awt.*;
+import javafx.scene.control.Dialog;
+
 import java.io.File;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.awt.Desktop;
 
 public class HomeViewModel {
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -444,32 +448,23 @@ public class HomeViewModel {
         Label menuText = Typography.caption(translation.common().option());
         menu.setGraphic(menuText);
 
-        MenuItem itemNovo = new MenuItem(translation.new_());
+        MenuItem itemNovo = new MenuItem(translation.newProject());
         MenuItem itemSalvar = new MenuItem(translation.common().save());
-        MenuItem itemSaveAs = new MenuItem(translation.common().saveAs());
         MenuItem itemLoad = new MenuItem(translation.common().load());
         MenuItem itemSair = new MenuItem(translation.exit());
         MenuItem itemContribute = new MenuItem(translation.optionsMenuMainScene().becomeContributor());
 
-        menu.getItems().addAll(itemNovo, itemSalvar, itemSaveAs, itemLoad, itemSair, itemContribute);
+        menu.getItems().addAll(itemNovo, itemSalvar, itemLoad, itemSair, itemContribute);
 
-        //itemNovo.setOnAction(_ -> handleNew(home, stage));
+        itemNovo.setOnAction(_ -> handleNewProject());
         itemSalvar.setOnAction(_ -> handleSave());
-        itemSaveAs.setOnAction(_ -> {
-
-            try {
-                handleSaveAs_(home, stage);
-            } catch (RuntimeException e) {
-                home.leftSide.notifyError(e.getMessage());
-            }
-        });
 
         itemSair.setOnAction(_ -> {
             FileManager.updateCurrentProjectFIleInPrefs(null);
             AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(App.stage));
         });
 
-        // itemLoad.setOnAction(_ -> handleClickLoad(home, stage));
+        itemLoad.setOnAction(_ -> handleClickLoad());
 
         //itemShowCode.setOnAction(_ -> handleShowJavaCode(home.canva));
 
@@ -478,6 +473,71 @@ public class HomeViewModel {
         menuText.getStyleClass().add("text-primary-color");
 
         return menu;
+    }
+
+    private void handleClickLoad() {
+        // 1. CORREÇÃO: Mudar o tipo da Dialog para ButtonType
+        ButtonType loadButtonType = new ButtonType("Load", ButtonBar.ButtonData.OK_DONE);
+        Dialog<ButtonType> dialog = new Dialog<>(); // <--- Mudança aqui
+
+        dialog.setTitle("Load project dialog");
+        dialog.setContentText("You will exit this project and open another one instead, you have sure?");
+
+        // Adiciona os botões de confirmação e um botão de Cancelar (padrão)
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, loadButtonType);
+
+        boolean disabled = false; // computed based on content of text fields, for example
+        dialog.getDialogPane().lookupButton(loadButtonType).setDisable(disabled);
+
+        // 2. CORREÇÃO: O resultado agora é um Optional<ButtonType>
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            // O valor agora é o ButtonType clicado
+            ButtonType clickedButton = result.get();
+
+            // Verifica se o botão clicado é o de 'Load' (usando o objeto ButtonType)
+            boolean loadConfirmed = clickedButton == loadButtonType;
+
+            // Exemplo de uso
+            if (loadConfirmed) {
+                IO.println("Load confirmed!");
+                // Lógica para abrir o FileChooser e carregar o projeto
+                handleOpenExistingProject();
+            } else {
+                IO.println("Load canceled.");
+            }
+        }
+    }
+
+    StringProperty errorMessageProperty = new SimpleStringProperty();
+    StringProperty showToastProperty = new SimpleStringProperty();
+
+    public void handleOpenExistingProject() {
+        var fc = new FileChooser();
+        fc.setTitle("load json project");
+        fc.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("ui.json", "*.json"));
+
+        errorMessageProperty.set(null);
+        try {
+            var file = fc.showOpenDialog(stage);
+            if (file != null) {
+                final var text = FileManager.loadDataFromProjectFile(file).name();
+
+                FileManager.saveProjectAndAddToRecents(text, file);
+
+                showToastProperty.set("Project was loaded successfully!");
+                AppScenes.SwapScene(stage, AppScenes.HomeScene(stage));
+            }
+        } catch (Exception e) {
+            errorMessageProperty.set("Erro ao salvar projeto: " + e.getMessage());
+        }
+    }
+
+
+    private void handleNewProject() {
+        AllWindows.showWindowForCreateNewProject();
     }
 
     @Component
@@ -527,12 +587,6 @@ public class HomeViewModel {
     }
 
     private File uiJsonFile;
-
-    public void handleSaveAs_(Home home, Stage stage) {
-        home.leftSide.removeError();
-
-        //...
-    }
 
 
     public void handleBecomeContributor() {

@@ -118,7 +118,8 @@ public class TranslationContext {
             String selectIconsPackToViewIconsHere,
             String screenName,
             String update,
-            String exit
+            String exit,
+            String newProject
     ) {
     }
 

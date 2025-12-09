@@ -24,4 +24,10 @@ public class AllWindows {
         window.setScene(AppScenes.PrimitiveListFormScene(window, callback));
         window.show();
     }
+
+    public static void showWindowForCreateNewProject() {
+        final var window = new Stage();
+        window.setScene(AppScenes.CreateProjectScene(window));
+        window.show();
+    }
 }

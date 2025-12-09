@@ -62,10 +62,11 @@
   "centralizeHorizontally": "Centralize horizontally",
   "columnItems": "Column Items",
   "chooseIcon": "Choose icon",
-  "register": "Registro",
+  "register": "Register",
   "chooseType": "Choose type",
   "selectIconsPackToViewIconsHere": "Select a icon pack to view icons here",
   "screenName": "Screen name",
   "update": "Update",
-  "exit": "Exit"
+  "exit": "Exit",
+  "newProject": "New Project"
 }

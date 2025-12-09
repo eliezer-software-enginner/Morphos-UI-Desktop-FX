@@ -368,4 +368,14 @@ public class FileManager {
         updateRecents(absolutePathOfCurrentProject);
         IO.println("Project set as active: " + absolutePathOfCurrentProject);
     }
+
+    public static Projectv2 loadDataFromProjectFile(File file) {
+        try {
+            final var projectAbsolutePath = file.getAbsolutePath();
+            final var om = new ObjectMapper();
+            return om.readValue(new File(projectAbsolutePath), Projectv2.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
