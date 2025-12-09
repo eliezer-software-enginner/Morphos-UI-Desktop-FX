@@ -4,9 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import my_app.components.Components;
 import my_app.data.Commons;
@@ -25,6 +23,9 @@ public class ScreenCreateProject extends VBox {
     // Novo: Container para o Card de Criação de Projeto (usado como modal)
     private final VBox newProjectCard;
 
+    @Component
+    private final VBox mainContent;
+
     public ScreenCreateProject(Stage primaryStage) {
         this.viewModel = new ScreenCreateProjectViewModel(primaryStage);
 
@@ -33,12 +34,16 @@ public class ScreenCreateProject extends VBox {
         this.newProjectCard.setVisible(false);
         this.newProjectCard.setManaged(false); // Não ocupa espaço no layout quando invisível
 
+        this.mainContent = createMainContent();
+        //this.mainContent.setStyle("-fx-background-color:blue;");
+        VBox.setVgrow(this.mainContent, Priority.ALWAYS);
+
         // Layout Principal: Agora é um VBox que empilha os componentes de cima para baixo
         getChildren().addAll(
                 createHeader(),
                 this.newProjectCard, // O card de criação de projeto (oculto)
                 toast,
-                createMainContent() // Botão de Adicionar + Lista de Recentes
+                this.mainContent // Botão de Adicionar + Lista de Recentes
         );
 
         setAlignment(Pos.TOP_CENTER);
@@ -57,9 +62,12 @@ public class ScreenCreateProject extends VBox {
         return header;
     }
 
+
+    @Component
     private VBox createMainContent() {
         var createBtn = Components.ButtonPrimary("Criar Novo Projeto");
         createBtn.getStyleClass().add("create-new-project-btn");
+
 
         // Ação: Ao clicar, exibe/oculta o card de criação
         createBtn.setOnAction(e -> {
@@ -70,9 +78,14 @@ public class ScreenCreateProject extends VBox {
 
         var recentProjectsPane = createRecentProjectsList();
 
+        //recentProjectsPane.setStyle("-fx-background-color:yellow;");
+        VBox.setVgrow(recentProjectsPane, Priority.ALWAYS);
+
         var root = new VBox(20, createBtn, recentProjectsPane);
         root.setPadding(new Insets(0, 100, 0, 100)); // Adiciona padding horizontal para centralizar o conteúdo
         root.setAlignment(Pos.TOP_CENTER);
+        //root.setStyle("-fx-background:blue;");
+
         return root;
     }
 
@@ -87,14 +100,17 @@ public class ScreenCreateProject extends VBox {
         projectListContainer.setVgap(5);
         projectListContainer.setHgap(10);
         projectListContainer.getStyleClass().add("recent-projects-list");
-        projectListContainer.setPrefColumns(4);
+        projectListContainer.setPrefColumns(3);
+
         final var scroll = new ScrollPane();
         scroll.setStyle("-fx-background:transparent;");
         scroll.getStyleClass().add("background-color");
         scroll.setContent(projectListContainer);
-        scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
 
+        // CORREÇÃO ESSENCIAL: Permite que o container da lista cresça no VBox root
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+// Adiciona para garantir que o TilePane ocupe o máximo de largura do ScrollPane
 
         // Listener reativo
         this.viewModel.recentProjectsProperty.addListener((obs, oldList, newList) -> {
@@ -148,10 +164,6 @@ public class ScreenCreateProject extends VBox {
                 errorContainer.getChildren().setAll(Typography.error(newVal));
             }
         });
-
-        // Listener para Toast (manter no construtor principal ou em um método separado)
-        // ... (o listener do Toast não precisa ser repetido aqui)
-
         return root;
     }
 

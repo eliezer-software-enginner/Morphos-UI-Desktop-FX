@@ -116,21 +116,6 @@ public class FileManager {
         }
     }
 
-    public static void saveProject(
-            //StateJson_v2 currentCanvaScreen,
-            String name, File file) {
-
-        try {
-            var project = new Projectv2(name, new TableData(List.of()), List.of());
-            writeDataAsJsonInFileInDisc(project, file);
-            IO.println("project was saved");
-
-            saveDataInPrefs(file.getAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
     public static Projectv2 getProjectData() {
         try {
             final var prefsData = getPrefsData();
@@ -156,25 +141,11 @@ public class FileManager {
         }
     }
 
-
-    private static void saveDataInPrefs(String absolutePathOfCurrentProject) {
-        var prefsFile = getPrefsFile();
-
-        var defaultPrefs = new PrefsData(absolutePathOfCurrentProject, TranslationContext.instance().currentLanguage());
-        try {
-            writeDataAsJsonInFileInDisc(defaultPrefs, prefsFile.toFile());
-            IO.println("Saved prefs json at: " + prefsFile.toFile().getAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
     public static PrefsDatav2 loadDataInPrefs() {
-        var prefsFile = getPrefsFile();
-
-        var om = new ObjectMapper();
-
         try {
+            var prefsFile = getPrefsFile();
+
+            var om = new ObjectMapper();
             return om.readValue(prefsFile.toFile(), PrefsDatav2.class);
             //final var path = prefsData.last_project_saved_path();
             //return path == null || path.isBlank() ? null : new File(path);

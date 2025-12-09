@@ -43,6 +43,8 @@ public class ScreenCreateProjectViewModel {
                     ? prefsData.recent_projects_paths()
                     : List.<String>of();
 
+            IO.println(paths);
+
             recentProjects.setAll(paths);
 
         } catch (RuntimeException e) {
