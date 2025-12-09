@@ -1,0 +1,50 @@
+/* Estilo geral dos cards/painéis principais */
+.card-create-project {
+    /*-fx-background-color: #ffffff;*/
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0.5, 0, 0);
+    -fx-max-width: 450px; /* Limita a largura dos cards */
+    -fx-alignment: top-left;
+}
+
+/* Estilo para o card de criação (pode ser usado como "modal" simples) */
+.new-project-card {
+    -fx-position: absolute; /* Tenta sobrepor o conteúdo, se o layout permitir */
+    -fx-top: 150px;
+    -fx-z-index: 10;
+    -fx-padding: 30px;
+    -fx-border-color: #4a90e2;
+    -fx-border-width: 1px;
+}
+
+/* Estilo do botão principal de criação */
+.create-new-project-btn {
+    -fx-pref-width: 250px;
+    -fx-alignment: center;
+}
+
+/* Estilo para cada item na lista de projetos recentes */
+.recent-project-item {
+    /*-fx-background-color: #f7f7f7;*/
+    -fx-padding: 10px 15px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-spacing: 20px;
+    -fx-max-width: 600px;
+}
+
+/* Efeito hover para os itens da lista */
+.recent-project-item:hover {
+    /*-fx-background-color: #eeeeee;*/
+    -fx-border-color: #4a90e2;
+}
+
+/* Oculta o botão 'Abrir' nos itens da lista (se você quiser que o clique na área abra) */
+.recent-project-item:hover .open-project-link {
+    /* Pode reverter a visibilidade se você quiser que o botão 'Abrir' apareça no hover */
+}

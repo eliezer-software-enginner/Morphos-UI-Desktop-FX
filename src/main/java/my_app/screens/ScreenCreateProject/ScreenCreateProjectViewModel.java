@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import my_app.FileManager;
 import my_app.scenes.AppScenes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScreenCreateProjectViewModel {
@@ -28,18 +29,36 @@ public class ScreenCreateProjectViewModel {
     public ScreenCreateProjectViewModel(Stage primaryStage) {
         this.stage = primaryStage;
         loadRecentProjects();
+        //loadRecentProjectsFake();
     }
 
     // --- Comandos e Lógica de Negócios ---
 
     private void loadRecentProjects() {
         try {
-            final var prefsData = FileManager.loadDataInPrefsv2();
+            final var prefsData = FileManager.loadDataInPrefs();
 
             // Adiciona a lista de caminhos. Filtra nulls para segurança.
             final var paths = prefsData.recent_projects_paths() != null
                     ? prefsData.recent_projects_paths()
                     : List.<String>of();
+
+            recentProjects.setAll(paths);
+
+        } catch (RuntimeException e) {
+            // Ignoramos o erro de carregamento (por exemplo, arquivo prefs.json não existe ainda)
+            System.err.println("Aviso: Não foi possível carregar projetos recentes: " + e.getMessage());
+            recentProjects.clear();
+        }
+    }
+
+    private void loadRecentProjectsFake() {
+        try {
+            List<String> paths = new ArrayList<>();
+
+            for (int i = 0; i < 20; i++) {
+                paths.add("caminho de teste: " + i);
+            }
 
             recentProjects.setAll(paths);
 
@@ -57,8 +76,7 @@ public class ScreenCreateProjectViewModel {
             FileManager.setLastProject(path);
 
             // Navegação
-            stage.setScene(AppScenes.HomeScene(stage));
-
+            AppScenes.SwapScene(stage, AppScenes.HomeScene(stage));
         } catch (Exception e) {
             errorMessageProperty.set("Erro ao abrir projeto: " + e.getMessage());
         }

@@ -19,6 +19,7 @@ public class AppScenes {
 
     final static String componentsCssFile = Path.of("/components.css").toFile().getAbsolutePath();
     final static String tabCssFile = Path.of("/tab.css").toFile().getAbsolutePath();
+    final static String screenCreateProjectCssFile = Path.of("/screen-create-project.css").toFile().getAbsolutePath();
 
 
     public static void SwapScene(Stage currentWindow, Scene sceneToGoTo) {
@@ -42,16 +43,16 @@ public class AppScenes {
     public static Scene CreateProjectScene(Stage theirStage) {
         var scene = new Scene(new ScreenCreateProject(theirStage));
 
-        var screenSize = Commons.ScreensSize._700x500;
+        var screenSize = Commons.ScreensSize._900x560;
         theirStage.setWidth(screenSize.width);
         theirStage.setHeight(screenSize.heigh);
-        theirStage.setResizable(false);
+        theirStage.setResizable(true);
         theirStage.centerOnScreen();
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);
 
-        scene.getStylesheets().add(componentsCssFile);
+        scene.getStylesheets().add(screenCreateProjectCssFile);
         return scene;
     }
 

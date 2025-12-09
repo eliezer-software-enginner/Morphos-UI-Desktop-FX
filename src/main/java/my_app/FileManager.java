@@ -156,27 +156,13 @@ public class FileManager {
         }
     }
 
-    public static PrefsDatav2 loadDataInPrefsv2() {
+    public static PrefsDatav2 loadDataInPrefs() {
         var prefsFile = getPrefsFile();
 
         var om = new ObjectMapper();
 
         try {
             return om.readValue(prefsFile.toFile(), PrefsDatav2.class);
-            //final var path = prefsData.last_project_saved_path();
-            //return path == null || path.isBlank() ? null : new File(path);
-        } catch (IOException e) {
-            throw new RuntimeException("Não foi possível carregar prefs.json", e);
-        }
-    }
-
-    public static PrefsData loadDataInPrefs() {
-        var prefsFile = getPrefsFile();
-
-        var om = new ObjectMapper();
-
-        try {
-            return om.readValue(prefsFile.toFile(), PrefsData.class);
             //final var path = prefsData.last_project_saved_path();
             //return path == null || path.isBlank() ? null : new File(path);
         } catch (IOException e) {
@@ -310,7 +296,7 @@ public class FileManager {
         // 1. Carrega os dados atuais
         PrefsDatav2 currentPrefs;
         try {
-            currentPrefs = loadDataInPrefsv2();
+            currentPrefs = loadDataInPrefs();
         } catch (RuntimeException e) {
             // Se a carga falhar (arquivo não existe), usa um padrão com a lista vazia
             currentPrefs = new PrefsDatav2(

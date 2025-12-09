@@ -69,6 +69,14 @@ public class Components {
         return btn;
     }
 
+    @Component
+    public static Button ButtonSecondary(String text) {
+        var btn = new Button(text);
+        btn.getStyleClass().addAll("button-secondary", "body-typo", "text-secondary");
+
+        return btn;
+    }
+
 
     @Component
     public static Button buttonRemove(String text) {

@@ -1,9 +1,6 @@
 package my_app.screens.SplashScreen;
 
-import javafx.animation.ScaleTransition;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import my_app.FileManager;
 import my_app.scenes.AppScenes;
 
@@ -11,44 +8,33 @@ import java.io.File;
 
 public class SplashScreenViewModel {
 
-
     private final Stage stage;
 
     public SplashScreenViewModel(Stage theirStage) {
         this.stage = theirStage;
     }
 
-    void animateLogo(ImageView logo) {
+    /**
+     * Comando chamado pela View (quando a animação termina).
+     * Contém a lógica de negócio para decidir a próxima tela.
+     */
+    public void decideNextScene() {
+        try {
+            final var prefsData = FileManager.loadDataInPrefs();
+            final var absolutePath = prefsData.last_project_saved_path();
 
-        ScaleTransition scale = new ScaleTransition(Duration.seconds(1));
-        scale.setNode(logo);
-        scale.setFromX(1);
-        scale.setFromY(1);
-
-        scale.setToX(0.5);
-        scale.setToY(0.5);
-
-        scale.setCycleCount(2);
-        scale.setAutoReverse(true);
-        scale.play();
-
-        scale.setOnFinished(_ -> {
-            try {
-                //acessar o arquivo de projeto
-                final var prefsData = FileManager.loadDataInPrefs();
-                final var absolutePath = prefsData.last_project_saved_path();
-                final var projectFile = new File(absolutePath);
-                if (!projectFile.exists()) {
-                    stage.setScene(AppScenes.CreateProjectScene(stage));
-                    stage.centerOnScreen();
-                    return;
-                }
-
-                stage.setScene(AppScenes.HomeScene(stage));
-            } catch (Exception e) {
-                stage.setScene(AppScenes.CreateProjectScene(stage));
-                stage.centerOnScreen();
+            // Lógica de negócio: Se o caminho é inválido ou nulo, vá para Criação.
+            if (absolutePath == null || !new File(absolutePath).exists()) {
+                AppScenes.SwapScene(stage, AppScenes.CreateProjectScene(stage));
+                return;
             }
-        });
+
+            // Sucesso: vá para a Home
+            AppScenes.SwapScene(stage, AppScenes.HomeScene(stage));
+
+        } catch (Exception e) {
+            // Falha na leitura: vá para a tela de Criação como fallback seguro.
+            AppScenes.SwapScene(stage, AppScenes.CreateProjectScene(stage));
+        }
     }
 }

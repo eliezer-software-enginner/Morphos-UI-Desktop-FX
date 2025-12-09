@@ -165,7 +165,7 @@ public class HomeViewModel {
         // todo funciona com canva
         this.nodeSelected.set(newSelection);
 
-        final var prefsData = FileManager.loadDataInPrefsv2();
+        final var prefsData = FileManager.loadDataInPrefs();
         //acessar o arqivo de projeto
         final var absolutePath = prefsData.last_project_saved_path();
         final var projectFile = new File(absolutePath);
