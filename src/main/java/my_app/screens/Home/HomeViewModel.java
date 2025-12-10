@@ -379,6 +379,7 @@ public class HomeViewModel {
         }
     }
 
+    //todo considerar a remoção desse método, pois não está sendo usado em lugar nenhum!
     public void removeComponentFromAllPlaces(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
         // Método auxiliar usado por componentes internos
         canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
@@ -388,7 +389,26 @@ public class HomeViewModel {
 
     // --- MÉTODOS AUXILIARES DE DADOS ---
 
+    /**
+     * Adiciona um item no mapa de dados, verificando se o ID do componente já existe
+     * para prevenir duplicação de estado.
+     */
     public void addItemOnDataMap(String type, ViewContractv2<?> nodeWrapper) {
+        String newId = nodeWrapper.getCurrentNode().getId();
+
+        // 1. Verifica se o ID já existe em qualquer lista do dataMap (prevenção de duplicação)
+        boolean idExists = dataMap.values().stream()
+                .flatMap(List::stream) // Achata todas as listas de componentes em um único Stream
+                .anyMatch(existingNode -> newId.equals(existingNode.getCurrentNode().getId()));
+
+        if (idExists) {
+            // Se o ID já existe, ignora a adição. Isso é comum e esperado durante o
+            // processo de carregamento de telas que já estão na memória.
+            System.err.println("Warning: Component with ID " + newId +
+                    " already exists in dataMap. Skipping addition.");
+            return;
+        }
+        
         dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList()).add(nodeWrapper);
     }
 

@@ -136,10 +136,13 @@ public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageC
         this.name.set(data.name());
         this.clipType = data.type_of_clip();
 
-        if (data.type_of_clip().equals("Circle")) {
-            var size = data.height() / 2;
-            setClip(new Circle(size, size, size));
+        if (data.type_of_clip() != null) {
+            if (data.type_of_clip().equals("Circle")) {
+                var size = data.height() / 2;
+                setClip(new Circle(size, size, size));
+            }
         }
+
     }
 
     @Override

@@ -145,14 +145,31 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                     this.addElementDragable(comp, false);
                 }
             }
+
+            for (ImageComponentData it : data.image_components) {
+                var comp = new ImageComponentv2(this.viewModel, this);
+                comp.applyData(it);
+
+                viewModel.addItemOnDataMap("image", comp);
+
+                if (it.in_canva()) {
+                    this.addElementDragable(comp, false);
+                }
+            }
             //todo finalizar o restante
         }
-
-
     }
 
 
     public void addElementDragable(Node node, boolean putInCenter) {
+        //evitar adição de no duplicado
+        for (Node child : getChildren()) {
+            if (child.getId().equals(node.getId())) {
+                IO.println("Node already added in canva!");
+                return;
+            }
+        }
+
         // posição inicial centralizada
         double relX = 0.5;
         double relY = 0.5;
