@@ -208,47 +208,76 @@ public class Components {
 
         HBox root = ItemRow(tf, name);
 
-        if (fieldCss.equals("text-wrapping-width")) {
-            if (node instanceof TextComponentv2 component) {
-                tf.setText(String.valueOf(component.getWrappingWidth()));
+        switch (fieldCss) {
+            case "text-wrapping-width" -> {
+                if (node instanceof TextComponent component) {
+                    tf.setText(String.valueOf(component.getWrappingWidth()));
+                }
             }
-        } else if (fieldCss.equals("screen-name")) {
-            if (node instanceof CanvaComponentV2 component) {
-                tf.setText(component.name);
+            case "screen-name" -> {
+                if (node instanceof CanvaComponentV2 component) {
+                    tf.setText(component.name);
+                }
             }
-        } else {
-            String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
-            tf.setText(valueOfField);
+            case "text-content" -> {
+                if (node instanceof TextComponent component) {
+                    tf.setText(component.getText());
+                } else if (node instanceof ButtonComponentv2 component) {
+                    tf.setText(component.getText());
+                } else if (node instanceof InputComponent component) {
+                    tf.setText(component.getText());
+                }
+            }
+            default -> {
+                String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
+                tf.setText(valueOfField);
+            }
         }
 
 
         tf.textProperty().addListener((_, _, newVal) -> {
-            if (!newVal.isBlank()) {
 //                if (!newVal.matches("\\d+(px|em|pt)?")) { // Permite valores numéricos seguidos de px, em ou pt
 //                    return; // Se não for válido, ignora a alteração
 //                }
-                try {
-                    if (fieldCss.equals("text-wrapping-width")) {
-                        if (node instanceof TextComponentv2 component) {
+            try {
+                switch (fieldCss) {
+                    case "text-wrapping-width" -> {
+                        if (node instanceof TextComponent component) {
                             //validate if is number
+                            if (!newVal.matches("\\d+(px|em|pt)?")) { // Permite valores numéricos seguidos de px, em ou pt
+                                return; // Se não for válido, ignora a alteração
+                            }
                             component.setWrappingWidth(Double.parseDouble(newVal.trim()));
                         }
-                    } else if (fieldCss.equals("screen-name")) {
+                    }
+                    case "screen-name" -> {
                         if (node instanceof CanvaComponentV2 component) {
                             //validate if is number
                             component.name = newVal.trim();
-                            //FileManager.updateScreenNameInProject(component.screenFatherId, newVal.trim());
                         }
-                    } else {
+                    }
+                    case "text-content" -> {
+                        if (node instanceof TextComponent component) {
+                            component.setText(newVal.trim());
+                        }
+                        if (node instanceof ButtonComponentv2 component) {
+                            component.setText(newVal.trim());
+                        }
+                        if (node instanceof InputComponent component) {
+                            component.setText(newVal.trim());
+                        }
+                    }
+                    default -> {
                         String currentStyle = node.getStyle();
                         String newStyle = Commons.UpdateEspecificStyle(currentStyle,
                                 fieldCss, newVal);
                         node.setStyle(newStyle);
                     }
-
-                } catch (NumberFormatException ignored) {
                 }
+
+            } catch (NumberFormatException ignored) {
             }
+
         });
 
         return root;
@@ -386,11 +415,11 @@ public class Components {
         } else {
             String color = "transparent";
 
-            if (selectedNode instanceof InputComponentv2 node) {
+            if (selectedNode instanceof InputComponent node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
             } else if (selectedNode instanceof ButtonComponentv2 node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-            } else if (selectedNode instanceof TextComponentv2 node) {
+            } else if (selectedNode instanceof TextComponent node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
             }
 

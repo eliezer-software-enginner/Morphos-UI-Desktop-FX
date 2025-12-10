@@ -74,7 +74,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
 
         for (Node node : getChildren()) {
 
-            if (node instanceof TextComponentv2 component) {
+            if (node instanceof TextComponent component) {
                 textComponentsData.add(component.getData());
             }
 
@@ -86,7 +86,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
                 imgComponentsData.add(component.getData());
             }
 
-            if (node instanceof InputComponentv2 component) {
+            if (node instanceof InputComponent component) {
                 inputComponentsData.add(component.getData());
             }
 

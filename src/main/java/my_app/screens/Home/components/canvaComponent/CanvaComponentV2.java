@@ -14,8 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import my_app.FileManager;
 import my_app.components.Components;
-import my_app.components.InputComponentv2;
-import my_app.components.TextComponentv2;
+import my_app.components.InputComponent;
+import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.HeightComponent;
@@ -104,7 +104,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             }
 
             for (TextComponentData it : data.text_components) {
-                var comp = new TextComponentv2(it.text(), this.viewModel, this);
+                var comp = new TextComponent(it.text(), this.viewModel, this);
                 comp.applyData(it);
 
                 viewModel.addItemOnDataMap("text", comp);
@@ -136,7 +136,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             }
 
             for (InputComponentData it : data.input_components) {
-                var comp = new InputComponentv2(this.viewModel, this);
+                var comp = new InputComponent(this.viewModel, this);
                 comp.applyData(it);
 
                 viewModel.addItemOnDataMap("input", comp);

@@ -16,7 +16,7 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
-public class TextComponentv2 extends Text implements ViewContractv2<TextComponentData> {
+public class TextComponent extends Text implements ViewContractv2<TextComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -27,7 +27,7 @@ public class TextComponentv2 extends Text implements ViewContractv2<TextComponen
     boolean isDeleted = false;
     private HomeViewModel viewModel;
 
-    public TextComponentv2(String content, HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
+    public TextComponent(String content, HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
 
         super(content);
         this.viewModel = viewModel;
@@ -43,7 +43,7 @@ public class TextComponentv2 extends Text implements ViewContractv2<TextComponen
         currentState.set(this);
     }
 
-    public TextComponentv2(HomeViewModel homeViewModel, CanvaComponentV2 canvaComponent) {
+    public TextComponent(HomeViewModel homeViewModel, CanvaComponentV2 canvaComponent) {
         this.viewModel = homeViewModel;
 
         this.canvaFather = canvaComponent;
@@ -63,7 +63,7 @@ public class TextComponentv2 extends Text implements ViewContractv2<TextComponen
         father.getChildren().setAll(
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-fill"),
-                Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
+                Components.LabelWithInput(translation.textContent(), this, "text-content"),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
                 Components.LabelWithInput(translation.width(), this, "text-wrapping-width"),
                 // Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),

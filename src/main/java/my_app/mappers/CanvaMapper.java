@@ -2,8 +2,8 @@ package my_app.mappers;
 
 import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
-import my_app.components.InputComponentv2;
-import my_app.components.TextComponentv2;
+import my_app.components.InputComponent;
+import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.data.StateJson_v3;
@@ -39,7 +39,7 @@ public class CanvaMapper {
 
                 var node = nodeWrapper.getCurrentNode();
 
-                if (node instanceof TextComponentv2 component) {
+                if (node instanceof TextComponent component) {
                     // O .getData() deve retornar um TextComponentData que inclui a flag 'in_canva'
                     canvaData.text_components.add(component.getData());
                 }
@@ -52,7 +52,7 @@ public class CanvaMapper {
                     canvaData.image_components.add(component.getData());
                 }
 
-                if (node instanceof InputComponentv2 component) {
+                if (node instanceof InputComponent component) {
                     canvaData.input_components.add(component.getData());
                 }
 

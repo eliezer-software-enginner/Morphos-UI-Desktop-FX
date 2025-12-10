@@ -52,7 +52,7 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
         this.viewModel = viewModel;
         this.canva = canva;
 
-        getChildren().add(new TextComponentv2("Im new here", viewModel, canva));
+        getChildren().add(new TextComponent("Im new here", viewModel, canva));
     }
 
     @Override
@@ -173,7 +173,7 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
             newNodeWrapper.applyData((ImageComponentData) originalData);
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.input())) {
-            var newNodeWrapper = new InputComponentv2(this.viewModel, canva);
+            var newNodeWrapper = new InputComponent(this.viewModel, canva);
             newNodeWrapper.applyData((InputComponentData) originalData);
             if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
                 final var currentText = newNodeWrapper.getText();
@@ -181,7 +181,7 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
             }
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.text())) {
-            var newNodeWrapper = new TextComponentv2(this.viewModel, canva);
+            var newNodeWrapper = new TextComponent(this.viewModel, canva);
             newNodeWrapper.applyData((TextComponentData) originalData);
             if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
                 final var currentText = newNodeWrapper.getText();

@@ -147,7 +147,7 @@ public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonCo
                 Components.ColorPickerRow(translation.borderColor(), this, "-fx-border-color"),
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
-                Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
+                Components.LabelWithInput(translation.textContent(), this, "text-content"),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
                 //Components.ButtonChooseGraphicContent(this),
                 Components.LabelWithComboBox(translation.iconPosition(), this, "positioning-icon"),

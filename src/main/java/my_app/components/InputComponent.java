@@ -17,7 +17,7 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
-public class InputComponentv2 extends TextField implements ViewContractv2<InputComponentData> {
+public class InputComponent extends TextField implements ViewContractv2<InputComponentData> {
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
     ComponentsContext componentsContext;
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -29,7 +29,7 @@ public class InputComponentv2 extends TextField implements ViewContractv2<InputC
     CanvaComponentV2 canvaFather;
     private final HomeViewModel homeViewModel;
 
-    public InputComponentv2(String content, HomeViewModel homeViewModel, CanvaComponentV2 canva) {
+    public InputComponent(String content, HomeViewModel homeViewModel, CanvaComponentV2 canva) {
         super(content);
         this.homeViewModel = homeViewModel;
         config();
@@ -37,7 +37,7 @@ public class InputComponentv2 extends TextField implements ViewContractv2<InputC
         this.canvaFather = canva;
     }
 
-    public InputComponentv2(HomeViewModel homeViewModel, CanvaComponentV2 canva) {
+    public InputComponent(HomeViewModel homeViewModel, CanvaComponentV2 canva) {
         this.homeViewModel = homeViewModel;
         config();
 
@@ -95,7 +95,7 @@ public class InputComponentv2 extends TextField implements ViewContractv2<InputC
         father.getChildren().setAll(
                 Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
-                Components.LabelWithTextContent(translation.textContent(), getText(), this::setText),
+                Components.LabelWithInput(translation.textContent(), this, "text-content"),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
                 Components.LabelWithTextContent(translation.placeholder(), getPromptText(), this::setPromptText),
                 Components.ColorPickerRow(translation.placeholderColor(), this, "-fx-prompt-text-fill"),

@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 import my_app.App;
 import my_app.FileManager;
 import my_app.components.ColumnComponent;
-import my_app.components.InputComponentv2;
-import my_app.components.TextComponentv2;
+import my_app.components.InputComponent;
+import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponentv2;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.contexts.ComponentsContext;
@@ -335,9 +335,9 @@ public class HomeViewModel {
         if (type.equalsIgnoreCase(englishBase.button())) {
             node = new ButtonComponentv2(content, this);
         } else if (type.equalsIgnoreCase(englishBase.input())) {
-            node = new InputComponentv2(content, this, currentCanva);
+            node = new InputComponent(content, this, currentCanva);
         } else if (type.equalsIgnoreCase(englishBase.text())) {
-            node = new TextComponentv2(content, this, currentCanva);
+            node = new TextComponent(content, this, currentCanva);
         } else if (type.equalsIgnoreCase(englishBase.image())) {
             node = new ImageComponentv2(
                     ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
