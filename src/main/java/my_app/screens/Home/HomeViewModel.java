@@ -12,7 +12,7 @@ import my_app.FileManager;
 import my_app.components.ColumnComponent;
 import my_app.components.InputComponent;
 import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
@@ -333,7 +333,7 @@ public class HomeViewModel {
 
         // Factory simples (pode ser extraída depois)
         if (type.equalsIgnoreCase(englishBase.button())) {
-            node = new ButtonComponentv2(content, this);
+            node = new ButtonComponent(content, this);
         } else if (type.equalsIgnoreCase(englishBase.input())) {
             node = new InputComponent(content, this, currentCanva);
         } else if (type.equalsIgnoreCase(englishBase.text())) {
@@ -408,7 +408,7 @@ public class HomeViewModel {
                     " already exists in dataMap. Skipping addition.");
             return;
         }
-        
+
         dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList()).add(nodeWrapper);
     }
 

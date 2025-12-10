@@ -12,13 +12,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
 import my_app.FileManager;
-import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.scenes.IconsScene.IconsScene;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
+import my_app.windows.AllWindows;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
 
@@ -89,37 +89,50 @@ public class Components {
     private static final TranslationContext.Translation translation = TranslationContext.instance().get();
 
 
+    // Local: Onde ButtonChooseGraphicContent está definido (ex: my_app.components.Components)
     @Component
-    public static Node ButtonChooseGraphicContent(ButtonComponentv2 nodeTarget) {
+    public static Node ButtonChooseGraphicContent(ButtonComponent nodeTarget) {
         var btn = ButtonPrimary(translation.chooseIcon());
-        HBox root = new HBox(5, btn);
-
-        var loadedIcon = nodeTarget.getGraphic();
-
-        if (loadedIcon instanceof FontIcon ic) {
-            root.getChildren().add(FontIcon.of(ic.getIconCode(), ic.getIconSize(), (Color) ic.getIconColor()));
-        }
-
-        root.setSpacing(10);
+        HBox root = new HBox(10, btn);
         root.setAlignment(Pos.CENTER_LEFT);
 
+        // --- 1. Lógica de Reatividade (Bind) ---
+        // Função auxiliar para atualizar o ícone de pré-visualização
+        Consumer<Node> updateVisualIcon = (graphicNode) -> {
+            // Remove o ícone existente (se houver) na posição 1
+            if (root.getChildren().size() > 1) {
+                root.getChildren().remove(1);
+            }
 
+            // Se o novo gráfico não for nulo e for um FontIcon, cria a pré-visualização
+            if (graphicNode instanceof FontIcon ic) {
+                // Clona o FontIcon para o preview, ajustando o tamanho (16px)
+                var previewIcon = FontIcon.of(ic.getIconCode(), 16, (Color) ic.getIconColor());
+                // Adiciona o novo ícone na posição 1 (depois do botão)
+                root.getChildren().add(previewIcon);
+            }
+        };
+
+        // Listener de Propriedade: Reage a QUALQUER mudança no ícone do botão alvo
+        nodeTarget.graphicProperty().addListener((obs, oldVal, newVal) -> {
+            updateVisualIcon.accept(newVal);
+        });
+
+        // Inicializa a pré-visualização com o estado atual do botão
+        updateVisualIcon.accept(nodeTarget.getGraphic());
+
+
+        // --- 2. Ação do Botão (Callback Única) ---
         btn.setOnMouseClicked(ev -> {
-            var is = new IconsScene();
-            is.show();
+            // Usa um CALLBACK que será executado apenas UMA VEZ na seleção do ícone
+            AllWindows.showWindowForSelectIcons(selectedIcon -> {
+                if (selectedIcon != null) {
+                    // Clona o FontIcon para usar no nodeTarget (tamanho 14px, por exemplo)
+                    var newIconForTarget = FontIcon.of(selectedIcon.getIconCode(), 14, (Color) selectedIcon.getIconColor());
 
-            is.iconItemSelected().addListener((_, _, icon) -> {
-                if (icon != null) {
-                    var ic = FontIcon.of(icon.getIconCode(), 16, Color.WHITE);
-
-                    if (root.getChildren().size() == 2) {
-                        root.getChildren().set(1, ic);
-                    } else {
-                        root.getChildren().add(ic);
-                    }
-
-                    ic = FontIcon.of(icon.getIconCode(), 14, Color.WHITE);
-                    nodeTarget.setGraphic(ic);
+                    // Define o novo ícone no componente alvo.
+                    // O listener criado no passo 1 irá garantir que o 'root' seja atualizado.
+                    nodeTarget.setGraphic(newIconForTarget);
                 }
             });
         });
@@ -222,7 +235,7 @@ public class Components {
             case "text-content" -> {
                 if (node instanceof TextComponent component) {
                     tf.setText(component.getText());
-                } else if (node instanceof ButtonComponentv2 component) {
+                } else if (node instanceof ButtonComponent component) {
                     tf.setText(component.getText());
                 } else if (node instanceof InputComponent component) {
                     tf.setText(component.getText());
@@ -260,7 +273,7 @@ public class Components {
                         if (node instanceof TextComponent component) {
                             component.setText(newVal.trim());
                         }
-                        if (node instanceof ButtonComponentv2 component) {
+                        if (node instanceof ButtonComponent component) {
                             component.setText(newVal.trim());
                         }
                         if (node instanceof InputComponent component) {
@@ -323,7 +336,7 @@ public class Components {
                 }
             }
             case "positioning-icon" -> {
-                if (selectedNode instanceof ButtonComponentv2 component) {
+                if (selectedNode instanceof ButtonComponent component) {
                     comboBox.setItems(FXCollections.observableArrayList("Left", "Right"));
 
                     //se tem type de clip definido
@@ -377,7 +390,7 @@ public class Components {
 
         //quando button foi montado vemos se já tem icone
         if (cssField.equals("icon-color")) {
-            var btn = (ButtonComponentv2) selectedNode;
+            var btn = (ButtonComponent) selectedNode;
             var loadedIcon = (FontIcon) btn.getGraphic();
             if (loadedIcon != null) {
                 colorPicker.setValue((Color) loadedIcon.getIconColor());
@@ -417,7 +430,7 @@ public class Components {
 
             if (selectedNode instanceof InputComponent node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
-            } else if (selectedNode instanceof ButtonComponentv2 node) {
+            } else if (selectedNode instanceof ButtonComponent node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);
             } else if (selectedNode instanceof TextComponent node) {
                 color = Commons.getValueOfSpecificField(node.getStyle(), cssField);

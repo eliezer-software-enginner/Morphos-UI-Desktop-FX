@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.contexts.ComponentsContext;
@@ -78,7 +78,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
                 textComponentsData.add(component.getData());
             }
 
-            if (node instanceof ButtonComponentv2 component) {
+            if (node instanceof ButtonComponent component) {
                 btnComponentsData.add(component.getData());
             }
 

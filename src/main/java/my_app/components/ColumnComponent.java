@@ -8,7 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.FileManager;
-import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.ButtonRemoverComponent;
 import my_app.components.shared.ChildHandlerComponent;
@@ -159,7 +159,7 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
         var type = originalData.type();
 
         if (type.equalsIgnoreCase(englishBase.button())) {
-            var newNodeWrapper = new ButtonComponentv2(this.viewModel, canva);
+            var newNodeWrapper = new ButtonComponent(this.viewModel, canva);
             newNodeWrapper.applyData((ButtonComponentData) originalData);
 
             if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {

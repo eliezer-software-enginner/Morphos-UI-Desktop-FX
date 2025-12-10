@@ -23,7 +23,7 @@ import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
 
-public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonComponentData> {
+public class ButtonComponent extends Button implements ViewContractv2<ButtonComponentData> {
 
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
     TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -35,14 +35,14 @@ public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonCo
     CanvaComponentV2 currentCanva;
     private final HomeViewModel viewModel;
 
-    public ButtonComponentv2(HomeViewModel viewModel, CanvaComponentV2 currentCanva) {
+    public ButtonComponent(HomeViewModel viewModel, CanvaComponentV2 currentCanva) {
         super();
         this.viewModel = viewModel;
         this.currentCanva = currentCanva;
         config();
     }
 
-    public ButtonComponentv2(String content, HomeViewModel viewModel) {
+    public ButtonComponent(String content, HomeViewModel viewModel) {
         super(content);
         this.viewModel = viewModel;
         config();
@@ -149,7 +149,7 @@ public class ButtonComponentv2 extends Button implements ViewContractv2<ButtonCo
                 Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
                 Components.LabelWithInput(translation.textContent(), this, "text-content"),
                 Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
-                //Components.ButtonChooseGraphicContent(this),
+                Components.ButtonChooseGraphicContent(this),
                 Components.LabelWithComboBox(translation.iconPosition(), this, "positioning-icon"),
                 Components.ColorPickerRow(translation.iconColor(), this, "icon-color"),
                 //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),

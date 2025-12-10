@@ -16,7 +16,7 @@ import my_app.FileManager;
 import my_app.components.Components;
 import my_app.components.InputComponent;
 import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.HeightComponent;
 import my_app.components.shared.WidthComponent;
@@ -115,7 +115,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             }
 
             for (ButtonComponentData it : data.button_components) {
-                var comp = new ButtonComponentv2(this.viewModel, this);
+                var comp = new ButtonComponent(this.viewModel, this);
                 comp.applyData(it);
 
                 viewModel.addItemOnDataMap("button", comp);

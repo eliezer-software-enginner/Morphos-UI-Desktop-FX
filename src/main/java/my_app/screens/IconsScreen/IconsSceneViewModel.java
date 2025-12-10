@@ -1,4 +1,4 @@
-package my_app.scenes.IconsScene;
+package my_app.screens.IconsScreen;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

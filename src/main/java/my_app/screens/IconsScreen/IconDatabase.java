@@ -1,4 +1,4 @@
-package my_app.scenes.IconsScene;
+package my_app.screens.IconsScreen;
 
 import org.kordamp.ikonli.Ikon;
 

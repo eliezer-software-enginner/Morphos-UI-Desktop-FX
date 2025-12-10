@@ -1,5 +1,6 @@
 package my_app.scenes;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import my_app.data.Commons;
@@ -7,13 +8,16 @@ import my_app.screens.DataTableScreen.DataTableScreen;
 import my_app.screens.Home.Home;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
+import my_app.screens.IconsScreen.IconsScreen;
 import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreen;
 import my_app.screens.ScreenCreateProject.ScreenCreateProject;
 import my_app.screens.ShowCodeScreen.ShowCodeScreen;
 import my_app.screens.SplashScreen.SplashScreen;
 import my_app.themes.ThemeManager;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.nio.file.Path;
+import java.util.function.Consumer;
 
 public class AppScenes {
 
@@ -110,6 +114,41 @@ public class AppScenes {
         theirStage.centerOnScreen();
         theirStage.setResizable(true);
         theirStage.setTitle("Showing code");
+
+        Commons.UseDefaultStyles(scene);
+        ThemeManager.Instance().addScene(scene);
+        return scene;
+    }
+
+
+    public static Scene IconsScene(Stage theirStage, Consumer<FontIcon> onIconSelected) {
+        // Cria a tela, injetando o callable para setup inicial
+        var screen = new IconsScreen(self -> {
+            self.getStyleClass().add("background-color");
+            self.setPadding(new Insets(20));
+
+            self.iconItemSelected().addListener((_, _, icon) -> {
+                if (icon != null) {
+                    // 1. Executa o callback externo (passado de ButtonChooseGraphicContent)
+                    onIconSelected.accept(icon);
+
+                    // 2. Fecha a janela após a seleção
+                    //theirStage.close();
+                }
+            });
+            // CORREÇÃO ESSENCIAL: Adiciona o listener UMA ÚNICA VEZ
+            self.iconItemSelected();
+            return self;
+        });
+
+        var scene = new Scene(screen);
+
+        var screenSize = Commons.ScreensSize._1280x720;
+        theirStage.setWidth(screenSize.width);
+        theirStage.setHeight(screenSize.heigh);
+        theirStage.centerOnScreen();
+        theirStage.setResizable(true);
+        theirStage.setTitle("Icons");
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);

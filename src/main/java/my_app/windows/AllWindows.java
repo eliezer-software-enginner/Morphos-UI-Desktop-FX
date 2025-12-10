@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import my_app.scenes.AppScenes;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class AllWindows {
 
@@ -28,6 +29,14 @@ public class AllWindows {
     public static void showWindowForCreateNewProject() {
         final var window = new Stage();
         window.setScene(AppScenes.CreateProjectScene(window));
+        window.show();
+    }
+
+    // Local: my_app.windows.AllWindows
+    public static void showWindowForSelectIcons(java.util.function.Consumer<FontIcon> onIconSelected) {
+        final var window = new Stage();
+        // Passa o callback para AppScenes.IconsScene
+        window.setScene(AppScenes.IconsScene(window, onIconSelected));
         window.show();
     }
 }

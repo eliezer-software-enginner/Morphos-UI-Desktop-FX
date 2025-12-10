@@ -4,7 +4,7 @@ import my_app.components.ColumnComponent;
 import my_app.components.CustomComponent;
 import my_app.components.InputComponent;
 import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponentv2;
+import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.data.StateJson_v3;
 import my_app.screens.Home.HomeViewModel;
@@ -44,7 +44,7 @@ public class CanvaMapper {
                     canvaData.text_components.add(component.getData());
                 }
 
-                if (node instanceof ButtonComponentv2 component) {
+                if (node instanceof ButtonComponent component) {
                     canvaData.button_components.add(component.getData());
                 }
 
