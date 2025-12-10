@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.HBox;
-import my_app.themes.ThemeManager;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -14,9 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 public class IconsScreenViewModel {
-
-    // Serviço (Mantido, mas não deve expor a UI diretamente)
-    private final ThemeManager themeManager = ThemeManager.Instance();
 
     // DADOS
     public final Map<String, List<Ikon>> iconsMap = IconDatabase.ICONS;
