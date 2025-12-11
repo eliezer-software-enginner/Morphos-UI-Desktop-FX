@@ -59,7 +59,6 @@ public class OptionHeader extends HBox {
 
         btnAdd.setOnAction(_ -> {
             viewModel.addComponent(type);
-            viewModel.headerSelected.set(type);
             expanded.set(true);
         });
 

@@ -78,7 +78,8 @@ public class Home extends BorderPane {
         initBindings();
 
         // 4. Pede para a ViewModel carregar os dados iniciais
-        viewModel.init();
+
+        viewModel.init(openComponentScene);
     }
 
     private void configLayout() {

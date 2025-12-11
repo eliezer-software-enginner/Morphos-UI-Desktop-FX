@@ -77,7 +77,11 @@ public class HomeViewModel {
     /**
      * Chamado pela View logo após a criação para carregar os dados iniciais.
      */
-    public void init() {
+    public void init(boolean isCustomComponent) {
+        if (isCustomComponent) {
+            createDefaultScreen();
+            return;
+        }
         loadProjectData();
     }
 
@@ -343,6 +347,10 @@ public class HomeViewModel {
                     ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
         } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
             node = new ColumnComponent(this, currentCanva);
+        } else if (type.equalsIgnoreCase(englishBase.component())) {
+            AllWindows.showSceneCreateCustomComponent();
+            //  new ShowComponentScene(currentCanva, this).stage.show();
+            return;
         }
 
         if (node != null) {

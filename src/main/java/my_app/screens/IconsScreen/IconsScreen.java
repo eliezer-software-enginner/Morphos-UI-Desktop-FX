@@ -144,8 +144,6 @@ public class IconsScreen extends VBox {
 
         // Comando: Atualiza o estado na ViewModel
         root.setOnMouseClicked(ev -> {
-
-            java.lang.IO.println(id);
             IO.println(id);
             viewModel.iconIdSelected.set(id);
             viewModel.iconItemSelected.set(icon);

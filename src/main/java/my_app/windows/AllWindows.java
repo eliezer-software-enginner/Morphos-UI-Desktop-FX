@@ -6,6 +6,8 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.util.function.Consumer;
+
 public class AllWindows {
 
     public static void showWindowForShowCode(HomeViewModel homeViewModel, CanvaComponentV2 canva) {
@@ -32,11 +34,16 @@ public class AllWindows {
         window.show();
     }
 
-    // Local: my_app.windows.AllWindows
-    public static void showWindowForSelectIcons(java.util.function.Consumer<FontIcon> onIconSelected) {
+    public static void showWindowForSelectIcons(Consumer<FontIcon> onIconSelected) {
         final var window = new Stage();
         // Passa o callback para AppScenes.IconsScene
         window.setScene(AppScenes.IconsScene(window, onIconSelected));
+        window.show();
+    }
+
+    public static void showSceneCreateCustomComponent() {
+        final var window = new Stage();
+        window.setScene(AppScenes.SceneCreateCustomComponent(window));
         window.show();
     }
 }

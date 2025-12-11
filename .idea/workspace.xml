@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="selecionando icones para o botão na nova estrutura">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="refatoração de IconsScreen e IconsScreenViewModel">
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/IconsScreen/IconsSceneViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/IconsScreen/IconsSceneViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/IconsScreen/IconsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/IconsScreen/IconsScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,11 +106,11 @@
       <recent name="my_app.screens.ScreenCreateProject" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="my_app.screens.CustomComponentScreen" />
       <recent name="my_app.screens.Home.components" />
       <recent name="my_app.components" />
       <recent name="my_app.data" />
       <recent name="my_app.components.imageComponent" />
-      <recent name="my_app.components.buttonComponent" />
     </key>
   </component>
   <component name="RunManager" selected="Application.App[Linux]">
@@ -242,22 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00031" summary="duplicating custom component">
-      <option name="closed" value="true" />
-      <created>1763384161470</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1763384161470</updated>
-    </task>
-    <task id="LOCAL-00032" summary="duplicating all other components">
-      <option name="closed" value="true" />
-      <created>1763387590718</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1763387590718</updated>
     </task>
     <task id="LOCAL-00033" summary="deleting custom component">
       <option name="closed" value="true" />
@@ -635,7 +625,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765409325260</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="refatoração de IconsScreen e IconsScreenViewModel">
+      <option name="closed" value="true" />
+      <created>1765409864779</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1765409864779</updated>
+    </task>
+    <task id="LOCAL-00081" summary="refatoração de IconsScreen e IconsScreenViewModel">
+      <option name="closed" value="true" />
+      <created>1765410056079</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1765410056079</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -650,7 +656,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="correção ao atualizar nome da Screen" />
     <MESSAGE value="correção ao listar a lista de dados em vbox (columnItens)" />
     <MESSAGE value="tratamento ao carregar dados na splashcreen" />
     <MESSAGE value="refatorada forma de abrir a opção de exibir código" />
@@ -675,7 +680,8 @@
     <MESSAGE value="correção em editar o text-content" />
     <MESSAGE value="evitando adição de componentes duplicados no datamap e no canva" />
     <MESSAGE value="selecionando icones para o botão na nova estrutura" />
-    <option name="LAST_COMMIT_MESSAGE" value="selecionando icones para o botão na nova estrutura" />
+    <MESSAGE value="refatoração de IconsScreen e IconsScreenViewModel" />
+    <option name="LAST_COMMIT_MESSAGE" value="refatoração de IconsScreen e IconsScreenViewModel" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

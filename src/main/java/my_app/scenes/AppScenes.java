@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import my_app.data.Commons;
+import my_app.screens.CustomComponentScreen.CustomComponentScreen;
 import my_app.screens.DataTableScreen.DataTableScreen;
 import my_app.screens.Home.Home;
 import my_app.screens.Home.HomeViewModel;
@@ -120,10 +121,9 @@ public class AppScenes {
         return scene;
     }
 
-
     public static Scene IconsScene(Stage theirStage, Consumer<FontIcon> onIconSelected) {
         // Cria a tela, injetando o callable para setup inicial
-        var screen = new IconsScreen(self -> {
+        var scene = new Scene(new IconsScreen(self -> {
             self.getStyleClass().add("background-color");
             self.setPadding(new Insets(20));
 
@@ -139,9 +139,7 @@ public class AppScenes {
             // CORREÇÃO ESSENCIAL: Adiciona o listener UMA ÚNICA VEZ
             self.iconItemSelected();
             return self;
-        });
-
-        var scene = new Scene(screen);
+        }));
 
         var screenSize = Commons.ScreensSize._1280x720;
         theirStage.setWidth(screenSize.width);
@@ -149,6 +147,24 @@ public class AppScenes {
         theirStage.centerOnScreen();
         theirStage.setResizable(true);
         theirStage.setTitle("Icons");
+
+        Commons.UseDefaultStyles(scene);
+        ThemeManager.Instance().addScene(scene);
+        return scene;
+    }
+
+    public static Scene SceneCreateCustomComponent(Stage theirStage) {
+        var scene = new Scene(new CustomComponentScreen(self -> {
+            self.getStyleClass().add("background-color");
+            return self;
+        }));
+
+        var screenSize = Commons.ScreensSize._900x500;
+        theirStage.setWidth(screenSize.width);
+        theirStage.setHeight(screenSize.heigh);
+        theirStage.centerOnScreen();
+        theirStage.setResizable(true);
+        theirStage.setTitle("Showing code");
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);
