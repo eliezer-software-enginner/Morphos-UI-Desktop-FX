@@ -51,6 +51,9 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     public String name;
     public String screenFatherId;
 
+    //Aqui é o nome de viewmodel que será gerado no json
+    public String viewModelName;
+
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
     HomeViewModel viewModel;
@@ -104,6 +107,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             setId(data.identification);
             this.screenFatherId = data.screenFatherId;
             this.name = data.name;
+            this.viewModelName = data.viewModelName;
 
             // Ajustando o padding
             setPadding(
@@ -477,11 +481,19 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     @Override
     public void otherSettings(VBox father, CanvaComponentV2 canva) {
         father.getChildren().addAll(Components.LabelWithInputAndButton(
-                translation.screenName(), translation.update(),
-                this, "screen-name", () -> {
-                    FileManager.updateScreenNameInProject(screenFatherId, name);
-                    //  viewModel.toggleRefreshScreenTabs();
-                }));
+                        translation.screenName(), translation.update(),
+                        this, "screen-name", () -> {
+                            FileManager.updateScreenNameInProject(screenFatherId, "name", name);
+                            //  viewModel.toggleRefreshScreenTabs();
+                        }),
+                Components.LabelWithInputAndButton(
+                        "view model name", translation.update(),
+                        this, "view-model-name", () -> {
+                            FileManager.updateScreenNameInProject(screenFatherId, "viewModelName",
+                                    this.viewModelName);
+                            //  viewModel.toggleRefreshScreenTabs();
+                        })
+        );
     }
 
     void config() {
@@ -537,7 +549,9 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
 
         return new CanvaComponentDatav2(
                 paddingTop, paddingRight, paddingBottom, paddingLeft, width, height, bgType,
-                bgContent, this.getId(), null, 0, 0, isDeleted, this.name, this.screenFatherId,
+                bgContent, this.getId(), null, 0, 0, isDeleted, this.name,
+                this.screenFatherId,
+                this.viewModelName,
 
                 text_components,
                 button_components,

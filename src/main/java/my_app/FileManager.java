@@ -197,7 +197,9 @@ public class FileManager {
         return Path.of(appDataAbsolutePath).resolve(Commons.AppNameAtAppData);
     }
 
-    public static void updateScreenNameInProject(String screenId, String newName) {
+    public static void updateScreenNameInProject(String screenId,
+                                                 String fieldName,
+                                                 String newName) {
         try {
             final var projectData = getProjectData();
             var screens = projectData.screens();
@@ -206,8 +208,13 @@ public class FileManager {
                     .findFirst();
 
             screenOp.ifPresent(it -> {
-                it.name = newName;
-                IO.println("atualizou nome");
+                if (fieldName.equals("name")) {
+                    it.name = newName;
+                    IO.println("atualizou nome");
+                } else if (fieldName.equals("viewModelName")) {
+                    it.viewModelName = newName;
+                    IO.println("atualizou viewModelName");
+                }
             });
 
             final var prefsData = getPrefsData();

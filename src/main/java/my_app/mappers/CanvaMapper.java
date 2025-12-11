@@ -17,6 +17,7 @@ public class CanvaMapper {
         var jsonTarget = new StateJson_v3();
         jsonTarget.screen_id = canva.screenFatherId;
         jsonTarget.name = canva.name;
+        jsonTarget.viewModelName = canva.viewModelName;
 
         jsonTarget.id_of_component_selected = nodeSelected == null ? null
                 : nodeSelected.node().getId();
@@ -82,6 +83,8 @@ public class CanvaMapper {
         canvaComponent.applyData(screen.canva);
         canvaComponent.screenFatherId = screen.screen_id;
         canvaComponent.name = screen.name;
+        canvaComponent.viewModelName = screen.viewModelName;
+        ;
 
         return canvaComponent;
     }

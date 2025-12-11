@@ -196,12 +196,23 @@ public class Components {
             }
         }
 
+        if (fieldCss.equals("view-model-name")) {
+            if (node instanceof CanvaComponentV2 component) {
+                tf.setText(component.viewModelName);
+            }
+        }
+
         tf.textProperty().addListener((_, _, newVal) -> {
             if (!newVal.isBlank()) {
                 try {
                     if (fieldCss.equals("screen-name")) {
                         if (node instanceof CanvaComponentV2 component) {
                             component.name = newVal.trim();
+                        }
+                    }
+                    if (fieldCss.equals("view-model-name")) {
+                        if (node instanceof CanvaComponentV2 component) {
+                            component.viewModelName = newVal.trim();
                         }
                     }
                 } catch (NumberFormatException ignored) {

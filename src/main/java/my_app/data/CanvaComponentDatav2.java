@@ -20,6 +20,7 @@ public class CanvaComponentDatav2 implements ComponentData {
     public boolean isDeleted;
     public String name;
     public String screenFatherId;
+    public String viewModelName;
 
     public List<TextComponentData> text_components = new ArrayList<>();
     public List<ButtonComponentData> button_components = new ArrayList<>();
@@ -48,6 +49,7 @@ public class CanvaComponentDatav2 implements ComponentData {
             String identification,
             String nameOfOnClickMethod,
             int x, int y, boolean isDeleted, String name, String screenFatherId,
+            String viewModelName,
             List<TextComponentData> text_components,
             List<ButtonComponentData> button_components,
             List<ImageComponentData> image_components,
@@ -72,6 +74,7 @@ public class CanvaComponentDatav2 implements ComponentData {
         this.isDeleted = isDeleted;
         this.name = name;
         this.screenFatherId = screenFatherId;
+        this.viewModelName = viewModelName;
         this.text_components = text_components;
         this.button_components = button_components;
         this.image_components = image_components;

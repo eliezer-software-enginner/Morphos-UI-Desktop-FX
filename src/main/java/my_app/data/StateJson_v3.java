@@ -11,6 +11,7 @@ public class StateJson_v3 implements Serializable {
 
     //public CanvaProps canva;
     public CanvaComponentDatav2 canva;
+    public String viewModelName;
 
     public StateJson_v3() {
         // Gera novos IDs apenas se eles ainda não tiverem sido atribuídos

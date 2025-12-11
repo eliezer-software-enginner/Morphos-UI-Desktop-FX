@@ -4,18 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="adicionado onClick para o button component">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="remoção de &quot;in_canva&quot; desnecessário">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/MenuComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/MenuComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ButtonComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ButtonComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ImageComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ImageComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/InputComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/InputComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/MenuComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/MenuComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/TextComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/TextComponentData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +64,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.AppNavTest.executor": "Run",
-    "Application.App[Linux].executor": "Run",
+    "Application.App[Linux].executor": "Debug",
     "Application.App_base.executor": "Run",
     "Application.Commons.executor": "Run",
     "Application.IconDatabase.executor": "Run",
@@ -250,14 +246,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00041" summary="added time of creation">
-      <option name="closed" value="true" />
-      <created>1764081517282</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1764081517282</updated>
     </task>
     <task id="LOCAL-00042" summary="rendering each text using value of datatable list">
       <option name="closed" value="true" />
@@ -643,7 +631,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765462338993</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="remoção de &quot;in_canva&quot; desnecessário">
+      <option name="closed" value="true" />
+      <created>1765462869388</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1765462869388</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -658,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alternando entre screens" />
     <MESSAGE value="excluindo tela atual" />
     <MESSAGE value="criado componente para tab" />
     <MESSAGE value="tab clicada marca node como selecionado" />
@@ -683,7 +678,8 @@
     <MESSAGE value="criação de menu component" />
     <MESSAGE value="salvando e carregando menu" />
     <MESSAGE value="adicionado onClick para o button component" />
-    <option name="LAST_COMMIT_MESSAGE" value="adicionado onClick para o button component" />
+    <MESSAGE value="remoção de &quot;in_canva&quot; desnecessário" />
+    <option name="LAST_COMMIT_MESSAGE" value="remoção de &quot;in_canva&quot; desnecessário" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -735,7 +731,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/FileManager.java</url>
-          <line>207</line>
+          <line>209</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -760,7 +756,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/FileManager.java</url>
-          <line>317</line>
+          <line>324</line>
           <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -815,6 +811,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
           <line>389</line>
           <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/components/Components.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="100" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
