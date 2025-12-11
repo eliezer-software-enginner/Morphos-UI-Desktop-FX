@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="remoção de &quot;in_canva&quot; desnecessário">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="atrelando nome para criação da viewmodel para a tela">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/StateJson_v3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tab.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +60,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.AppNavTest.executor": "Run",
-    "Application.App[Linux].executor": "Debug",
+    "Application.App[Linux].executor": "Run",
     "Application.App_base.executor": "Run",
     "Application.Commons.executor": "Run",
     "Application.IconDatabase.executor": "Run",
@@ -246,14 +242,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00042" summary="rendering each text using value of datatable list">
-      <option name="closed" value="true" />
-      <created>1764705676060</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1764705676060</updated>
     </task>
     <task id="LOCAL-00043" summary="output node for when columnItem is empty">
       <option name="closed" value="true" />
@@ -639,7 +627,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765462869388</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="atrelando nome para criação da viewmodel para a tela">
+      <option name="closed" value="true" />
+      <created>1765465295667</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1765465295667</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -654,7 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="excluindo tela atual" />
     <MESSAGE value="criado componente para tab" />
     <MESSAGE value="tab clicada marca node como selecionado" />
     <MESSAGE value="saindo do projeto" />
@@ -679,7 +674,8 @@
     <MESSAGE value="salvando e carregando menu" />
     <MESSAGE value="adicionado onClick para o button component" />
     <MESSAGE value="remoção de &quot;in_canva&quot; desnecessário" />
-    <option name="LAST_COMMIT_MESSAGE" value="remoção de &quot;in_canva&quot; desnecessário" />
+    <MESSAGE value="atrelando nome para criação da viewmodel para a tela" />
+    <option name="LAST_COMMIT_MESSAGE" value="atrelando nome para criação da viewmodel para a tela" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

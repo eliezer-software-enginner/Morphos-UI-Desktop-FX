@@ -1,25 +1,38 @@
 package my_app.screens.Home.components;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import my_app.components.Components;
 import my_app.data.StateJson_v3;
+import my_app.mappers.CanvaMapper;
 import my_app.screens.Home.HomeViewModel;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
+import my_app.windows.AllWindows;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
+import toolkit.Component;
 
 public class ScreenTab extends VBox {
 
     private final StateJson_v3 screen;
+
+
     private final HBox contentContainer;
+
+    @Component
+    private final VBox culumnContent;
     private final Rectangle indicator; // O "chão azul"
 
     ThemeManager themeManager = ThemeManager.Instance();
+
+    BooleanProperty btnShowCodeIsVisible = new SimpleBooleanProperty(false);
 
     public ScreenTab(StateJson_v3 screen, HomeViewModel viewModel) {
         this.screen = screen;
@@ -44,9 +57,39 @@ public class ScreenTab extends VBox {
         });
 
         // Contêiner principal da Tab (Nome e Fechar)
-        contentContainer = new HBox(5, nameLabel, closeButton); // Espaçamento entre nome e fechar
+
+        Button btnExpand = new Button();
+        final var iconDown = new FontIcon(Feather.CHEVRON_DOWN);
+        iconDown.setIconSize(18);
+        iconDown.setIconColor(themeManager.themeIsWhite() ? Color.BLACK : Color.WHITE);
+        btnExpand.setGraphic(iconDown);
+        btnExpand.getStyleClass().add("button-add");
+
+        btnExpand.setOnMouseClicked(ev -> btnShowCodeIsVisible.set(!btnShowCodeIsVisible.get()));
+        
+        btnShowCodeIsVisible.addListener((_, _, newV) -> {
+            iconDown.setIconCode(newV ? Feather.CHEVRON_UP : Feather.CHEVRON_DOWN);
+        });
+
+        final var btnShowCode = Components.ButtonPrimary("Show code");
+        btnShowCode.setOnMouseClicked(ev -> {
+            AllWindows.showWindowForShowCode(viewModel, CanvaMapper.fromScreenToCanva(screen, viewModel));
+        });
+
+        btnShowCode.managedProperty().bind(btnShowCodeIsVisible);
+        btnShowCode.visibleProperty().bind(btnShowCodeIsVisible);
+
+        VBox containerHoldingExpandIconAndBtnForAction = new VBox(2, btnExpand, btnShowCode);
+        containerHoldingExpandIconAndBtnForAction.setAlignment(Pos.CENTER);
+
+
+        this.culumnContent = new VBox(2, nameLabel, containerHoldingExpandIconAndBtnForAction);
+
+
+        contentContainer = new HBox(5, culumnContent, closeButton); // Espaçamento entre nome e fechar
         contentContainer.setAlignment(Pos.CENTER_LEFT);
         contentContainer.getStyleClass().add("screen-tab-content");
+
 
         // 2. O Indicador (o "chão azul")
         indicator = new Rectangle();
@@ -59,7 +102,7 @@ public class ScreenTab extends VBox {
         // Para garantir que o VBox pai preencha a largura disponível (dentro do HBox screensTabs)
 
         // 3. Adiciona o conteúdo e o indicador
-        this.getChildren().addAll(contentContainer, indicator);
+        this.getChildren().addAll(this.contentContainer, indicator);
         this.getStyleClass().add("tab-container");
         this.setSpacing(0); // Garante que o indicador fique colado no conteúdo
 

@@ -44,6 +44,12 @@
     -fx-cursor: hand;
 }
 
+.button-add {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
 .close-tab-button:hover {
     /* 1. Altera a cor do ícone no hover (para um cinza claro, por exemplo) */
     -fx-text-fill: #cccccc; /* Manter se houver texto, mas o importante é o fill */
@@ -52,6 +58,15 @@
     -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-background-radius: 4px;
     -fx-padding: 6px;
+}
+
+.button-add:hover {
+    /* 1. Altera a cor do ícone no hover (para um cinza claro, por exemplo) */
+    -fx-text-fill: #cccccc; /* Manter se houver texto, mas o importante é o fill */
+
+    /* 2. Opcional: Adiciona um fundo sutil e arredondado para o botão de fechar */
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 4px;
 }
 
 /* NOVO: Regra específica para o ícone no estado hover */
