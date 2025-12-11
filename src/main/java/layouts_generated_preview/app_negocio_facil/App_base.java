@@ -40,7 +40,24 @@ class Component1 extends Pane {
 
 }
 
+
+// -------------------------------------------------------------------
+// VIEW MODEL - Contém a lógica de negócio e handlers de eventos
+// -------------------------------------------------------------------
+class testeViewModel {
+
+    // Construtor, injeção de dependências, etc., podem ser adicionados aqui
+
+    public void onClickSignin() {
+        // Lógica de onClickSignin
+        IO.println("ola mundo");
+    }
+}
+
+
 class Screen extends Pane {
+
+    testeViewModel testeViewModel = new testeViewModel();
 
 
     Text text1 = new Text("Seja bem vindo ao négocio fácil");
@@ -63,6 +80,9 @@ class Screen extends Pane {
         setup();
         styles();
 
+        // Lógica de Eventos de Clique (usando ViewModel)
+        btn1.setOnMouseClicked(e -> testeViewModel.onClickSignin());
+
     }
 
     void setup() {
@@ -79,12 +99,12 @@ class Screen extends Pane {
         imgV1.setImage(new Image(url));
         imgV1.setLayoutX(350.000000);
         imgV1.setLayoutY(36.000000);
+        input1.setPromptText("your login");
         input1.setLayoutX(300.390625);
         input1.setLayoutY(236.000000);
-        input1.setPromptText("your login");
+        input2.setPromptText("your password");
         input2.setLayoutX(300.390625);
         input2.setLayoutY(296.000000);
-        input2.setPromptText("your password");
     }
 
     void styles() {

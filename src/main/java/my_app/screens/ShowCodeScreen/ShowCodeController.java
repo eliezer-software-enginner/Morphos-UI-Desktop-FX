@@ -22,6 +22,16 @@ import java.util.Locale;
 public class ShowCodeController {
     private final HomeViewModel viewModel;
 
+    // --- COLEÇÕES DE DADOS (Helper Class para reduzir parâmetros) ---
+    private record CodeCollections(
+            List<String> instances,
+            List<String> children,
+            List<String> setup,
+            List<String> styles,
+            List<String> onClickHandlers) {
+    }
+    // ------------------------------------------------------------------
+
     public ShowCodeController(HomeViewModel viewModel) {
         this.viewModel = viewModel;
     }
@@ -29,6 +39,7 @@ public class ShowCodeController {
     public String createImports() {
         return """
                 import javafx.scene.Scene;
+                import javafx.scene.input.MouseEvent;
                 import javafx.scene.control.*;
                 import javafx.scene.text.*;
                 import javafx.scene.image.ImageView;
@@ -40,222 +51,72 @@ public class ShowCodeController {
                 """;
     }
 
-    //Aqui são classes componentes
-    // class Component1{
-    //
-    //    }
-    public List<String> createComponentsForPreview(ObservableList<Node> nodesInCanva) {
-
-        var componentsInstances = new ArrayList<String>();
-        var componentsInsideGetChildren = new ArrayList<String>();
-        var componentsInsideMethodSetup = new ArrayList<String>();
-        var componentsInsideMethodStyles = new ArrayList<String>();
-        var componentsClassCreation = new ArrayList<String>();
-
-        int textCount = 0;
-        int btnCount = 0;
-        int imgCount = 0;
-        int inputCount = 0;
-        int customComponentCount = 0;
-
-        //
-
-        // code.append(String.join("\n\t", componentsInsideMethodStyles));
-
-        //
-
-        for (int i = 0; i < nodesInCanva.size(); i++) {
-            Node node = nodesInCanva.get(i);
-
-            if (node instanceof CustomComponent customComponent) {
-                StringBuilder code = new StringBuilder();
-                customComponentCount++;
-
-                code
-                        .append("class Component%d extends Pane {\n\t".formatted(customComponentCount));
-
-                for (var child : customComponent.getChildren()) {
-                    if (child instanceof TextComponent component) {
-
-                        textCount++;
-
-                        String textText = component.getText();
-
-
-                        String textCreation = "Text text%d = new Text(\"%s\");".formatted(textCount, textText);
-                        componentsInstances.add(textCreation);
-                        componentsInsideGetChildren.add("text" + textCount);
-
-                        String setX = String.format(Locale.US, "text%d.setLayoutX(%f);", textCount,
-                                component.getLayoutX());
-                        String setY = String.format(Locale.US, "text%d.setLayoutY(%f);", textCount,
-                                component.getLayoutY());
-
-                        componentsInsideMethodSetup.add(setX);
-                        componentsInsideMethodSetup.add(setY);
-
-                        String setStyle = "text%d.setStyle(\"%s\");".formatted(textCount, component.getStyle());
-                        componentsInsideMethodStyles.add(setStyle);
-                    }
-
-                    if (child instanceof Button component) {
-
-                        btnCount++;
-
-                        String btnText = component.getText();
-
-                        String btnCreation = "Button button%d = new Button(\"%s\");".formatted(btnCount, btnText);
-                        componentsInstances.add(btnCreation);
-                        componentsInsideGetChildren.add("button" + btnCount);
-
-                        String setX = String.format(Locale.US, "button%d.setLayoutX(%f);", btnCount,
-                                component.getLayoutX());
-                        String setY = String.format(Locale.US, "button%d.setLayoutY(%f);", btnCount,
-                                component.getLayoutY());
-
-                        componentsInsideMethodSetup.add(setX);
-                        componentsInsideMethodSetup.add(setY);
-
-                        String setStyle = "button%d.setStyle(\"%s\");".formatted(btnCount, component.getStyle());
-                        componentsInsideMethodStyles.add(setStyle);
-                    }
-
-                    if (node instanceof ImageComponentv2 component) {
-
-                        imgCount++;
-
-                        String imgViewCreation = "ImageView imgV%d = new ImageView();".formatted(imgCount);
-                        componentsInstances.add(imgViewCreation);
-
-                        componentsInsideGetChildren.add("imgV" + imgCount);
-
-                        Image img = component.getImage();
-
-                        String url = (img != null && img.getUrl() != null) ? img.getUrl() : "";
-
-                        String urlstr = "final var url = \"%s\";".formatted(url);
-
-                        String setX = String.format(Locale.US, "imgV%d.setLayoutX(%f);", imgCount,
-                                component.getLayoutX());
-                        String setY = String.format(Locale.US, "imgV%d.setLayoutY(%f);", imgCount,
-                                component.getLayoutY());
-
-                        String setImageStr = "imgV%d.setImage(new Image(url));".formatted(imgCount, urlstr);
-
-                        var h = component.getFitHeight();
-                        var w = component.getFitWidth();
-                        String wstr = "imgV%d.setFitWidth(%.0f);".formatted(imgCount, w);
-                        String hstr = "imgV%d.setFitHeight(%.0f);".formatted(imgCount, h);
-
-                        // inside setup
-                        componentsInsideMethodSetup.add(urlstr);
-                        componentsInsideMethodSetup.add(wstr);
-                        componentsInsideMethodSetup.add(hstr);
-
-                        componentsInsideMethodSetup.add(setImageStr);
-                        componentsInsideMethodSetup.add(setX);
-                        componentsInsideMethodSetup.add(setY);
-
-                        String setStyle = "imgV%d.setStyle(\"%s\");".formatted(imgCount, component.getStyle());
-                        componentsInsideMethodStyles.add(setStyle);
-                    }
-
-                    if (node instanceof InputComponent component) {
-
-                        inputCount++;
-
-                        String textText = component.getText();
-
-                        String textCreation = "TextField input%d = new TextField(\"%s\");".formatted(inputCount,
-                                textText);
-                        componentsInstances.add(textCreation);
-                        componentsInsideGetChildren.add("input" + inputCount);
-
-                        String setX = String.format(Locale.US, "input%d.setLayoutX(%f);", inputCount,
-                                component.getLayoutX());
-                        String setY = String.format(Locale.US, "input%d.setLayoutY(%f);", inputCount,
-                                component.getLayoutY());
-                        String setPromptText = "input%d.setPromptText(\"%s\");".formatted(inputCount,
-                                component.getPromptText());
-
-                        componentsInsideMethodSetup.add(setX);
-                        componentsInsideMethodSetup.add(setY);
-                        componentsInsideMethodSetup.add(setPromptText);
-
-                        String setStyle = "input%d.setStyle(\"%s\");".formatted(inputCount, component.getStyle());
-                        componentsInsideMethodStyles.add(setStyle);
-                    }
-
-                }
-
-                // componentsInstances.
-
-                code.append(String.join("\n\t", componentsInstances));
-
-                code.append("\n\t{\n");
-                // restante aqui da implementação
-
-                // getChildren().addAll(
-                code.append("\n\t\tgetChildren().addAll(\n\t\t");
-                code.append(String.join(",\n\t\t", componentsInsideGetChildren));
-                code.append("\n\t\t);\n");
-                // )
-
-                code.append("\t\tsetup();\n");
-                code.append("\t\tstyles();\n");
-
-                code.append("\t}\n\n");
-
-                // p.setBack
-
-                // setup(){
-                code.append("\tvoid setup(){\n\t\t");
-
-                String config = "this.setPrefSize(%.0f, %.0f);\n\t\t".formatted(
-                        customComponent.getPrefWidth(),
-                        customComponent.getPrefHeight());
-                code.append(config);
-
-                // code.append();
-                code.append(String.join("\n\t\t", componentsInsideMethodSetup));
-                code.append("\n\t  }\n\n");
-                // }
-
-                // styles(){
-                code.append("\tvoid styles(){\n\t\t");
-                code.append("setStyle(\"%s\");\n\t\t".formatted(customComponent.getStyle()));
-                code.append(String.join("\n\t\t", componentsInsideMethodStyles));
-                code.append("\n\t  }\n\n");
-                // }
-
-                code.append("}");
-
-                System.out.println(code.toString());
-
-                componentsClassCreation.add(code.toString());
-
-            }
-
+    private String generateViewModelCode(String viewModelName, ArrayList<String> methods) {
+        if (methods.isEmpty() || viewModelName == null || viewModelName.isEmpty()) {
+            return "";
         }
 
-        return componentsClassCreation;
+        String methodsCode = String.join("\n\n\t", methods);
+
+        return """
+                
+                // -------------------------------------------------------------------
+                // VIEW MODEL - Contém a lógica de negócio e handlers de eventos
+                // -------------------------------------------------------------------
+                class %s {
+                
+                    // Construtor, injeção de dependências, etc., podem ser adicionados aqui
+                
+                    %s
+                }
+                
+                
+                """.formatted(viewModelName, methodsCode);
     }
 
-    public String createRestOfCode(
-            CanvaComponentV2 canvaComponent) {
+    /**
+     * Adiciona as linhas de código comuns para configuração de layout e estilo de um componente.
+     */
+    private void addCommonComponentCode(
+            String finalName,
+            Node node,
+            String style,
+            List<String> componentsInsideGetChildren,
+            List<String> componentsInsideMethodSetup,
+            List<String> componentsInsideMethodStyles) {
+
+        // 1. Adicionar à lista de children do Pane
+        componentsInsideGetChildren.add(finalName);
+
+        // 2. Setup (Layout)
+        String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
+        String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
+
+        componentsInsideMethodSetup.add(setX);
+        componentsInsideMethodSetup.add(setY);
+
+        // 3. Styles
+        String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, style);
+        componentsInsideMethodStyles.add(setStyle);
+    }
+
+    public String createRestOfCode(CanvaComponentV2 canvaComponent) {
+
+        final String viewModelName = canvaComponent.getData().viewModelName != null && !canvaComponent.getData().viewModelName.isEmpty() ?
+                canvaComponent.getData().viewModelName : "AppViewModel";
+        final String viewModelInstanceName = viewModelName.substring(0, 1).toLowerCase() + viewModelName.substring(1);
+
+        final var onClickHandlers = new ArrayList<String>();
+        final var viewModelMethods = new ArrayList<String>();
 
         ObservableList<Node> nodesInCanva = canvaComponent.getChildren();
-        // codigo da classe
 
         final var componentsInstances = new ArrayList<String>();
         final var componentsInsideGetChildren = new ArrayList<String>();
         final var componentsInsideMethodSetup = new ArrayList<String>();
         final var componentsInsideMethodStyles = new ArrayList<String>();
 
-        //exemplo: List<String> list1 = List.of("white","black");
         final var listOf_Instances = new ArrayList<String>();
-
-        //exemplo: Text textEmptyColumn = new Text("Nothing")
         final var listOfChildWhenColumnIsEmptyInstances = new ArrayList<String>();
         final var listOfRepeatableChildForColumn_Instances = new ArrayList<String>();
 
@@ -268,9 +129,7 @@ public class ShowCodeController {
         int inputCount = 0;
         int columnComponentCount = 0;
         int customComponentCount = 0;
-        int listOf_InstancesCount = 0;
         int emptyComponentCount_columnItem_Count = 0;
-        int repeatableComponentCount_columnItem_Count = 0;
 
         for (int i = 0; i < nodesInCanva.size(); i++) {
             Node node = nodesInCanva.get(i);
@@ -279,44 +138,47 @@ public class ShowCodeController {
                 final String variableName = component.name.get();
                 if (variableName == null) textCount++;
 
-                String textText = component.getText();
-
                 String finalName = variableName != null ? variableName : "text" + textCount;
 
-                String textCreation = "Text %s = new Text(\"%s\");".formatted(finalName, textText);
+                String textCreation = "Text %s = new Text(\"%s\");".formatted(finalName, component.getText());
                 componentsInstances.add(textCreation);
-                componentsInsideGetChildren.add(finalName);
 
-                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
-                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
-
-                componentsInsideMethodSetup.add(setX);
-                componentsInsideMethodSetup.add(setY);
-
-                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
-                componentsInsideMethodStyles.add(setStyle);
+                // --- Código Comum Extraído ---
+                addCommonComponentCode(
+                        finalName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
             }
 
             if (node instanceof ButtonComponent component) {
                 String variableName = component.name.get();
                 if (variableName == null) btnCount++;
 
-                String btnText = component.getText();
-
                 String finalName = variableName != null ? variableName : "btn" + btnCount;
 
-                String btnCreation = "Button %s = new Button(\"%s\");".formatted(finalName, btnText);
+                String btnCreation = "Button %s = new Button(\"%s\");".formatted(finalName, component.getText());
                 componentsInstances.add(btnCreation);
-                componentsInsideGetChildren.add(finalName);
 
-                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
-                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
+                // --- Código Comum Extraído ---
+                addCommonComponentCode(
+                        finalName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
 
-                componentsInsideMethodSetup.add(setX);
-                componentsInsideMethodSetup.add(setY);
+                // Lógica Única de Eventos de Clique
+                String onClickMethodName = component.getData().nameOfOnClickMethod();
 
-                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
-                componentsInsideMethodStyles.add(setStyle);
+                if (onClickMethodName != null && !onClickMethodName.isEmpty()) {
+                    String handler = "%s.setOnMouseClicked(e -> %s.%s());".formatted(
+                            finalName, viewModelInstanceName, onClickMethodName
+                    );
+                    onClickHandlers.add(handler);
+
+                    String methodSignature = "public void %s() {\n\t\t// Lógica de %s\n\t}".formatted(onClickMethodName, onClickMethodName);
+                    if (viewModelMethods.stream().noneMatch(s -> s.contains("public void " + onClickMethodName + "()"))) {
+                        viewModelMethods.add(methodSignature);
+                    }
+                }
             }
 
             if (node instanceof ImageComponentv2 component) {
@@ -328,35 +190,27 @@ public class ShowCodeController {
                 String imgViewCreation = "ImageView %s = new ImageView();".formatted(finalName);
                 componentsInstances.add(imgViewCreation);
 
-                componentsInsideGetChildren.add(finalName);
-
+                // Lógica Única de Image
                 Image img = component.getImage();
-
                 String url = (img != null && img.getUrl() != null) ? img.getUrl() : "";
-
                 String urlstr = "final var url = \"%s\";".formatted(url);
-
-                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
-                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
-
                 String setImageStr = "%s.setImage(new Image(url));".formatted(finalName);
-
                 var h = component.getFitHeight();
                 var w = component.getFitWidth();
                 String wstr = "%s.setFitWidth(%.0f);".formatted(finalName, w);
                 String hstr = "%s.setFitHeight(%.0f);".formatted(finalName, h);
 
-                // inside setup
+                // inside setup (Unique and Common)
                 componentsInsideMethodSetup.add(urlstr);
                 componentsInsideMethodSetup.add(wstr);
                 componentsInsideMethodSetup.add(hstr);
-
                 componentsInsideMethodSetup.add(setImageStr);
-                componentsInsideMethodSetup.add(setX);
-                componentsInsideMethodSetup.add(setY);
 
-                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
-                componentsInsideMethodStyles.add(setStyle);
+                // --- Código Comum Extraído ---
+                addCommonComponentCode(
+                        finalName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
             }
 
             if (node instanceof InputComponent component) {
@@ -364,26 +218,21 @@ public class ShowCodeController {
                 if (variableName == null) inputCount++;
 
                 String finalName = variableName != null ? variableName : "input" + inputCount;
-                String textText = component.getText();
 
-                String textCreation = "TextField %s = new TextField(\"%s\");".formatted(finalName, textText);
+                String textCreation = "TextField %s = new TextField(\"%s\");".formatted(finalName, component.getText());
                 componentsInstances.add(textCreation);
-                componentsInsideGetChildren.add(finalName);
 
-                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
-                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
-                String setPromptText = "%s.setPromptText(\"%s\");".formatted(finalName,
-                        component.getPromptText());
-
-                componentsInsideMethodSetup.add(setX);
-                componentsInsideMethodSetup.add(setY);
+                // Lógica Única de Input
+                String setPromptText = "%s.setPromptText(\"%s\");".formatted(finalName, component.getPromptText());
                 componentsInsideMethodSetup.add(setPromptText);
 
-                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
-                componentsInsideMethodStyles.add(setStyle);
+                // --- Código Comum Extraído ---
+                addCommonComponentCode(
+                        finalName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
             }
 
-            //todo fiz só para filho Text, preciso fazer para os outros
             if (node instanceof ColumnComponent component) {
                 final String variableName = component.name.get();
                 if (variableName == null) columnComponentCount++;
@@ -404,25 +253,19 @@ public class ShowCodeController {
                     compWhenEmpty_Creation = "Text %s = new Text(\"%s\");".formatted(finalNameForComp_WhenEmpty, textText);
 
                     listOfChildWhenColumnIsEmptyInstances.add(compWhenEmpty_Creation);
-
                     emptyComponentCount_columnItem_Count++;
                 }
 
-
                 String compCreation = "VBox %s = new VBox(%s);".formatted(finalName, finalNameForComp_WhenEmpty);
-
                 componentsInstances.add(compCreation);
-                componentsInsideGetChildren.add(finalName);
 
-                String setX = String.format("%s.setLayoutX(%f);", finalName, node.getLayoutX());
-                String setY = String.format("%s.setLayoutY(%f);", finalName, node.getLayoutY());
+                // --- Código Comum Extraído ---
+                addCommonComponentCode(
+                        finalName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
 
-                componentsInsideMethodSetup.add(setX);
-                componentsInsideMethodSetup.add(setY);
-
-                String setStyle = "%s.setStyle(\"%s\");".formatted(finalName, component.getStyle());
-                componentsInsideMethodStyles.add(setStyle);
-
+                // Lógica Única de ColumnComponent (load method)
                 final String methodName = "load" + finalName + "()";
                 listOfLoadColumnItems_MethodsInvocation.add(methodName + ";");
                 final var dataTableListVariableName = component.dataTableVariableName;
@@ -432,74 +275,52 @@ public class ShowCodeController {
                     methodBuilder.append("\n\t\tfor(var item : %s){".formatted(dataTableListVariableName));
 
                 if (nodeWrapper_whenSelfHasData instanceof TextComponent comp) {
-                    //todo pegar dado primitivo ou complexo em cada iteracao
                     final String text = comp.getText();
                     String comp_Creation = "\n\t\t\tfinal var component = new Text(\"%s\".replace(\"${boom}\", item));".formatted(text);
 
                     methodBuilder.append(comp_Creation);
-                    // columnItens.children.add(btn)
-                    methodBuilder.append(finalName).append("\n\t\t\tgetChildren().add(component);");
+                    methodBuilder.append("\n\t\t\t%s.getChildren().add(component);".formatted(finalName));
                 }
 
-                if (dataTableListVariableName != null) methodBuilder.append("\n\t\t}");//fim do for
+                if (dataTableListVariableName != null) methodBuilder.append("\n\t\t}");
                 methodBuilder.append("\n\t}");
                 listOfLoadColumnItems_MethodsDeclaration.add(methodBuilder.toString());
 
                 if (dataTableListVariableName != null) {
-                    // 1. Obter a lista de valores (Exemplo: ["black", "white", "blue"])
                     final List<String> list = FileManager.getValuesFromVariableName(dataTableListVariableName);
-
-                    // Lista para armazenar cada valor entre aspas
                     List<String> quotedValues = new ArrayList<>();
-
-                    // 2. Colocar cada valor entre aspas
                     for (String value : list) {
-                        // Exemplo: "black" -> "\"black\""
                         quotedValues.add("\"%s\"".formatted(value));
                     }
-
-                    // 3. Juntar os valores com vírgula e espaço (", ")
-                    // Exemplo: "\"black\", \"white\", \"blue\""
                     String joinedValues = String.join(", ", quotedValues);
-
-                    // 4. Construir a linha final no formato desejado
                     String finalAssignment = "List<String> %s = List.of(%s);".formatted(
                             dataTableListVariableName,
                             joinedValues
                     );
-
-                    // 5. Adicionar a linha gerada à sua lista final
                     listOf_Instances.add(finalAssignment);
                 }
-
             }
 
-            //todo ver a questão de obter o name da variable aqui posteriormente
             if (node instanceof CustomComponent component) {
-
                 customComponentCount++;
 
-                String compCreation = "Component%d component%d = new Component%d();".formatted(
-                        customComponentCount, customComponentCount, customComponentCount);
+                String finalName = "component" + customComponentCount;
+                String compCreation = "Component%d %s = new Component%d();".formatted(
+                        customComponentCount, finalName, customComponentCount);
 
                 componentsInstances.add(compCreation);
-                componentsInsideGetChildren.add("component" + customComponentCount);
 
-                String setX = String.format(Locale.US, "component%d.setLayoutX(%f);", customComponentCount,
-                        node.getLayoutX());
-                String setY = String.format(Locale.US, "component%d.setLayoutY(%f);", customComponentCount,
-                        node.getLayoutY());
-
-                componentsInsideMethodSetup.add(setX);
-                componentsInsideMethodSetup.add(setY);
-
-                String setStyle = "component%d.setStyle(\"%s\");".formatted(customComponentCount, component.getStyle());
-                componentsInsideMethodStyles.add(setStyle);
+                // --- Código Comum Extraído ---
+                addCommonComponentCode(
+                        finalName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
             }
-
         }
 
-        return getFinalCode(canvaComponent, listOf_Instances,
+        return generateViewModelCode(viewModelName, viewModelMethods) + getFinalCode(canvaComponent, viewModelName,
+                viewModelInstanceName, onClickHandlers,
+                listOf_Instances,
                 listOfChildWhenColumnIsEmptyInstances, listOfRepeatableChildForColumn_Instances,
                 componentsInstances, componentsInsideGetChildren,
                 listOfLoadColumnItems_MethodsInvocation, componentsInsideMethodSetup,
@@ -508,6 +329,9 @@ public class ShowCodeController {
 
     private static String getFinalCode(
             CanvaComponentV2 canvaComponent,
+            String viewModelName,
+            String viewModelInstanceName,
+            ArrayList<String> onClickHandlers,
             ArrayList<String> listOf_Instances,
             ArrayList<String> listOfChildWhenColumnIsEmptyInstances,
             ArrayList<String> listOfRepeatableChildForColumn_Instances,
@@ -517,17 +341,15 @@ public class ShowCodeController {
             ArrayList<String> componentsInsideMethodSetup,
             ArrayList<String> componentsInsideMethodStyles,
             ArrayList<String> listOfLoadColumnItems_MethodsDeclaration) {
+
         StringBuilder code = new StringBuilder();
-        //
 
-        // code.append(String.join("\n\t", componentsInsideMethodStyles));
-
-        //
         code
                 .append("class Screen extends Pane {\n\t");
 
-        // componentsInstances.
-        //code.append(String.join("\n\t", listOf_Instances));
+        if (!viewModelName.isEmpty()) {
+            code.append("\n\t%s %s = new %s();\n\t".formatted(viewModelName, viewModelInstanceName, viewModelName));
+        }
 
         code.append(String.join("\n\t", listOf_Instances));
         code.append("\n\t");
@@ -539,24 +361,25 @@ public class ShowCodeController {
         code.append(String.join("\n\t", componentsInstances));
 
         code.append("\n\t{\n");
-        // restante aqui da implementação
 
-        // getChildren().addAll(
         code.append("\n\t\tgetChildren().addAll(\n\t\t");
         code.append(String.join(",\n\t\t", componentsInsideGetChildren));
         code.append("\n\t\t);\n");
-        // )
 
         code.append("\t\tsetup();\n");
-        code.append("\t\tstyles();\n\t\t");
+        code.append("\t\tstyles();\n");
+
+        if (!onClickHandlers.isEmpty()) {
+            code.append("\n\t\t// Lógica de Eventos de Clique (usando ViewModel)\n");
+            code.append(String.join("\n\t\t", onClickHandlers));
+        }
+
+        code.append("\n\t\t");
         code.append(String.join("\n\t\t", listOfLoadColumnItems_MethodsInvocation));
         code.append("\n");
 
         code.append("\t}\n\n");
 
-        // p.setBack
-
-        // setup(){
         code.append("\tvoid setup(){\n\t\t");
 
         String config = "this.setPrefSize(%.0f, %.0f);\n\t\t".formatted(
@@ -564,26 +387,16 @@ public class ShowCodeController {
                 canvaComponent.getPrefHeight());
         code.append(config);
 
-        // String config = "this.setPrefSize(%.0f, %.0f);\n\t\t".formatted(
-        // canvaComponent.getPrefWidth(),
-        // canvaComponent.getPrefHeight());
-        // code.append(config);
-
         code.append(String.join("\n\t\t", componentsInsideMethodSetup));
         code.append("\n\t  }\n\n");
-        // }
 
-        // styles(){
         code.append("\tvoid styles(){\n\t\t");
         code.append("setStyle(\"%s\");\n\t\t".formatted(canvaComponent.getStyle()));
         code.append(String.join("\n\t\t", componentsInsideMethodStyles));
         code.append("\n\t  }");
-        // }
 
-        // loadColumnItem1(){
         code.append("\n\n");
         code.append(String.join("\n\n", listOfLoadColumnItems_MethodsDeclaration));
-        // }
 
         code.append("\n\n}");
 
@@ -591,7 +404,141 @@ public class ShowCodeController {
         return code.toString();
     }
 
+    // O método 'createComponentsForPreview' não será refatorado profundamente, pois
+    // lida com a lógica interna do CustomComponent, mas é mantido aqui.
+    public List<String> createComponentsForPreview(ObservableList<Node> nodesInCanva) {
+
+        var componentsClassCreation = new ArrayList<String>();
+        int customComponentCount = 0;
+
+        for (int i = 0; i < nodesInCanva.size(); i++) {
+            Node node = nodesInCanva.get(i);
+
+            if (node instanceof CustomComponent customComponent) {
+                StringBuilder code = new StringBuilder();
+                customComponentCount++;
+
+                var collections = new CodeCollections(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+                int textCount = 0;
+                int btnCount = 0;
+                int imgCount = 0;
+                int inputCount = 0;
+
+                code.append("class Component%d extends Pane {\n\t".formatted(customComponentCount));
+
+                for (var child : customComponent.getChildren()) {
+
+                    // Note: Os contadores aqui são locais e precisam ser incrementados dentro do loop interno.
+
+                    if (child instanceof TextComponent component) {
+                        textCount++;
+                        String finalName = "text" + textCount;
+
+                        String textCreation = "Text %s = new Text(\"%s\");".formatted(finalName, component.getText());
+                        collections.instances().add(textCreation);
+
+                        addCommonComponentCode(
+                                finalName, component, component.getStyle(),
+                                collections.children(), collections.setup(), collections.styles());
+                    }
+
+                    if (child instanceof Button component) {
+                        btnCount++;
+                        String finalName = "button" + btnCount;
+
+                        String btnCreation = "Button %s = new Button(\"%s\");".formatted(finalName, component.getText());
+                        collections.instances().add(btnCreation);
+
+                        addCommonComponentCode(
+                                finalName, component, component.getStyle(),
+                                collections.children(), collections.setup(), collections.styles());
+                    }
+
+                    if (child instanceof ImageComponentv2 component) {
+                        imgCount++;
+                        String finalName = "imgV" + imgCount;
+
+                        String imgViewCreation = "ImageView %s = new ImageView();".formatted(finalName);
+                        collections.instances().add(imgViewCreation);
+
+                        // Lógica Única de Image
+                        Image img = component.getImage();
+                        String url = (img != null && img.getUrl() != null) ? img.getUrl() : "";
+                        String urlstr = "final var url = \"%s\";".formatted(url);
+                        String setImageStr = "%s.setImage(new Image(url));".formatted(finalName);
+                        var h = component.getFitHeight();
+                        var w = component.getFitWidth();
+                        String wstr = "%s.setFitWidth(%.0f);".formatted(finalName, w);
+                        String hstr = "%s.setFitHeight(%.0f);".formatted(finalName, h);
+
+                        // inside setup (Unique and Common)
+                        collections.setup().add(urlstr);
+                        collections.setup().add(wstr);
+                        collections.setup().add(hstr);
+                        collections.setup().add(setImageStr);
+
+                        addCommonComponentCode(
+                                finalName, component, component.getStyle(),
+                                collections.children(), collections.setup(), collections.styles());
+                    }
+
+                    if (child instanceof InputComponent component) {
+                        inputCount++;
+                        String finalName = "input" + inputCount;
+
+                        String textCreation = "TextField %s = new TextField(\"%s\");".formatted(finalName, component.getText());
+                        collections.instances().add(textCreation);
+
+                        // Lógica Única de Input
+                        String setPromptText = "%s.setPromptText(\"%s\");".formatted(finalName, component.getPromptText());
+                        collections.setup().add(setPromptText);
+
+                        addCommonComponentCode(
+                                finalName, component, component.getStyle(),
+                                collections.children(), collections.setup(), collections.styles());
+                    }
+
+                }
+
+                code.append(String.join("\n\t", collections.instances()));
+
+                code.append("\n\t{\n");
+                code.append("\n\t\tgetChildren().addAll(\n\t\t");
+                code.append(String.join(",\n\t\t", collections.children()));
+                code.append("\n\t\t);\n");
+
+                code.append("\t\tsetup();\n");
+                code.append("\t\tstyles();\n");
+
+                code.append("\t}\n\n");
+
+                code.append("\tvoid setup(){\n\t\t");
+
+                String config = "this.setPrefSize(%.0f, %.0f);\n\t\t".formatted(
+                        customComponent.getPrefWidth(),
+                        customComponent.getPrefHeight());
+                code.append(config);
+
+                code.append(String.join("\n\t\t", collections.setup()));
+                code.append("\n\t  }\n\n");
+
+                code.append("\tvoid styles(){\n\t\t");
+                code.append("setStyle(\"%s\");\n\t\t".formatted(customComponent.getStyle()));
+                code.append(String.join("\n\t\t", collections.styles()));
+                code.append("\n\t  }\n\n");
+
+                code.append("}");
+
+                System.out.println(code.toString());
+
+                componentsClassCreation.add(code.toString());
+
+            }
+
+        }
+
+        return componentsClassCreation;
+    }
 
 }
-
-
