@@ -1,50 +1,64 @@
 package my_app.screens.ShowCodeScreen;
 
-import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+import my_app.components.Components;
 import my_app.contexts.TranslationContext;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
+import org.kordamp.ikonli.feather.Feather;
+import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
+import toolkit.Toast;
 
 import java.util.List;
 
-public class ShowCodeScreen extends VBox {
+public class ShowCodeScreen extends StackPane {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
     private final ShowCodeController controller;
 
-    // por enquanto só os node do canva
-    // mas adiante expandir para os componentes gerais também pra
-    // ver como vou encaix-alos no codigo gerado
+    @Component
+    Toast toast = new Toast();
+
     public ShowCodeScreen(HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
         this.controller = new ShowCodeController(viewModel);
 
+        final VBox layout = new VBox();
+        getChildren().addAll(layout, toast);
+
+        // 1. Geração de Código
         String importsContent = controller.createImports();
         String codeContent = controller.createRestOfCode(canvaComponent);
         List<String> customComponentsContent = controller.createComponentsForPreview(canvaComponent.getChildren());
 
+        // 2. Imports
         VBox importsColumnContent = columnItem(importsContent, translation.imports());
-        getChildren().add(importsColumnContent);
-
         VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
+        layout.getChildren().add(importsColumnContent);
 
+        // 3. Código Principal da Screen
         VBox codeColumnContent = columnItem(codeContent, translation.codeContent());
-        getChildren().add(codeColumnContent);
+        VBox.setMargin(codeColumnContent, new Insets(0, 0, 20, 0));
+        layout.getChildren().add(codeColumnContent);
 
-        for (String text : customComponentsContent) {
-            VBox.setMargin(importsColumnContent, new Insets(0, 0, 20, 0));
-
-            VBox customComponentsColumnContent = columnItem(text, translation.codeContentOfCustomComponent());
-            getChildren().add(customComponentsColumnContent);
+        // 4. Componentes Customizados
+        for (String customComponentCode : customComponentsContent) {
+            VBox customComponentsColumnContent = columnItem(customComponentCode, translation.codeContentOfCustomComponent());
+            VBox.setMargin(customComponentsColumnContent, new Insets(0, 0, 20, 0));
+            layout.getChildren().add(customComponentsColumnContent);
         }
 
-        setSpacing(10);
-        setStyle("-fx-padding: 20; -fx-alignment: center;");
-
+        // 5. Estilo da Screen
+        layout.setSpacing(10);
+        // O alinhamento superior é ideal para VBoxes com conteúdo de rolagem
+        setStyle("-fx-padding: 20; -fx-alignment: top-center;");
         getStyleClass().add("background-color");
     }
 
@@ -53,40 +67,57 @@ public class ShowCodeScreen extends VBox {
         Text titleText = new Text(title);
         VBox.setMargin(titleText, new Insets(0, 0, 10, 0));
 
-        // TextArea permite seleção e cópia
         TextArea textArea = new TextArea(content);
-        textArea.setEditable(false); // não deixa editar
-        textArea.setWrapText(true); // quebra de linha automática
+        textArea.setEditable(false);
+        textArea.setWrapText(false); // Mantido: Scroll horizontal é melhor para código
 
-        // ScrollPane não é necessário, o TextArea já tem barra de rolagem embutida
-        textArea.setPrefHeight(200);
+        // --- MUDANÇAS CHAVE PARA O CÁLCULO DE ALTURA DINÂMICA ---
+
+        // 1. Calcula o número de linhas (mínimo de 10 por estética)
+        long lineCount = content.lines().count();
+        int rows = (int) Math.max(10, lineCount + 1);
+
+        // 2. Define o número de linhas preferenciais. Isso faz o TextArea calcular
+        // a altura necessária para o conteúdo (quebrando o limite de 200px fixo).
+        textArea.setPrefRowCount(rows);
+
+        // 3. Remove restrições de altura conflitantes
+        textArea.setMinHeight(200);
+        //VBox.setVgrow(textArea, Priority.ALWAYS); // Removido: Não é necessário para "size-to-content"
+
+        // Garante que a altura máxima não seja um limite artificial, mas permita o cálculo baseado em rowCount.
+        textArea.setMaxHeight(Double.MAX_VALUE);
+
+        // -----------------------------------------------------------
 
         titleText.setStyle("-fx-fill:white;-fx-font-size:18px;");
 
         textArea.setStyle(
-                "-fx-control-inner-background:#1E1E1E;" + // fundo estilo editor
-                        "-fx-font-family:Consolas, monospace;" + // fonte de código
-                        "-fx-highlight-fill:#264F78;" + // cor do highlight
+                "-fx-control-inner-background:#1E1E1E;" +
+                        "-fx-font-family:Consolas, monospace;" +
+                        "-fx-highlight-fill:#264F78;" +
                         "-fx-highlight-text-fill:white;" +
-                        "-fx-text-fill:white;" // cor do texto
+                        "-fx-text-fill:white;"
         );
 
-        VBox column = new VBox(titleText, textArea);
+        final var btnCopyToClipboard = Components.ButtonPrimary("Copy");
+        var icon = FontIcon.of(Feather.COPY);
+        icon.setIconSize(18);
+        icon.setIconColor(Color.WHITE);
+
+        btnCopyToClipboard.setGraphic(icon);
+        btnCopyToClipboard.setOnMouseClicked(ev -> {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent c = new ClipboardContent();
+            c.putString(content);
+            clipboard.setContent(c);
+            
+            toast.show("Copied to clipboard!");
+        });
+        HBox rowHeader = new HBox(titleText, btnCopyToClipboard);
+
+        VBox column = new VBox(rowHeader, textArea);
         column.setSpacing(5);
-
-        ScaleTransition st = new ScaleTransition(Duration.millis(600));
-        st.setNode(textArea);
-
-        st.setFromX(0.7);
-        st.setFromY(0.7);
-
-        st.setToX(1);
-        st.setToY(1);
-
-        st.setAutoReverse(true);
-        st.setCycleCount(1);
-
-        st.play();
 
         return column;
     }
