@@ -30,6 +30,24 @@ import java.util.List;
 import static my_app.screens.Home.HomeViewModel.SelectedComponent;
 
 public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaComponentDatav2> {
+
+    // --- CONSTANTES ---
+    private static final String TRANSPARENT_BG_TYPE = "transparent";
+
+    // CSS para o fundo quadriculado (tons de cinza claro/branco)
+// CORREÇÃO ESSENCIAL: O valor de -fx-background-image deve estar em uma única linha contínua
+    // ou formatado de forma que o parser JavaFX não introduza erros com as quebras de linha/indentação.
+    // Garantindo que todos os gradientes sejam separados apenas por vírgulas.
+// CORREÇÃO ESSENCIAL: O valor CSS foi condensado em uma única string contínua,
+// separando as propriedades por ponto e vírgula e garantindo que a lista de gradientes
+// em -fx-background-image seja uma lista coesa separada apenas por vírgulas.
+    // REMOVIDA: A constante CHECKERED_BG_STYLE foi removida e substituída por um Node.
+
+    // NOVO: O Node que representa o fundo quadriculado (inicializado uma vez)
+    private final Region checkerboardBackground = createCheckerboardBackground();
+    // --- ESTADO INTERNO ---
+    private String currentBgType = "color"; // Novo: Para rastrear o tipo de fundo
+    private String currentBgContent = Commons.CanvaBgColorDefault; // Novo: Para armazenar o conteúdo (cor/url)
     boolean isDeleted = false;
 
     public String name;
@@ -72,10 +90,11 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     }
 
 
+    /**
+     * Aplica os dados do Canva, incluindo a nova lógica para fundo transparente.
+     */
     @Override
     public void applyData(CanvaComponentDatav2 data) {
-        // Aplicando as informações extraídas ao CanvaComponent
-
         if (data != null) {
 
             IO.println("deve mostrar um texto: " + data.text_components.size());
@@ -93,22 +112,29 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
 
             var bgType = data.bg_type;
             var bgContent = data.bgContent;
-            // Definindo o fundo com base no tipo
+
+            // --- NOVO TRATAMENTO DE FUNDO ---
             if (bgType.equals("color")) {
-                setStyle("-fx-background-color:%s;".formatted(
-                        bgContent));
+                setStyle("-fx-background-color:%s;".formatted(bgContent));
             } else if (bgType.equals("image")) {
-                // Para imagem, você pode fazer algo como isso:
                 setStyle("-fx-background-image: url('" + bgContent + "');" +
                         "-fx-background-size: cover; -fx-background-position: center;");
+            } else if (bgType.equals(TRANSPARENT_BG_TYPE)) {
+                // NOVO: Aplica o fundo quadriculado
+                applyCheckeredBackground();
             }
+            // ---------------------------------
 
+            // Atualiza o estado interno para o getData()
+            this.currentBgType = bgType;
+            this.currentBgContent = bgContent;
+
+            // ... (Loop de componentes mantido) ...
+            // (Seus loops de componentes aqui)
             for (TextComponentData it : data.text_components) {
                 var comp = new TextComponent(it.text(), this.viewModel, this);
                 comp.applyData(it);
-
                 viewModel.addItemOnDataMap("text", comp);
-
                 if (it.in_canva()) {
                     this.addElementDragable(comp, false);
                 }
@@ -117,7 +143,6 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             for (ButtonComponentData it : data.button_components) {
                 var comp = new ButtonComponent(this.viewModel, this);
                 comp.applyData(it);
-
                 viewModel.addItemOnDataMap("button", comp);
                 if (it.in_canva()) {
                     this.addElementDragable(comp, false);
@@ -127,9 +152,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             for (ImageComponentData it : data.image_components) {
                 var comp = new ImageComponentv2(this.viewModel, this);
                 comp.applyData(it);
-
                 viewModel.addItemOnDataMap("image", comp);
-
                 if (it.in_canva()) {
                     this.addElementDragable(comp, false);
                 }
@@ -138,24 +161,12 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             for (InputComponentData it : data.input_components) {
                 var comp = new InputComponent(this.viewModel, this);
                 comp.applyData(it);
-
                 viewModel.addItemOnDataMap("input", comp);
-
                 if (it.in_canva()) {
                     this.addElementDragable(comp, false);
                 }
             }
 
-            for (ImageComponentData it : data.image_components) {
-                var comp = new ImageComponentv2(this.viewModel, this);
-                comp.applyData(it);
-
-                viewModel.addItemOnDataMap("image", comp);
-
-                if (it.in_canva()) {
-                    this.addElementDragable(comp, false);
-                }
-            }
             //todo finalizar o restante
         }
     }
@@ -164,7 +175,13 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     public void addElementDragable(Node node, boolean putInCenter) {
         //evitar adição de no duplicado
         for (Node child : getChildren()) {
-            if (child.getId().equals(node.getId())) {
+            // Se o filho for o TilePane de fundo, ignore-o e continue a checagem.
+            if (child == checkerboardBackground) {
+                continue;
+            }
+
+            // Checagem de duplicação para componentes válidos (que devem ter ID)
+            if (node.getId() != null && node.getId().equals(child.getId())) {
                 IO.println("Node already added in canva!");
                 return;
             }
@@ -265,21 +282,29 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
         }
     }
 
+    /**
+     * Atualização do painel de aparência.
+     */
     @Override
     public void appearance(VBox father, CanvaComponentV2 canva) {
 
-        // Color Picker
+        // Color Picker (Ação atualizada para rastrear estado e remover o fundo Node)
         ColorPicker bgColorPicker = new ColorPicker(
                 Color.web(
                         Commons.getValueOfSpecificField(getStyle(), "-fx-background-color")));
         bgColorPicker.setOnAction(e -> {
             Color c = bgColorPicker.getValue();
+            String hexColor = Commons.ColortoHex(c);
 
-            setStyle("-fx-background-color:%s;".formatted(
-                    Commons.ColortoHex(c)));
+            removeCheckeredBackground(); // Remove o quadriculado
+            setStyle("-fx-background-color:%s;".formatted(hexColor));
+
+            // Atualiza o estado interno
+            this.currentBgType = "color";
+            this.currentBgContent = hexColor;
         });
 
-        // Botão para escolher imagem do sistema
+        // Botão para escolher imagem do sistema (Ação atualizada para remover o fundo Node)
         Button chooseImgBtn = new Button("Choose Image...");
         chooseImgBtn.setOnAction(e -> {
             javafx.stage.FileChooser fc = new javafx.stage.FileChooser();
@@ -287,28 +312,154 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                     new javafx.stage.FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
             var file = fc.showOpenDialog(null);
             if (file != null) {
-                setStyle("-fx-background-image: url('" + file.toURI().toString() + "'); " +
+                String uri = file.toURI().toString();
+
+                removeCheckeredBackground(); // Remove o quadriculado
+                setStyle("-fx-background-image: url('" + uri + "'); " +
                         "-fx-background-size: cover; -fx-background-position: center;");
+
+                // Atualiza o estado interno
+                this.currentBgType = "image";
+                this.currentBgContent = uri;
             }
         });
 
-        // Campo para URL
+        // Botão para tornar o fundo transparente (Chama o novo método)
+        Button transparentBtn = new Button("Set Transparent");
+        transparentBtn.setOnAction(e -> {
+            applyCheckeredBackground();
+            // applyCheckeredBackground() já atualiza o estado interno
+        });
+
+
+        // Campo para URL (Ação atualizada para remover o fundo Node)
         TextField urlField = new TextField();
         urlField.setPromptText("Paste URl of image");
         Button applyUrl = new Button("Apply URL");
         applyUrl.setOnAction(_ -> {
             String url = urlField.getText();
             if (url != null && !url.isBlank()) {
+
+                removeCheckeredBackground(); // Remove o quadriculado
                 setStyle("-fx-background-image: url('" + url + "'); " +
                         "-fx-background-size: cover; -fx-background-position: center;");
+
+                // Atualiza o estado interno
+                this.currentBgType = "image";
+                this.currentBgContent = url;
             }
         });
 
-        father.getChildren().setAll(bgColorPicker, chooseImgBtn, urlField,
+        // Configura o layout do painel de aparência
+        father.getChildren().setAll(
+                bgColorPicker,
+                chooseImgBtn,
+                urlField,
                 applyUrl,
+                Components.spacerVertical(10),
+                transparentBtn,
+                Components.spacerVertical(10),
                 new WidthComponent(this),
                 new HeightComponent(this));
 
+    }
+
+    /**
+     * Remove o Node do fundo quadriculado se estiver presente.
+     */
+    private void removeCheckeredBackground() {
+        this.getChildren().remove(checkerboardBackground);
+    }
+
+    /**
+     * Aplica o fundo quadriculado (Node-based) e remove qualquer fundo CSS.
+     */
+    private void applyCheckeredBackground() {
+        // 1. Garante que o fundo do Canva seja transparente (para que o TilePane apareça)
+        this.setStyle("-fx-background-color: transparent;");
+
+        // 2. Adiciona o TilePane do quadriculado como o primeiro filho (índice 0)
+        //    para garantir que fique atrás de todos os elementos dragáveis.
+        if (!this.getChildren().contains(checkerboardBackground)) {
+            // Adiciona na posição 0 para ser o background
+            IO.println("Aqui");
+            this.getChildren().add(0, checkerboardBackground);
+
+            // 3. ESSENCIAL: Força o redimensionamento imediato do TilePane após a adição.
+            checkerboardBackground.resize(this.getWidth(), this.getHeight());
+        }
+
+        // NOVO: 4. Garante que todos os outros filhos (componentes de design)
+        // estejam na frente, corrigindo o problema de Z-order dos componentes já carregados.
+        // O TilePane permanece no fundo.
+        for (Node child : this.getChildren()) {
+            if (child != checkerboardBackground) {
+                child.toFront();
+            }
+        }
+
+
+        // 5. Atualiza o estado interno
+        this.currentBgType = TRANSPARENT_BG_TYPE;
+        this.currentBgContent = "";
+    }
+
+    /**
+     * Implementação da nova estratégia: Cria um TilePane preenchido com Regions
+     * para formar o padrão quadriculado, contornando o erro do parser CSS.
+     */
+    /**
+     * Implementação da nova estratégia: Cria um TilePane preenchido com Regions
+     * para formar o padrão quadriculado, contornando o erro do parser CSS.
+     */
+    private Region createCheckerboardBackground() {
+        TilePane tileContainer = new TilePane(0, 0); // Espaçamento zero
+
+        // O TilePane deve cobrir o tamanho do Canva, garantindo que ele se redimensione
+        tileContainer.prefWidthProperty().bind(this.widthProperty());
+        tileContainer.prefHeightProperty().bind(this.heightProperty());
+
+        final int TILE_SIZE_FX = 16;
+
+        String style1 = "-fx-background-color: #F0F0F0;"; // Cinza claro
+        String style2 = "-fx-background-color: #CCCCCC;"; // Cinza escuro
+
+        // ... (lógica de criação e estilização dos tiles mantida) ...
+        final int MAX_COLUMNS = 100;
+        final int MAX_ROWS = 100;
+        final int TOTAL_TILES_COUNT = MAX_COLUMNS * MAX_ROWS;
+
+        for (int k = 0; k < TOTAL_TILES_COUNT; k++) {
+            Region tile = new Region();
+            tile.setPrefSize(TILE_SIZE_FX, TILE_SIZE_FX);
+
+            int row = k / MAX_COLUMNS;
+            int col = k % MAX_COLUMNS;
+
+            if ((row + col) % 2 == 0) {
+                tile.setStyle(style1);
+            } else {
+                tile.setStyle(style2);
+            }
+            tileContainer.getChildren().add(tile);
+        }
+
+        // Faz o Node ser ignorado pelos cálculos de layout dos elementos irmãos
+        tileContainer.setManaged(false);
+
+        // CORREÇÃO ESSENCIAL: Permite que eventos de mouse passem para o nó subjacente.
+        tileContainer.setMouseTransparent(true); // <--- ESTA É A LINHA QUE RESOLVE
+
+        // ESSENCIAL: Adiciona listeners para forçar o TilePane a se redimensionar
+        this.widthProperty().addListener((obs, oldW, newW) -> {
+            tileContainer.resize(newW.doubleValue(), this.getHeight());
+        });
+
+        this.heightProperty().addListener((obs, oldH, newH) -> {
+            tileContainer.resize(this.getWidth(), newH.doubleValue());
+        });
+
+        return tileContainer;
     }
 
     @Override
@@ -360,8 +511,6 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     @Override
     public CanvaComponentDatav2 getData() {
 
-        String canvastyle = this.getStyle();
-
         Insets padding = this.getPadding();
         int paddingTop = (int) padding.getTop();
         int paddingRight = (int) padding.getRight();
@@ -371,25 +520,13 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
         double width = this.getPrefWidth();
         double height = this.getPrefHeight();
 
-        /*
-         * setStyle("-fx-background-image: url('" + url + "'); " +
-         * "-fx-background-size: cover; -fx-background-position: center;");
-         */
-        String bgType = "";
-        String bgContent = "";
-        if (Commons.getValueOfSpecificField(canvastyle, "-fx-background-image").isEmpty()) {
-            bgContent = Commons.getValueOfSpecificField(canvastyle, "-fx-background-color");
-            bgType = "color";
-        } else {
-            var bgImage = Commons.getValueOfSpecificField(canvastyle, "-fx-background-image");// url('" + url +
-            // "');
+        // --- NOVO: Usa os campos de estado para o fundo ---
+        String bgType = this.currentBgType;
+        String bgContent = this.currentBgContent;
 
-            var right = bgImage.split("(")[1];
-            var left = right.split(")")[0];
-
-            bgContent = left;
-            bgType = "image";
-        }
+        // Se a cor atual for transparente, o getData retorna o tipo correto
+        // A lógica complexa de parse de CSS foi evitada usando os campos de estado.
+        // ----------------------------------------------------
 
         return new CanvaComponentDatav2(
                 paddingTop, paddingRight, paddingBottom, paddingLeft, width, height, bgType,

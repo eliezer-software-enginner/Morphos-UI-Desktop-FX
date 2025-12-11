@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="refatoração de IconsScreen e IconsScreenViewModel">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="refatoração abrindo janela para criação de componente customizado">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/Commons.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/IconsScreen/IconsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/IconsScreen/IconsScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,14 +241,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00033" summary="deleting custom component">
-      <option name="closed" value="true" />
-      <created>1763403601855</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1763403601855</updated>
     </task>
     <task id="LOCAL-00034" summary="consuming click on text inside CustomComponent">
       <option name="closed" value="true" />
@@ -641,7 +626,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765410056079</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="refatoração abrindo janela para criação de componente customizado">
+      <option name="closed" value="true" />
+      <created>1765411831124</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1765411831124</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -656,7 +649,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="correção ao listar a lista de dados em vbox (columnItens)" />
     <MESSAGE value="tratamento ao carregar dados na splashcreen" />
     <MESSAGE value="refatorada forma de abrir a opção de exibir código" />
     <MESSAGE value="remoção de métodos depreciados" />
@@ -681,7 +673,8 @@
     <MESSAGE value="evitando adição de componentes duplicados no datamap e no canva" />
     <MESSAGE value="selecionando icones para o botão na nova estrutura" />
     <MESSAGE value="refatoração de IconsScreen e IconsScreenViewModel" />
-    <option name="LAST_COMMIT_MESSAGE" value="refatoração de IconsScreen e IconsScreenViewModel" />
+    <MESSAGE value="refatoração abrindo janela para criação de componente customizado" />
+    <option name="LAST_COMMIT_MESSAGE" value="refatoração abrindo janela para criação de componente customizado" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
