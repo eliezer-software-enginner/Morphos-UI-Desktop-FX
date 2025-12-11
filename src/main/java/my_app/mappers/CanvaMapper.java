@@ -1,9 +1,6 @@
 package my_app.mappers;
 
-import my_app.components.ColumnComponent;
-import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
+import my_app.components.*;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.data.StateJson_v3;
@@ -69,6 +66,9 @@ public class CanvaMapper {
 
                 if (node instanceof ColumnComponent component) {
                     canvaData.column_components.add(component.getData());
+                }
+                if (node instanceof MenuComponent component) {
+                    canvaData.menu_components.add(component.getData());
                 }
             } // Fim do loop interno (iteração sobre Nodes)
         } // Fim do loop externo (iteração sobre as Listas)

@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="leve refatorada em column component">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/MenuComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildIdSelectorComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/MenuDataEditorComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/data/MenuComponentData.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="criação de menu component">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CanvaComponentDatav2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,14 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00038" summary="added more icons and also a scrollpane">
-      <option name="closed" value="true" />
-      <created>1763667080042</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1763667080042</updated>
     </task>
     <task id="LOCAL-00039" summary="creating primitive list">
       <option name="closed" value="true" />
@@ -643,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765458388577</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="criação de menu component">
+      <option name="closed" value="true" />
+      <created>1765460295277</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1765460295277</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -658,7 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="carregando os componentes na leftside" />
     <MESSAGE value="componentes selecionados são marcados na leftside componentes na leftside" />
     <MESSAGE value="exibindo informação na rightSide" />
     <MESSAGE value="alternando entre screens" />
@@ -683,7 +675,8 @@
     <MESSAGE value="desenhando custom component" />
     <MESSAGE value="exibindo custom component no canva principal" />
     <MESSAGE value="leve refatorada em column component" />
-    <option name="LAST_COMMIT_MESSAGE" value="leve refatorada em column component" />
+    <MESSAGE value="criação de menu component" />
+    <option name="LAST_COMMIT_MESSAGE" value="criação de menu component" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -805,6 +798,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
           <line>121</line>
           <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>375</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>389</line>
+          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -13,10 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import my_app.FileManager;
-import my_app.components.Components;
-import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
+import my_app.components.*;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
 import my_app.components.shared.HeightComponent;
@@ -62,6 +59,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     public List<ButtonComponentData> button_components = new ArrayList<>();
     public List<ImageComponentData> image_components = new ArrayList<>();
     public List<InputComponentData> input_components = new ArrayList<>();
+    public List<MenuComponentData> menu_components = new ArrayList<>();
     // REMOVIDA: public List<FlexComponentData> flex_components = new ArrayList<>();
 
     // ADICIONADA: Nova lista de componentes de Coluna
@@ -173,6 +171,15 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("custom component", comp);
                 if (it.in_canva) {
+                    this.addElementDragable(comp, false);
+                }
+            }
+
+            for (MenuComponentData it : data.menu_components) {
+                var comp = new MenuComponent(this.viewModel, this);
+                comp.applyData(it);
+                viewModel.addItemOnDataMap("menu component", comp);
+                if (it.in_canva()) {
                     this.addElementDragable(comp, false);
                 }
             }
@@ -547,7 +554,8 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 image_components,
                 input_components,
                 column_components,
-                custom_components
+                custom_components,
+                menu_components
         );
     }
 

@@ -30,6 +30,7 @@ public class CanvaComponentDatav2 implements ComponentData {
     public List<ColumnComponentData> column_components = new ArrayList<>();
 
     public List<CustomComponentData> custom_components = new ArrayList<>();
+    public List<MenuComponentData> menu_components = new ArrayList<>();
 
     public CanvaComponentDatav2() {
     }
@@ -50,7 +51,8 @@ public class CanvaComponentDatav2 implements ComponentData {
             List<ImageComponentData> image_components,
             List<InputComponentData> input_components,
             List<ColumnComponentData> column_components,
-            List<CustomComponentData> custom_components
+            List<CustomComponentData> custom_components,
+            List<MenuComponentData> menu_components
     ) {
 
         this.padding_top = padding_top;
@@ -73,6 +75,7 @@ public class CanvaComponentDatav2 implements ComponentData {
         this.input_components = input_components;
         this.column_components = column_components;
         this.custom_components = custom_components;
+        this.menu_components = menu_components;
     }
 
     @Override
