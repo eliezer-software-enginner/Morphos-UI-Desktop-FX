@@ -44,7 +44,8 @@ public class LeftSide extends VBox {
             new Field(translation.input(), enlishBase.input()),
             new Field(translation.image(), enlishBase.image()),
             new Field(translation.customComponent(), enlishBase.customComponent()),
-            new Field(translation.columnItems(), enlishBase.columnItems())
+            new Field(translation.columnItems(), enlishBase.columnItems()),
+            new Field(translation.menuComponent(), enlishBase.menuComponent())
     );
 
 

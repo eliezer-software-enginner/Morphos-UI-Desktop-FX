@@ -69,5 +69,6 @@
   "update": "Update",
   "exit": "Exit",
   "newProject": "New Project",
-  "customComponent": "Custom component"
+  "customComponent": "Custom component",
+  "menuComponent": "Menu component"
 }

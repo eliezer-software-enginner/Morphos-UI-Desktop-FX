@@ -120,7 +120,8 @@ public class TranslationContext {
             String screenName,
             String update,
             String exit,
-            String newProject
+            String newProject,
+            String menuComponent
     ) {
     }
 

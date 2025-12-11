@@ -11,6 +11,7 @@ import my_app.App;
 import my_app.FileManager;
 import my_app.components.ColumnComponent;
 import my_app.components.InputComponent;
+import my_app.components.MenuComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
@@ -371,6 +372,8 @@ public class HomeViewModel {
                         ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
             } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
                 node = new ColumnComponent(this, currentCanva);
+            } else if (type.equalsIgnoreCase(englishBase.menuComponent())) {
+                node = new MenuComponent(this, currentCanva);
             }
         }
 

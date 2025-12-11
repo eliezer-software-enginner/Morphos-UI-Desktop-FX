@@ -69,5 +69,6 @@
   "update": "Atualizar",
   "exit": "Sair",
   "newProject": "Novo Projeto",
-  "customComponent": "Component customizado"
+  "customComponent": "Componente customizado",
+  "menuComponent": "Menu componente"
 }

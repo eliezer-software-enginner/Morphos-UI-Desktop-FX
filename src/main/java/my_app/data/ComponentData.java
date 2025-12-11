@@ -20,6 +20,7 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = InputComponentData.class, name = "input"),
         @JsonSubTypes.Type(value = CustomComponentData.class, name = "custom component"),
         @JsonSubTypes.Type(value = ColumnComponentData.class, name = "column items"),
+        @JsonSubTypes.Type(value = MenuComponentData.class, name = "menu component"), // <-- NOVO
         @JsonSubTypes.Type(value = CanvaComponentDatav2.class, name = "canva"),
 })
 
