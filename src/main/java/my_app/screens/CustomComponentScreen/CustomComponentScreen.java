@@ -7,7 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import my_app.contexts.TranslationContext;
 import my_app.screens.Home.Home;
-import my_app.themes.ThemeManager;
 import toolkit.Component;
 
 import java.util.function.Function;
@@ -19,10 +18,8 @@ public class CustomComponentScreen extends BorderPane {
     MenuBar mb = new MenuBar();
 
     @Component
-    //Home home = new Home(stage, componentsContext, true);
     Home home = new Home(stage, true);
 
-    ThemeManager themeManager = ThemeManager.Instance();
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
     public CustomComponentScreen(Function<CustomComponentScreen, CustomComponentScreen> callable) {
@@ -34,6 +31,7 @@ public class CustomComponentScreen extends BorderPane {
         mb.getMenus().add(menu);
 
         is.setOnAction(_ -> {
+            //todo ainda vou fazer logica aqui
             // O 'home.canva' é o CanvaComponent com o conteúdo que o usuário desenhou (aqui
             // é o 'contentCanva').
             // var contentCanva = home.canva;

@@ -79,7 +79,7 @@ public class HomeViewModel {
      */
     public void init(boolean isCustomComponent) {
         if (isCustomComponent) {
-            createDefaultScreen();
+            createDefaultScreen(isCustomComponent);
             return;
         }
         loadProjectData();
@@ -97,20 +97,42 @@ public class HomeViewModel {
                 loadScreenById(projectData.screens().getFirst().screen_id);
             } catch (Exception e) {
                 IO.println("Erro ao carregar primeira tela: " + e.getMessage());
-                createDefaultScreen();
+                createDefaultScreen(false);
             }
         } else {
-            createDefaultScreen();
+            createDefaultScreen(false);
         }
     }
 
-    private void createDefaultScreen() {
+    private void createDefaultScreen(boolean isCustomComponent) {
         var screen = new StateJson_v3();
-        // Lógica de criar e salvar tela padrão
-        // Precisamos gerar o canva para ter os dados padrão serializados
-        var tempCanva = CanvaMapper.fromScreenToCanva(screen, this);
-        var updatedScreen = CanvaMapper.toStateJson(tempCanva, this);
+        // 1. Gera o canva temporário (necessário para ter o CanvaComponentV2 com defaults)
+        var newCanva = CanvaMapper.fromScreenToCanva(screen, this);
 
+        // 2. Converte de volta para StateJson_v3 para obter o ID e dados defaults corretos
+        var updatedScreen = CanvaMapper.toStateJson(newCanva, this);
+
+        // --- CORREÇÃO: Lógica para Custom Component ---
+        if (isCustomComponent) {
+            // Se for um componente customizado, APENAS carrega o Canva na UI,
+            // mas NÃO salva no disco e NÃO adiciona na lista de abas (screenTabs).
+
+            // 2.1. Define o ID da tela temporária
+            this.currentScreenId.set(updatedScreen.screen_id);
+
+            // 2.2. Ativa o Canva. Isso dispara o listener em Home.java
+            // que cria LeftSide, RightSide e centraliza o Canva.
+            this.activeCanva.set(newCanva);
+
+            // 2.3. Seleciona o Canva para carregar o RightSide
+            this.selectNode(newCanva);
+
+            // Não precisa de updateUiPathProperty() para componente customizado
+            return;
+        }
+        // ----------------------------------------------
+
+        // Lógica original para projetos normais (salva e carrega)
         FileManager.addScreenToProjectAndSave(updatedScreen);
 
         // Atualiza estado
@@ -175,7 +197,7 @@ public class HomeViewModel {
         // 3. Lógica de fallback de navegação
         if (screenTabs.isEmpty()) {
             IO.println("Todas as telas excluídas. Criando padrão.");
-            createDefaultScreen();
+            createDefaultScreen(false);
         } else if (wasCurrentScreen) {
             // Carrega a última tela restante
             loadScreenById(screenTabs.getLast().screen_id);
