@@ -68,5 +68,6 @@
   "screenName": "Nome da Screen",
   "update": "Atualizar",
   "exit": "Sair",
-  "newProject": "Novo Projeto"
+  "newProject": "Novo Projeto",
+  "customComponent": "Component customizado"
 }

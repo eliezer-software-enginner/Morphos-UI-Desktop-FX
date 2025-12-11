@@ -18,7 +18,7 @@ import java.io.Serializable;
         // Adicione todos os seus outros tipos de dados aqui:
         @JsonSubTypes.Type(value = ImageComponentData.class, name = "image"),
         @JsonSubTypes.Type(value = InputComponentData.class, name = "input"),
-        @JsonSubTypes.Type(value = CustomComponentData.class, name = "component"),
+        @JsonSubTypes.Type(value = CustomComponentData.class, name = "custom component"),
         @JsonSubTypes.Type(value = ColumnComponentData.class, name = "column items"),
         @JsonSubTypes.Type(value = CanvaComponentDatav2.class, name = "canva"),
 })

@@ -153,11 +153,13 @@ public class AppScenes {
         return scene;
     }
 
-    public static Scene SceneCreateCustomComponent(Stage theirStage) {
-        var scene = new Scene(new CustomComponentScreen(self -> {
-            self.getStyleClass().add("background-color");
-            return self;
-        }));
+    public static Scene SceneCreateCustomComponent(Stage theirStage, HomeViewModel homeViewModel) {
+        var scene = new Scene(new CustomComponentScreen(theirStage,
+                homeViewModel,
+                self -> {
+                    self.getStyleClass().add("background-color");
+                    return self;
+                }));
 
         var screenSize = Commons.ScreensSize._900x500;
         theirStage.setWidth(screenSize.width);

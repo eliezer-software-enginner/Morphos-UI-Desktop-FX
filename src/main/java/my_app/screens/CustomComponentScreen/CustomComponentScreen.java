@@ -5,25 +5,28 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import my_app.components.CustomComponent;
 import my_app.contexts.TranslationContext;
 import my_app.screens.Home.Home;
+import my_app.screens.Home.HomeViewModel;
 import toolkit.Component;
 
 import java.util.function.Function;
 
 public class CustomComponentScreen extends BorderPane {
-    public Stage stage = new Stage();
-
     @Component
     MenuBar mb = new MenuBar();
 
     @Component
-    Home home = new Home(stage, true);
+    Home home;
 
     TranslationContext.Translation translation = TranslationContext.instance().get();
+    TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
-    public CustomComponentScreen(Function<CustomComponentScreen, CustomComponentScreen> callable) {
+    public CustomComponentScreen(Stage stage, HomeViewModel homeViewModel, Function<CustomComponentScreen, CustomComponentScreen> callable) {
         callable.apply(this);
+
+        this.home = new Home(stage, true);
         Menu menu = new Menu(translation.menu());
         MenuItem is = new MenuItem(translation.save());
 
@@ -32,31 +35,20 @@ public class CustomComponentScreen extends BorderPane {
 
         is.setOnAction(_ -> {
             //todo ainda vou fazer logica aqui
-            // O 'home.canva' é o CanvaComponent com o conteúdo que o usuário desenhou (aqui
-            // é o 'contentCanva').
-            // var contentCanva = home.canva;
-            // style-> "-fx-background-color:#1a4d4d;"
-            // 1. Cria o CustomComponent
-//            CustomComponent newCustomComponent = new CustomComponent(componentsContext, contentCanva);
-//            newCustomComponent.setStyle(contentCanva.getStyle());
-//            newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
-//            newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());
-//            newCustomComponent.mainComponentsContext = mainComponentsContext;
+            //só preciso criar o objeto customcomponent e adicionar ao datamap da viewmodel principal
 
-            // 2. Transfere os filhos do canva temporário (home.canva) para o customComp.
-            // **IMPORTANTE:** Isso move os Nodes, tirando-os do 'contentCanva'.
-            // Se você precisar que os Nodes permaneçam no 'contentCanva', você precisa
-            // CLONAR.
-            //   newCustomComponent.getChildren().addAll(contentCanva.getChildren());
+            final var contentCanva = home.getCanva();
+            CustomComponent newCustomComponent = new CustomComponent(homeViewModel, contentCanva);
+            newCustomComponent.setStyle(contentCanva.getStyle());
+            newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
+            newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());
 
-            // 3. Adiciona o nó à lista global e à sidebar.
-            // O mainCanvaComponent aqui é usado apenas para a lógica interna (embora o
-            // addCustomComponent não o use visualmente).
+            newCustomComponent.getChildren().addAll(contentCanva.getChildren());
 
-            //   mainComponentsContext.addCustomComponent(newCustomComponent, mainCanva);
+            homeViewModel.addComponent(englishBase.customComponent(), newCustomComponent);
 
-            //   System.out.println(
-            //            "Componente personalizado criado e adicionado ao sistema com ID: " + newCustomComponent.getId());
+            System.out.println(
+                    "Componente personalizado criado e adicionado ao sistema com ID: " + newCustomComponent.getId());
 
             stage.close();
         });

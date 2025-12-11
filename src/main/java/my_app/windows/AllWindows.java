@@ -41,9 +41,9 @@ public class AllWindows {
         window.show();
     }
 
-    public static void showSceneCreateCustomComponent() {
+    public static void showSceneCreateCustomComponent(HomeViewModel homeViewModel) {
         final var window = new Stage();
-        window.setScene(AppScenes.SceneCreateCustomComponent(window));
+        window.setScene(AppScenes.SceneCreateCustomComponent(window, homeViewModel));
         window.show();
     }
 }

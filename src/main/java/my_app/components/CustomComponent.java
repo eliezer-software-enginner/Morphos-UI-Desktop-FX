@@ -1,7 +1,9 @@
 package my_app.components;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import my_app.components.buttonComponent.ButtonComponent;
@@ -17,9 +19,6 @@ import toolkit.Component;
 import java.util.ArrayList;
 
 public class CustomComponent extends Pane implements ViewContractv2<CustomComponentData> {
-    TranslationContext.Translation translation = TranslationContext.instance().get();
-    ComponentsContext componentsContext;
-    public ComponentsContext mainComponentsContext;
     @Component
     public CanvaComponentV2 canva;
 
@@ -138,35 +137,55 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
                     "-fx-background-size: cover; -fx-background-position: center;");
         }
 
-//        for (ButtonComponentData data_ : data.button_components) {
-//            var node = new ButtonComponentv2(data_.text(), componentsContext);
-//            node.applyData(data_);
-//         //   node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
-//            getChildren().add(node);
-//        }
+        for (ButtonComponentData data_ : data.button_components) {
+            var node = new ButtonComponent(data_.text(), viewModel);
+            //node.setMouseTransparent(true);
+            node.applyData(data_);
+            node.setOnMouseClicked((e) -> viewModel.selectNodePartially(node));
+            node.setOnMouseDragged(getDragged());
+            getChildren().add(node);
+        }
 
-//        for (TextComponentData data_ : data.text_components) {
-//            var node = new TextComponentv2(data_.text(), componentsContext, canva);
-//            node.applyData(data_);
-//            node.setOnMouseClicked((e) -> {
-//                // ESSENCIAL: Consome o evento para evitar que o pai (CustomComponent) o veja.
-//                e.consume();
-//            //    componentsContext.selectNodePartially(node);
-//            });
-//            getChildren().add(node);
-//        }
+        for (TextComponentData data_ : data.text_components) {
+            var node = new TextComponent(data_.text(), viewModel, canva);
+            node.applyData(data_);
+            node.setOnMouseClicked((e) -> {
+                // ESSENCIAL: Consome o evento para evitar que o pai (CustomComponent) o veja.
+                e.consume();
+                viewModel.selectNodePartially(node);
+            });
+            node.setOnMouseDragged(getDragged());
+            getChildren().add(node);
+        }
 //
-//        for (ImageComponentData data_ : data.image_components) {
-//            var node = new ImageComponentv2(data_.url(), componentsContext);
-//            node.applyData(data_);
-//          //  node.setOnMouseClicked((e) -> componentsContext.selectNodePartially(node));
-//            getChildren().add(node);
-//        }
+        for (ImageComponentData data_ : data.image_components) {
+            var node = new ImageComponentv2(data_.url(), viewModel);
+            node.applyData(data_);
+            node.setOnMouseClicked((e) -> viewModel.selectNodePartially(node));
+            node.setOnMouseDragged(getDragged());
+            getChildren().add(node);
+        }
 //
-
+        //todo finalizar o restante em breve
 
         //this.name.set(data.name());
         isDeleted = data.isDeleted();
+    }
+
+    private EventHandler<MouseEvent> getDragged() {
+        return e -> {
+            // 1. Obtém o manipulador de eventos MOUSE_DRAGGED que foi definido no pai (CustomComponent).
+            var parentDragHandler = this.getOnMouseDragged();
+
+            if (parentDragHandler != null) {
+                // 2. Executa o manipulador do pai com o evento do filho.
+                parentDragHandler.handle(e);
+
+                // 3. Consome o evento. Isso é crucial para que o CanvaComponentV2 subjacente
+                //    não receba o evento de arrastar e tente se mover ou iniciar a seleção.
+                e.consume();
+            }
+        };
     }
 
     @Override

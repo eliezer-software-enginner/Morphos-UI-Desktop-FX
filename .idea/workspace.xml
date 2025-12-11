@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo fundo quadriculado no canva quando setada a opção transparent">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="desenhando custom component">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/ShowComponentScene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CustomComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CustomComponentData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,34 +70,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AppNavTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.App[Linux].executor&quot;: &quot;Run&quot;,
-    &quot;Application.App_base.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Commons.executor&quot;: &quot;Run&quot;,
-    &quot;Application.IconDatabase.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SceneGraph.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TranslationContext.executor&quot;: &quot;Run&quot;,
-    &quot;Application.run app ratinho.executor&quot;: &quot;Run&quot;,
-    &quot;Application.run layout preview.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ScreenCreateProjectViewModelTest.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AppNavTest.executor": "Run",
+    "Application.App[Linux].executor": "Run",
+    "Application.App_base.executor": "Run",
+    "Application.Commons.executor": "Run",
+    "Application.IconDatabase.executor": "Run",
+    "Application.MainApp.executor": "Run",
+    "Application.SceneGraph.executor": "Run",
+    "Application.TranslationContext.executor": "Run",
+    "Application.run app ratinho.executor": "Run",
+    "Application.run layout preview.executor": "Run",
+    "JUnit.ScreenCreateProjectViewModelTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "actions.on.save"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens" />
@@ -243,14 +255,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00035" summary="introducing column component">
-      <option name="closed" value="true" />
-      <created>1763411671773</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1763411671773</updated>
     </task>
     <task id="LOCAL-00036" summary="fixed operations involving add icon">
       <option name="closed" value="true" />
@@ -636,7 +640,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765414947405</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="desenhando custom component">
+      <option name="closed" value="true" />
+      <created>1765415878771</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1765415878771</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -651,7 +663,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refatorada forma de abrir a opção de exibir código" />
     <MESSAGE value="remoção de métodos depreciados" />
     <MESSAGE value="o canva agora é que lida com o spawn de componentes filhos dele" />
     <MESSAGE value="carregando os componentes na leftside" />
@@ -676,7 +687,8 @@
     <MESSAGE value="refatoração de IconsScreen e IconsScreenViewModel" />
     <MESSAGE value="refatoração abrindo janela para criação de componente customizado" />
     <MESSAGE value="exibindo fundo quadriculado no canva quando setada a opção transparent" />
-    <option name="LAST_COMMIT_MESSAGE" value="exibindo fundo quadriculado no canva quando setada a opção transparent" />
+    <MESSAGE value="desenhando custom component" />
+    <option name="LAST_COMMIT_MESSAGE" value="desenhando custom component" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -713,7 +725,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java</url>
-          <line>315</line>
+          <line>309</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -738,7 +750,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java</url>
-          <line>60</line>
+          <line>62</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -775,6 +787,29 @@
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProject.java</url>
           <line>125</line>
           <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>353</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

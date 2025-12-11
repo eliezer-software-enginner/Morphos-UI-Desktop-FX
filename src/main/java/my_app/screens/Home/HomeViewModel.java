@@ -349,45 +349,59 @@ public class HomeViewModel {
 
     // --- LÓGICA DE COMPONENTES E SELEÇÃO ---
 
-    public void addComponent(String type) {
+    public void addComponent(String type, ViewContractv2<?> component) {
         final var currentCanva = activeCanva.get(); // Pega da propriedade!
         if (currentCanva == null || type == null || type.isBlank()) return;
 
-        ViewContractv2<?> node = null;
+        ViewContractv2<?> node = component;
         var content = "Im new here";
         var typeNormalized = type.trim().toLowerCase();
 
-        // Factory simples (pode ser extraída depois)
-        if (type.equalsIgnoreCase(englishBase.button())) {
-            node = new ButtonComponent(content, this);
-        } else if (type.equalsIgnoreCase(englishBase.input())) {
-            node = new InputComponent(content, this, currentCanva);
-        } else if (type.equalsIgnoreCase(englishBase.text())) {
-            node = new TextComponent(content, this, currentCanva);
-        } else if (type.equalsIgnoreCase(englishBase.image())) {
-            node = new ImageComponentv2(
-                    ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
-        } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
-            node = new ColumnComponent(this, currentCanva);
-        } else if (type.equalsIgnoreCase(englishBase.component())) {
-            AllWindows.showSceneCreateCustomComponent();
-            //  new ShowComponentScene(currentCanva, this).stage.show();
-            return;
+        //se node é nulo, signigica que é para criar um componente gererico
+        if (node == null) {
+            // Factory simples (pode ser extraída depois)
+            if (type.equalsIgnoreCase(englishBase.button())) {
+                node = new ButtonComponent(content, this);
+            } else if (type.equalsIgnoreCase(englishBase.input())) {
+                node = new InputComponent(content, this, currentCanva);
+            } else if (type.equalsIgnoreCase(englishBase.text())) {
+                node = new TextComponent(content, this, currentCanva);
+            } else if (type.equalsIgnoreCase(englishBase.image())) {
+                node = new ImageComponentv2(
+                        ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
+            } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
+                node = new ColumnComponent(this, currentCanva);
+            }
         }
+
 
         if (node != null) {
             addItemOnDataMap(typeNormalized, node);
 
             // Seleciona o novo nó
-            final var newSelection = new SelectedComponent(typeNormalized, node.getCurrentNode());
-            nodeSelected.set(newSelection);
-            headerSelected.set(typeNormalized);
+            highlightComponent(node);
 
             // Adiciona visualmente ao Canva atual
             currentCanva.addElementDragable(node.getCurrentNode(), true);
 
             refreshSubItems();
         }
+    }
+
+    private void highlightComponent(ViewContractv2<?> component) {
+        var typeNormalized = component.getData().type().trim().toLowerCase();
+        // Seleciona o novo nó
+        final var newSelection = new SelectedComponent(typeNormalized, component.getCurrentNode());
+        nodeSelected.set(newSelection);
+        headerSelected.set(typeNormalized);
+    }
+
+    //here for example is when i only want to select the node for editing inside custom component
+    public void selectNodePartially(ViewContractv2<?> node) {
+        var comp = (ComponentData) node.getData();
+        SelectedComponent newSelection = new SelectedComponent(comp.type(), node.getCurrentNode());
+        nodeSelected.set(newSelection);
+        System.out.println("Selecionado: " + node + " (Type: " + comp.type() + ")");
     }
 
     public void removeNode(String nodeId) {

@@ -232,4 +232,16 @@ public class Home extends BorderPane {
 
         return menu;
     }
+
+    public CanvaComponentV2 getCanva() {
+        var content = this.editor.getContent();
+        if (content == null) {
+            throw new RuntimeException("Current canva is null");
+        }
+
+        if (content instanceof CanvaComponentV2 canva) {
+            return canva;
+        }
+        throw new RuntimeException("Unexpected child of editor! Must be a canva");
+    }
 }

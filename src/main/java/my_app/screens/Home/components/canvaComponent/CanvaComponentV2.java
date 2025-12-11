@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import my_app.FileManager;
 import my_app.components.Components;
+import my_app.components.CustomComponent;
 import my_app.components.InputComponent;
 import my_app.components.TextComponent;
 import my_app.components.buttonComponent.ButtonComponent;
@@ -163,6 +164,15 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("input", comp);
                 if (it.in_canva()) {
+                    this.addElementDragable(comp, false);
+                }
+            }
+
+            for (CustomComponentData it : data.custom_components) {
+                var comp = new CustomComponent(this.viewModel, this);
+                comp.applyData(it);
+                viewModel.addItemOnDataMap("custom component", comp);
+                if (it.in_canva) {
                     this.addElementDragable(comp, false);
                 }
             }

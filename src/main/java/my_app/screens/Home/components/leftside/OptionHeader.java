@@ -10,11 +10,13 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import my_app.components.Components;
+import my_app.contexts.TranslationContext;
+import my_app.data.Commons;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import my_app.data.Commons;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
+import my_app.windows.AllWindows;
 import org.kordamp.ikonli.antdesignicons.AntDesignIconsOutlined;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -58,7 +60,7 @@ public class OptionHeader extends HBox {
         String type = field.nameEngligh().toLowerCase();
 
         btnAdd.setOnAction(_ -> {
-            viewModel.addComponent(type);
+            viewModel.addComponent(type, null);
             expanded.set(true);
         });
 
@@ -109,7 +111,14 @@ public class OptionHeader extends HBox {
 
         // Lógica de clique do botão Add Component
         btnAdd.setOnAction(_ -> {
-            viewModel.addComponent(type);
+            TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+
+            if (type.equalsIgnoreCase(englishBase.customComponent())) {
+                AllWindows.showSceneCreateCustomComponent(viewModel);
+                return;
+            }
+
+            viewModel.addComponent(type, null);
             // REMOVEMOS: ComponentsContext.headerSelected.set(type); // Não é mais
             // necessário se o AddComponent chamar SelectNode
             expanded.set(true);

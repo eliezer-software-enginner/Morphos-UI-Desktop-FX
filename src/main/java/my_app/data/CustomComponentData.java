@@ -3,7 +3,7 @@ package my_app.data;
 import java.util.List;
 
 public class CustomComponentData implements ComponentData {
-    public String type = "component";
+    public String type = "custom component";
     public int padding_top;
     public int padding_right;
     public int padding_bottom;

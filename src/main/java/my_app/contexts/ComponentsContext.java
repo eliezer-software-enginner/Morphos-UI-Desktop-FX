@@ -211,13 +211,7 @@ public class ComponentsContext {
         refreshSubItems();
     }
 
-    //here for example is when i only want to select the node for editing inside custom component
-    public void selectNodePartially(ViewContract<?> node) {
-        var comp = (ComponentData) node.getData();
-        SelectedComponent newSelection = new SelectedComponent(comp.type(), node.getCurrentNode());
-        nodeSelected.set(newSelection);
-        System.out.println("Selecionado: " + node + " (Type: " + comp.type() + ")");
-    }
+
 
 //    public ObservableList<ViewContract<?>> getItemsByType(String type) {
 //        var data = dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList());

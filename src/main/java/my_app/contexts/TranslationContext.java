@@ -77,6 +77,7 @@ public class TranslationContext {
             String input,
             String image,
             String component,
+            String customComponent,
             String menu,
             String save,
             String imports,
