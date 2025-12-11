@@ -28,7 +28,7 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
     ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
     TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
-
+    public String nameOfOnClickMethod;
     boolean isDeleted = false;
 
     @Component
@@ -74,6 +74,7 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
 
         setId(data.identification());
         setText(data.text());
+        this.nameOfOnClickMethod = data.nameOfOnClickMethod();
 
         String paddings = "%s %s %s %s"
                 .formatted(data.padding_top(), data.padding_right(), data.padding_bottom(),
@@ -152,6 +153,7 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
                 Components.ButtonChooseGraphicContent(this),
                 Components.LabelWithComboBox(translation.iconPosition(), this, "positioning-icon"),
                 Components.ColorPickerRow(translation.iconColor(), this, "icon-color"),
+                Components.LabelWithInput("onClick", this, "on-click"),
                 //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
                 Components.spacerVertical(10),
                 new ButtonRemoverComponent(this, this.viewModel));
@@ -212,6 +214,7 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
                 "button",
                 text, fontSize, fontWeight, color, borderWidth, borderRadius, bgColor,
                 x, y, paddingTop, paddingRight, paddingBottom, paddingLeft, this.getId(),
+                nameOfOnClickMethod,
                 location.inCanva(),
                 location.fatherId(),
                 borderColor,

@@ -13,6 +13,7 @@ public class CanvaComponentDatav2 implements ComponentData {
     public String bg_type;
     public String bgContent;
     public String identification;
+    public String nameOfOnClickMethod;
     public int x;
     public int y;
     public String type = "canva";
@@ -45,6 +46,7 @@ public class CanvaComponentDatav2 implements ComponentData {
             String bg_type,
             String bgContent,
             String identification,
+            String nameOfOnClickMethod,
             int x, int y, boolean isDeleted, String name, String screenFatherId,
             List<TextComponentData> text_components,
             List<ButtonComponentData> button_components,
@@ -64,6 +66,7 @@ public class CanvaComponentDatav2 implements ComponentData {
         this.bg_type = bg_type;
         this.bgContent = bgContent;
         this.identification = identification;
+        this.nameOfOnClickMethod = nameOfOnClickMethod;
         this.x = x;
         this.y = y;
         this.isDeleted = isDeleted;

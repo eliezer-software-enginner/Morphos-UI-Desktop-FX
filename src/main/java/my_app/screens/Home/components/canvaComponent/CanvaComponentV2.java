@@ -547,7 +547,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
 
         return new CanvaComponentDatav2(
                 paddingTop, paddingRight, paddingBottom, paddingLeft, width, height, bgType,
-                bgContent, this.getId(), 0, 0, isDeleted, this.name, this.screenFatherId,
+                bgContent, this.getId(), null, 0, 0, isDeleted, this.name, this.screenFatherId,
 
                 text_components,
                 button_components,

@@ -241,6 +241,11 @@ public class Components {
                     tf.setText(component.getText());
                 }
             }
+            case "on-click" -> {
+                if (node instanceof ButtonComponent component) {
+                    tf.setText(component.nameOfOnClickMethod);
+                }
+            }
             default -> {
                 String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
                 tf.setText(valueOfField);
@@ -278,6 +283,11 @@ public class Components {
                         }
                         if (node instanceof InputComponent component) {
                             component.setText(newVal.trim());
+                        }
+                    }
+                    case "on-click" -> {
+                        if (node instanceof ButtonComponent component) {
+                            component.nameOfOnClickMethod = newVal.trim();
                         }
                     }
                     default -> {

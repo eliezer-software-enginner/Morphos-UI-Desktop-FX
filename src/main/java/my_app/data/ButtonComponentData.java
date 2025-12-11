@@ -16,6 +16,7 @@ public record ButtonComponentData(
         int padding_bottom,
         int padding_left,
         String identification,
+        String nameOfOnClickMethod,
         boolean in_canva,
         String canva_id,
         String border_color, String name, IconData icon, boolean isDeleted) implements ComponentData {
