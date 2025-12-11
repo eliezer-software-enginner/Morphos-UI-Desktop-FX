@@ -115,7 +115,6 @@ public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageC
         var location = Commons.NodeInCanva(this);
 
         return new ImageComponentData(url, width, height, x, y, preserveRatio, this.getId(),
-                location.inCanva(),
                 location.fatherId(),
                 name.get(), clipType, "image", isDeleted);
     }

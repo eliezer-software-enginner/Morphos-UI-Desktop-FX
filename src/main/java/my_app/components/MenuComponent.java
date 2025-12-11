@@ -192,7 +192,6 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
                 new ArrayList<>(this.itemsState), // Copia defensiva da lista
                 (int) getLayoutX(),
                 (int) getLayoutY(),
-                location.inCanva(),
                 location.fatherId(),
                 isDeleted
         );

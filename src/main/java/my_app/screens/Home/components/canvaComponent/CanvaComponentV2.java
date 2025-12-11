@@ -134,36 +134,28 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 var comp = new TextComponent(it.text(), this.viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("text", comp);
-                if (it.in_canva()) {
-                    this.addElementDragable(comp, false);
-                }
+                this.addElementDragable(comp, false);
             }
 
             for (ButtonComponentData it : data.button_components) {
                 var comp = new ButtonComponent(this.viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("button", comp);
-                if (it.in_canva()) {
-                    this.addElementDragable(comp, false);
-                }
+                this.addElementDragable(comp, false);
             }
 
             for (ImageComponentData it : data.image_components) {
                 var comp = new ImageComponentv2(this.viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("image", comp);
-                if (it.in_canva()) {
-                    this.addElementDragable(comp, false);
-                }
+                this.addElementDragable(comp, false);
             }
 
             for (InputComponentData it : data.input_components) {
                 var comp = new InputComponent(this.viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("input", comp);
-                if (it.in_canva()) {
-                    this.addElementDragable(comp, false);
-                }
+                this.addElementDragable(comp, false);
             }
 
             for (CustomComponentData it : data.custom_components) {
@@ -179,9 +171,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 var comp = new MenuComponent(this.viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("menu component", comp);
-                if (it.in_canva()) {
-                    this.addElementDragable(comp, false);
-                }
+                this.addElementDragable(comp, false);
             }
 
             //todo finalizar o restante

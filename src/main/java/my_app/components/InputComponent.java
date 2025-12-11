@@ -142,7 +142,6 @@ public class InputComponent extends TextField implements ViewContractv2<InputCom
 
         return new InputComponentData(
                 "input", text, placeholder, fontWeight, fontSize, color, x, y, this.getId(),
-                location.inCanva(),
                 location.fatherId(), focusColor, placeholderColor, noFocusColor,
                 name.get(), isDeleted);
     }

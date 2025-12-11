@@ -10,7 +10,6 @@ public record InputComponentData(
         double x,
         double y,
         String identification,
-        boolean in_canva,
         String canva_id,
         String focus_color,
         String placeholder_color,

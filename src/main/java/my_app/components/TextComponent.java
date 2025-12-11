@@ -102,7 +102,6 @@ public class TextComponent extends Text implements ViewContractv2<TextComponentD
         return new TextComponentData(
                 "text",
                 text, x, y, fontSize, textFill, fontWeight, this.getId(),
-                location.inCanva(),
                 location.fatherId(), name.get(), this.getWrappingWidth(), isDeleted);
     }
 

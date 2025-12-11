@@ -215,7 +215,6 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
                 text, fontSize, fontWeight, color, borderWidth, borderRadius, bgColor,
                 x, y, paddingTop, paddingRight, paddingBottom, paddingLeft, this.getId(),
                 nameOfOnClickMethod,
-                location.inCanva(),
                 location.fatherId(),
                 borderColor,
                 name.get(),

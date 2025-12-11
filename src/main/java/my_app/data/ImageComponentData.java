@@ -8,6 +8,5 @@ public record ImageComponentData(
         double y,
         boolean preserve_ratio,
         String identification,
-        boolean in_canva,
         String canva_id, String name, String type_of_clip, String type, boolean isDeleted) implements ComponentData {
 }

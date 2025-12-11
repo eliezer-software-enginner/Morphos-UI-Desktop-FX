@@ -9,7 +9,6 @@ public record MenuComponentData(
         List<MenuItemData> items, // Lista de itens específicos do menu
         int x,
         int y,
-        boolean in_canva,
         String canva_id,
         boolean isDeleted
 ) implements ComponentData {
