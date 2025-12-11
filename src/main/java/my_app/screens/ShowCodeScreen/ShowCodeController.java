@@ -299,7 +299,7 @@ public class ShowCodeController {
 
             if (node instanceof ButtonComponent component) {
                 String variableName = component.name.get();
-                if (variableName != null) btnCount++;
+                if (variableName == null) btnCount++;
 
                 String btnText = component.getText();
 
@@ -321,7 +321,7 @@ public class ShowCodeController {
 
             if (node instanceof ImageComponentv2 component) {
                 String variableName = component.name.get();
-                if (variableName != null) imgCount++;
+                if (variableName == null) imgCount++;
 
                 String finalName = variableName != null ? variableName : "imgV" + imgCount;
 
@@ -361,7 +361,7 @@ public class ShowCodeController {
 
             if (node instanceof InputComponent component) {
                 String variableName = component.name.get();
-                if (variableName != null) inputCount++;
+                if (variableName == null) inputCount++;
 
                 String finalName = variableName != null ? variableName : "input" + inputCount;
                 String textText = component.getText();
@@ -370,8 +370,8 @@ public class ShowCodeController {
                 componentsInstances.add(textCreation);
                 componentsInsideGetChildren.add(finalName);
 
-                String setX = String.format("%s.setLayoutX(%f);", finalName, node.getLayoutX());
-                String setY = String.format("%s.setLayoutY(%f);", finalName, node.getLayoutY());
+                String setX = String.format(Locale.US, "%s.setLayoutX(%f);", finalName, node.getLayoutX());
+                String setY = String.format(Locale.US, "%s.setLayoutY(%f);", finalName, node.getLayoutY());
                 String setPromptText = "%s.setPromptText(\"%s\");".formatted(finalName,
                         component.getPromptText());
 

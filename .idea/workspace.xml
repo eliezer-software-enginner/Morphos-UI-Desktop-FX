@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="atrelando nome para criação da viewmodel para a tela">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo código da ui">
+      <change afterPath="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_negocio_facil/biscoito_da_sorte/App_base.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tab.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +78,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/layouts_generated_preview/app_negocio_facil",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -87,11 +87,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_negocio_facil" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene" />
-      <recent name="$PROJECT_DIR$/.java_fx" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -107,11 +107,11 @@
       <recent name="my_app.components.imageComponent" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App[Linux]">
-    <configuration name="AppNavTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="my_app.AppNavTest" />
+  <component name="RunManager" selected="Application.layouts_generated_preview.app_negocio_facil.App_base">
+    <configuration name="App[Linux]" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="my_app.App" />
       <module name="my_app" />
-      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -Dprism.verbose=true --enable-native-access=javafx.graphics" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="my_app.*" />
@@ -122,13 +122,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="App[Linux]" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="my_app.App" />
+    <configuration name="App_base" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="layouts_generated_preview.app_negocio_facil.biscoito_da_sorte.App_base" />
       <module name="my_app" />
-      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -Dprism.verbose=true --enable-native-access=javafx.graphics" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="my_app.*" />
+          <option name="PATTERN" value="layouts_generated_preview.app_negocio_facil.biscoito_da_sorte.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -155,6 +154,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="my_app.scenes.IconsScene.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="layouts_generated_preview.app_negocio_facil.App_base" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="layouts_generated_preview.app_negocio_facil.App_base" />
+      <module name="my_app" />
+      <option name="VM_PARAMETERS" value="--module-path ./.java_fx/linux-25.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web --enable-native-access=javafx.graphics" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="layouts_generated_preview.app_negocio_facil.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -217,21 +230,22 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.layouts_generated_preview.app_negocio_facil.App_base" />
       <item itemvalue="Application.run app ratinho" />
       <item itemvalue="Application.App[Linux]" />
+      <item itemvalue="Application.App_base" />
       <item itemvalue="Application.IconDatabase" />
-      <item itemvalue="Application.AppNavTest" />
       <item itemvalue="Application.Commons" />
       <item itemvalue="Application.run layout preview" />
       <item itemvalue="JUnit.ScreenCreateProjectViewModelTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App_base" />
         <item itemvalue="Application.App[Linux]" />
         <item itemvalue="JUnit.ScreenCreateProjectViewModelTest" />
         <item itemvalue="Application.IconDatabase" />
         <item itemvalue="Application.Commons" />
-        <item itemvalue="Application.AppNavTest" />
       </list>
     </recent_temporary>
   </component>
@@ -242,14 +256,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00043" summary="output node for when columnItem is empty">
-      <option name="closed" value="true" />
-      <created>1764785820105</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1764785820105</updated>
     </task>
     <task id="LOCAL-00044" summary="creating dinamic methods for populationg columnItens(Vbox)">
       <option name="closed" value="true" />
@@ -635,7 +641,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765465295667</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="exibindo código da ui">
+      <option name="closed" value="true" />
+      <created>1765467239997</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1765467239997</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -650,7 +664,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="criado componente para tab" />
     <MESSAGE value="tab clicada marca node como selecionado" />
     <MESSAGE value="saindo do projeto" />
     <MESSAGE value="usando mvvm corretamente na ScreenCreateProject" />
@@ -675,7 +688,8 @@
     <MESSAGE value="adicionado onClick para o button component" />
     <MESSAGE value="remoção de &quot;in_canva&quot; desnecessário" />
     <MESSAGE value="atrelando nome para criação da viewmodel para a tela" />
-    <option name="LAST_COMMIT_MESSAGE" value="atrelando nome para criação da viewmodel para a tela" />
+    <MESSAGE value="exibindo código da ui" />
+    <option name="LAST_COMMIT_MESSAGE" value="exibindo código da ui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
