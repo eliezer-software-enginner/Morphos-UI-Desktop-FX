@@ -4,23 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="desenhando custom component">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo custom component no canva principal">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/ComponentsContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/CustomComponentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/data/CustomComponentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/translations/pt-br.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,14 +242,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00036" summary="fixed operations involving add icon">
-      <option name="closed" value="true" />
-      <created>1763514710293</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1763514710294</updated>
     </task>
     <task id="LOCAL-00037" summary="added annotation @Component for aesthetics">
       <option name="closed" value="true" />
@@ -648,7 +627,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765415878771</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="exibindo custom component no canva principal">
+      <option name="closed" value="true" />
+      <created>1765457228778</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1765457228779</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -663,7 +650,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remoção de métodos depreciados" />
     <MESSAGE value="o canva agora é que lida com o spawn de componentes filhos dele" />
     <MESSAGE value="carregando os componentes na leftside" />
     <MESSAGE value="componentes selecionados são marcados na leftside componentes na leftside" />
@@ -688,7 +674,8 @@
     <MESSAGE value="refatoração abrindo janela para criação de componente customizado" />
     <MESSAGE value="exibindo fundo quadriculado no canva quando setada a opção transparent" />
     <MESSAGE value="desenhando custom component" />
-    <option name="LAST_COMMIT_MESSAGE" value="desenhando custom component" />
+    <MESSAGE value="exibindo custom component no canva principal" />
+    <option name="LAST_COMMIT_MESSAGE" value="exibindo custom component no canva principal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -730,7 +717,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java</url>
-          <line>166</line>
+          <line>165</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -790,7 +777,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
-          <line>94</line>
+          <line>96</line>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -808,7 +795,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
-          <line>119</line>
+          <line>121</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>

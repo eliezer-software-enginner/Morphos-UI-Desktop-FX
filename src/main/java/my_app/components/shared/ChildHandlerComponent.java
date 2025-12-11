@@ -9,8 +9,7 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.themes.Typography;
 import toolkit.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 
 public class ChildHandlerComponent extends HBox {
 
@@ -28,8 +27,14 @@ public class ChildHandlerComponent extends HBox {
 
         config();
 
-        Set<String> uniqueItems = new HashSet<>();
-        uniqueItems.add("None");
+        //Set<String> uniqueItems = new HashSet<>();
+        //uniqueItems.add("None");
+
+        combo.getItems().add("None");
+
+        // Mapeamento interno para armazenar "Nome Amigável" -> "ID Real"
+        var displayIdMap = new HashMap<String, String>();
+        displayIdMap.put("None", "None");
 
         // Itera sobre os componentes no ViewModel
         for (var entry : viewModel.dataMap.entrySet()) {
@@ -44,27 +49,43 @@ public class ChildHandlerComponent extends HBox {
             for (var nodeWrapper : entry.getValue()) {
                 String id = nodeWrapper.getCurrentNode().getId();
 
-                // Filtro 2: ignora o próprio id
                 if (id.equals(self.getId())) {
                     continue;
                 }
 
-                uniqueItems.add(id);
+                // CRIAÇÃO DO NOME AMIGÁVEL: "Tipo - ID"
+                String friendlyName = componentType + " - " + id;
+                displayIdMap.put(friendlyName, id);
+                combo.getItems().add(friendlyName);
             }
         }
 
-        // Garante que o ID atualmente selecionado esteja na lista (evita que a ComboBox fique vazia se o item tiver sido deletado)
+        // CORREÇÃO ESSENCIAL: Garantir que o item atual seja exibido, mesmo que não esteja mais no dataMap
         String currentId = currentNodeId.get();
-        if (currentId != null && !currentId.isEmpty() && !currentId.equals("None")) {
-            uniqueItems.add(currentId);
+        String currentFriendlyName = "None";
+
+        // Tenta encontrar o nome amigável para o ID atual, se houver
+        if (!currentId.equals("None")) {
+            currentFriendlyName = displayIdMap.entrySet().stream()
+                    .filter(e -> e.getValue().equals(currentId))
+                    .map(java.util.Map.Entry::getKey)
+                    .findFirst()
+                    .orElse(currentId); // Se não encontrar, mostra o ID bruto como fallback
+
+            if (!combo.getItems().contains(currentFriendlyName) && !currentFriendlyName.equals(currentId)) {
+                combo.getItems().add(currentFriendlyName);
+            }
         }
 
-        combo.getItems().setAll(uniqueItems);
-        combo.setValue(currentId);
 
-        combo.valueProperty().addListener((obs, old, newVal) -> {
-            if (newVal != null && !newVal.equals(old)) {
-                currentNodeId.set(newVal);
+        combo.setValue(currentFriendlyName); // Define o valor amigável
+
+        combo.valueProperty().addListener((obs, oldFriendly, newFriendly) -> {
+            if (newFriendly != null && !newFriendly.equals(oldFriendly)) {
+                // Obtém o ID real através do mapeamento
+                String newId = displayIdMap.getOrDefault(newFriendly, newFriendly);
+
+                currentNodeId.set(newId);
                 self.recreateChildren();
             }
         });

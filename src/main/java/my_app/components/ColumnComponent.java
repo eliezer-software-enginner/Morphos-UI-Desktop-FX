@@ -42,7 +42,6 @@ public class ColumnComponent extends VBox implements ViewContractv2<ColumnCompon
 
     public ColumnComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
         setSpacing(5);
-        setStyle("-fx-background-color:red;");
 
         setAlignment(Pos.CENTER);
         setPrefWidth(Region.USE_COMPUTED_SIZE);
