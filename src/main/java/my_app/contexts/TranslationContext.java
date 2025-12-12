@@ -126,6 +126,13 @@ public class TranslationContext {
     }
 
     public Translation get() {
+        if (this.translation == null) {
+            // Se esta.translation for nulo, a tradução não foi carregada.
+            // Isso acontece em Hot Reload, pois App.init() não é re-executado.
+            // Replicamos a lógica de inicialização de App.init() (usando Locale.getDefault()).
+            System.err.println("[TranslationContext] Forcing default translation load due to uninitialized state.");
+            loadTranslation(Locale.getDefault());
+        }
         return this.translation.get();
     }
 

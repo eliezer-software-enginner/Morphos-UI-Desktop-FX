@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="copiando códigos">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenPreviewUI/CanvaViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenPreviewUI/ScreenPreviewUI.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo preview">
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/CoesionApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/HotReload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/HotReloadClassLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/ReloadableWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/Reloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/UIReloaderImpl1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/ScreenTab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/windows/AllWindows.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +86,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/screens",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/hotreload",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -94,11 +95,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/my_app/hotreload" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens" />
       <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_negocio_facil" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/main/java/my_app/scenes/IconsScene" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -237,12 +238,12 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.App[Linux]" />
       <item itemvalue="Application.layouts_generated_preview.app_negocio_facil.App_base" />
       <item itemvalue="Application.run app ratinho" />
-      <item itemvalue="Application.App[Linux]" />
       <item itemvalue="Application.App_base" />
-      <item itemvalue="Application.IconDatabase" />
       <item itemvalue="Application.Commons" />
+      <item itemvalue="Application.IconDatabase" />
       <item itemvalue="Application.run layout preview" />
       <item itemvalue="JUnit.ScreenCreateProjectViewModelTest" />
     </list>
@@ -263,14 +264,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00047" summary="datasecene was redesigned">
-      <option name="closed" value="true" />
-      <created>1764871640187</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1764871640187</updated>
     </task>
     <task id="LOCAL-00048" summary="algumas refatorações e criando projeto e carregando-o">
       <option name="closed" value="true" />
@@ -656,7 +649,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765480061125</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="exibindo preview">
+      <option name="closed" value="true" />
+      <created>1765498701562</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1765498701562</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +672,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="nova estrutura com projetos recentes" />
     <MESSAGE value="testes en create project view" />
     <MESSAGE value="saindo do projeto atual" />
     <MESSAGE value="escolhendo projeto para carregar" />
@@ -696,7 +696,8 @@
     <MESSAGE value="correção no input gerado" />
     <MESSAGE value="refatoração leve" />
     <MESSAGE value="copiando códigos" />
-    <option name="LAST_COMMIT_MESSAGE" value="copiando códigos" />
+    <MESSAGE value="exibindo preview" />
+    <option name="LAST_COMMIT_MESSAGE" value="exibindo preview" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

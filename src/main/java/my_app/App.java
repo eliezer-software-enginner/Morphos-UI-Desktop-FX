@@ -5,15 +5,22 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
+import my_app.hotreload.CoesionApp;
+import my_app.hotreload.HotReload;
 import my_app.scenes.AppScenes;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
+@CoesionApp(stylesheets = {})
 public class App extends Application {
 
     public static Stage stage;
     TranslationContext translationContext;
+
+    HotReload hotReload;
 
     @Override
     public void init() {
@@ -35,26 +42,26 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
 
-        stage.setTitle(Commons.AppName + " " + Commons.AppVersion);
-        stage.setMinWidth(Commons.ScreensSize.LARGE.width);
+        // 🛑 NOVO: Chama a lógica de inicialização em um método estático
+        // A primeira chamada é feita pelo App original (System CL)
+        initializeScene(primaryStage);
 
-        //Scene splashScene = new SplashScene(primaryStage);
-        //this.stage.setScene(splashScene);
+        Set<String> exclusions = new HashSet<String>();
+        // 🛑 REMOÇÃO CRUCIAL: App NÃO deve mais ser excluído para que o HotReload possa carregá-lo
+        // exclusions.add("my_app.App");
 
-        //final var mainWindow = new MainWindow(componentsContext);
-        //mainWindow.show();
+        // Mantemos a exclusão dessas classes/interfaces de infraestrutura:
+        exclusions.add("my_app.hotreload.CoesionApp");
+        exclusions.add("my_app.hotreload.Reloader");
 
-        //final var mainScene = new MainScene();
-        //primaryStage.setScene(AppScenes.SplashScene(primaryStage));
-        //primaryStage.setScene(AppScenes.CreateProjectScene(primaryStage));
-        primaryStage.setScene(AppScenes.HomeScene(primaryStage));
-        //primaryStage.setScene(AppScenes.PrimitiveListFormScene());
-
-//        AllWindows.showWindowForDataTableForm_PrimitiveData(() -> {
-//        });
-        //this.stage.setScene(new IconsScene());
-
-        // themeManager.addScene(mainScene);
+        this.hotReload = new HotReload(
+                "src/main/java/my_app",
+                "target/classes",
+                "src/main/resources",
+                "my_app.hotreload.UIReloaderImpl1",
+                primaryStage,
+                exclusions
+        );
 
         // getStylesheets().add(getClass().getResource("/global_styles.css").toExternalForm());
         stage.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
@@ -68,17 +75,24 @@ public class App extends Application {
             }
         });
 
-        // Cria a DataScene passando a referência da mainScene e do primaryStage
-        //DataScene dataScene = new DataScene();
-        //primaryStage.setScene(dataScene);
-        //dataScene.show();
-        // Botão muda para DataScene
-        // componentData.setOnAction(e -> primaryStage.setScene(dataScene));
+
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
 
         primaryStage.show();
+        this.hotReload.start();
+    }
 
-        // new WindowPrimitiveListForm().show();
+    // 🛑 NOVO MÉTODO ESTÁTICO: Centraliza a lógica de UI
+    // Este método será chamado pelo start() e também pelo UIReloaderImpl1 (via Reflection)
+    public static void initializeScene(Stage stage) throws Exception {
+        // Configurações do Stage que podem mudar em desenvolvimento
+        stage.setTitle(Commons.AppName + " " + Commons.AppVersion);
+        stage.setMinWidth(Commons.ScreensSize.LARGE.width);
+
+        // A linha chave: A Scene é recriada.
+        // Se este método for chamado pelo HotReloadCL, o AppScenes será o novo.
+        stage.setScene(AppScenes.HomeScene(stage));
+        System.out.println("[App] Scene re-initialized.");
     }
 
     public void changeLanguage(Locale locale) {
@@ -86,6 +100,18 @@ public class App extends Application {
 
 //        MainScene mainScene = new MainScene();
 //        stage.setScene(mainScene);
+    }
+
+    // 🛑 NOVO MÉTODO: Ponto de entrada para a recarga de UI
+    // Ele precisa ser estático, público/privado (usamos setAccessible no Reloader)
+    // e deve aceitar o Stage principal.
+    public static void reinitScene(Stage stage) throws Exception {
+        // Re-executa a lógica que configura a Scene principal
+        // O AppScenes.HomeScene() será resolvido pelo ClassLoader que carregou a nova AppScenes.java.
+        // Já que a AppScenes provavelmente NÃO está na lista de classes excluídas,
+        // a versão mais nova dela será usada aqui.
+        stage.setScene(AppScenes.HomeScene(stage));
+        System.out.println("[App] Scene re-initialized with new AppScenes logic.");
     }
 
     static void main(String[] args) {
