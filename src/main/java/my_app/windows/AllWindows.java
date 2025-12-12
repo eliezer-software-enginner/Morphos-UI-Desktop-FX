@@ -46,4 +46,10 @@ public class AllWindows {
         window.setScene(AppScenes.SceneCreateCustomComponent(window, homeViewModel));
         window.show();
     }
+
+    public static void showWindowForPreviewUI(CanvaComponentV2 canva) {
+        final var window = new Stage();
+        window.setScene(AppScenes.ScenePreviewUI(window, canva));
+        window.show();
+    }
 }

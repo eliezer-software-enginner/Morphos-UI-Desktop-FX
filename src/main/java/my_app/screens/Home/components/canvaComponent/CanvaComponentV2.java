@@ -57,6 +57,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     TranslationContext.Translation translation = TranslationContext.instance().get();
 
     HomeViewModel viewModel;
+    private boolean enableAnimation = true;
 
     public List<TextComponentData> text_components = new ArrayList<>();
     public List<ButtonComponentData> button_components = new ArrayList<>();
@@ -219,29 +220,34 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
         getChildren().add(node);
     }
 
-    static void AnimateOnEntry(Node node) {
-        ScaleTransition st = new ScaleTransition(Duration.millis(400), node);
-        st.setFromX(0.5);
-        st.setFromY(0.5);
-        st.setToX(1);
-        st.setToY(1);
+    void AnimateOnEntry(Node node) {
+        if (this.enableAnimation) {
+            ScaleTransition st = new ScaleTransition(Duration.millis(400), node);
+            st.setFromX(0.5);
+            st.setFromY(0.5);
+            st.setToX(1);
+            st.setToY(1);
 
-        st.play();
+            st.play();
+        }
+
     }
 
     // achacoalhar
-    public static void Shake(Node node) {
+    public void Shake(Node node) {
+        if (this.enableAnimation) {
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(node.translateXProperty(), 0)),
+                    new KeyFrame(Duration.millis(100), new KeyValue(node.translateXProperty(), -1)),
+                    new KeyFrame(Duration.millis(200), new KeyValue(node.translateXProperty(), 1)),
+                    new KeyFrame(Duration.millis(300), new KeyValue(node.translateXProperty(), -1)),
+                    new KeyFrame(Duration.millis(400), new KeyValue(node.translateXProperty(), 1)),
+                    new KeyFrame(Duration.millis(500), new KeyValue(node.translateXProperty(), -1)),
+                    new KeyFrame(Duration.millis(600), new KeyValue(node.translateXProperty(), 0)));
+            timeline.setCycleCount(1);
+            timeline.play();
+        }
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(node.translateXProperty(), 0)),
-                new KeyFrame(Duration.millis(100), new KeyValue(node.translateXProperty(), -1)),
-                new KeyFrame(Duration.millis(200), new KeyValue(node.translateXProperty(), 1)),
-                new KeyFrame(Duration.millis(300), new KeyValue(node.translateXProperty(), -1)),
-                new KeyFrame(Duration.millis(400), new KeyValue(node.translateXProperty(), 1)),
-                new KeyFrame(Duration.millis(500), new KeyValue(node.translateXProperty(), -1)),
-                new KeyFrame(Duration.millis(600), new KeyValue(node.translateXProperty(), 0)));
-        timeline.setCycleCount(1);
-        timeline.play();
     }
 
     private void enableDrag(Node node, double relX, double relY) {
@@ -576,5 +582,9 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     @Override
     public void delete() {
         isDeleted = true;
+    }
+
+    public void disableAnimation() {
+        this.enableAnimation = false;
     }
 }

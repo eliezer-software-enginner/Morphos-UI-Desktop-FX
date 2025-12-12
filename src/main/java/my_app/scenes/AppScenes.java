@@ -12,6 +12,7 @@ import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.screens.IconsScreen.IconsScreen;
 import my_app.screens.PrimitiveListFormScreen.PrimitiveListFormScreen;
 import my_app.screens.ScreenCreateProject.ScreenCreateProject;
+import my_app.screens.ScreenPreviewUI.ScreenPreviewUI;
 import my_app.screens.ShowCodeScreen.ShowCodeScreen;
 import my_app.screens.SplashScreen.SplashScreen;
 import my_app.themes.ThemeManager;
@@ -170,6 +171,20 @@ public class AppScenes {
 
         Commons.UseDefaultStyles(scene);
         ThemeManager.Instance().addScene(scene);
+        return scene;
+    }
+
+    public static Scene ScenePreviewUI(Stage theirStage, CanvaComponentV2 canva) {
+        var scene = new Scene(new ScreenPreviewUI(canva));
+
+        var data = canva.getData();
+
+        theirStage.setWidth(data.width);
+        theirStage.setHeight(data.height);
+        theirStage.centerOnScreen();
+        theirStage.setResizable(false);
+        theirStage.setTitle("Preview");
+
         return scene;
     }
 }

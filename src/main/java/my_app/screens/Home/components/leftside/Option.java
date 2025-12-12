@@ -142,7 +142,8 @@ public class Option extends VBox {
             // 2. finded in main canva so, selected
             if (target != null) {
                 viewModel.selectNode(target);
-                CanvaComponentV2.Shake(target);
+                this.currentCanva.Shake(target);
+                //CanvaComponentV2.Shake(target);
             } else {
                 // if not, just add in canva
                 this.currentCanva.addElementDragable(op.get().getCurrentNode(), false);

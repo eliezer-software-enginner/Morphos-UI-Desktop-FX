@@ -84,7 +84,6 @@ public class CanvaMapper {
         canvaComponent.screenFatherId = screen.screen_id;
         canvaComponent.name = screen.name;
         canvaComponent.viewModelName = screen.viewModelName;
-        ;
 
         return canvaComponent;
     }

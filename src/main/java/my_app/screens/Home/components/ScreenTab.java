@@ -15,6 +15,7 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.themes.ThemeManager;
 import my_app.themes.Typography;
 import my_app.windows.AllWindows;
+import org.kordamp.ikonli.entypo.Entypo;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 import toolkit.Component;
@@ -66,7 +67,7 @@ public class ScreenTab extends VBox {
         btnExpand.getStyleClass().add("button-add");
 
         btnExpand.setOnMouseClicked(ev -> btnShowCodeIsVisible.set(!btnShowCodeIsVisible.get()));
-        
+
         btnShowCodeIsVisible.addListener((_, _, newV) -> {
             iconDown.setIconCode(newV ? Feather.CHEVRON_UP : Feather.CHEVRON_DOWN);
         });
@@ -76,10 +77,21 @@ public class ScreenTab extends VBox {
             AllWindows.showWindowForShowCode(viewModel, CanvaMapper.fromScreenToCanva(screen, viewModel));
         });
 
+        final var btnPreviewUi = Components.ButtonPrimary("Preview");
+        final var iconPreview = new FontIcon(Entypo.CONTROLLER_PLAY);
+        iconPreview.setIconSize(18);
+        iconPreview.setIconColor(themeManager.themeIsWhite() ? Color.BLACK : Color.WHITE);
+        btnPreviewUi.setGraphic(iconPreview);
+        btnPreviewUi.setOnMouseClicked(ev -> {
+            AllWindows.showWindowForPreviewUI(CanvaMapper.fromScreenToCanva(screen, viewModel));
+        });
+
         btnShowCode.managedProperty().bind(btnShowCodeIsVisible);
         btnShowCode.visibleProperty().bind(btnShowCodeIsVisible);
+        btnPreviewUi.managedProperty().bind(btnShowCodeIsVisible);
+        btnPreviewUi.visibleProperty().bind(btnShowCodeIsVisible);
 
-        VBox containerHoldingExpandIconAndBtnForAction = new VBox(2, btnExpand, btnShowCode);
+        VBox containerHoldingExpandIconAndBtnForAction = new VBox(2, btnExpand, btnShowCode, btnPreviewUi);
         containerHoldingExpandIconAndBtnForAction.setAlignment(Pos.CENTER);
 
 
