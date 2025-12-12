@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class UIReloaderImpl1 implements Reloader {
+public class UIReloaderImpl implements Reloader {
 
     private static final String APP_CLASS_NAME = "my_app.App";
     private static final String REINIT_METHOD_NAME = "initializeScene"; // O novo método estático em App
@@ -78,7 +78,6 @@ public class UIReloaderImpl1 implements Reloader {
     }
 
     private void applyStylesToScene(Scene scene, List<String> stylesPaths, Class<?> contextClassForResources) {
-        // ... (o método de aplicar estilos permanece o mesmo)
         if (scene == null || stylesPaths.isEmpty()) return;
 
         for (String stylePath : stylesPaths) {

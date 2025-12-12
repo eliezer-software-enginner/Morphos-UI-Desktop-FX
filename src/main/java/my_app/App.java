@@ -58,7 +58,7 @@ public class App extends Application {
                 "src/main/java/my_app",
                 "target/classes",
                 "src/main/resources",
-                "my_app.hotreload.UIReloaderImpl1",
+                "my_app.hotreload.UIReloaderImpl",
                 primaryStage,
                 exclusions
         );

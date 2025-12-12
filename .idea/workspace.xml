@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="exibindo preview">
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/CoesionApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/HotReload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/HotReloadClassLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/ReloadableWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/Reloader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/UIReloaderImpl1.java" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="adicionada minha implementação de hotreload">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/contexts/TranslationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/hotreload/UIReloaderImpl1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/UIReloaderImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenPreviewUI/ScreenPreviewUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenPreviewUI/ScreenPreviewUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,14 +261,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00048" summary="algumas refatorações e criando projeto e carregando-o">
-      <option name="closed" value="true" />
-      <created>1764944579558</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1764944579558</updated>
     </task>
     <task id="LOCAL-00049" summary="refatorações e salvando tela no arquivo de projeto">
       <option name="closed" value="true" />
@@ -657,7 +646,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765498701562</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="adicionada minha implementação de hotreload">
+      <option name="closed" value="true" />
+      <created>1765546146484</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1765546146484</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -672,7 +669,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="testes en create project view" />
     <MESSAGE value="saindo do projeto atual" />
     <MESSAGE value="escolhendo projeto para carregar" />
     <MESSAGE value="refatoração home - homeviewmodel (mvvm)" />
@@ -697,7 +693,8 @@
     <MESSAGE value="refatoração leve" />
     <MESSAGE value="copiando códigos" />
     <MESSAGE value="exibindo preview" />
-    <option name="LAST_COMMIT_MESSAGE" value="exibindo preview" />
+    <MESSAGE value="adicionada minha implementação de hotreload" />
+    <option name="LAST_COMMIT_MESSAGE" value="adicionada minha implementação de hotreload" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -832,7 +829,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java</url>
-          <line>183</line>
+          <line>182</line>
           <option name="timeStamp" value="102" />
         </line-breakpoint>
       </breakpoints>

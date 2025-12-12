@@ -233,6 +233,14 @@ public class Components {
         HBox root = ItemRow(tf, name);
 
         switch (fieldCss) {
+            case "-fx-pref-width" -> {
+                if (node instanceof CanvaComponentV2 component)
+                    tf.setText(String.valueOf((component.getPrefWidth())));
+            }
+            case "-fx-pref-height" -> {
+                if (node instanceof CanvaComponentV2 component)
+                    tf.setText(String.valueOf((component.getPrefHeight())));
+            }
             case "text-wrapping-width" -> {
                 if (node instanceof TextComponent component) {
                     tf.setText(String.valueOf(component.getWrappingWidth()));
@@ -259,6 +267,7 @@ public class Components {
             }
             default -> {
                 String valueOfField = Commons.getValueOfSpecificField(node.getStyle(), fieldCss);
+                System.err.println("[Components]: " + fieldCss + ":" + valueOfField);
                 tf.setText(valueOfField);
             }
         }
@@ -270,6 +279,21 @@ public class Components {
 //                }
             try {
                 switch (fieldCss) {
+
+                    case "-fx-pref-width" -> {
+                        if (newVal.matches("\\d+")) {
+                            if (node instanceof CanvaComponentV2 component)
+                                component.setPrefWidth(Double.parseDouble(newVal));
+                        }
+                    }
+
+                    case "-fx-pref-height" -> {
+                        if (newVal.matches("\\d+")) {
+                            if (node instanceof CanvaComponentV2 component)
+                                component.setPrefHeight(Double.parseDouble(newVal));
+                        }
+                    }
+
                     case "text-wrapping-width" -> {
                         if (node instanceof TextComponent component) {
                             //validate if is number

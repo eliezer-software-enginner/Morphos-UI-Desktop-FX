@@ -16,8 +16,6 @@ import my_app.FileManager;
 import my_app.components.*;
 import my_app.components.buttonComponent.ButtonComponent;
 import my_app.components.imageComponent.ImageComponentv2;
-import my_app.components.shared.HeightComponent;
-import my_app.components.shared.WidthComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
 import my_app.screens.Home.HomeViewModel;
@@ -314,7 +312,8 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             String hexColor = Commons.ColortoHex(c);
 
             removeCheckeredBackground(); // Remove o quadriculado
-            setStyle("-fx-background-color:%s;".formatted(hexColor));
+
+            setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-color", hexColor));
 
             // Atualiza o estado interno
             this.currentBgType = "color";
@@ -331,9 +330,18 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             if (file != null) {
                 String uri = file.toURI().toString();
 
-                removeCheckeredBackground(); // Remove o quadriculado
+                //antigo
+                /*
                 setStyle("-fx-background-image: url('" + uri + "'); " +
                         "-fx-background-size: cover; -fx-background-position: center;");
+                 */
+
+                removeCheckeredBackground(); // Remove o quadriculado
+                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-image", "url('" + uri + "')"));
+
+                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-size", "cover"));
+                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-position", "center"));
+
 
                 // Atualiza o estado interno
                 this.currentBgType = "image";
@@ -358,8 +366,13 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             if (url != null && !url.isBlank()) {
 
                 removeCheckeredBackground(); // Remove o quadriculado
-                setStyle("-fx-background-image: url('" + url + "'); " +
-                        "-fx-background-size: cover; -fx-background-position: center;");
+
+                //setStyle("-fx-background-image: url('" + url + "'); " +
+                //      "-fx-background-size: cover; -fx-background-position: center;");
+
+                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-image", "url('" + url + "')"));
+                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-size", "cover"));
+                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-position", "center"));
 
                 // Atualiza o estado interno
                 this.currentBgType = "image";
@@ -376,8 +389,9 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
                 Components.spacerVertical(10),
                 transparentBtn,
                 Components.spacerVertical(10),
-                new WidthComponent(this),
-                new HeightComponent(this));
+                Components.LabelWithInput(translation.height(), this, "-fx-pref-height"),
+                Components.LabelWithInput(translation.width(), this, "-fx-pref-width")
+        );
 
     }
 
@@ -393,8 +407,8 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
      */
     private void applyCheckeredBackground() {
         // 1. Garante que o fundo do Canva seja transparente (para que o TilePane apareça)
-        this.setStyle("-fx-background-color: transparent;");
-
+        // this.setStyle("-fx-background-color: transparent;");
+        setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-color", "transparent"));
         // 2. Adiciona o TilePane do quadriculado como o primeiro filho (índice 0)
         //    para garantir que fique atrás de todos os elementos dragáveis.
         if (!this.getChildren().contains(checkerboardBackground)) {
@@ -517,8 +531,10 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
 
         setPadding(new Insets(0));
 
-        setStyle("-fx-background-color:%s;".formatted(Commons.CanvaBgColorDefault));
+        // setStyle("-fx-background-color:%s;-fx-pref-width:%s;-fx-pref-height:%s;".formatted(
+        //         Commons.CanvaBgColorDefault, Commons.CanvaWidthDefault, Commons.CanvaHeightDefault));
 
+        setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-color", Commons.CanvaBgColorDefault));
         setId(String.valueOf(System.currentTimeMillis()));
 
         // ComponentsContext.nodeSelected.set(this);

@@ -27,7 +27,6 @@ public class AppScenes {
     final static String tabCssFile = Path.of("/tab.css").toFile().getAbsolutePath();
     final static String screenCreateProjectCssFile = Path.of("/screen-create-project.css").toFile().getAbsolutePath();
 
-
     public static void SwapScene(Stage currentWindow, Scene sceneToGoTo) {
         currentWindow.setScene(sceneToGoTo);
     }
