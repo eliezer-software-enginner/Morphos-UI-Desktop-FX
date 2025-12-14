@@ -123,6 +123,7 @@ public class ScreenCreateProjectViewModel {
             }
         } catch (Exception e) {
             errorMessageProperty.set("Erro ao salvar projeto: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

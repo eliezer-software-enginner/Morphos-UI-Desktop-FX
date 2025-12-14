@@ -44,7 +44,7 @@ class ScreenCreateProjectViewModelTest {
         try (var mockedFileManager = mockStatic(FileManager.class)) {
             // Simula o retorno de PrefsData com projetos recentes.
             var mockPrefsData = new PrefsDatav2(null, "pt-br", List.of("path/to/project1", "path/to/project2"));
-            mockedFileManager.when(FileManager::loadDataInPrefsv2).thenReturn(mockPrefsData);
+            // mockedFileManager.when(FileManager::loadDataInPrefsv2).thenReturn(mockPrefsData);
 
             // Cria a ViewModel (que chama loadRecentProjects no construtor)
             viewModel = new ScreenCreateProjectViewModel(mockStage);

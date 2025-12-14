@@ -1,5 +1,8 @@
 package my_app.screens.Home.components.leftside;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,9 +18,6 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import toolkit.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LeftSide extends VBox {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -45,9 +45,7 @@ public class LeftSide extends VBox {
             new Field(translation.image(), enlishBase.image()),
             new Field(translation.customComponent(), enlishBase.customComponent()),
             new Field(translation.columnItems(), enlishBase.columnItems()),
-            new Field(translation.menuComponent(), enlishBase.menuComponent())
-    );
-
+            new Field(translation.menuComponent(), enlishBase.menuComponent()));
 
     @Component
     List<Option> options = new ArrayList<>();
@@ -58,14 +56,13 @@ public class LeftSide extends VBox {
     @Component // Este campo precisa ser atualizado
     CanvaComponentV2 currentCanva;
 
-
     public LeftSide(CanvaComponentV2 currentCanva, HomeViewModel viewModel) {
 
         this.currentCanva = currentCanva;
         config();
         styles();
 
-        getChildren().addAll(logo, title);
+        // getChildren().addAll(logo, title);
 
         var spacer = new Region();
         spacer.setMaxHeight(10);
@@ -100,7 +97,7 @@ public class LeftSide extends VBox {
     }
 
     void styles() {
-        getStyleClass().add("background-color");
+        // getStyleClass().add("background-color");
     }
 
     public void notifyError(String message) {
