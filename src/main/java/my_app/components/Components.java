@@ -12,8 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.converter.NumberStringConverter;
 import my_app.FileManager;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
@@ -361,7 +360,7 @@ public class Components {
 
         switch (cssField) {
             case "clip-image-as-circle" -> {
-                if (selectedNode instanceof ImageComponentv2 component) {
+                if (selectedNode instanceof ImageComponent component) {
                     comboBox.setItems(FXCollections.observableArrayList("Circle"));
 
                     //se tem type de clip definido

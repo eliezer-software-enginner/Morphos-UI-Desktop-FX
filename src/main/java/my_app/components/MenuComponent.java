@@ -6,32 +6,27 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
-import my_app.components.shared.ButtonRemoverComponent;
-import my_app.components.shared.MenuDataEditorComponent;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
 import my_app.data.MenuComponentData.MenuItemData;
+import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 
 import java.util.ArrayList;
 
-public class MenuComponent extends HBox implements ViewContractv2<MenuComponentData> {
+public final class MenuComponent extends HBox implements ViewComponent<MenuComponentData> {
 
     private final HomeViewModel viewModel;
-    private final CanvaComponentV2 canva;
     private boolean isDeleted = false;
 
     // Estado Observável Central: a lista de itens do menu
-    private ObservableList<MenuItemData> itemsState = FXCollections.observableArrayList(new MenuItemData());
+    public ObservableList<MenuItemData> itemsState = FXCollections.observableArrayList(new MenuItemData());
 
     private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
 
-    public MenuComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
+    public MenuComponent(HomeViewModel viewModel) {
         setSpacing(10); // Espaçamento entre os itens do menu
         setAlignment(Pos.CENTER_LEFT);
         setPadding(new Insets(5));
@@ -40,7 +35,6 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
         this.setId(String.valueOf(System.currentTimeMillis()));
 
         this.viewModel = viewModel;
-        this.canva = canva;
 
         // Renderiza o item padrão inicial
         renderMenu();
@@ -80,9 +74,9 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
 
                 // 2. Clona o template (método cloneExistingNode é reutilizado de ColumnComponent)
                 // Usamos -1 para indicar que não é uma repetição de dados, apenas uma clonagem
-                final var newNodeWrapper = (ViewContractv2<ComponentData>) cloneExistingNode((ViewContractv2<ComponentData>) existingNodeWrapper, item);
+                final var newNodeWrapper = (ViewComponent<ComponentData>) cloneExistingNode((ViewComponent<ComponentData>) existingNodeWrapper, item);
 
-                var node = newNodeWrapper.getCurrentNode();
+                var node = newNodeWrapper.getNode();
 
                 // 3. Aplica o nome do item de menu ao texto do componente, se possível
                 if (node instanceof ButtonComponent btn) {
@@ -103,7 +97,7 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
     }
 
     // Adaptado do ColumnComponent para suportar o MenuComponentData
-    private ViewContractv2<? extends ComponentData> cloneExistingNode(ViewContractv2<ComponentData> existingNode, MenuItemData itemData) {
+    private ViewComponent<? extends ComponentData> cloneExistingNode(ViewComponent<ComponentData> existingNode, MenuItemData itemData) {
         var originalData = existingNode.getData();
         var type = originalData.type();
 
@@ -112,29 +106,29 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
         // mas foi mantida a estrutura para ser coerente com ColumnComponent.
 
         if (type.equalsIgnoreCase(englishBase.button())) {
-            var newNodeWrapper = new ButtonComponent(this.viewModel, canva);
+            var newNodeWrapper = new ButtonComponent();
             newNodeWrapper.applyData((ButtonComponentData) originalData);
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.image())) {
-            var newNodeWrapper = new ImageComponentv2(this.viewModel, canva);
+            var newNodeWrapper = new ImageComponent();
             newNodeWrapper.applyData((ImageComponentData) originalData);
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.input())) {
-            var newNodeWrapper = new InputComponent(this.viewModel, canva);
+            var newNodeWrapper = new InputComponent();
             newNodeWrapper.applyData((InputComponentData) originalData);
             return newNodeWrapper;
         } else if (type.equalsIgnoreCase(englishBase.text())) {
-            var newNodeWrapper = new TextComponent(this.viewModel, canva);
+            var newNodeWrapper = new TextComponent();
             newNodeWrapper.applyData((TextComponentData) originalData);
             return newNodeWrapper;
         } else {
-            var newNodeWrapper = new CustomComponent(this.viewModel, canva);
+            var newNodeWrapper = new CustomComponent(this.viewModel);
             newNodeWrapper.applyData((CustomComponentData) originalData);
             return newNodeWrapper;
         }
     }
 
-    private ViewContractv2<?> searchNode(String componentId) {
+    private ViewComponent<?> searchNode(String componentId) {
         var optionalNode = this.viewModel.SearchNodeById(componentId);
         return optionalNode.orElseThrow(() -> new IllegalStateException("Template component with ID " + componentId + " not found in ViewModel."));
     }
@@ -144,7 +138,7 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
     // -------------------------------------------------------------------
 
     @Override
-    public Node getCurrentNode() {
+    public Node getNode() {
         return this;
     }
 
@@ -158,28 +152,6 @@ public class MenuComponent extends HBox implements ViewContractv2<MenuComponentD
         isDeleted = true;
     }
 
-    @Override
-    public void appearance(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Typography.subtitle("Menu Items"),
-                new MenuDataEditorComponent(this.itemsState, this.viewModel, this), // Novo editor de lista
-                new ButtonRemoverComponent(this, this.viewModel)
-        );
-    }
-
-    @Override
-    public void settings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LayoutXYComponent(this),
-                Components.ToogleSwithItemRow("Centralizar verticalmente", this, canva)
-        );
-    }
-
-    @Override
-    public void otherSettings(VBox father, CanvaComponentV2 canva) {
-        // Nada específico por enquanto
-        father.getChildren().setAll(Typography.body("Configurações adicionais de menu..."));
-    }
 
     @Override
     public MenuComponentData getData() {

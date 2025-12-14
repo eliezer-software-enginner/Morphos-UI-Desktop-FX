@@ -63,7 +63,7 @@ public class Option extends VBox {
         IO.println("nodes: " + nodes.size());
 
         for (var nodeWrapper : nodes) {
-            String itemId = nodeWrapper.getCurrentNode().getId();
+            String itemId = nodeWrapper.getNode().getId();
 
             HBox subItemBox = createSubItemBox(itemId);
 
@@ -146,7 +146,7 @@ public class Option extends VBox {
                 //CanvaComponentV2.Shake(target);
             } else {
                 // if not, just add in canva
-                this.currentCanva.addElementDragable(op.get().getCurrentNode(), false);
+                this.currentCanva.addElementDragable(op.get().getNode(), false);
             }
         });
 

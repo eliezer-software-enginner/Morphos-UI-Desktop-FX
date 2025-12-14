@@ -42,7 +42,7 @@ public class ChildIdSelectorComponent extends HBox {
             }
 
             for (var nodeWrapper : entry.getValue()) {
-                String id = nodeWrapper.getCurrentNode().getId();
+                String id = nodeWrapper.getNode().getId();
 
                 // CRIAÇÃO DO NOME AMIGÁVEL: "Tipo - ID"
                 String friendlyName = componentType + " - " + id;

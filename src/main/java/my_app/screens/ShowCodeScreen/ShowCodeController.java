@@ -5,13 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import my_app.FileManager;
-import my_app.components.ColumnComponent;
-import my_app.components.CustomComponent;
-import my_app.components.InputComponent;
-import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
-import my_app.data.ViewContractv2;
+import my_app.components.*;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
@@ -181,7 +176,7 @@ public class ShowCodeController {
                 }
             }
 
-            if (node instanceof ImageComponentv2 component) {
+            if (node instanceof ImageComponent component) {
                 String variableName = component.name.get();
                 if (variableName == null) imgCount++;
 
@@ -241,8 +236,8 @@ public class ShowCodeController {
 
                 final var childIdWhenSelfIsEmpty = component.getData().alternativeChildId();
                 final var childIdWhenSelfHasData = component.getData().childId();
-                final ViewContractv2<?> nodeWrapper_whenSelfIsEmpty = this.viewModel.findNodeById(childIdWhenSelfIsEmpty);
-                final ViewContractv2<?> nodeWrapper_whenSelfHasData = this.viewModel.findNodeById(childIdWhenSelfHasData);
+                final var nodeWrapper_whenSelfIsEmpty = this.viewModel.findNodeById(childIdWhenSelfIsEmpty);
+                final var nodeWrapper_whenSelfHasData = this.viewModel.findNodeById(childIdWhenSelfHasData);
 
                 String compWhenEmpty_Creation = "";
                 String finalNameForComp_WhenEmpty = "";
@@ -455,7 +450,7 @@ public class ShowCodeController {
                                 collections.children(), collections.setup(), collections.styles());
                     }
 
-                    if (child instanceof ImageComponentv2 component) {
+                    if (child instanceof ImageComponent component) {
                         imgCount++;
                         String finalName = "imgV" + imgCount;
 

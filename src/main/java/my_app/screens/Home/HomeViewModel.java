@@ -9,17 +9,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.App;
 import my_app.FileManager;
-import my_app.components.ColumnComponent;
-import my_app.components.InputComponent;
+import my_app.components.*;
 import my_app.components.MenuComponent;
 import my_app.components.TextComponent;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.ComponentsContext;
 import my_app.contexts.TranslationContext;
 import my_app.data.ComponentData;
 import my_app.data.StateJson_v3;
-import my_app.data.ViewContractv2;
+import my_app.data.contracts.ViewComponent;
 import my_app.mappers.CanvaMapper;
 import my_app.scenes.AppScenes;
 import my_app.scenes.SettingsScene;
@@ -62,7 +60,7 @@ public class HomeViewModel {
 
     // 6. Mapa de Dados dos Componentes (Lógica Interna)
     // Key: Tipo do componente ("button", "text", etc.)
-    public ObservableMap<String, ObservableList<ViewContractv2<?>>> dataMap = FXCollections.observableHashMap();
+    public ObservableMap<String, ObservableList<ViewComponent<?>>> dataMap = FXCollections.observableHashMap();
 
     // Propriedades para Toast/Erro (Opcional, se a View tiver um Toast)
     public StringProperty errorMessageProperty = new SimpleStringProperty();
@@ -350,11 +348,11 @@ public class HomeViewModel {
 
     // --- LÓGICA DE COMPONENTES E SELEÇÃO ---
 
-    public void addComponent(String type, ViewContractv2<?> component) {
+    public void addComponent(String type, ViewComponent<?> component) {
         final var currentCanva = activeCanva.get(); // Pega da propriedade!
         if (currentCanva == null || type == null || type.isBlank()) return;
 
-        ViewContractv2<?> node = component;
+        ViewComponent<?> node = component;
         var content = "Im new here";
         var typeNormalized = type.trim().toLowerCase();
 
@@ -362,18 +360,18 @@ public class HomeViewModel {
         if (node == null) {
             // Factory simples (pode ser extraída depois)
             if (type.equalsIgnoreCase(englishBase.button())) {
-                node = new ButtonComponent(content, this);
+                node = new ButtonComponent(content);
             } else if (type.equalsIgnoreCase(englishBase.input())) {
-                node = new InputComponent(content, this, currentCanva);
+                node = new InputComponent(content);
             } else if (type.equalsIgnoreCase(englishBase.text())) {
-                node = new TextComponent(content, this, currentCanva);
+                node = new TextComponent(content);
             } else if (type.equalsIgnoreCase(englishBase.image())) {
-                node = new ImageComponentv2(
+                node = new ImageComponent(
                         ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
             } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
                 node = new ColumnComponent(this, currentCanva);
             } else if (type.equalsIgnoreCase(englishBase.menuComponent())) {
-                node = new MenuComponent(this, currentCanva);
+                node = new MenuComponent(this);
             }
         }
 
@@ -385,24 +383,24 @@ public class HomeViewModel {
             highlightComponent(node);
 
             // Adiciona visualmente ao Canva atual
-            currentCanva.addElementDragable(node.getCurrentNode(), true);
+            currentCanva.addElementDragable(node.getNode(), true);
 
             refreshSubItems();
         }
     }
 
-    private void highlightComponent(ViewContractv2<?> component) {
+    private void highlightComponent(ViewComponent<?> component) {
         var typeNormalized = component.getData().type().trim().toLowerCase();
         // Seleciona o novo nó
-        final var newSelection = new SelectedComponent(typeNormalized, component.getCurrentNode());
+        final var newSelection = new SelectedComponent(typeNormalized, component.getNode());
         nodeSelected.set(newSelection);
         headerSelected.set(typeNormalized);
     }
 
     //here for example is when i only want to select the node for editing inside custom component
-    public void selectNodePartially(ViewContractv2<?> node) {
+    public void selectNodePartially(ViewComponent<?> node) {
         var comp = (ComponentData) node.getData();
-        SelectedComponent newSelection = new SelectedComponent(comp.type(), node.getCurrentNode());
+        SelectedComponent newSelection = new SelectedComponent(comp.type(), node.getNode());
         nodeSelected.set(newSelection);
         System.out.println("Selecionado: " + node + " (Type: " + comp.type() + ")");
     }
@@ -427,9 +425,9 @@ public class HomeViewModel {
     }
 
     //todo considerar a remoção desse método, pois não está sendo usado em lugar nenhum!
-    public void removeComponentFromAllPlaces(ViewContractv2<?> componentWrapper, CanvaComponentV2 canvaComponent) {
+    public void removeComponentFromAllPlaces(ViewComponent<?> componentWrapper, CanvaComponentV2 canvaComponent) {
         // Método auxiliar usado por componentes internos
-        canvaComponent.getChildren().remove(componentWrapper.getCurrentNode());
+        canvaComponent.getChildren().remove(componentWrapper.getNode());
         removeComponentFromDataMap(componentWrapper);
         refreshSubItems();
     }
@@ -440,13 +438,13 @@ public class HomeViewModel {
      * Adiciona um item no mapa de dados, verificando se o ID do componente já existe
      * para prevenir duplicação de estado.
      */
-    public void addItemOnDataMap(String type, ViewContractv2<?> nodeWrapper) {
-        String newId = nodeWrapper.getCurrentNode().getId();
+    public void addItemOnDataMap(String type, ViewComponent<?> nodeWrapper) {
+        String newId = nodeWrapper.getNode().getId();
 
         // 1. Verifica se o ID já existe em qualquer lista do dataMap (prevenção de duplicação)
         boolean idExists = dataMap.values().stream()
                 .flatMap(List::stream) // Achata todas as listas de componentes em um único Stream
-                .anyMatch(existingNode -> newId.equals(existingNode.getCurrentNode().getId()));
+                .anyMatch(existingNode -> newId.equals(existingNode.getNode().getId()));
 
         if (idExists) {
             // Se o ID já existe, ignora a adição. Isso é comum e esperado durante o
@@ -462,7 +460,7 @@ public class HomeViewModel {
     private boolean removeItemByIdentification(String identification) {
         for (var itemsList : dataMap.values()) {
             var itemToRemove = itemsList.stream()
-                    .filter(item -> identification.equals(item.getCurrentNode().getId()))
+                    .filter(item -> identification.equals(item.getNode().getId()))
                     .findFirst()
                     .orElse(null);
 
@@ -474,12 +472,12 @@ public class HomeViewModel {
         return false;
     }
 
-    public void removeComponentFromDataMap(ViewContractv2<?> componentWrapper) {
+    public void removeComponentFromDataMap(ViewComponent<?> componentWrapper) {
         var data = (ComponentData) componentWrapper.getData();
         var list = dataMap.get(data.type());
         if (list != null) {
-            var currentNodeId = componentWrapper.getCurrentNode().getId();
-            list.stream().filter(it -> it.getCurrentNode().getId().equals(currentNodeId))
+            var currentNodeId = componentWrapper.getNode().getId();
+            list.stream().filter(it -> it.getNode().getId().equals(currentNodeId))
                     .findFirst().ifPresent(it -> it.delete());
         }
     }
@@ -508,21 +506,21 @@ public class HomeViewModel {
         if (node == null) return null;
         String nodeId = node.getId();
         for (var entry : dataMap.entrySet()) {
-            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(n.getCurrentNode().getId()))) {
+            if (entry.getValue().stream().anyMatch(n -> node.getId().equals(n.getNode().getId()))) {
                 return entry.getKey();
             }
         }
         return null; // Pode retornar "canva" se for o background, dependendo da lógica desejada
     }
 
-    public Optional<ViewContractv2<?>> SearchNodeById(String nodeId) {
+    public Optional<ViewComponent<?>> SearchNodeById(String nodeId) {
         return dataMap.values().stream()
                 .flatMap(List::stream)
-                .filter(node -> node.getCurrentNode().getId().equals(nodeId))
+                .filter(node -> node.getNode().getId().equals(nodeId))
                 .findFirst();
     }
 
-    public List<ViewContractv2<?>> getItemsByType(String type) {
+    public List<ViewComponent<?>> getItemsByType(String type) {
         return dataMap.computeIfAbsent(type, _ -> FXCollections.observableArrayList())
                 .stream()
                 .filter(component -> !component.isDeleted())
@@ -545,10 +543,10 @@ public class HomeViewModel {
                 .orElse(null);
     }
 
-    public ViewContractv2<?> findNodeById(String id) {
+    public ViewComponent<?> findNodeById(String id) {
         if (id == null || id.isEmpty()) return null;
         for (var viewList : dataMap.values()) {
-            for (ViewContractv2<?> contract : viewList) {
+            for (final var contract : viewList) {
                 if (id.equals(contract.getData().identification())) {
                     return contract;
                 }

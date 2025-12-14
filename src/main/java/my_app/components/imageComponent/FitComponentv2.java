@@ -14,7 +14,7 @@ public class FitComponentv2 extends HBox {
     ChoiceBox<String> choiceBox = new ChoiceBox<>(
             FXCollections.observableArrayList("contain", "cover", "fill"));
 
-    public FitComponentv2(ImageComponentv2 node) {
+    public FitComponentv2(ImageComponent node) {
         config();
 
         // Define o valor atual no ChoiceBox
@@ -38,7 +38,7 @@ public class FitComponentv2 extends HBox {
     /**
      * Aplica o comportamento de visualização de acordo com o modo
      */
-    private void applyFitMode(ImageComponentv2 img, FitMode mode) {
+    private void applyFitMode(ImageComponent img, FitMode mode) {
         double width = img.getFitWidth();
         double height = img.getFitHeight();
 

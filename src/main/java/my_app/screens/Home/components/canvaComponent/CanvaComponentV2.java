@@ -6,18 +6,14 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import my_app.FileManager;
 import my_app.components.*;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.*;
+import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
 
 import java.util.ArrayList;
@@ -25,7 +21,7 @@ import java.util.List;
 
 import static my_app.screens.Home.HomeViewModel.SelectedComponent;
 
-public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaComponentDatav2> {
+public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaComponentDatav2> {
 
     // --- CONSTANTES ---
     private static final String TRANSPARENT_BG_TYPE = "transparent";
@@ -42,8 +38,8 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     // NOVO: O Node que representa o fundo quadriculado (inicializado uma vez)
     private final Region checkerboardBackground = createCheckerboardBackground();
     // --- ESTADO INTERNO ---
-    private String currentBgType = "color"; // Novo: Para rastrear o tipo de fundo
-    private String currentBgContent = Commons.CanvaBgColorDefault; // Novo: Para armazenar o conteúdo (cor/url)
+    public String currentBgType = "color"; // Novo: Para rastrear o tipo de fundo
+    public String currentBgContent = Commons.CanvaBgColorDefault; // Novo: Para armazenar o conteúdo (cor/url)
     boolean isDeleted = false;
 
     public String name;
@@ -134,35 +130,35 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             // ... (Loop de componentes mantido) ...
             // (Seus loops de componentes aqui)
             for (TextComponentData it : data.text_components) {
-                var comp = new TextComponent(it.text(), this.viewModel, this);
+                var comp = new TextComponent(it.text());
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("text", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ButtonComponentData it : data.button_components) {
-                var comp = new ButtonComponent(this.viewModel, this);
+                var comp = new ButtonComponent();
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("button", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ImageComponentData it : data.image_components) {
-                var comp = new ImageComponentv2(this.viewModel, this);
+                var comp = new ImageComponent();
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("image", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (InputComponentData it : data.input_components) {
-                var comp = new InputComponent(this.viewModel, this);
+                var comp = new InputComponent();
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("input", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (CustomComponentData it : data.custom_components) {
-                var comp = new CustomComponent(this.viewModel, this);
+                var comp = new CustomComponent(this.viewModel);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("custom component", comp);
                 if (it.in_canva) {
@@ -171,7 +167,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
             }
 
             for (MenuComponentData it : data.menu_components) {
-                var comp = new MenuComponent(this.viewModel, this);
+                var comp = new MenuComponent(this.viewModel);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("menu component", comp);
                 this.addElementDragable(comp, false);
@@ -297,115 +293,18 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
         }
     }
 
-    /**
-     * Atualização do painel de aparência.
-     */
-    @Override
-    public void appearance(VBox father, CanvaComponentV2 canva) {
-
-        // Color Picker (Ação atualizada para rastrear estado e remover o fundo Node)
-        ColorPicker bgColorPicker = new ColorPicker(
-                Color.web(
-                        Commons.getValueOfSpecificField(getStyle(), "-fx-background-color")));
-        bgColorPicker.setOnAction(e -> {
-            Color c = bgColorPicker.getValue();
-            String hexColor = Commons.ColortoHex(c);
-
-            removeCheckeredBackground(); // Remove o quadriculado
-
-            setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-color", hexColor));
-
-            // Atualiza o estado interno
-            this.currentBgType = "color";
-            this.currentBgContent = hexColor;
-        });
-
-        // Botão para escolher imagem do sistema (Ação atualizada para remover o fundo Node)
-        Button chooseImgBtn = new Button("Choose Image...");
-        chooseImgBtn.setOnAction(e -> {
-            javafx.stage.FileChooser fc = new javafx.stage.FileChooser();
-            fc.getExtensionFilters().addAll(
-                    new javafx.stage.FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
-            var file = fc.showOpenDialog(null);
-            if (file != null) {
-                String uri = file.toURI().toString();
-
-                //antigo
-                /*
-                setStyle("-fx-background-image: url('" + uri + "'); " +
-                        "-fx-background-size: cover; -fx-background-position: center;");
-                 */
-
-                removeCheckeredBackground(); // Remove o quadriculado
-                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-image", "url('" + uri + "')"));
-
-                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-size", "cover"));
-                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-position", "center"));
-
-
-                // Atualiza o estado interno
-                this.currentBgType = "image";
-                this.currentBgContent = uri;
-            }
-        });
-
-        // Botão para tornar o fundo transparente (Chama o novo método)
-        Button transparentBtn = new Button("Set Transparent");
-        transparentBtn.setOnAction(e -> {
-            applyCheckeredBackground();
-            // applyCheckeredBackground() já atualiza o estado interno
-        });
-
-
-        // Campo para URL (Ação atualizada para remover o fundo Node)
-        TextField urlField = new TextField();
-        urlField.setPromptText("Paste URl of image");
-        Button applyUrl = new Button("Apply URL");
-        applyUrl.setOnAction(_ -> {
-            String url = urlField.getText();
-            if (url != null && !url.isBlank()) {
-
-                removeCheckeredBackground(); // Remove o quadriculado
-
-                //setStyle("-fx-background-image: url('" + url + "'); " +
-                //      "-fx-background-size: cover; -fx-background-position: center;");
-
-                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-image", "url('" + url + "')"));
-                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-size", "cover"));
-                setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-position", "center"));
-
-                // Atualiza o estado interno
-                this.currentBgType = "image";
-                this.currentBgContent = url;
-            }
-        });
-
-        // Configura o layout do painel de aparência
-        father.getChildren().setAll(
-                bgColorPicker,
-                chooseImgBtn,
-                urlField,
-                applyUrl,
-                Components.spacerVertical(10),
-                transparentBtn,
-                Components.spacerVertical(10),
-                Components.LabelWithInput(translation.height(), this, "-fx-pref-height"),
-                Components.LabelWithInput(translation.width(), this, "-fx-pref-width")
-        );
-
-    }
 
     /**
      * Remove o Node do fundo quadriculado se estiver presente.
      */
-    private void removeCheckeredBackground() {
+    public void removeCheckeredBackground() {
         this.getChildren().remove(checkerboardBackground);
     }
 
     /**
      * Aplica o fundo quadriculado (Node-based) e remove qualquer fundo CSS.
      */
-    private void applyCheckeredBackground() {
+    public void applyCheckeredBackground() {
         // 1. Garante que o fundo do Canva seja transparente (para que o TilePane apareça)
         // this.setStyle("-fx-background-color: transparent;");
         setStyle(Commons.UpdateEspecificStyle(this.getStyle(), "-fx-background-color", "transparent"));
@@ -493,28 +392,6 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
         return tileContainer;
     }
 
-    @Override
-    public void settings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().clear();
-    }
-
-    @Override
-    public void otherSettings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().addAll(Components.LabelWithInputAndButton(
-                        translation.screenName(), translation.update(),
-                        this, "screen-name", () -> {
-                            FileManager.updateScreenNameInProject(screenFatherId, "name", name);
-                            //  viewModel.toggleRefreshScreenTabs();
-                        }),
-                Components.LabelWithInputAndButton(
-                        "view model name", translation.update(),
-                        this, "view-model-name", () -> {
-                            FileManager.updateScreenNameInProject(screenFatherId, "viewModelName",
-                                    this.viewModelName);
-                            //  viewModel.toggleRefreshScreenTabs();
-                        })
-        );
-    }
 
     void config() {
         setBorder(new Border(
@@ -586,7 +463,7 @@ public class CanvaComponentV2 extends Pane implements ViewContractv2<CanvaCompon
     }
 
     @Override
-    public Node getCurrentNode() {
+    public Node getNode() {
         return this;
     }
 

@@ -1,8 +1,8 @@
 package my_app.mappers;
 
 import my_app.components.*;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
+import my_app.components.ButtonComponent;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.data.StateJson_v3;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
@@ -35,7 +35,7 @@ public class CanvaMapper {
             for (var nodeWrapper : nodesList) {
                 // A LÓGICA DE SERIALIZAÇÃO PERMANECE A MESMA
 
-                var node = nodeWrapper.getCurrentNode();
+                var node = nodeWrapper.getNode();
 
                 if (node instanceof TextComponent component) {
                     // O .getData() deve retornar um TextComponentData que inclui a flag 'in_canva'
@@ -46,7 +46,7 @@ public class CanvaMapper {
                     canvaData.button_components.add(component.getData());
                 }
 
-                if (node instanceof ImageComponentv2 component) {
+                if (node instanceof ImageComponent component) {
                     canvaData.image_components.add(component.getData());
                 }
 

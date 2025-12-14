@@ -13,10 +13,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import my_app.components.NodeWrapperv2;
+import my_app.components.inspectors.InspectorRegistry;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
-import my_app.data.ViewContractv2;
+import my_app.data.contracts.Inspector;
+import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.HomeViewModel.SelectedComponent;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
@@ -26,7 +27,7 @@ import toolkit.Component;
 import static my_app.components.shared.UiComponents.ButtonPrimary;
 import static my_app.components.shared.UiComponents.ButtonSecondary;
 
-public class RightSidev2 extends VBox {
+public class RightSidev3 extends VBox {
     private TranslationContext.Translation translation = TranslationContext.instance().get();
     final double width = 350;
     // 1. ALTERADO: Tipo da propriedade é agora SelectedComponent
@@ -53,7 +54,7 @@ public class RightSidev2 extends VBox {
 
     IntegerProperty optionSelected = new SimpleIntegerProperty(1);
 
-    public RightSidev2(CanvaComponentV2 canva, HomeViewModel viewModel) {
+    public RightSidev3(CanvaComponentV2 canva, HomeViewModel viewModel) {
         // 1. ALTERADO: Atribui a propriedade com o tipo correto
         ObjectProperty<SelectedComponent> selectedCompProp = viewModel.nodeSelected;
 
@@ -76,32 +77,39 @@ public class RightSidev2 extends VBox {
         getChildren().add(spacer);
 
         // mount
-        mount(canva);
+        mount(canva, viewModel);
 
         // Atualiza UI quando muda de seleção
 
         // quando muda o node
-        optionSelected.addListener((_, _, _) -> mount(canva));
+        optionSelected.addListener((_, _, _) -> mount(canva, viewModel));
 
         // 2. ALTERADO: Listener agora recebe SelectedComponent
         selectedComponentProperty.addListener((_, _, newComp) -> {
             // Extrai o Node do SelectedComponent. Será null se a seleção for limpa.
             Node newNode = (newComp != null) ? newComp.node() : null;
 
-            if (newNode instanceof ViewContractv2 renderable) {
-                final var nw = new NodeWrapperv2(renderable);
-                nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
+            if (newNode instanceof ViewComponent<?> component) {
+                Inspector<?> inspector = InspectorRegistry.resolve(component, viewModel);
+
+                if (optionSelected.get() == 1)
+                    inspector.appearance(dynamicContainer, canva);
+                else if (optionSelected.get() == 2)
+                    inspector.layout(dynamicContainer, canva);
+                else
+                    inspector.settings(dynamicContainer, canva);
+
             } else {
-                // Se newNode for null (desseleção) ou não for ViewContract
                 dynamicContainer.getChildren().setAll(NoContentText);
             }
+
         });
 
         config();
         style();
     }
 
-    void mount(CanvaComponentV2 canva) {
+    void mount(CanvaComponentV2 canva, HomeViewModel viewModel) {
         SelectedComponent currentSelectedComp = selectedComponentProperty.get();
         Node currentNode = (currentSelectedComp != null) ? currentSelectedComp.node() : null;
 
@@ -111,17 +119,31 @@ public class RightSidev2 extends VBox {
         else if (opselected == 2) title.setText(translation.layoutSettings());
         else title.setText(translation.otherSettings());
 
+        if (currentNode instanceof ViewComponent<?> component) {
+            Inspector<?> inspector = InspectorRegistry.resolve(component, viewModel);
 
-        if (currentNode instanceof ViewContractv2 renderable) {
-            final var nw = new NodeWrapperv2(renderable);
-            nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
+            if (optionSelected.get() == 1)
+                inspector.appearance(dynamicContainer, canva);
+            else if (optionSelected.get() == 2)
+                inspector.layout(dynamicContainer, canva);
+            else
+                inspector.settings(dynamicContainer, canva);
+
         } else {
-            // Garante que o container esteja limpo se nada estiver selecionado ao montar
-            Label desc = Typography.caption(translation.selectComponentToViewSettings());
-            desc.setWrapText(true);
-
-            dynamicContainer.getChildren().setAll(desc);
+            dynamicContainer.getChildren().setAll(NoContentText);
         }
+
+
+//        if (currentNode instanceof ViewContractv2 renderable) {
+//            final var nw = new NodeWrapperv2(renderable);
+//            nw.renderRightSideContainer(dynamicContainer, optionSelected, canva);
+//        } else {
+//            // Garante que o container esteja limpo se nada estiver selecionado ao montar
+//            Label desc = Typography.caption(translation.selectComponentToViewSettings());
+//            desc.setWrapText(true);
+//
+//            dynamicContainer.getChildren().setAll(desc);
+//        }
     }
 
     void config() {

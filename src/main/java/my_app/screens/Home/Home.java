@@ -9,7 +9,7 @@ import my_app.components.Components;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.StateJson_v3;
-import my_app.screens.Home.components.RightSidev2;
+import my_app.screens.Home.components.RightSidev3;
 import my_app.screens.Home.components.ScreenTab;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.screens.Home.components.leftside.LeftSide;
@@ -157,7 +157,7 @@ public class Home extends BorderPane {
         setLeft(this.leftSide);
 
         // 3. Recria o RightSide com a nova referência do Canva
-        RightSidev2 newRightSide = new RightSidev2(newCanva, viewModel);
+        final var newRightSide = new RightSidev3(newCanva, viewModel);
         rightWrapper.getChildren().setAll(newRightSide);
     }
 

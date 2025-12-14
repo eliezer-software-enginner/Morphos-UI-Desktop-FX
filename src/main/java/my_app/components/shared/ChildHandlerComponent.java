@@ -47,7 +47,7 @@ public class ChildHandlerComponent extends HBox {
 
             // Itera sobre os IDs desse grupo
             for (var nodeWrapper : entry.getValue()) {
-                String id = nodeWrapper.getCurrentNode().getId();
+                String id = nodeWrapper.getNode().getId();
 
                 if (id.equals(self.getId())) {
                     continue;

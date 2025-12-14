@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import my_app.components.imageComponent.ImageComponentv2;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
@@ -19,7 +19,7 @@ public class WidthComponent extends HBox {
     public WidthComponent(Node node) {
         config();
 
-        if (node instanceof ImageComponentv2 imgview) {
+        if (node instanceof ImageComponent imgview) {
             tf.setText(String.valueOf(imgview.getFitWidth()));
         }
 
@@ -33,7 +33,7 @@ public class WidthComponent extends HBox {
 
             try {
                 double v = Double.parseDouble(newVal);
-                if (node instanceof ImageComponentv2 imgview) {
+                if (node instanceof ImageComponent imgview) {
                     imgview.setFitWidth(v);
                 } else if (node instanceof CanvaComponentV2 c) {
                     c.setPrefWidth(v);

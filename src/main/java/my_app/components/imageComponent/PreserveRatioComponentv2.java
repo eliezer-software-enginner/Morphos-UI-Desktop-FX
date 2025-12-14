@@ -14,7 +14,7 @@ public class PreserveRatioComponentv2 extends HBox {
     ChoiceBox<String> choiceBox = new ChoiceBox<>(
             FXCollections.observableArrayList("True", "False"));
 
-    public PreserveRatioComponentv2(ImageComponentv2 node) {
+    public PreserveRatioComponentv2(ImageComponent node) {
         config();
 
         // Define o valor inicial com base no estado atual da imagem

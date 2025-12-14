@@ -9,52 +9,32 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
-import my_app.components.Components;
-import my_app.components.shared.ButtonRemoverComponent;
-import my_app.components.shared.HeightComponent;
-import my_app.components.shared.WidthComponent;
-import my_app.contexts.ComponentsContext;
-import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.ImageComponentData;
-import my_app.data.ViewContractv2;
+import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
-public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageComponentData> {
+public final class ImageComponent extends ImageView implements ViewComponent<ImageComponentData> {
 
     final int size = 100;
-    ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
 
     public ObjectProperty<FitMode> fitMode = new SimpleObjectProperty<>(FitMode.CONTAIN);
 
-    public Stage stage;
-
     public StringProperty name = new SimpleStringProperty();
     public String clipType;
-    TranslationContext.Translation translation = TranslationContext.instance().get();
-
-    ComponentsContext componentsContext;
 
     boolean isDeleted = false;
 
     @Component
     public VBox errorContainer = new VBox();
-    @Component
-    CanvaComponentV2 currentCanva;
-    private final HomeViewModel viewModel;
 
-    public ImageComponentv2(HomeViewModel viewModel, CanvaComponentV2 canvaComponent) {
-        this.viewModel = viewModel;
+    public ImageComponent() {
         config();
-        this.currentCanva = canvaComponent;
     }
 
-    public ImageComponentv2(String sourcePath, HomeViewModel viewModel) {
+    public ImageComponent(String sourcePath, HomeViewModel viewModel) {
         super(new Image(sourcePath, true));
-        this.viewModel = viewModel;
         // 'true' ativa carregamento assíncrono
         config();
     }
@@ -66,39 +46,8 @@ public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageC
         setPreserveRatio(true);
 
         setId(String.valueOf(System.currentTimeMillis()));
-        currentState.set(this);
     }
 
-    @Override
-    public void appearance(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                new WidthComponent(this),
-                new HeightComponent(this),
-                new PreserveRatioComponentv2(this),
-                new ImageBackgroundComponentv2(this),
-                Components.LabelWithComboBox("Clip", this, "clip-image-as-circle"),
-                //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
-                Components.spacerVertical(10),
-                errorContainer,
-                Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, this.viewModel)
-                // new FitComponent(this)
-        );
-    }
-
-    @Override
-    public void settings(VBox father, CanvaComponentV2 canva) {
-
-        father.getChildren().setAll(
-                Components.LayoutXYComponent(this),
-                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
-    }
-
-    @Override
-    public void otherSettings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
-    }
 
     @Override
     public ImageComponentData getData() {
@@ -145,7 +94,7 @@ public class ImageComponentv2 extends ImageView implements ViewContractv2<ImageC
     }
 
     @Override
-    public Node getCurrentNode() {
+    public Node getNode() {
         return this;
     }
 

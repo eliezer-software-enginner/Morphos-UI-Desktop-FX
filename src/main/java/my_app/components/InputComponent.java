@@ -1,47 +1,25 @@
 package my_app.components;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import my_app.components.shared.ButtonRemoverComponent;
-import my_app.contexts.ComponentsContext;
-import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.data.InputComponentData;
-import my_app.data.ViewContractv2;
-import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
-import toolkit.Component;
+import my_app.data.contracts.ViewComponent;
 
-public class InputComponent extends TextField implements ViewContractv2<InputComponentData> {
-    ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
-    ComponentsContext componentsContext;
-    TranslationContext.Translation translation = TranslationContext.instance().get();
+public final class InputComponent extends TextField implements ViewComponent<InputComponentData> {
     public StringProperty name = new SimpleStringProperty();
 
     boolean isDeleted = false;
 
-    @Component
-    CanvaComponentV2 canvaFather;
-    private final HomeViewModel homeViewModel;
-
-    public InputComponent(String content, HomeViewModel homeViewModel, CanvaComponentV2 canva) {
+    public InputComponent(String content) {
         super(content);
-        this.homeViewModel = homeViewModel;
         config();
-
-        this.canvaFather = canva;
     }
 
-    public InputComponent(HomeViewModel homeViewModel, CanvaComponentV2 canva) {
-        this.homeViewModel = homeViewModel;
+    public InputComponent() {
         config();
-
-        this.canvaFather = canva;
     }
 
     void config() {
@@ -55,7 +33,6 @@ public class InputComponent extends TextField implements ViewContractv2<InputCom
                 ));
 
         setId(String.valueOf(System.currentTimeMillis()));
-        currentState.set(this);
     }
 
     @Override
@@ -76,7 +53,7 @@ public class InputComponent extends TextField implements ViewContractv2<InputCom
     }
 
     @Override
-    public Node getCurrentNode() {
+    public Node getNode() {
         return this;
     }
 
@@ -88,36 +65,6 @@ public class InputComponent extends TextField implements ViewContractv2<InputCom
     @Override
     public void delete() {
         isDeleted = true;
-    }
-
-    @Override
-    public void appearance(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
-                Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
-                Components.LabelWithInput(translation.textContent(), this, "text-content"),
-                Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
-                Components.LabelWithTextContent(translation.placeholder(), getPromptText(), this::setPromptText),
-                Components.ColorPickerRow(translation.placeholderColor(), this, "-fx-prompt-text-fill"),
-                Components.ColorPickerRow(translation.focusColor(), this, "-fx-focus-color"),
-                Components.ColorPickerRow(translation.noFocusColor(), this, "-fx-text-box-border"),
-                //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
-                Components.spacerVertical(20),
-                new ButtonRemoverComponent(this, this.homeViewModel));
-    }
-
-    @Override
-    public void settings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LayoutXYComponent(this),
-                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva)
-        );
-    }
-
-    @Override
-    public void otherSettings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
     }
 
     @Override

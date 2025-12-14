@@ -54,14 +54,14 @@ public class App extends Application {
         exclusions.add("my_app.hotreload.CoesionApp");
         exclusions.add("my_app.hotreload.Reloader");
 
-        this.hotReload = new HotReload(
-                "src/main/java/my_app",
-                "target/classes",
-                "src/main/resources",
-                "my_app.hotreload.UIReloaderImpl",
-                primaryStage,
-                exclusions
-        );
+//        this.hotReload = new HotReload(
+//                "src/main/java/my_app",
+//                "target/classes",
+//                "src/main/resources",
+//                "my_app.hotreload.UIReloaderImpl",
+//                primaryStage,
+//                exclusions
+//        );
 
         // getStylesheets().add(getClass().getResource("/global_styles.css").toExternalForm());
         stage.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
@@ -79,7 +79,7 @@ public class App extends Application {
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/assets/app_ico_window_32_32.png"))));
 
         primaryStage.show();
-        this.hotReload.start();
+        //this.hotReload.start();
     }
 
     // 🛑 NOVO MÉTODO ESTÁTICO: Centraliza a lógica de UI
@@ -91,7 +91,8 @@ public class App extends Application {
 
         // A linha chave: A Scene é recriada.
         // Se este método for chamado pelo HotReloadCL, o AppScenes será o novo.
-        stage.setScene(AppScenes.HomeScene(stage));
+        // stage.setScene(AppScenes.HomeScene(stage));
+        stage.setScene(AppScenes.SplashScene(stage));
         System.out.println("[App] Scene re-initialized.");
     }
 

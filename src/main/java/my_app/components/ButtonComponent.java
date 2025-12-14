@@ -1,50 +1,32 @@
-package my_app.components.buttonComponent;
+package my_app.components;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import my_app.components.Components;
-import my_app.components.shared.ButtonRemoverComponent;
-import my_app.contexts.TranslationContext;
 import my_app.data.ButtonComponentData;
 import my_app.data.Commons;
 import my_app.data.IconData;
-import my_app.data.ViewContractv2;
-import my_app.screens.Home.HomeViewModel;
-import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
+import my_app.data.contracts.ViewComponent;
 import org.kordamp.ikonli.Ikon;
 import org.kordamp.ikonli.javafx.FontIcon;
-import toolkit.Component;
 
-public class ButtonComponent extends Button implements ViewContractv2<ButtonComponentData> {
+final public class ButtonComponent extends Button implements ViewComponent<ButtonComponentData> {
 
-    ObjectProperty<Node> currentState = new SimpleObjectProperty<>();
-    TranslationContext.Translation translation = TranslationContext.instance().get();
     public StringProperty name = new SimpleStringProperty();
     public String nameOfOnClickMethod;
     boolean isDeleted = false;
 
-    @Component
-    CanvaComponentV2 currentCanva;
-    private final HomeViewModel viewModel;
-
-    public ButtonComponent(HomeViewModel viewModel, CanvaComponentV2 currentCanva) {
+    public ButtonComponent() {
         super();
-        this.viewModel = viewModel;
-        this.currentCanva = currentCanva;
         config();
     }
 
-    public ButtonComponent(String content, HomeViewModel viewModel) {
+    public ButtonComponent(String content) {
         super(content);
-        this.viewModel = viewModel;
         config();
     }
 
@@ -66,7 +48,6 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
                                 Commons.ButtonRadiusWidth
                         ));
 
-        currentState.set(this);
     }
 
     @Override
@@ -123,7 +104,7 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
     }
 
     @Override
-    public Node getCurrentNode() {
+    public Node getNode() {
         return this;
     }
 
@@ -137,40 +118,6 @@ public class ButtonComponent extends Button implements ViewContractv2<ButtonComp
         isDeleted = true;
     }
 
-    @Override
-    public void appearance(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.ColorPickerRow(translation.backgroundColor(), this, "-fx-background-color"),
-                Components.LabelWithInput(translation.padding(), this, "-fx-padding"),
-                new ButtonBorderRadius(currentState),
-                //new ButtonBorderWidth(currentState),
-                Components.LabelWithInput(translation.borderWidth(), this, "-fx-border-width"),
-                Components.ColorPickerRow(translation.borderColor(), this, "-fx-border-color"),
-                Components.LabelWithInput(translation.fontWeight(), this, "-fx-font-weight"),
-                Components.ColorPickerRow(translation.fontColor(), this, "-fx-text-fill"),
-                Components.LabelWithInput(translation.textContent(), this, "text-content"),
-                Components.LabelWithInput(translation.fontSize(), this, "-fx-font-size"),
-                Components.ButtonChooseGraphicContent(this),
-                Components.LabelWithComboBox(translation.iconPosition(), this, "positioning-icon"),
-                Components.ColorPickerRow(translation.iconColor(), this, "icon-color"),
-                Components.LabelWithInput("onClick", this, "on-click"),
-                //Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
-                Components.spacerVertical(10),
-                new ButtonRemoverComponent(this, this.viewModel));
-    }
-
-    @Override
-    public void settings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LayoutXYComponent(this),
-                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), this, canva));
-    }
-
-    @Override
-    public void otherSettings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                Components.LabelWithTextContent("Variable name", name.get(), v -> name.set(v)));
-    }
 
     @Override
     public ButtonComponentData getData() {

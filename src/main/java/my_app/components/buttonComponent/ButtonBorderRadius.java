@@ -1,13 +1,9 @@
 package my_app.components.buttonComponent;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import my_app.components.ButtonComponent;
 import my_app.contexts.TranslationContext;
 import my_app.data.Commons;
 import my_app.themes.Typography;
@@ -21,10 +17,8 @@ public class ButtonBorderRadius extends HBox {
     @Component
     TextField tf = new TextField();
 
-    public ButtonBorderRadius(ObjectProperty<Node> selectedNode) {
+    public ButtonBorderRadius(ButtonComponent node) {
         setSpacing(10);
-
-        Button node = (Button) selectedNode.get();
 
         String currentBorderRadius = Commons.getValueOfSpecificField(node.getStyle(), "-fx-border-radius");
 

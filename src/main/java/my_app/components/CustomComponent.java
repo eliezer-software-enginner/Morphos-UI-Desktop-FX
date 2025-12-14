@@ -6,28 +6,23 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import my_app.components.buttonComponent.ButtonComponent;
-import my_app.components.imageComponent.ImageComponentv2;
+import my_app.components.imageComponent.ImageComponent;
 import my_app.components.shared.ButtonRemoverComponent;
-import my_app.contexts.ComponentsContext;
-import my_app.contexts.TranslationContext;
 import my_app.data.*;
+import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import toolkit.Component;
 
 import java.util.ArrayList;
 
-public class CustomComponent extends Pane implements ViewContractv2<CustomComponentData> {
-    @Component
-    public CanvaComponentV2 canva;
+public final class CustomComponent extends Pane implements ViewComponent<CustomComponentData> {
 
     boolean isDeleted = false;
     private final HomeViewModel viewModel;
 
-    public CustomComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
+    public CustomComponent(HomeViewModel viewModel) {
         this.viewModel = viewModel;
-        this.canva = canva;
 
         this.setId(System.currentTimeMillis() + "");
     }
@@ -81,7 +76,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
                 btnComponentsData.add(component.getData());
             }
 
-            if (node instanceof ImageComponentv2 component) {
+            if (node instanceof ImageComponent component) {
                 imgComponentsData.add(component.getData());
             }
 
@@ -138,7 +133,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
         }
 
         for (ButtonComponentData data_ : data.button_components) {
-            var node = new ButtonComponent(data_.text(), viewModel);
+            var node = new ButtonComponent(data_.text());
             //node.setMouseTransparent(true);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> viewModel.selectNodePartially(node));
@@ -147,7 +142,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
         }
 
         for (TextComponentData data_ : data.text_components) {
-            var node = new TextComponent(data_.text(), viewModel, canva);
+            var node = new TextComponent(data_.text());
             node.applyData(data_);
             node.setOnMouseClicked((e) -> {
                 // ESSENCIAL: Consome o evento para evitar que o pai (CustomComponent) o veja.
@@ -159,7 +154,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
         }
 //
         for (ImageComponentData data_ : data.image_components) {
-            var node = new ImageComponentv2(data_.url(), viewModel);
+            var node = new ImageComponent(data_.url(), viewModel);
             node.applyData(data_);
             node.setOnMouseClicked((e) -> viewModel.selectNodePartially(node));
             node.setOnMouseDragged(getDragged());
@@ -189,7 +184,7 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
     }
 
     @Override
-    public Node getCurrentNode() {
+    public Node getNode() {
         return this;
     }
 
@@ -203,21 +198,5 @@ public class CustomComponent extends Pane implements ViewContractv2<CustomCompon
         isDeleted = true;
     }
 
-    @Override
-    public void appearance(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(
-                //  Components.ButtonPrimary(translation.duplicate(), () -> componentsContext.duplicateComponentInCanva(this, canva)),
-                new ButtonRemoverComponent(this, this.viewModel));
-    }
-
-    @Override
-    public void settings(VBox father, CanvaComponentV2 canva) {
-        father.getChildren().setAll(Components.LayoutXYComponent(this));
-    }
-
-    @Override
-    public void otherSettings(VBox father, CanvaComponentV2 canva) {
-
-    }
 
 }

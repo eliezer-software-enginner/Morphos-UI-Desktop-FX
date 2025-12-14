@@ -4,14 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="adicionada minha implementação de hotreload">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="remocao de clicks e de drag em modo de preview e correção em definir altura e largura no canva">
+      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/ButtonInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/CanvaInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/ColumnInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/CustomComponentInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/ImageInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/InputInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/InspectorRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/MenuInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/components/inspectors/TextInspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContract.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/data/contracts/Inspector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/my_app/data/contracts/ViewComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/Components.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/hotreload/UIReloaderImpl1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/UIReloaderImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/InputComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ItemRowComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/MenuComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/MenuComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/NodeWrapperv2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/TextComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/VisibilityRowComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderRadius.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonBorderRadius.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/buttonComponent/ButtonComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ButtonComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/FitComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/FitComponentv2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageBackgroundComponentv2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/ImageComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/PreserveRatioComponentv2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/imageComponent/PreserveRatioComponentv2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildHandlerComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildIdSelectorComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/ChildIdSelectorComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/HeightComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/shared/WidthComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/data/ViewContractv2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/mappers/CanvaMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/CustomComponentScreen/CustomComponentScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/RightSidev3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenPreviewUI/ScreenPreviewUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenPreviewUI/ScreenPreviewUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/Option.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ShowCodeScreen/ShowCodeController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +63,9 @@
       <list>
         <option value="Record" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="module-info" />
       </list>
     </option>
   </component>
@@ -36,7 +75,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="screens-big-refactor" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,9 +120,9 @@
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "refactor-using-inspector",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/hotreload",
+    "last_opened_file_path": "/home/eliezer/Documents/my-projects/Morphos-UI-Desktop-FX/src/main/java/my_app/view",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -92,11 +131,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/my_app/view" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/hotreload" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens" />
       <recent name="$PROJECT_DIR$/src/main/java/layouts_generated_preview/app_negocio_facil" />
       <recent name="$PROJECT_DIR$/src/main/java/my_app/screens/PrimitiveListFormScreen" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -105,11 +144,11 @@
       <recent name="my_app.screens.ScreenCreateProject" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="my_app.screens.CustomComponentScreen" />
+      <recent name="my_app.view" />
+      <recent name="my_app.components.inspectors" />
       <recent name="my_app.screens.Home.components" />
+      <recent name="my_app.screens.CustomComponentScreen" />
       <recent name="my_app.components" />
-      <recent name="my_app.data" />
-      <recent name="my_app.components.imageComponent" />
     </key>
   </component>
   <component name="RunManager" selected="Application.App[Linux]">
@@ -261,14 +300,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00049" summary="refatorações e salvando tela no arquivo de projeto">
-      <option name="closed" value="true" />
-      <created>1764958503975</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1764958503975</updated>
     </task>
     <task id="LOCAL-00050" summary="refatorações e mudando nome da screen">
       <option name="closed" value="true" />
@@ -654,7 +685,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765546146484</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="remocao de clicks e de drag em modo de preview e correção em definir altura e largura no canva">
+      <option name="closed" value="true" />
+      <created>1765550966167</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1765550966167</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -669,7 +708,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="saindo do projeto atual" />
     <MESSAGE value="escolhendo projeto para carregar" />
     <MESSAGE value="refatoração home - homeviewmodel (mvvm)" />
     <MESSAGE value="alterada cor default do canva" />
@@ -694,7 +732,8 @@
     <MESSAGE value="copiando códigos" />
     <MESSAGE value="exibindo preview" />
     <MESSAGE value="adicionada minha implementação de hotreload" />
-    <option name="LAST_COMMIT_MESSAGE" value="adicionada minha implementação de hotreload" />
+    <MESSAGE value="remocao de clicks e de drag em modo de preview e correção em definir altura e largura no canva" />
+    <option name="LAST_COMMIT_MESSAGE" value="remocao de clicks e de drag em modo de preview e correção em definir altura e largura no canva" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -736,7 +775,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ColumnComponent.java</url>
-          <line>165</line>
+          <line>161</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -791,7 +830,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
-          <line>96</line>
+          <line>91</line>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -801,7 +840,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>354</line>
+          <line>352</line>
           <properties>
             <option name="lambda-ordinal" value="-1" />
           </properties>
@@ -809,28 +848,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/CustomComponent.java</url>
-          <line>121</line>
+          <line>116</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>375</line>
+          <line>373</line>
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>389</line>
+          <line>387</line>
           <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/Components.java</url>
-          <line>200</line>
+          <line>199</line>
           <option name="timeStamp" value="100" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/scenes/AppScenes.java</url>
           <line>182</line>
           <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/FileManager.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="105" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

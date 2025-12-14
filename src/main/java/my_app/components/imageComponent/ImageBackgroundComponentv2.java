@@ -32,11 +32,11 @@ public class ImageBackgroundComponentv2 extends HBox {
     @Component
     VBox column = new VBox(tf, btnChooseImg);
 
-    public ImageBackgroundComponentv2(ImageComponentv2 node) {
+    public ImageBackgroundComponentv2(ImageComponent node) {
 
         config();
 
-        var stage = node.stage;
+        //var stage = node.stage;
 
         tf.textProperty().addListener((_, _, newVal) -> {
 
@@ -50,7 +50,7 @@ public class ImageBackgroundComponentv2 extends HBox {
                 node.errorContainer.getChildren().clear();
 
                 // Escuta se deu erro após o carregamento em background
-                image.errorProperty().addListener((obs, wasError, isError) -> {
+                image.errorProperty().addListener((_, _, isError) -> {
                     if (isError) {
                         var message = "Erro ao carregar imagem: " + image.getException().getMessage();
                         System.err.println(message);
@@ -81,12 +81,12 @@ public class ImageBackgroundComponentv2 extends HBox {
 
         });
 
-        btnChooseImg.setOnAction(_ -> searchImageLocally(node, stage));
+        //btnChooseImg.setOnAction(_ -> searchImageLocally(node, stage));
 
         getChildren().addAll(title, column);
     }
 
-    void searchImageLocally(ImageComponentv2 node, Stage stage) {
+    void searchImageLocally(ImageComponent node, Stage stage) {
         var fileChooser = new FileChooser();
         fileChooser.setTitle("Open as");
         fileChooser.getExtensionFilters().add(

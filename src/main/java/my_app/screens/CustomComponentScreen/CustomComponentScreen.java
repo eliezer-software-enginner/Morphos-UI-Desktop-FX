@@ -38,7 +38,7 @@ public class CustomComponentScreen extends BorderPane {
             //só preciso criar o objeto customcomponent e adicionar ao datamap da viewmodel principal
 
             final var contentCanva = home.getCanva();
-            CustomComponent newCustomComponent = new CustomComponent(homeViewModel, contentCanva);
+            CustomComponent newCustomComponent = new CustomComponent(homeViewModel);
             newCustomComponent.setStyle(contentCanva.getStyle());
             newCustomComponent.setPrefHeight(contentCanva.getPrefHeight());
             newCustomComponent.setPrefWidth(contentCanva.getPrefWidth());
