@@ -9,11 +9,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import my_app.App;
 import my_app.FileManager;
-import my_app.components.*;
-import my_app.components.MenuComponent;
-import my_app.components.TextComponent;
-import my_app.components.imageComponent.ImageComponent;
-import my_app.contexts.ComponentsContext;
+import my_app.components.ComponentsFactory;
 import my_app.contexts.TranslationContext;
 import my_app.data.ComponentData;
 import my_app.data.StateJson_v3;
@@ -352,29 +348,8 @@ public class HomeViewModel {
         final var currentCanva = activeCanva.get(); // Pega da propriedade!
         if (currentCanva == null || type == null || type.isBlank()) return;
 
-        ViewComponent<?> node = component;
-        var content = "Im new here";
+        var node = ComponentsFactory.createNew(type, this, currentCanva);
         var typeNormalized = type.trim().toLowerCase();
-
-        //se node é nulo, signigica que é para criar um componente gererico
-        if (node == null) {
-            // Factory simples (pode ser extraída depois)
-            if (type.equalsIgnoreCase(englishBase.button())) {
-                node = new ButtonComponent(content);
-            } else if (type.equalsIgnoreCase(englishBase.input())) {
-                node = new InputComponent(content);
-            } else if (type.equalsIgnoreCase(englishBase.text())) {
-                node = new TextComponent(content);
-            } else if (type.equalsIgnoreCase(englishBase.image())) {
-                node = new ImageComponent(
-                        ComponentsContext.class.getResource("/assets/images/mago.jpg").toExternalForm(), this);
-            } else if (type.equalsIgnoreCase(englishBase.columnItems())) {
-                node = new ColumnComponent(this, currentCanva);
-            } else if (type.equalsIgnoreCase(englishBase.menuComponent())) {
-                node = new MenuComponent(this);
-            }
-        }
-
 
         if (node != null) {
             addItemOnDataMap(typeNormalized, node);
@@ -383,11 +358,12 @@ public class HomeViewModel {
             highlightComponent(node);
 
             // Adiciona visualmente ao Canva atual
-            currentCanva.addElementDragable(node.getNode(), true);
+            currentCanva.addElementDragable(node, true);
 
             refreshSubItems();
         }
     }
+
 
     private void highlightComponent(ViewComponent<?> component) {
         var typeNormalized = component.getData().type().trim().toLowerCase();

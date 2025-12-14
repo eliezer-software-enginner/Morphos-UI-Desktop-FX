@@ -8,9 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import my_app.FileManager;
-import my_app.components.imageComponent.ImageComponent;
-import my_app.contexts.TranslationContext;
-import my_app.data.*;
+import my_app.data.ColumnComponentData;
+import my_app.data.Commons;
+import my_app.data.ComponentData;
 import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
@@ -25,7 +25,6 @@ public final class ColumnComponent extends VBox implements ViewComponent<ColumnC
 
     public SimpleIntegerProperty childrenAmountState = new SimpleIntegerProperty(2);
     public StringProperty name = new SimpleStringProperty();
-    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     private final HomeViewModel viewModel;
     private final CanvaComponentV2 canva;
@@ -34,8 +33,7 @@ public final class ColumnComponent extends VBox implements ViewComponent<ColumnC
 
     public String dataTableVariableName;
 
-    private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
-    private List<String> valuesOfVariableName = new ArrayList<>();
+    private final List<String> valuesOfVariableName = new ArrayList<>();
 
     public ColumnComponent(HomeViewModel viewModel, CanvaComponentV2 canva) {
         setSpacing(5);
@@ -149,45 +147,13 @@ public final class ColumnComponent extends VBox implements ViewComponent<ColumnC
     }
 
     private ViewComponent<? extends ComponentData> cloneExistingNode(ViewComponent<?> existingNode, int currentIndex) {
-        // Lógica de clonagem mantida, pois é necessária para criar as cópias.
-        var originalData = existingNode.getData();
-        var type = originalData.type();
-
-        if (type.equalsIgnoreCase(englishBase.button())) {
-            var newNodeWrapper = new ButtonComponent();
-            newNodeWrapper.applyData((ButtonComponentData) originalData);
-
-            if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
-                final var currentText = newNodeWrapper.getText();
-                newNodeWrapper.setText(currentText.replace("${boom}", valuesOfVariableName.get(currentIndex)));
-            }
-
-            return newNodeWrapper;
-        } else if (type.equalsIgnoreCase(englishBase.image())) {
-            var newNodeWrapper = new ImageComponent();
-            newNodeWrapper.applyData((ImageComponentData) originalData);
-            return newNodeWrapper;
-        } else if (type.equalsIgnoreCase(englishBase.input())) {
-            var newNodeWrapper = new InputComponent();
-            newNodeWrapper.applyData((InputComponentData) originalData);
-            if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
-                final var currentText = newNodeWrapper.getText();
-                newNodeWrapper.setText(currentText.replace("${boom}", valuesOfVariableName.get(currentIndex)));
-            }
-            return newNodeWrapper;
-        } else if (type.equalsIgnoreCase(englishBase.text())) {
-            var newNodeWrapper = new TextComponent();
-            newNodeWrapper.applyData((TextComponentData) originalData);
-            if (currentIndex != -1 && !valuesOfVariableName.isEmpty()) {
-                final var currentText = newNodeWrapper.getText();
-                newNodeWrapper.setText(currentText.replace("${boom}", valuesOfVariableName.get(currentIndex)));
-            }
-            return newNodeWrapper;
-        } else {
-            var newNodeWrapper = new CustomComponent(this.viewModel);
-            newNodeWrapper.applyData((CustomComponentData) originalData);
-            return newNodeWrapper;
-        }
+        return ComponentsFactory.cloneFrom(
+                existingNode,
+                viewModel,
+                canva,
+                currentIndex,
+                valuesOfVariableName.get(currentIndex)
+        );
     }
 
     // MÉTODO AJUSTADO: Agora depende SOMENTE da ViewModel

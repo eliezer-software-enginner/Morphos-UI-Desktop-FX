@@ -146,7 +146,7 @@ public class Option extends VBox {
                 //CanvaComponentV2.Shake(target);
             } else {
                 // if not, just add in canva
-                this.currentCanva.addElementDragable(op.get().getNode(), false);
+                this.currentCanva.addElementDragable(op.get(), false);
             }
         });
 

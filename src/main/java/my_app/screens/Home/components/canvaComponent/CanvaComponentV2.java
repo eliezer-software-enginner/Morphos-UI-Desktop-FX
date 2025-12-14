@@ -130,35 +130,35 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
             // ... (Loop de componentes mantido) ...
             // (Seus loops de componentes aqui)
             for (TextComponentData it : data.text_components) {
-                var comp = new TextComponent(it.text());
+                var comp = (TextComponent) ComponentsFactory.fromData(it, viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("text", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ButtonComponentData it : data.button_components) {
-                var comp = new ButtonComponent();
+                var comp = (ButtonComponent) ComponentsFactory.fromData(it, viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("button", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ImageComponentData it : data.image_components) {
-                var comp = new ImageComponent();
+                var comp = (ImageComponent) ComponentsFactory.fromData(it, viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("image", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (InputComponentData it : data.input_components) {
-                var comp = new InputComponent();
+                var comp = (InputComponent) ComponentsFactory.fromData(it, viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("input", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (CustomComponentData it : data.custom_components) {
-                var comp = new CustomComponent(this.viewModel);
+                var comp = (CustomComponent) ComponentsFactory.fromData(it, viewModel, this);
                 comp.applyData(it);
                 viewModel.addItemOnDataMap("custom component", comp);
                 if (it.in_canva) {
@@ -178,7 +178,8 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
     }
 
 
-    public void addElementDragable(Node node, boolean putInCenter) {
+    public void addElementDragable(ViewComponent<?> component, boolean putInCenter) {
+        final var node = component.getNode();
         //evitar adição de no duplicado
         for (Node child : getChildren()) {
             // Se o filho for o TilePane de fundo, ignore-o e continue a checagem.
