@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="fazendo uso de module-info.java para lidar com sealed interface com permits">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/App__Linux__Module.xml" afterDir="false" />
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="adicionado readme explicando o funcionamento">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/contexts/DataStore.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/hotreload/HotReload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/hotreload/HotReload.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/LeftSide.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/my_app/screens/ScreenCreateProject/ScreenCreateProjectViewModelTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,22 +263,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00051" summary="salvando tabledata de lista simples">
-      <option name="closed" value="true" />
-      <created>1764967223994</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1764967223994</updated>
-    </task>
-    <task id="LOCAL-00052" summary="salvando tabledata de lista e exibindo na ui">
-      <option name="closed" value="true" />
-      <created>1764980353803</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1764980353804</updated>
     </task>
     <task id="LOCAL-00053" summary="validações em salvar registros em TableData list">
       <option name="closed" value="true" />
@@ -661,7 +640,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765728170336</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="correção no hotreload para funcionar com module-info">
+      <option name="closed" value="true" />
+      <created>1765730769134</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1765730769134</updated>
+    </task>
+    <task id="LOCAL-00101" summary="adicionado readme explicando o funcionamento">
+      <option name="closed" value="true" />
+      <created>1765731209612</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1765731209612</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -676,8 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refatoração home - homeviewmodel (mvvm)" />
-    <MESSAGE value="alterada cor default do canva" />
     <MESSAGE value="remoção de cache local" />
     <MESSAGE value="correção em editar o text-content" />
     <MESSAGE value="evitando adição de componentes duplicados no datamap e no canva" />
@@ -701,7 +694,9 @@
     <MESSAGE value="adicionada minha implementação de hotreload" />
     <MESSAGE value="remocao de clicks e de drag em modo de preview e correção em definir altura e largura no canva" />
     <MESSAGE value="fazendo uso de module-info.java para lidar com sealed interface com permits" />
-    <option name="LAST_COMMIT_MESSAGE" value="fazendo uso de module-info.java para lidar com sealed interface com permits" />
+    <MESSAGE value="correção no hotreload para funcionar com module-info" />
+    <MESSAGE value="adicionado readme explicando o funcionamento" />
+    <option name="LAST_COMMIT_MESSAGE" value="adicionado readme explicando o funcionamento" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

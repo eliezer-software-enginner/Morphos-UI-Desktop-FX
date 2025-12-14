@@ -1,8 +1,5 @@
 package my_app.screens.Home.components.leftside;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +15,9 @@ import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.themes.Typography;
 import toolkit.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeftSide extends VBox {
     private final TranslationContext.Translation translation = TranslationContext.instance().get();
@@ -62,7 +62,7 @@ public class LeftSide extends VBox {
         config();
         styles();
 
-        // getChildren().addAll(logo, title);
+        getChildren().addAll(logo, title);
 
         var spacer = new Region();
         spacer.setMaxHeight(10);

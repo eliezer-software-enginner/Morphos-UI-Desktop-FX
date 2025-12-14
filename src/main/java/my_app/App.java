@@ -1,10 +1,5 @@
 package my_app;
 
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Set;
-
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -13,6 +8,11 @@ import my_app.data.Commons;
 import my_app.hotreload.CoesionApp;
 import my_app.hotreload.HotReload;
 import my_app.scenes.AppScenes;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
 
 @CoesionApp(stylesheets = {})
 public class App extends Application {
@@ -92,8 +92,8 @@ public class App extends Application {
 
         // A linha chave: A Scene é recriada.
         // Se este método for chamado pelo HotReloadCL, o AppScenes será o novo.
-        // stage.setScene(AppScenes.HomeScene(stage));
-        stage.setScene(AppScenes.SplashScene(stage));
+        stage.setScene(AppScenes.HomeScene(stage));
+        //stage.setScene(AppScenes.SplashScene(stage));
         System.out.println("[App] Scene re-initialized.");
     }
 
