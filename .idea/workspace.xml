@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="adicionado readme explicando o funcionamento">
+    <list default="true" id="4a9556c4-6925-46c8-95d4-3b820d8f0fe9" name="Changes" comment="correção de alguns bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/my_app/components/ComponentsFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/components/ComponentsFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/canvaComponent/CanvaComponentV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +61,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.App [Linux] Module.executor": "Run",
+    "Application.App [Linux] Module.executor": "Debug",
     "Application.AppNavTest.executor": "Run",
     "Application.App[Linux].executor": "Run",
     "Application.App_base.executor": "Run",
@@ -265,14 +262,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762636393870</updated>
-    </task>
-    <task id="LOCAL-00053" summary="validações em salvar registros em TableData list">
-      <option name="closed" value="true" />
-      <created>1764981970886</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1764981970886</updated>
     </task>
     <task id="LOCAL-00054" summary="traduções no canva component e adicionado passando titulo para o botão">
       <option name="closed" value="true" />
@@ -658,7 +647,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765731209612</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="correção de alguns bugs">
+      <option name="closed" value="true" />
+      <created>1765910671729</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1765910671730</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -673,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="remoção de cache local" />
     <MESSAGE value="correção em editar o text-content" />
     <MESSAGE value="evitando adição de componentes duplicados no datamap e no canva" />
     <MESSAGE value="selecionando icones para o botão na nova estrutura" />
@@ -698,7 +694,8 @@
     <MESSAGE value="fazendo uso de module-info.java para lidar com sealed interface com permits" />
     <MESSAGE value="correção no hotreload para funcionar com module-info" />
     <MESSAGE value="adicionado readme explicando o funcionamento" />
-    <option name="LAST_COMMIT_MESSAGE" value="adicionado readme explicando o funcionamento" />
+    <MESSAGE value="correção de alguns bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="correção de alguns bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -750,7 +747,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java</url>
-          <line>62</line>
+          <line>60</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -784,11 +781,6 @@
           <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/my_app/FileManager.java</url>
-          <line>124</line>
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/components/ComponentsFactory.java</url>
           <line>68</line>
           <option name="timeStamp" value="108" />
@@ -800,8 +792,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
-          <line>322</line>
-          <option name="timeStamp" value="110" />
+          <line>364</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/components/leftside/OptionHeader.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/my_app/screens/Home/HomeViewModel.java</url>
+          <line>354</line>
+          <option name="timeStamp" value="114" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

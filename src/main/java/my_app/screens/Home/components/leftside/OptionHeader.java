@@ -24,7 +24,6 @@ import toolkit.theme.MaterialTheme;
 
 public class OptionHeader extends HBox {
 
-    private final HomeViewModel viewModel;
     @Component
     Label label;
 
@@ -44,7 +43,6 @@ public class OptionHeader extends HBox {
             CanvaComponentV2 currentCanva, BooleanProperty expanded,
             HomeViewModel viewModel) {
 
-        this.viewModel = viewModel;
         // Armazena a referência inicial
         this.currentCanva = currentCanva;
 

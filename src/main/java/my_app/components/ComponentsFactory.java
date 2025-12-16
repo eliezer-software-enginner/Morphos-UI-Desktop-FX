@@ -26,19 +26,19 @@ public class ComponentsFactory {
 
         var normalized = type.trim().toLowerCase();
 
-        if (normalized.equals(EN.button())) {
+        if (normalized.equalsIgnoreCase(EN.button())) {
             return new ButtonComponent("Im new here");
         }
 
-        if (normalized.equals(EN.input())) {
+        if (normalized.equalsIgnoreCase(EN.input())) {
             return new InputComponent("Im new here");
         }
 
-        if (normalized.equals(EN.text())) {
+        if (normalized.equalsIgnoreCase(EN.text())) {
             return new TextComponent("Im new here");
         }
 
-        if (normalized.equals(EN.image())) {
+        if (normalized.equalsIgnoreCase(EN.image())) {
             return new ImageComponent(
                     ComponentsContext.class
                             .getResource("/assets/images/mago.jpg")
@@ -47,11 +47,11 @@ public class ComponentsFactory {
             );
         }
 
-        if (normalized.equals(EN.columnItems())) {
+        if (normalized.equalsIgnoreCase(EN.columnItems())) {
             return new ColumnComponent(viewModel, canva);
         }
 
-        if (normalized.equals(EN.menuComponent())) {
+        if (normalized.equalsIgnoreCase(EN.menuComponent())) {
             return new MenuComponent(viewModel);
         }
 
