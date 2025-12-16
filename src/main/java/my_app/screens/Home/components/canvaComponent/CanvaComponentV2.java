@@ -131,35 +131,30 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
             // (Seus loops de componentes aqui)
             for (TextComponentData it : data.text_components) {
                 var comp = (TextComponent) ComponentsFactory.fromData(it, viewModel, this);
-                comp.applyData(it);
                 viewModel.addItemOnDataMap("text", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ButtonComponentData it : data.button_components) {
                 var comp = (ButtonComponent) ComponentsFactory.fromData(it, viewModel, this);
-                comp.applyData(it);
                 viewModel.addItemOnDataMap("button", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ImageComponentData it : data.image_components) {
                 var comp = (ImageComponent) ComponentsFactory.fromData(it, viewModel, this);
-                comp.applyData(it);
                 viewModel.addItemOnDataMap("image", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (InputComponentData it : data.input_components) {
                 var comp = (InputComponent) ComponentsFactory.fromData(it, viewModel, this);
-                comp.applyData(it);
                 viewModel.addItemOnDataMap("input", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (CustomComponentData it : data.custom_components) {
                 var comp = (CustomComponent) ComponentsFactory.fromData(it, viewModel, this);
-                comp.applyData(it);
                 viewModel.addItemOnDataMap("custom component", comp);
                 if (it.in_canva) {
                     this.addElementDragable(comp, false);
@@ -168,7 +163,6 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
 
             for (MenuComponentData it : data.menu_components) {
                 var comp = new MenuComponent(this.viewModel);
-                comp.applyData(it);
                 viewModel.addItemOnDataMap("menu component", comp);
                 this.addElementDragable(comp, false);
             }

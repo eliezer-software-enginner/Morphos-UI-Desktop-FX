@@ -7,7 +7,6 @@ import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import my_app.App;
 import my_app.FileManager;
 import my_app.components.ComponentsFactory;
 import my_app.contexts.TranslationContext;
@@ -128,7 +127,12 @@ public class HomeViewModel {
         // ----------------------------------------------
 
         // Lógica original para projetos normais (salva e carrega)
-        FileManager.addScreenToProjectAndSave(updatedScreen);
+        try {
+            //pode ser que não dê para carregar o projeto para salvar
+            FileManager.addScreenToProjectAndSave(updatedScreen);
+        } catch (RuntimeException e) {
+            errorMessageProperty.set(e.getMessage());
+        }
 
         // Atualiza estado
         screenTabs.add(updatedScreen);
@@ -265,7 +269,7 @@ public class HomeViewModel {
 
     public void exitProject() {
         FileManager.updateCurrentProjectFIleInPrefs(null);
-        AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(App.stage));
+        AppScenes.SwapScene(this.stage, AppScenes.CreateProjectScene(this.stage));
     }
 
     public void handleBecomeContributor() {

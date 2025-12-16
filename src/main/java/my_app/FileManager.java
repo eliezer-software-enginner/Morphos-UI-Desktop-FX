@@ -57,6 +57,9 @@ public class FileManager {
 
         try {
             final var projectData = getProjectData();
+            if (projectData == null) {
+                throw new RuntimeException("project not found");
+            }
             var screens = projectData.screens();
 
             // Adiciona a nova tela no final da lista
@@ -120,6 +123,8 @@ public class FileManager {
         try {
             final var prefsData = getPrefsData();
             final var projectAbsolutePath = prefsData.last_project_saved_path();
+
+            if (projectAbsolutePath == null) return null;
 
             final var om = new ObjectMapper();
             return om.readValue(new File(projectAbsolutePath), Projectv2.class);

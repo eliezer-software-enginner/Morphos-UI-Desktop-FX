@@ -92,8 +92,8 @@ public class App extends Application {
 
         // A linha chave: A Scene é recriada.
         // Se este método for chamado pelo HotReloadCL, o AppScenes será o novo.
-        stage.setScene(AppScenes.HomeScene(stage));
-        //stage.setScene(AppScenes.SplashScene(stage));
+        //stage.setScene(AppScenes.HomeScene(stage));
+        stage.setScene(AppScenes.SplashScene(stage));
         System.out.println("[App] Scene re-initialized.");
     }
 

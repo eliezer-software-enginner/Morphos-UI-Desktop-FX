@@ -8,7 +8,7 @@ import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
-public final class ComponentsFactory {
+public class ComponentsFactory {
 
     private static final TranslationContext.Translation EN =
             TranslationContext.instance().getInEnglishBase();
