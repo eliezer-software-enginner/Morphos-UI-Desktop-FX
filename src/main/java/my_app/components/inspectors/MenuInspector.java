@@ -29,18 +29,21 @@ public class MenuInspector implements Inspector<MenuComponent> {
 
     @Override
     public void appearance(VBox father, CanvaComponentV2 canva) {
+        // Cria o editor e armazena a referência no componente
+        var editor = new MenuDataEditorComponent(component.itemsState, this.viewModel, component);
+        component.setEditorComponent(editor);
+
         father.getChildren().setAll(
                 Typography.subtitle("Menu Items"),
-                new MenuDataEditorComponent(component.itemsState, this.viewModel, component), // Novo editor de lista
-                new ButtonRemoverComponent(component, this.viewModel)
-        );
+                editor,
+                new ButtonRemoverComponent(component, this.viewModel));
     }
-
 
     @Override
     public void settings(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
-                //  Components.LabelWithTextContent(translation.variableName(), component.name.get(), component.name::set)
+        // Components.LabelWithTextContent(translation.variableName(),
+        // component.name.get(), component.name::set)
         );
     }
 
@@ -48,8 +51,7 @@ public class MenuInspector implements Inspector<MenuComponent> {
     public void layout(VBox father, CanvaComponentV2 canva) {
         father.getChildren().setAll(
                 Components.LayoutXYComponent(component),
-                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), component, canva)
-        );
+                Components.ToogleSwithItemRow(translation.centralizeHorizontally(), component, canva));
     }
 
 }

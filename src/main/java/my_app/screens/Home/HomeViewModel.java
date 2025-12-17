@@ -1,6 +1,16 @@
 package my_app.screens.Home;
 
-import javafx.beans.property.*;
+import java.awt.Desktop;
+import java.io.File;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -18,12 +28,6 @@ import my_app.scenes.AppScenes;
 import my_app.scenes.SettingsScene;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 import my_app.windows.AllWindows;
-
-import java.awt.*;
-import java.io.File;
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 
 public class HomeViewModel {
 
@@ -60,7 +64,6 @@ public class HomeViewModel {
     // Propriedades para Toast/Erro (Opcional, se a View tiver um Toast)
     public StringProperty errorMessageProperty = new SimpleStringProperty();
     public StringProperty showToastProperty = new SimpleStringProperty();
-
 
     // --- CONSTRUTOR & INICIALIZAÇÃO ---
 
@@ -100,10 +103,12 @@ public class HomeViewModel {
 
     private void createDefaultScreen(boolean isCustomComponent) {
         var screen = new StateJson_v3();
-        // 1. Gera o canva temporário (necessário para ter o CanvaComponentV2 com defaults)
+        // 1. Gera o canva temporário (necessário para ter o CanvaComponentV2 com
+        // defaults)
         var newCanva = CanvaMapper.fromScreenToCanva(screen, this);
 
-        // 2. Converte de volta para StateJson_v3 para obter o ID e dados defaults corretos
+        // 2. Converte de volta para StateJson_v3 para obter o ID e dados defaults
+        // corretos
         var updatedScreen = CanvaMapper.toStateJson(newCanva, this);
 
         // --- CORREÇÃO: Lógica para Custom Component ---
@@ -128,7 +133,7 @@ public class HomeViewModel {
 
         // Lógica original para projetos normais (salva e carrega)
         try {
-            //pode ser que não dê para carregar o projeto para salvar
+            // pode ser que não dê para carregar o projeto para salvar
             FileManager.addScreenToProjectAndSave(updatedScreen);
         } catch (RuntimeException e) {
             errorMessageProperty.set(e.getMessage());
@@ -228,13 +233,13 @@ public class HomeViewModel {
         }
     }
 
-
     /**
      * Salva o projeto atual.
      */
     public void handleSave() {
         if (activeCanva.get() != null) {
-            // Notifica para remover erros da UI (via propriedade, se houver binding) ou callback
+            // Notifica para remover erros da UI (via propriedade, se houver binding) ou
+            // callback
             // home.leftSide.removeError(); // <-- Removido (View deve observar status)
 
             final var screen = CanvaMapper.toStateJson(activeCanva.get(), this);
@@ -291,7 +296,6 @@ public class HomeViewModel {
         AllWindows.showWindowForDataTable();
     }
 
-
     // --- LÓGICA INTERNA DE CARREGAMENTO ---
 
     private void loadScreenById(String screenId) {
@@ -319,7 +323,8 @@ public class HomeViewModel {
         // Gera o componente visual (Conteúdo)
         final var newCanva = CanvaMapper.fromScreenToCanva(screen, this);
 
-        // Define o Canva Ativo -> A View vai observar isso e atualizar o editor.setContent()
+        // Define o Canva Ativo -> A View vai observar isso e atualizar o
+        // editor.setContent()
         this.activeCanva.set(newCanva);
 
         // Seleciona o Canva por padrão
@@ -350,7 +355,8 @@ public class HomeViewModel {
 
     public void addComponent(String type, ViewComponent<?> component) {
         final var currentCanva = activeCanva.get(); // Pega da propriedade!
-        if (currentCanva == null || type == null || type.isBlank()) return;
+        if (currentCanva == null || type == null || type.isBlank())
+            return;
 
         var node = ComponentsFactory.createNew(type, this, currentCanva);
         var typeNormalized = type.trim().toLowerCase();
@@ -368,7 +374,6 @@ public class HomeViewModel {
         }
     }
 
-
     private void highlightComponent(ViewComponent<?> component) {
         var typeNormalized = component.getData().type().trim().toLowerCase();
         // Seleciona o novo nó
@@ -377,7 +382,8 @@ public class HomeViewModel {
         headerSelected.set(typeNormalized);
     }
 
-    //here for example is when i only want to select the node for editing inside custom component
+    // here for example is when i only want to select the node for editing inside
+    // custom component
     public void selectNodePartially(ViewComponent<?> node) {
         var comp = (ComponentData) node.getData();
         SelectedComponent newSelection = new SelectedComponent(comp.type(), node.getNode());
@@ -387,7 +393,8 @@ public class HomeViewModel {
 
     public void removeNode(String nodeId) {
         final var currentCanva = activeCanva.get();
-        if (currentCanva == null) return;
+        if (currentCanva == null)
+            return;
 
         ObservableList<Node> canvaChildren = currentCanva.getChildren();
         boolean removedFromCanva = canvaChildren.removeIf(node -> nodeId.equals(node.getId()));
@@ -404,24 +411,27 @@ public class HomeViewModel {
         }
     }
 
-    //todo considerar a remoção desse método, pois não está sendo usado em lugar nenhum!
+    // todo considerar a remoção desse método, pois não está sendo usado em lugar
+    // nenhum!
     public void removeComponentFromAllPlaces(ViewComponent<?> componentWrapper, CanvaComponentV2 canvaComponent) {
         // Método auxiliar usado por componentes internos
         canvaComponent.getChildren().remove(componentWrapper.getNode());
         removeComponentFromDataMap(componentWrapper);
-        refreshSubItems();
+
     }
 
     // --- MÉTODOS AUXILIARES DE DADOS ---
 
     /**
-     * Adiciona um item no mapa de dados, verificando se o ID do componente já existe
+     * Adiciona um item no mapa de dados, verificando se o ID do componente já
+     * existe
      * para prevenir duplicação de estado.
      */
     public void addItemOnDataMap(String type, ViewComponent<?> nodeWrapper) {
         String newId = nodeWrapper.getNode().getId();
 
-        // 1. Verifica se o ID já existe em qualquer lista do dataMap (prevenção de duplicação)
+        // 1. Verifica se o ID já existe em qualquer lista do dataMap (prevenção de
+        // duplicação)
         boolean idExists = dataMap.values().stream()
                 .flatMap(List::stream) // Achata todas as listas de componentes em um único Stream
                 .anyMatch(existingNode -> newId.equals(existingNode.getNode().getId()));
@@ -459,6 +469,8 @@ public class HomeViewModel {
             var currentNodeId = componentWrapper.getNode().getId();
             list.stream().filter(it -> it.getNode().getId().equals(currentNodeId))
                     .findFirst().ifPresent(it -> it.delete());
+
+            refreshSubItems();
         }
     }
 
@@ -483,7 +495,8 @@ public class HomeViewModel {
     }
 
     public String getNodeType(Node node) {
-        if (node == null) return null;
+        if (node == null)
+            return null;
         String nodeId = node.getId();
         for (var entry : dataMap.entrySet()) {
             if (entry.getValue().stream().anyMatch(n -> node.getId().equals(n.getNode().getId()))) {
@@ -524,7 +537,8 @@ public class HomeViewModel {
     }
 
     public ViewComponent<?> findNodeById(String id) {
-        if (id == null || id.isEmpty()) return null;
+        if (id == null || id.isEmpty())
+            return null;
         for (var viewList : dataMap.values()) {
             for (final var contract : viewList) {
                 if (id.equals(contract.getData().identification())) {

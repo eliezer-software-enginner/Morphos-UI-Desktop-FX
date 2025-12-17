@@ -162,7 +162,7 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
             }
 
             for (MenuComponentData it : data.menu_components) {
-                var comp = new MenuComponent(this.viewModel);
+                var comp = (MenuComponent) ComponentsFactory.fromData(it, viewModel, this);
                 viewModel.addItemOnDataMap("menu component", comp);
                 this.addElementDragable(comp, false);
             }

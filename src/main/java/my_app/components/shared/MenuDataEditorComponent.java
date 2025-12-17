@@ -1,9 +1,13 @@
 package my_app.components.shared;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,7 +24,11 @@ public class MenuDataEditorComponent extends VBox {
     private final MenuComponent menuComponent;
 
     private final VBox itemsContainer = new VBox(5);
+    private final ScrollPane scrollPane = new ScrollPane();
     private final Button addButton = Components.ButtonPrimary("+ Add Item");
+
+    // Lista para armazenar referências aos campos de texto
+    private final List<ItemFieldsHolder> itemFields = new ArrayList<>();
 
     public MenuDataEditorComponent(
             ObservableList<MenuItemData> items,
@@ -34,16 +42,53 @@ public class MenuDataEditorComponent extends VBox {
         setSpacing(10);
         setPadding(new Insets(10, 0, 10, 0));
 
-        // --- MUDANÇA CRUCIAL: O LISTENER GERAL FOI REMOVIDO ---
-        // A reconstrução da UI do editor agora é explicitamente chamada nos botões.
+        // Configuração do ScrollPane
+        scrollPane.setContent(itemsContainer);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setPrefHeight(400); // Altura preferencial
+        scrollPane.setMaxHeight(600); // Altura máxima
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
 
+        // Padding do container de itens
+        itemsContainer.setPadding(new Insets(5));
+
+        // Quando clicar em "Add Item", captura os valores dos campos e atualiza a UI
         addButton.setOnAction(_ -> {
+            // Primeiro, atualiza todos os itens existentes com os valores dos campos
+            updateAllItemsFromFields();
+
+            // Adiciona um novo item vazio
             this.items.add(new MenuItemData());
-            rebuildUI(); // Chama rebuildUI explicitamente após a adição
+
+            // Reconstrói a UI
+            rebuildUI();
         });
 
         rebuildUI();
-        getChildren().addAll(itemsContainer, addButton);
+        getChildren().addAll(scrollPane, addButton);
+    }
+
+    /**
+     * Atualiza todos os itens da lista com os valores atuais dos campos de texto.
+     * Este método deve ser chamado antes de salvar para garantir que todos os
+     * valores
+     * digitados sejam persistidos.
+     */
+    public void updateAllItemsFromFields() {
+        for (int i = 0; i < itemFields.size() && i < items.size(); i++) {
+            ItemFieldsHolder holder = itemFields.get(i);
+            String name = holder.nameField.getText();
+            String functionName = holder.functionField.getText();
+            String childId = holder.currentChildId;
+
+            MenuItemData updatedItem = new MenuItemData(name, functionName, childId);
+            items.set(i, updatedItem);
+        }
+
+        // Atualiza a visualização do menu
+        menuComponent.renderMenu();
     }
 
     /**
@@ -51,15 +96,16 @@ public class MenuDataEditorComponent extends VBox {
      */
     private void rebuildUI() {
         itemsContainer.getChildren().clear();
+        itemFields.clear();
 
         for (int i = 0; i < items.size(); i++) {
-            final int index = i;
             MenuItemData itemData = items.get(i);
 
-            VBox itemRow = createItemEditor(itemData, index);
+            VBox itemRow = createItemEditor(itemData, i);
             itemsContainer.getChildren().add(itemRow);
         }
 
+        // Atualiza a visualização do menu após reconstruir a UI
         menuComponent.renderMenu();
     }
 
@@ -74,65 +120,64 @@ public class MenuDataEditorComponent extends VBox {
         TextField nameField = new TextField(itemData.name());
         nameField.setPromptText("Nome do Item");
 
-        // CORREÇÃO: Atualiza o modelo APENAS quando o campo perde o foco
-        nameField.focusedProperty().addListener((obs, oldVal, hasFocus) -> {
-            if (oldVal && !hasFocus) { // Se estava focado e agora perdeu o foco
-                updateItemData(index, itemData.functionName(), itemData.childId(), nameField.getText());
-            }
-        });
-        // Remove textProperty().addListener
-
         // --- Nome da Função (Callback) ---
         TextField functionField = new TextField(itemData.functionName());
         functionField.setPromptText("Nome da Função (e.g., handleLogin)");
 
-        // CORREÇÃO: Atualiza o modelo APENAS quando o campo perde o foco
-        functionField.focusedProperty().addListener((obs, oldVal, hasFocus) -> {
-            if (oldVal && !hasFocus) { // Se estava focado e agora perdeu o foco
-                updateItemData(index, functionField.getText(), itemData.childId(), itemData.name());
-            }
-        });
-        // Remove textProperty().addListener
-
         // --- Template (Child) ID ---
         Label templateLabel = Typography.caption("Template (ID do Componente):");
-        HBox templateRow = createChildIdSelector(itemData, index);
+
+        // Cria um holder para armazenar as referências dos campos
+        ItemFieldsHolder holder = new ItemFieldsHolder(nameField, functionField, itemData.childId());
+        itemFields.add(holder);
+
+        HBox templateRow = createChildIdSelector(holder, index);
 
         // --- Botão de Remover ---
         Button removeButton = Components.ButtonPrimary("Remover");
         removeButton.setOnAction(_ -> {
+            // Atualiza todos os campos antes de remover
+            updateAllItemsFromFields();
             items.remove(index);
+
+            // Se a lista ficou vazia, remove o MenuComponent do dataMap
+            if (items.isEmpty()) {
+                viewModel.removeComponentFromDataMap(menuComponent);
+                // Limpa a seleção para esconder o inspector no RightSide
+                viewModel.selectNode(null);
+            }
+
+            rebuildUI();
         });
 
         itemBox.getChildren().addAll(
-                header, nameField, functionField, templateLabel, templateRow, removeButton
-        );
+                header, nameField, functionField, templateLabel, templateRow, removeButton);
         return itemBox;
     }
 
-    private HBox createChildIdSelector(MenuItemData itemData, int index) {
+    private HBox createChildIdSelector(ItemFieldsHolder holder, int index) {
         var selector = new ChildIdSelectorComponent(
-                itemData.childId(),
+                holder.currentChildId,
                 this.viewModel,
-                // O ComboBox não causa perda de foco em si, então pode atualizar diretamente
-                newId -> updateItemData(index, itemData.functionName(), newId, itemData.name())
-        );
+                // Atualiza apenas o childId no holder quando o ComboBox mudar
+                newId -> holder.currentChildId = newId);
         selector.config();
 
         return selector;
     }
 
     /**
-     * Atualiza o MenuItemData na lista e força a re-renderização do menu visual na tela principal.
+     * Classe auxiliar para armazenar referências aos campos de um item.
      */
-    private void updateItemData(int index, String functionName, String childId, String name) {
-        // 1. Cria o novo registro de dados com o valor atualizado
-        MenuItemData newItem = new MenuItemData(name, functionName, childId);
+    private static class ItemFieldsHolder {
+        final TextField nameField;
+        final TextField functionField;
+        String currentChildId;
 
-        // 2. Atualiza a ObservableList. Isso dispara um evento 'update' que é ignorado pelo ListChangeListener
-        this.items.set(index, newItem);
-
-        // 3. Força apenas a atualização da visualização do menu na tela principal.
-        menuComponent.renderMenu();
+        ItemFieldsHolder(TextField nameField, TextField functionField, String childId) {
+            this.nameField = nameField;
+            this.functionField = functionField;
+            this.currentChildId = childId;
+        }
     }
 }
