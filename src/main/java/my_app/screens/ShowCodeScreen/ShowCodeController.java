@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import my_app.FileManager;
 import my_app.components.*;
 import my_app.components.imageComponent.ImageComponent;
+import my_app.data.MenuComponentData;
 import my_app.screens.Home.HomeViewModel;
 import my_app.screens.Home.components.canvaComponent.CanvaComponentV2;
 
@@ -41,8 +42,9 @@ public class ShowCodeController {
                 import javafx.scene.image.Image;
                 import javafx.scene.layout.*;
                 import javafx.scene.paint.Color;
-                import javafx.scene.layout.VBox;
+                import javafx.geometry.Pos;
                 import javafx.stage.Stage;
+                import java.util.List;
                 """;
     }
 
@@ -118,6 +120,8 @@ public class ShowCodeController {
         final var listOfLoadColumnItems_MethodsInvocation = new ArrayList<String>();
         final var listOfLoadColumnItems_MethodsDeclaration = new ArrayList<String>();
 
+        // final var listOfRepeatableChildForColumn_Instances = new ArrayList<String>();
+
         int textCount = 0;
         int btnCount = 0;
         int imgCount = 0;
@@ -125,10 +129,9 @@ public class ShowCodeController {
         int columnComponentCount = 0;
         int customComponentCount = 0;
         int emptyComponentCount_columnItem_Count = 0;
+        int menusComponentCount = 0;
 
-        for (int i = 0; i < nodesInCanva.size(); i++) {
-            Node node = nodesInCanva.get(i);
-
+        for (Node node : nodesInCanva) {
             if (node instanceof TextComponent component) {
                 final String variableName = component.name.get();
                 if (variableName == null) textCount++;
@@ -311,6 +314,68 @@ public class ShowCodeController {
                         componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
                 );
             }
+
+            if (node instanceof MenuComponent component) {
+                final String variableName = component.getData().variableName();
+                if (variableName == null || variableName.isEmpty()) menusComponentCount++;
+
+                // Nome da variável do container (MenuBar) e do Menu em si
+                final String barName = (variableName != null && !variableName.isEmpty())
+                        ? variableName + "Bar" : "menuBar" + menusComponentCount;
+                final String menuName = (variableName != null && !variableName.isEmpty())
+                        ? variableName : "menu" + menusComponentCount;
+
+                // 1. Instanciação da MenuBar e do Menu
+                componentsInstances.add("MenuBar %s = new MenuBar();".formatted(barName));
+                componentsInstances.add("Menu %s = new Menu(\"Menu\");".formatted(menuName));
+
+                // 2. Configuração de Layout da MenuBar (O que aparece no Canva)
+                addCommonComponentCode(
+                        barName, node, component.getStyle(),
+                        componentsInsideGetChildren, componentsInsideMethodSetup, componentsInsideMethodStyles
+                );
+
+                // 3. Processamento dos Itens (Sempre como MenuItem/Label)
+                List<String> itemVariableNames = new ArrayList<>();
+                int itemCount = 0;
+
+                for (MenuComponentData.MenuItemData item : component.getData().items()) {
+                    itemCount++;
+                    String itemVarName = menuName + "_item" + itemCount;
+                    itemVariableNames.add(itemVarName);
+
+                    // Criação do MenuItem (que funciona como a label do menu)
+                    componentsInstances.add("MenuItem %s = new MenuItem(\"%s\");".formatted(itemVarName, item.name()));
+
+                    // Configuração do Evento de Clique (Action)
+                    String onClickMethodName = item.functionName();
+                    if (onClickMethodName != null && !onClickMethodName.isEmpty()) {
+                        String handler = "%s.setOnAction(e -> %s.%s());".formatted(
+                                itemVarName, viewModelInstanceName, onClickMethodName
+                        );
+                        onClickHandlers.add(handler);
+
+                        // Adiciona assinatura na ViewModel
+                        String methodSignature = "public void %s() {\n\t\t// Ação do menu: %s\n\t}".formatted(onClickMethodName, item.name());
+                        if (viewModelMethods.stream().noneMatch(s -> s.contains("public void " + onClickMethodName + "()"))) {
+                            viewModelMethods.add(methodSignature);
+                        }
+                    }
+                }
+
+                // 4. Montagem da hierarquia no setup()
+                // Adiciona os itens ao Menu
+                if (!itemVariableNames.isEmpty()) {
+                    String addItems = "%s.getItems().addAll(%s);".formatted(
+                            menuName, String.join(", ", itemVariableNames)
+                    );
+                    componentsInsideMethodSetup.add(addItems);
+                }
+
+                // Adiciona o Menu à MenuBar
+                componentsInsideMethodSetup.add("%s.getMenus().add(%s);".formatted(barName, menuName));
+            }
+
         }
 
         return generateViewModelCode(viewModelName, viewModelMethods) + getFinalCode(canvaComponent, viewModelName,

@@ -10,7 +10,8 @@ public record MenuComponentData(
         int x,
         int y,
         String canva_id,
-        boolean isDeleted
+        boolean isDeleted,
+        String variableName
 ) implements ComponentData {
 
     public MenuComponentData {

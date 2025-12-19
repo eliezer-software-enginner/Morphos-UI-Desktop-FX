@@ -60,8 +60,7 @@ public class ComponentsFactory {
 
     public static ViewComponent<?> fromData(
             ComponentData data,
-            HomeViewModel viewModel,
-            CanvaComponentV2 canva
+            HomeViewModel viewModel
     ) {
 
         if (data == null) return null;
@@ -116,7 +115,7 @@ public class ComponentsFactory {
     ) {
 
         var data = existing.getData();
-        var clone = fromData(data, viewModel, canva);
+        var clone = fromData(data, viewModel);
 
         if (clone == null) return null;
 

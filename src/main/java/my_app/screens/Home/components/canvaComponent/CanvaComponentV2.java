@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import my_app.components.*;
 import my_app.components.imageComponent.ImageComponent;
-import my_app.contexts.TranslationContext;
 import my_app.data.*;
 import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
@@ -26,15 +25,6 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
     // --- CONSTANTES ---
     private static final String TRANSPARENT_BG_TYPE = "transparent";
 
-    // CSS para o fundo quadriculado (tons de cinza claro/branco)
-// CORREÇÃO ESSENCIAL: O valor de -fx-background-image deve estar em uma única linha contínua
-    // ou formatado de forma que o parser JavaFX não introduza erros com as quebras de linha/indentação.
-    // Garantindo que todos os gradientes sejam separados apenas por vírgulas.
-// CORREÇÃO ESSENCIAL: O valor CSS foi condensado em uma única string contínua,
-// separando as propriedades por ponto e vírgula e garantindo que a lista de gradientes
-// em -fx-background-image seja uma lista coesa separada apenas por vírgulas.
-    // REMOVIDA: A constante CHECKERED_BG_STYLE foi removida e substituída por um Node.
-
     // NOVO: O Node que representa o fundo quadriculado (inicializado uma vez)
     private final Region checkerboardBackground = createCheckerboardBackground();
     // --- ESTADO INTERNO ---
@@ -47,8 +37,6 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
 
     //Aqui é o nome de viewmodel que será gerado no json
     public String viewModelName;
-
-    TranslationContext.Translation translation = TranslationContext.instance().get();
 
     HomeViewModel viewModel;
     private boolean enableAnimation = true;
@@ -130,31 +118,31 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
             // ... (Loop de componentes mantido) ...
             // (Seus loops de componentes aqui)
             for (TextComponentData it : data.text_components) {
-                var comp = (TextComponent) ComponentsFactory.fromData(it, viewModel, this);
+                var comp = (TextComponent) ComponentsFactory.fromData(it, viewModel);
                 viewModel.addItemOnDataMap("text", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ButtonComponentData it : data.button_components) {
-                var comp = (ButtonComponent) ComponentsFactory.fromData(it, viewModel, this);
+                var comp = (ButtonComponent) ComponentsFactory.fromData(it, viewModel);
                 viewModel.addItemOnDataMap("button", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (ImageComponentData it : data.image_components) {
-                var comp = (ImageComponent) ComponentsFactory.fromData(it, viewModel, this);
+                var comp = (ImageComponent) ComponentsFactory.fromData(it, viewModel);
                 viewModel.addItemOnDataMap("image", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (InputComponentData it : data.input_components) {
-                var comp = (InputComponent) ComponentsFactory.fromData(it, viewModel, this);
+                var comp = (InputComponent) ComponentsFactory.fromData(it, viewModel);
                 viewModel.addItemOnDataMap("input", comp);
                 this.addElementDragable(comp, false);
             }
 
             for (CustomComponentData it : data.custom_components) {
-                var comp = (CustomComponent) ComponentsFactory.fromData(it, viewModel, this);
+                var comp = (CustomComponent) ComponentsFactory.fromData(it, viewModel);
                 viewModel.addItemOnDataMap("custom component", comp);
                 if (it.in_canva) {
                     this.addElementDragable(comp, false);
@@ -162,7 +150,7 @@ public final class CanvaComponentV2 extends Pane implements ViewComponent<CanvaC
             }
 
             for (MenuComponentData it : data.menu_components) {
-                var comp = (MenuComponent) ComponentsFactory.fromData(it, viewModel, this);
+                var comp = (MenuComponent) ComponentsFactory.fromData(it, viewModel);
                 viewModel.addItemOnDataMap("menu component", comp);
                 this.addElementDragable(comp, false);
             }

@@ -1,7 +1,5 @@
 package my_app.components;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -10,18 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import my_app.components.imageComponent.ImageComponent;
 import my_app.contexts.TranslationContext;
-import my_app.data.ButtonComponentData;
-import my_app.data.Commons;
-import my_app.data.ComponentData;
-import my_app.data.CustomComponentData;
-import my_app.data.ImageComponentData;
-import my_app.data.InputComponentData;
-import my_app.data.MenuComponentData;
+import my_app.data.*;
 import my_app.data.MenuComponentData.MenuItemData;
-import my_app.data.TextComponentData;
 import my_app.data.contracts.ViewComponent;
 import my_app.screens.Home.HomeViewModel;
 import my_app.themes.Typography;
+
+import java.util.ArrayList;
 
 public final class MenuComponent extends HBox implements ViewComponent<MenuComponentData> {
 
@@ -35,6 +28,8 @@ public final class MenuComponent extends HBox implements ViewComponent<MenuCompo
     private my_app.components.shared.MenuDataEditorComponent editorComponent;
 
     private final TranslationContext.Translation englishBase = TranslationContext.instance().getInEnglishBase();
+
+    public String variableName = "menu";
 
     public MenuComponent(HomeViewModel viewModel) {
         setSpacing(10); // Espaçamento entre os itens do menu
@@ -119,7 +114,7 @@ public final class MenuComponent extends HBox implements ViewComponent<MenuCompo
 
     // Adaptado do ColumnComponent para suportar o MenuComponentData
     private ViewComponent<? extends ComponentData> cloneExistingNode(ViewComponent<ComponentData> existingNode,
-            MenuItemData itemData) {
+                                                                     MenuItemData itemData) {
         var originalData = existingNode.getData();
         var type = originalData.type();
 
@@ -208,6 +203,7 @@ public final class MenuComponent extends HBox implements ViewComponent<MenuCompo
                 (int) getLayoutX(),
                 (int) getLayoutY(),
                 location.fatherId(),
-                isDeleted);
+                isDeleted,
+                this.variableName);
     }
 }
